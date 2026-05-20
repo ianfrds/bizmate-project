@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Semua Produk</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Shared LocalStorage Database -->
+  <script src="js/database.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #f8fafc; color: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #475569; }
+    .table-row-hover:hover { background-color: #f8fafc; }
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(12, 76, 180, 0.15) 0%, transparent 100%);
+      color: #ffffff;
+      border-left: 3px solid #3b82f6;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
+    
+    <!-- Logo Area -->
+    <div class="h-20 flex items-center justify-between px-6 border-b border-white/10 shrink-0">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white shadow-lg shadow-brand-blueRoyal/30 transform group-hover:scale-105 transition">
+          <i class="ti ti-sofa text-xl"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-outfit font-extrabold text-xl text-white tracking-tight leading-none">
+            biz<span class="text-brand-blueRoyal">mate</span>
+          </span>
+          <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Admin Console</span>
+        </div>
+      </a>
+      <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:text-white transition">
+        <i class="ti ti-x text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="flex-grow overflow-y-auto custom-scrollbar py-6 px-4 space-y-8">
+      
+      <!-- Core -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
+        <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-layout-dashboard text-lg"></i>
+          Dashboard
+        </a>
+        <a href="keuangan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-chart-pie text-lg"></i>
+          Keuangan
+        </a>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Store Management</p>
+        
+        <!-- Pesanan Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-pesanan', 'arrow-pesanan')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-shopping-cart text-lg"></i>
+              Pesanan
+            </div>
+            <i id="arrow-pesanan" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-pesanan" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="pesanan.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Daftar Pesanan</a>
+          </div>
+        </div>
+
+        <!-- Produk Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-produk', 'arrow-produk')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg nav-item active text-sm font-semibold text-white transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-box text-lg text-blue-400"></i>
+              Produk
+            </div>
+            <i id="arrow-produk" class="ti ti-chevron-down text-sm transition-transform rotate-180"></i>
+          </button>
+          <div id="sub-produk" class="pl-11 pr-4 py-1 space-y-1">
+            <a href="produk.html" class="flex items-center gap-2 py-2 text-[13px] font-bold text-white transition">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)] animate-pulse"></span>
+              Semua Produk
+            </a>
+            <a href="kategori.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Kategori</a>
+            <a href="tambah-produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Tambah Produk <span class="ml-2 px-1.5 py-0.5 bg-blue-500/20 text-blue-400 rounded-[4px] text-[9px] font-bold">NEW</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Data & System -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">System & Config</p>
+        
+        <!-- Master Data Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-master', 'arrow-master')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-database text-lg"></i>
+              Master Data
+            </div>
+            <i id="arrow-master" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-master" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="customer.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Customer</a>
+            <a href="admin-users.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Admin Users</a>
+          </div>
+        </div>
+
+        <!-- Konten Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-konten', 'arrow-konten')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-layout-kanban text-lg"></i>
+              Konten (CMS)
+            </div>
+            <i id="arrow-konten" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-konten" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="landing-page.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Landing Page</a>
+          </div>
+        </div>
+
+        <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-settings text-lg"></i>
+          Pengaturan
+        </a>
+      </div>
+
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-4 border-t border-white/10 shrink-0">
+      <div class="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blueRoyal to-purple-600 p-0.5">
+          <img src="https://ui-avatars.com/api/?name=Admin+Utama&background=0D8ABC&color=fff" alt="Avatar" class="w-full h-full rounded-full border-2 border-brand-sidebar object-cover">
+        </div>
+        <div class="flex-grow overflow-hidden">
+          <p class="text-sm font-bold text-white truncate">Admin Utama</p>
+          <p class="text-[11px] text-slate-500 font-medium truncate">superadmin@bizmate.id</p>
+        </div>
+        <i class="ti ti-selector text-slate-500"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-72 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <h2 class="font-black text-xl text-slate-800 leading-tight font-outfit hidden sm:block">Katalog Produk</h2>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+        <button class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition">
+          <i class="ti ti-file-import"></i> Import
+        </button>
+        <a href="tambah-produk.html" class="flex items-center gap-2 px-5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">
+          <i class="ti ti-plus"></i> Tambah Baru
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-6">
+      
+      <!-- Metrics Overview -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Semua Produk</p>
+          <p id="count-all" class="text-2xl font-black text-slate-800">342</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Aktif & Ditampilkan</p>
+          <p id="count-active" class="text-2xl font-black text-emerald-600">310</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Status Draft</p>
+          <p id="count-draft" class="text-2xl font-black text-amber-600">24</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Stok Habis</p>
+          <p id="count-out" class="text-2xl font-black text-red-500">8</p>
+        </div>
+      </div>
+
+      <!-- Advanced Data Table -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-card flex flex-col">
+        
+        <!-- Filters Bar -->
+        <div class="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-50/50 rounded-t-3xl">
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input id="search-input" type="text" placeholder="Cari Nama Produk, SKU..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
+            </div>
+          </div>
+          <div class="flex gap-2 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-2 sm:pb-0">
+            <select id="filter-category" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+              <option>Semua Kategori</option>
+              <option>Kursi & Sofa</option>
+              <option>Meja & Rak</option>
+              <option>Lampu & Dekorasi</option>
+              <option>Mebel Outdoor</option>
+            </select>
+            <select id="filter-status" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+              <option>Status: Semua</option>
+              <option>Status: Aktif</option>
+              <option>Status: Draft</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto flex-grow">
+          <table class="w-full text-left border-collapse min-w-[1000px]">
+            <thead>
+              <tr class="bg-white">
+                <th class="px-6 py-4 w-12 border-b border-slate-100"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal"></th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Info Produk</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Kategori</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Harga</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Stok</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-center">Tampilkan</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body" class="text-sm text-slate-700 divide-y divide-slate-100">
+              
+              <tr class="table-row-hover transition">
+                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50" src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=150&q=80">
+                    <div>
+                      <p class="font-bold text-slate-800 hover:text-brand-blueRoyal cursor-pointer transition">Kursi Santai Telur (Single Wheel)</p>
+                      <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU: CHR-RED-001</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">Mebel Outdoor</span>
+                </td>
+                <td class="px-6 py-4 font-black text-slate-800">Rp 1.899.000</td>
+                <td class="px-6 py-4">
+                  <p class="font-bold text-emerald-600">45 Unit</p>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked class="sr-only peer">
+                    <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition"><i class="ti ti-edit"></i></button>
+                  <button class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition"><i class="ti ti-trash"></i></button>
+                </td>
+              </tr>
+              
+              <tr class="table-row-hover transition">
+                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=150&q=80">
+                    <div>
+                      <p class="font-bold text-slate-800 hover:text-brand-blueRoyal cursor-pointer transition">Sofa Premium Velvet Modern</p>
+                      <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU: SFA-VLV-002</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">Kursi & Sofa</span>
+                </td>
+                <td class="px-6 py-4 font-black text-slate-800">Rp 4.500.000</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[10px] font-bold">2 Unit (Low)</span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked class="sr-only peer">
+                    <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition"><i class="ti ti-edit"></i></button>
+                  <button class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition"><i class="ti ti-trash"></i></button>
+                </td>
+              </tr>
+              
+              <tr class="table-row-hover transition bg-slate-50/50">
+                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50 opacity-50 grayscale" src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=150&q=80">
+                    <div>
+                      <p class="font-bold text-slate-500">Meja Kopi Jati Minimalis</p>
+                      <p class="text-[11px] text-slate-400 font-mono mt-0.5">SKU: TBL-JTI-003</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-400">Meja & Rak</span>
+                </td>
+                <td class="px-6 py-4 font-black text-slate-400">Rp 850.000</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-red-50 text-red-500 border border-red-200 rounded text-[10px] font-bold">0 (Habis)</span>
+                </td>
+                <td class="px-6 py-4 text-center">
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition"><i class="ti ti-edit"></i></button>
+                  <button class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition"><i class="ti ti-trash"></i></button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="p-6 border-t border-slate-100 flex items-center justify-between">
+          <p id="table-pagination-info" class="text-xs font-bold text-slate-400">Menampilkan 1 - 10 dari 342 Produk</p>
+          <div class="flex items-center gap-2">
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition"><i class="ti ti-chevron-left"></i></button>
+            <button class="w-8 h-8 rounded-lg bg-brand-blueRoyal text-white font-bold text-xs shadow">1</button>
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 font-bold text-xs transition">2</button>
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 font-bold text-xs transition">3</button>
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition"><i class="ti ti-chevron-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle logic
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    function toggleSubmenu(menuId, arrowId) {
+      const menu = document.getElementById(menuId);
+      const arrow = document.getElementById(arrowId);
+      if(menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        menu.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Dynamic Products Catalog
+    document.addEventListener("DOMContentLoaded", function() {
+      const tbody = document.getElementById('products-table-body');
+      const searchInput = document.getElementById('search-input');
+      const filterCategory = document.getElementById('filter-category');
+      const filterStatus = document.getElementById('filter-status');
+      const paginationInfo = document.getElementById('table-pagination-info');
+
+      // Main Render Function
+      function renderTable() {
+        const products = BizmateDB.getProducts();
+        const stats = BizmateDB.getStats();
+
+        // 1. Update Metrics
+        document.getElementById('count-all').textContent = stats.productsCount;
+        document.getElementById('count-active').textContent = stats.activeProductsCount;
+        document.getElementById('count-draft').textContent = stats.draftProductsCount;
+        document.getElementById('count-out').textContent = stats.outOfStockProductsCount;
+
+        // 2. Filter Products
+        const query = searchInput.value.toLowerCase().trim();
+        const cat = filterCategory.value;
+        const status = filterStatus.value;
+
+        let filtered = products.filter(p => {
+          const matchQuery = p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query);
+          const matchCat = cat === 'Semua Kategori' || p.category === cat;
+          
+          let matchStatus = true;
+          if (status === 'Status: Aktif') {
+            matchStatus = p.active;
+          } else if (status === 'Status: Draft') {
+            matchStatus = !p.active;
+          }
+
+          return matchQuery && matchCat && matchStatus;
+        });
+
+        // 3. Render HTML
+        tbody.innerHTML = '';
+        if (filtered.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="px-6 py-12 text-center text-slate-400 font-medium">
+                <i class="ti ti-box-off text-4xl block mb-2 opacity-50"></i>
+                Tidak ada produk ditemukan.
+              </td>
+            </tr>
+          `;
+          paginationInfo.textContent = 'Menampilkan 0 dari 0 Produk';
+          return;
+        }
+
+        filtered.forEach(p => {
+          let stockBadge = '';
+          if (p.stock === 0) {
+            stockBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-red-50 text-red-500 border border-red-200 rounded text-[10px] font-bold">0 (Habis)</span>`;
+          } else if (p.stock <= p.minStock) {
+            stockBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[10px] font-bold">${p.stock} Unit (Low)</span>`;
+          } else {
+            stockBadge = `<p class="font-bold text-emerald-600">${p.stock} Unit</p>`;
+          }
+
+          const opacityClass = p.active ? '' : 'opacity-60 grayscale';
+          const titleClass = p.active ? 'text-slate-800 hover:text-brand-blueRoyal' : 'text-slate-400';
+
+          tbody.innerHTML += `
+            <tr class="table-row-hover transition ${p.active ? '' : 'bg-slate-50/30'}">
+              <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-4 ${opacityClass}">
+                  <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50" src="${p.image}">
+                  <div>
+                    <p class="font-bold cursor-pointer transition ${titleClass}" onclick="editProduct('${p.sku}')">${p.name}</p>
+                    <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU: ${p.sku}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">${p.category}</span>
+              </td>
+              <td class="px-6 py-4 font-black text-slate-800">Rp ${p.price.toLocaleString('id-ID')}</td>
+              <td class="px-6 py-4">${stockBadge}</td>
+              <td class="px-6 py-4 text-center">
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleActive('${p.sku}')">
+                  <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                </label>
+              </td>
+              <td class="px-6 py-4 text-right">
+                <button onclick="editProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="Edit"><i class="ti ti-edit"></i></button>
+                <button onclick="deleteProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition" title="Delete"><i class="ti ti-trash"></i></button>
+              </td>
+            </tr>
+          `;
+        });
+
+        const totalProductBase = 339; // Seeded offset
+        paginationInfo.textContent = `Menampilkan 1 - ${filtered.length} dari ${filtered.length + totalProductBase} Produk`;
+      }
+
+      // Event Listeners for Search & Filters
+      searchInput.addEventListener('input', renderTable);
+      filterCategory.addEventListener('change', renderTable);
+      filterStatus.addEventListener('change', renderTable);
+
+      // Global functions for inline table actions
+      window.toggleActive = function(sku) {
+        BizmateDB.toggleProductStatus(sku);
+        renderTable();
+      };
+
+      window.deleteProduct = function(sku) {
+        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+          BizmateDB.deleteProduct(sku);
+          renderTable();
+        }
+      };
+
+      window.editProduct = function(sku) {
+        window.location.href = `tambah-produk.html?sku=${sku}`;
+      };
+
+      // Initial Render
+      renderTable();
+    });
+  </script>
+
+</body>
+</html>

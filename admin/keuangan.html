@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Dashboard Keuangan</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Shared LocalStorage Database -->
+  <script src="js/database.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #f8fafc; color: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #475569; }
+    .table-row-hover:hover { background-color: #f8fafc; }
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(12, 76, 180, 0.15) 0%, transparent 100%);
+      color: #ffffff;
+      border-left: 3px solid #3b82f6;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
+    
+    <!-- Logo Area -->
+    <div class="h-20 flex items-center justify-between px-6 border-b border-white/10 shrink-0">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white shadow-lg shadow-brand-blueRoyal/30 transform group-hover:scale-105 transition">
+          <i class="ti ti-sofa text-xl"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-outfit font-extrabold text-xl text-white tracking-tight leading-none">
+            biz<span class="text-brand-blueRoyal">mate</span>
+          </span>
+          <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Admin Console</span>
+        </div>
+      </a>
+      <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:text-white transition">
+        <i class="ti ti-x text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="flex-grow overflow-y-auto custom-scrollbar py-6 px-4 space-y-8">
+      
+      <!-- Core -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
+        <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-layout-dashboard text-lg"></i>
+          Dashboard
+        </a>
+        <a href="keuangan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item active text-sm font-semibold hover:text-white">
+          <i class="ti ti-chart-pie text-lg text-blue-400"></i>
+          Keuangan
+        </a>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Store Management</p>
+        
+        <!-- Pesanan Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-pesanan', 'arrow-pesanan')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-shopping-cart text-lg"></i>
+              Pesanan
+            </div>
+            <i id="arrow-pesanan" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-pesanan" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="pesanan.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Daftar Pesanan</a>
+          </div>
+        </div>
+
+        <!-- Produk Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-produk', 'arrow-produk')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-box text-lg"></i>
+              Produk
+            </div>
+            <i id="arrow-produk" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-produk" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Semua Produk</a>
+            <a href="kategori.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Kategori</a>
+            <a href="tambah-produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Tambah Produk <span class="ml-2 px-1.5 py-0.5 bg-blue-500/20 text-blue-400 rounded-[4px] text-[9px] font-bold">NEW</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Data & System -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">System & Config</p>
+        
+        <!-- Master Data Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-master', 'arrow-master')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-database text-lg"></i>
+              Master Data
+            </div>
+            <i id="arrow-master" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-master" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="customer.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Customer</a>
+            <a href="admin-users.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Admin Users</a>
+          </div>
+        </div>
+
+        <!-- Konten Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-konten', 'arrow-konten')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-layout-kanban text-lg"></i>
+              Konten (CMS)
+            </div>
+            <i id="arrow-konten" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-konten" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="landing-page.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Landing Page</a>
+          </div>
+        </div>
+
+        <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-settings text-lg"></i>
+          Pengaturan
+        </a>
+      </div>
+
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-4 border-t border-white/10 shrink-0">
+      <div class="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blueRoyal to-purple-600 p-0.5">
+          <img src="https://ui-avatars.com/api/?name=Admin+Utama&background=0D8ABC&color=fff" alt="Avatar" class="w-full h-full rounded-full border-2 border-brand-sidebar object-cover">
+        </div>
+        <div class="flex-grow overflow-hidden">
+          <p class="text-sm font-bold text-white truncate">Admin Utama</p>
+          <p class="text-[11px] text-slate-500 font-medium truncate">superadmin@bizmate.id</p>
+        </div>
+        <i class="ti ti-selector text-slate-500"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-72 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <h2 class="font-black text-xl text-slate-800 leading-tight font-outfit hidden sm:block">Laporan Keuangan & Kas</h2>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+        <button class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition">
+          <i class="ti ti-download"></i> Unduh Laporan (.xlsx)
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-6">
+      
+      <!-- Date Filter Bar -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-soft flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider font-outfit shrink-0">Filter Rentang Waktu</span>
+          <input type="date" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 focus:outline-none" value="2026-05-01">
+          <span class="text-xs font-bold text-slate-400">s/d</span>
+          <input type="date" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 focus:outline-none" value="2026-05-31">
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">Bulan Ini</button>
+          <button class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">Kuartal Terakhir</button>
+        </div>
+      </div>
+
+      <!-- Financial Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-soft hover:shadow-lg transition">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Total Pemasukan</span>
+            <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center"><i class="ti ti-arrow-up-right"></i></span>
+          </div>
+          <h3 id="finance-income" class="text-3xl font-black text-slate-800">Rp 124.890.000</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-2"><span class="text-emerald-500 font-bold">+18.2%</span> dibanding bulan lalu</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-soft hover:shadow-lg transition">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Pengeluaran & COGS</span>
+            <span class="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center"><i class="ti ti-arrow-down-left"></i></span>
+          </div>
+          <h3 id="finance-expenses" class="text-3xl font-black text-slate-800">Rp 48.300.000</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-2"><span class="text-rose-500 font-bold">+4.1%</span> peningkatan operasional</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-soft hover:shadow-lg transition">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Profit Bersih</span>
+            <span class="w-8 h-8 rounded-full bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center"><i class="ti ti-circle-check"></i></span>
+          </div>
+          <h3 id="finance-profit" class="text-3xl font-black text-brand-blueRoyal">Rp 76.590.000</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-2"><span id="finance-ratio" class="text-brand-blueRoyal font-bold">61.3%</span> Rasio profitabilitas margin</p>
+        </div>
+      </div>
+
+      <!-- Cashflow Graph & Metrics -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Transaction Line Chart (2 Cols) -->
+        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-soft p-6">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h3 class="font-outfit font-black text-lg text-slate-800">Analisis Pemasukan vs Pengeluaran</h3>
+              <p class="text-xs text-slate-500 font-medium">Laporan kas berjalan tahun ini</p>
+            </div>
+          </div>
+          <div class="w-full h-80">
+            <canvas id="cashflowChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Profit Distribution Pie Chart -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-outfit font-black text-lg text-slate-800">Distribusi Pengeluaran</h3>
+            <p class="text-xs text-slate-500 font-medium">Berdasarkan kategori operasional</p>
+          </div>
+          
+          <div class="w-full h-56 flex items-center justify-center">
+            <canvas id="distributionChart"></canvas>
+          </div>
+
+          <div class="space-y-2 mt-4">
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#0c4cb4]"></span> Pembelian Stok Mebel</span>
+              <span class="text-slate-700">Rp 32.0M</span>
+            </div>
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ea580c]"></span> Biaya Pengiriman & Logistik</span>
+              <span class="text-slate-700">Rp 10.5M</span>
+            </div>
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ef4444]"></span> Marketing & Iklan</span>
+              <span class="text-slate-700">Rp 5.8M</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Invoice History Table -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+        <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+          <div>
+            <h3 class="font-outfit font-black text-lg text-slate-800">Riwayat Pembayaran & Invoice</h3>
+            <p class="text-xs text-slate-500 font-medium">Daftar rekonsiliasi pembayaran tagihan transaksi terbaru.</p>
+          </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[800px]">
+            <thead>
+              <tr class="bg-slate-50/50">
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">ID Tagihan (Invoice)</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Metode</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Pelanggan</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Tanggal</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Status Pembayaran</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 text-right">Nilai Tagihan</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-table-body" class="text-sm font-medium text-slate-700 divide-y divide-slate-100">
+              
+              <tr class="table-row-hover transition">
+                <td class="px-6 py-4 font-mono font-bold text-slate-800">#INV-2026-0045</td>
+                <td class="px-6 py-4 text-slate-500">Virtual Account Mandiri</td>
+                <td class="px-6 py-4">Ahmad Subagyo</td>
+                <td class="px-6 py-4 text-slate-500">19 Mei 2026, 14:30</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">Lunas</span>
+                </td>
+                <td class="px-6 py-4 text-right font-bold">Rp 1.899.000</td>
+              </tr>
+
+              <tr class="table-row-hover transition">
+                <td class="px-6 py-4 font-mono font-bold text-slate-800">#INV-2026-0044</td>
+                <td class="px-6 py-4 text-slate-500">Credit Card (Stripe)</td>
+                <td class="px-6 py-4">Diana Maharani</td>
+                <td class="px-6 py-4 text-slate-500">18 Mei 2026, 11:15</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">Lunas</span>
+                </td>
+                <td class="px-6 py-4 text-right font-bold">Rp 4.500.000</td>
+              </tr>
+              
+              <tr class="table-row-hover transition">
+                <td class="px-6 py-4 font-mono font-bold text-slate-800">#INV-2026-0043</td>
+                <td class="px-6 py-4 text-slate-500">Manual Transfer BCA</td>
+                <td class="px-6 py-4">Budi Kurniawan</td>
+                <td class="px-6 py-4 text-slate-500">18 Mei 2026, 09:45</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-rose-50 text-red-500 text-[10px] font-bold uppercase tracking-wider">Refunded</span>
+                </td>
+                <td class="px-6 py-4 text-right font-bold">Rp 850.000</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle logic
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    function toggleSubmenu(menuId, arrowId) {
+      const menu = document.getElementById(menuId);
+      const arrow = document.getElementById(arrowId);
+      if(menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        menu.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Dynamic Finance Logic
+    document.addEventListener("DOMContentLoaded", function() {
+      const tbody = document.getElementById('transactions-table-body');
+      
+      const orders = BizmateDB.getOrders();
+      const products = BizmateDB.getProducts();
+
+      // 1. Calculate Real-Time COGS & Revenue
+      let dynamicPaidRevenue = 0;
+      let dynamicPaidCOGS = 0;
+
+      orders.filter(o => o.paymentStatus === 'Paid').forEach(o => {
+        dynamicPaidRevenue += (o.amount || 0);
+        
+        // Calculate items cost
+        if (o.items) {
+          o.items.forEach(item => {
+            const p = products.find(prod => prod.sku === item.sku);
+            const costPerUnit = p ? p.cost : (item.price * 0.45); // fallback HPP 45%
+            dynamicPaidCOGS += costPerUnit * (item.qty || 1);
+          });
+        }
+      });
+
+      const baseRevenue = 124890000;
+      const baseCOGS = 48300000;
+
+      const totalRevenue = baseRevenue + dynamicPaidRevenue;
+      const totalCOGS = baseCOGS + dynamicPaidCOGS;
+      const netProfit = totalRevenue - totalCOGS;
+      const marginRatio = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0;
+
+      // Update Metrik
+      document.getElementById('finance-income').textContent = `Rp ${totalRevenue.toLocaleString('id-ID')}`;
+      document.getElementById('finance-expenses').textContent = `Rp ${totalCOGS.toLocaleString('id-ID')}`;
+      document.getElementById('finance-profit').textContent = `Rp ${netProfit.toLocaleString('id-ID')}`;
+      document.getElementById('finance-ratio').textContent = `${marginRatio.toFixed(1)}%`;
+
+      // 2. Render Invoices Table
+      tbody.innerHTML = '';
+      
+      // Render orders as transactions
+      orders.forEach(o => {
+        let statusBadge = '';
+        if (o.paymentStatus === 'Paid') {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">Lunas</span>`;
+        } else if (o.paymentStatus === 'Pending') {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider">Pending</span>`;
+        } else {
+          statusBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-rose-50 text-red-500 text-[10px] font-bold uppercase tracking-wider">Gagal</span>`;
+        }
+
+        const invId = `#INV-2026-${o.id.replace(/\D/g, '') || '0046'}`;
+        const paymentMethod = o.paymentMethod || 'Manual Transfer BCA';
+        const displayCustomer = o.customer || o.customerName || 'Unknown Customer';
+        const displayAmount = o.amount || o.total || 0;
+
+        tbody.innerHTML += `
+          <tr class="table-row-hover transition">
+            <td class="px-6 py-4 font-mono font-bold text-slate-800">${invId}</td>
+            <td class="px-6 py-4 text-slate-500">${paymentMethod}</td>
+            <td class="px-6 py-4 font-bold text-slate-800">${displayCustomer}</td>
+            <td class="px-6 py-4 text-slate-500">${o.date}</td>
+            <td class="px-6 py-4">${statusBadge}</td>
+            <td class="px-6 py-4 text-right font-bold text-slate-800">Rp ${displayAmount.toLocaleString('id-ID')}</td>
+          </tr>
+        `;
+      });
+
+      // 3. Cashflow Line Chart Setup
+      const juneIncomeJuta = (124000000 + dynamicPaidRevenue) / 1000000;
+      const juneCostJuta = (48000000 + dynamicPaidCOGS) / 1000000;
+
+      const cashflowCtx = document.getElementById('cashflowChart').getContext('2d');
+      new Chart(cashflowCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+          datasets: [
+            {
+              label: 'Pemasukan (Rp Juta)',
+              data: [50, 75, 62, 85, 95, juneIncomeJuta],
+              borderColor: '#0c4cb4',
+              backgroundColor: 'transparent',
+              borderWidth: 3,
+              tension: 0.4
+            },
+            {
+              label: 'Pengeluaran (Rp Juta)',
+              data: [25, 40, 35, 48, 50, juneCostJuta],
+              borderColor: '#ef4444',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              tension: 0.4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top', labels: { font: { family: "'Plus Jakarta Sans'" } } } },
+          scales: {
+            y: { grid: { color: '#f1f5f9' }, ticks: { font: { family: "'Plus Jakarta Sans'", size: 10 } } },
+            x: { grid: { display: false }, ticks: { font: { family: "'Plus Jakarta Sans'", size: 10 } } }
+          }
+        }
+      });
+
+      // 4. Distribution Pie Chart Setup
+      const distCtx = document.getElementById('distributionChart').getContext('2d');
+      new Chart(distCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Stok', 'Logistik', 'Iklan'],
+          datasets: [{
+            data: [32, 10.5, 5.8],
+            backgroundColor: ['#0c4cb4', '#ea580c', '#ef4444'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          cutout: '70%'
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Manajemen Kategori</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Shared LocalStorage Database -->
+  <script src="js/database.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #f8fafc; color: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #475569; }
+    .category-row:hover { background-color: #f8fafc; }
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(12, 76, 180, 0.15) 0%, transparent 100%);
+      color: #ffffff;
+      border-left: 3px solid #3b82f6;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
+    
+    <!-- Logo Area -->
+    <div class="h-20 flex items-center justify-between px-6 border-b border-white/10 shrink-0">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white shadow-lg shadow-brand-blueRoyal/30 transform group-hover:scale-105 transition">
+          <i class="ti ti-sofa text-xl"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-outfit font-extrabold text-xl text-white tracking-tight leading-none">
+            biz<span class="text-brand-blueRoyal">mate</span>
+          </span>
+          <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Admin Console</span>
+        </div>
+      </a>
+      <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:text-white transition">
+        <i class="ti ti-x text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="flex-grow overflow-y-auto custom-scrollbar py-6 px-4 space-y-8">
+      
+      <!-- Core -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
+        <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-layout-dashboard text-lg"></i>
+          Dashboard
+        </a>
+        <a href="keuangan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-chart-pie text-lg"></i>
+          Keuangan
+        </a>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Store Management</p>
+        
+        <!-- Pesanan Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-pesanan', 'arrow-pesanan')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-shopping-cart text-lg"></i>
+              Pesanan
+            </div>
+            <i id="arrow-pesanan" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-pesanan" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="pesanan.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Daftar Pesanan</a>
+          </div>
+        </div>
+
+        <!-- Produk Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-produk', 'arrow-produk')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg nav-item active text-sm font-semibold text-white transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-box text-lg text-blue-400"></i>
+              Produk
+            </div>
+            <i id="arrow-produk" class="ti ti-chevron-down text-sm transition-transform rotate-180"></i>
+          </button>
+          <div id="sub-produk" class="pl-11 pr-4 py-1 space-y-1">
+            <a href="produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Semua Produk</a>
+            <a href="kategori.html" class="flex items-center gap-2 py-2 text-[13px] font-bold text-white transition">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)] animate-pulse"></span>
+              Kategori
+            </a>
+            <a href="tambah-produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Tambah Produk <span class="ml-2 px-1.5 py-0.5 bg-blue-500/20 text-blue-400 rounded-[4px] text-[9px] font-bold">NEW</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Data & System -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">System & Config</p>
+        
+        <!-- Master Data Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-master', 'arrow-master')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-database text-lg"></i>
+              Master Data
+            </div>
+            <i id="arrow-master" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-master" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="customer.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Customer</a>
+            <a href="admin-users.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Admin Users</a>
+          </div>
+        </div>
+
+        <!-- Konten Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-konten', 'arrow-konten')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-layout-kanban text-lg"></i>
+              Konten (CMS)
+            </div>
+            <i id="arrow-konten" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-konten" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="landing-page.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Landing Page</a>
+          </div>
+        </div>
+
+        <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-settings text-lg"></i>
+          Pengaturan
+        </a>
+      </div>
+
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-4 border-t border-white/10 shrink-0">
+      <div class="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blueRoyal to-purple-600 p-0.5">
+          <img src="https://ui-avatars.com/api/?name=Admin+Utama&background=0D8ABC&color=fff" alt="Avatar" class="w-full h-full rounded-full border-2 border-brand-sidebar object-cover">
+        </div>
+        <div class="flex-grow overflow-hidden">
+          <p class="text-sm font-bold text-white truncate">Admin Utama</p>
+          <p class="text-[11px] text-slate-500 font-medium truncate">superadmin@bizmate.id</p>
+        </div>
+        <i class="ti ti-selector text-slate-500"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-72 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <h2 class="font-black text-xl text-slate-800 leading-tight font-outfit hidden sm:block">Kategori & Departemen Toko</h2>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1400px] mx-auto">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        <!-- Left: Categories Structure (2 Cols) -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <div class="bg-white rounded-3xl border border-slate-200 shadow-card p-6 sm:p-8 space-y-6">
+            <div>
+              <h3 class="font-outfit font-black text-lg text-slate-800">Daftar Struktur Kategori</h3>
+              <p class="text-xs text-slate-500 font-medium">Susun prioritas menu toko menggunakan drag & drop sort.</p>
+            </div>
+
+            <!-- Categories List Area -->
+            <div id="categories-list" class="space-y-3">
+              
+              <!-- Category 1: Parent -->
+              <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-slate-400 cursor-move"><i class="ti ti-grip-vertical text-lg"></i></span>
+                    <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blueRoyal text-xl">
+                      <i class="ti ti-sofa"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-800">Kursi & Sofa</h4>
+                      <p class="text-[10px] text-slate-500 font-medium">Slug: kursi-sofa</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">112 Produk</span>
+                    <button class="p-1 hover:text-brand-blueRoyal"><i class="ti ti-edit"></i></button>
+                    <button class="p-1 hover:text-red-500"><i class="ti ti-trash"></i></button>
+                  </div>
+                </div>
+
+                <!-- Children categories -->
+                <div class="pl-12 space-y-2 border-l border-slate-200 mt-2">
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100 last:border-0 text-xs font-medium text-slate-700">
+                    <span>Sofa Velvet Premium</span>
+                    <span class="text-slate-400">45 Produk</span>
+                  </div>
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100 last:border-0 text-xs font-medium text-slate-700">
+                    <span>Kursi Santai</span>
+                    <span class="text-slate-400">32 Produk</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Category 2: Parent -->
+              <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-slate-400 cursor-move"><i class="ti ti-grip-vertical text-lg"></i></span>
+                    <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blueRoyal text-xl">
+                      <i class="ti ti-table"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-800">Meja & Rak</h4>
+                      <p class="text-[10px] text-slate-500 font-medium">Slug: meja-rak</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">89 Produk</span>
+                    <button class="p-1 hover:text-brand-blueRoyal"><i class="ti ti-edit"></i></button>
+                    <button class="p-1 hover:text-red-500"><i class="ti ti-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Category 3: Parent -->
+              <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-slate-400 cursor-move"><i class="ti ti-grip-vertical text-lg"></i></span>
+                    <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blueRoyal text-xl">
+                      <i class="ti ti-lamp"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-800">Lampu & Dekorasi</h4>
+                      <p class="text-[10px] text-slate-500 font-medium">Slug: lampu-dekorasi</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">54 Produk</span>
+                    <button class="p-1 hover:text-brand-blueRoyal"><i class="ti ti-edit"></i></button>
+                    <button class="p-1 hover:text-red-500"><i class="ti ti-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Add/Edit Category Form (1 Col) -->
+        <div class="w-full space-y-6">
+          <div class="bg-white rounded-3xl border border-slate-200 shadow-card p-6 space-y-5">
+            <h3 class="font-outfit font-black text-lg text-slate-800 pb-3 border-b border-slate-100">Tambah Kategori Baru</h3>
+            
+            <form id="category-form" class="space-y-4">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Nama Kategori *</label>
+                <input id="category-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition" placeholder="Contoh: Meja Makan" required>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Slug URL *</label>
+                <input id="category-slug" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition" placeholder="meja-makan" required>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Kategori Induk (Parent)</label>
+                <select id="category-parent" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition">
+                  <option value="" selected>Tidak Ada (Jadikan Kategori Utama)</option>
+                  <option value="Kursi & Sofa">Kursi & Sofa</option>
+                  <option value="Meja & Rak">Meja & Rak</option>
+                  <option value="Lampu & Dekorasi">Lampu & Dekorasi</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Pilih Icon Tabler</label>
+                <input type="hidden" id="category-icon" value="ti-sofa">
+                <div class="grid grid-cols-5 gap-2 border border-slate-200 rounded-xl p-3 bg-slate-50" id="icon-selector">
+                  <button type="button" data-icon="ti-sofa" class="w-10 h-10 rounded-lg bg-white text-brand-blueRoyal border-2 border-brand-blueRoyal flex items-center justify-center text-lg transition"><i class="ti ti-sofa"></i></button>
+                  <button type="button" data-icon="ti-table" class="w-10 h-10 rounded-lg bg-white border border-slate-200 hover:bg-brand-blueLight hover:text-brand-blueRoyal flex items-center justify-center text-lg transition"><i class="ti ti-table"></i></button>
+                  <button type="button" data-icon="ti-lamp" class="w-10 h-10 rounded-lg bg-white border border-slate-200 hover:bg-brand-blueLight hover:text-brand-blueRoyal flex items-center justify-center text-lg transition"><i class="ti ti-lamp"></i></button>
+                  <button type="button" data-icon="ti-bed" class="w-10 h-10 rounded-lg bg-white border border-slate-200 hover:bg-brand-blueLight hover:text-brand-blueRoyal flex items-center justify-center text-lg transition"><i class="ti ti-bed"></i></button>
+                  <button type="button" data-icon="ti-armchair" class="w-10 h-10 rounded-lg bg-white border border-slate-200 hover:bg-brand-blueLight hover:text-brand-blueRoyal flex items-center justify-center text-lg transition"><i class="ti ti-armchair"></i></button>
+                </div>
+              </div>
+
+              <div class="pt-4">
+                <button type="submit" class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">Simpan Kategori</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle logic
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    function toggleSubmenu(menuId, arrowId) {
+      const menu = document.getElementById(menuId);
+      const arrow = document.getElementById(arrowId);
+      if(menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        menu.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Dynamic Categories Logic
+    document.addEventListener("DOMContentLoaded", function() {
+      const categoriesList = document.getElementById('categories-list');
+      const categoryForm = document.getElementById('category-form');
+      const nameInput = document.getElementById('category-name');
+      const slugInput = document.getElementById('category-slug');
+      const parentInput = document.getElementById('category-parent');
+      const iconInput = document.getElementById('category-icon');
+      const iconSelector = document.getElementById('icon-selector');
+
+      // 1. Icon Selector micro-interaction
+      const iconBtns = iconSelector.querySelectorAll('button');
+      iconBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          iconBtns.forEach(b => {
+            b.className = "w-10 h-10 rounded-lg bg-white border border-slate-200 hover:bg-brand-blueLight hover:text-brand-blueRoyal flex items-center justify-center text-lg transition";
+          });
+          btn.className = "w-10 h-10 rounded-lg bg-white text-brand-blueRoyal border-2 border-brand-blueRoyal flex items-center justify-center text-lg transition";
+          iconInput.value = btn.getAttribute('data-icon');
+        });
+      });
+
+      // 2. Auto slug generator
+      nameInput.addEventListener('input', function() {
+        slugInput.value = nameInput.value
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-');
+      });
+
+      // 3. Render Categories Tree
+      function renderCategories() {
+        const categories = BizmateDB.getCategories();
+        const products = BizmateDB.getProducts();
+
+        categoriesList.innerHTML = '';
+        
+        // Render dropdown options
+        const parentOptionsHtml = ['<option value="" selected>Tidak Ada (Jadikan Kategori Utama)</option>'];
+
+        categories.forEach(c => {
+          // Dynamic calculation of product counts
+          const count = products.filter(p => p.category === c.name).length;
+          const displayCount = count > 0 ? count : (c.count || 0);
+
+          parentOptionsHtml.push(`<option value="${c.name}">${c.name}</option>`);
+
+          let subcategoriesHtml = '';
+          if (c.subcategories && c.subcategories.length > 0) {
+            subcategoriesHtml = `
+              <div class="pl-12 space-y-2 border-l border-slate-200 mt-2">
+                ${c.subcategories.map(sub => `
+                  <div class="flex items-center justify-between py-2 border-b border-slate-100 last:border-0 text-xs font-medium text-slate-700">
+                    <span>${sub}</span>
+                    <span class="text-slate-400">0 Produk</span>
+                  </div>
+                `).join('')}
+              </div>
+            `;
+          }
+
+          categoriesList.innerHTML += `
+            <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50 flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="text-slate-400 cursor-move"><i class="ti ti-grip-vertical text-lg"></i></span>
+                  <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blueRoyal text-xl">
+                    <i class="ti ${c.icon}"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-800">${c.name}</h4>
+                    <p class="text-[10px] text-slate-500 font-medium">Slug: ${c.slug}</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">${displayCount} Produk</span>
+                  <button class="p-1 hover:text-brand-blueRoyal"><i class="ti ti-edit"></i></button>
+                  <button onclick="deleteCategory('${c.slug}')" class="p-1 hover:text-red-500"><i class="ti ti-trash"></i></button>
+                </div>
+              </div>
+              ${subcategoriesHtml}
+            </div>
+          `;
+        });
+
+        // Update parent select
+        parentInput.innerHTML = parentOptionsHtml.join('');
+      }
+
+      // 4. Create Toast Notification
+      function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = `fixed top-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 transform translate-y-2 opacity-0 font-sans`;
+        toast.innerHTML = `
+          <i class="ti ti-circle-check text-emerald-400 text-xl"></i>
+          <div>
+            <p class="text-xs font-black text-white font-outfit uppercase tracking-wider">Berhasil</p>
+            <p class="text-[11px] text-slate-400 font-medium mt-0.5">${message}</p>
+          </div>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 100);
+        setTimeout(() => {
+          toast.classList.add('translate-y-2', 'opacity-0');
+          setTimeout(() => toast.remove(), 300);
+        }, 2500);
+      }
+
+      // 5. Submit Form
+      categoryForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = nameInput.value.trim();
+        const slug = slugInput.value.trim();
+        const parent = parentInput.value;
+        const icon = iconInput.value;
+
+        if (parent) {
+          // If subcategory, add to parent
+          const categories = BizmateDB.getCategories();
+          const pIdx = categories.findIndex(c => c.name === parent);
+          if (pIdx !== -1) {
+            if (!categories[pIdx].subcategories) {
+              categories[pIdx].subcategories = [];
+            }
+            categories[pIdx].subcategories.push(name);
+            localStorage.setItem('bizmate_categories', JSON.stringify(categories));
+          }
+        } else {
+          // Add as parent category
+          BizmateDB.saveCategory({ name, slug, icon });
+        }
+
+        showToast(`Kategori '${name}' berhasil disimpan!`);
+        categoryForm.reset();
+        
+        // Reset icon selector active
+        iconBtns.forEach((b, i) => {
+          b.className = i === 0 
+            ? "w-10 h-10 rounded-lg bg-white text-brand-blueRoyal border-2 border-brand-blueRoyal flex items-center justify-center text-lg transition"
+            : "w-10 h-10 rounded-lg bg-white border border-slate-200 hover:bg-brand-blueLight hover:text-brand-blueRoyal flex items-center justify-center text-lg transition";
+        });
+        iconInput.value = 'ti-sofa';
+
+        renderCategories();
+      });
+
+      // 6. Delete Category
+      window.deleteCategory = function(slug) {
+        if (confirm('Apakah Anda yakin ingin menghapus kategori ini?')) {
+          BizmateDB.deleteCategory(slug);
+          showToast('Kategori berhasil dihapus!');
+          renderCategories();
+        }
+      };
+
+      // Initial Render
+      renderCategories();
+    });
+  </script>
+
+</body>
+</html>

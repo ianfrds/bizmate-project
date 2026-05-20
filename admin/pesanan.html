@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Daftar Pesanan</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Shared LocalStorage Database -->
+  <script src="js/database.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #f8fafc; color: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #475569; }
+    .table-row-hover:hover { background-color: #f8fafc; }
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(12, 76, 180, 0.15) 0%, transparent 100%);
+      color: #ffffff;
+      border-left: 3px solid #3b82f6;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
+    
+    <!-- Logo Area -->
+    <div class="h-20 flex items-center justify-between px-6 border-b border-white/10 shrink-0">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white shadow-lg shadow-brand-blueRoyal/30 transform group-hover:scale-105 transition">
+          <i class="ti ti-sofa text-xl"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-outfit font-extrabold text-xl text-white tracking-tight leading-none">
+            biz<span class="text-brand-blueRoyal">mate</span>
+          </span>
+          <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Admin Console</span>
+        </div>
+      </a>
+      <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:text-white transition">
+        <i class="ti ti-x text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="flex-grow overflow-y-auto custom-scrollbar py-6 px-4 space-y-8">
+      
+      <!-- Core -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
+        <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-layout-dashboard text-lg"></i>
+          Dashboard
+        </a>
+        <a href="keuangan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-chart-pie text-lg"></i>
+          Keuangan
+        </a>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Store Management</p>
+        
+        <!-- Pesanan Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-pesanan', 'arrow-pesanan')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg nav-item active text-sm font-semibold text-white transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-shopping-cart text-lg text-blue-400"></i>
+              Pesanan
+            </div>
+            <i id="arrow-pesanan" class="ti ti-chevron-down text-sm transition-transform rotate-180"></i>
+          </button>
+          <div id="sub-pesanan" class="pl-11 pr-4 py-1 space-y-1">
+            <a href="pesanan.html" class="flex items-center gap-2 py-2 text-[13px] font-bold text-white transition">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)] animate-pulse"></span>
+              Daftar Pesanan
+            </a>
+          </div>
+        </div>
+
+        <!-- Produk Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-produk', 'arrow-produk')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-box text-lg"></i>
+              Produk
+            </div>
+            <i id="arrow-produk" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-produk" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Semua Produk</a>
+            <a href="kategori.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Kategori</a>
+            <a href="tambah-produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Tambah Produk <span class="ml-2 px-1.5 py-0.5 bg-blue-500/20 text-blue-400 rounded-[4px] text-[9px] font-bold">NEW</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Data & System -->
+      <div class="space-y-1">
+        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">System & Config</p>
+        
+        <!-- Master Data Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-master', 'arrow-master')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-database text-lg"></i>
+              Master Data
+            </div>
+            <i id="arrow-master" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-master" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="customer.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Customer</a>
+            <a href="admin-users.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Admin Users</a>
+          </div>
+        </div>
+
+        <!-- Konten Dropdown -->
+        <div class="space-y-0.5">
+          <button onclick="toggleSubmenu('sub-konten', 'arrow-konten')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
+            <div class="flex items-center gap-3">
+              <i class="ti ti-layout-kanban text-lg"></i>
+              Konten (CMS)
+            </div>
+            <i id="arrow-konten" class="ti ti-chevron-down text-sm transition-transform"></i>
+          </button>
+          <div id="sub-konten" class="hidden pl-11 pr-4 py-1 space-y-1">
+            <a href="landing-page.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Landing Page</a>
+          </div>
+        </div>
+
+        <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
+          <i class="ti ti-settings text-lg"></i>
+          Pengaturan
+        </a>
+      </div>
+
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-4 border-t border-white/10 shrink-0">
+      <div class="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blueRoyal to-purple-600 p-0.5">
+          <img src="https://ui-avatars.com/api/?name=Admin+Utama&background=0D8ABC&color=fff" alt="Avatar" class="w-full h-full rounded-full border-2 border-brand-sidebar object-cover">
+        </div>
+        <div class="flex-grow overflow-hidden">
+          <p class="text-sm font-bold text-white truncate">Admin Utama</p>
+          <p class="text-[11px] text-slate-500 font-medium truncate">superadmin@bizmate.id</p>
+        </div>
+        <i class="ti ti-selector text-slate-500"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-72 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <h2 class="font-black text-xl text-slate-800 leading-tight font-outfit hidden sm:block">Manajemen Pesanan</h2>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+        <button class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition">
+          <i class="ti ti-download"></i> Export Data
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-6">
+      
+      <!-- Metrics Overview -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Pesanan Baru</p>
+          <p id="orders-new" class="text-2xl font-black text-slate-800">24</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Siap Dikirim</p>
+          <p id="orders-ready" class="text-2xl font-black text-amber-600">12</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Dalam Pengiriman</p>
+          <p id="orders-shipping" class="text-2xl font-black text-brand-blueRoyal">45</p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Selesai (Bulan Ini)</p>
+          <p id="orders-completed" class="text-2xl font-black text-emerald-600">892</p>
+        </div>
+      </div>
+
+      <!-- Advanced Data Table -->
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-card flex flex-col">
+        
+        <!-- Filters Bar -->
+        <div class="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-50/50 rounded-t-3xl">
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="relative w-full sm:w-64">
+              <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input id="search-input" type="text" placeholder="Cari Order ID, Nama, Email..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
+            </div>
+          </div>
+          <div class="flex gap-2 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-2 sm:pb-0">
+            <select id="filter-payment" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+              <option>Semua Status Pembayaran</option>
+              <option>Paid</option>
+              <option>Pending</option>
+              <option>Failed</option>
+            </select>
+            <select id="filter-shipping" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+              <option>Semua Status Pengiriman</option>
+              <option>Unfulfilled</option>
+              <option>Shipped</option>
+              <option>Delivered</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto flex-grow">
+          <table class="w-full text-left border-collapse min-w-[1000px]">
+            <thead>
+              <tr class="bg-white">
+                <th class="px-6 py-4 w-12 border-b border-slate-100"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal"></th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Order ID</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Customer & Tanggal</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Produk</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Pembayaran</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Status</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body" class="text-sm text-slate-700 divide-y divide-slate-100">
+              
+              <tr class="table-row-hover transition cursor-pointer">
+                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+                <td class="px-6 py-4 font-outfit font-black text-slate-800">#ORD-9021</td>
+                <td class="px-6 py-4">
+                  <p class="font-bold text-slate-800">Ahmad Subagyo</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">19 Mei 2026, 14:30 WIB</p>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex -space-x-2">
+                    <img class="w-8 h-8 rounded-full border-2 border-white object-cover bg-slate-100" src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=100&q=80">
+                    <img class="w-8 h-8 rounded-full border-2 border-white object-cover bg-slate-100" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=100&q=80">
+                  </div>
+                  <p class="text-[10px] font-bold text-slate-400 mt-1">2 Items</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider mb-1 block w-max"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Paid</span>
+                  <p class="text-[10px] text-slate-400 font-bold">Transfer BCA</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider"><i class="ti ti-package text-xs"></i> Unfulfilled</span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <p class="font-black text-slate-800">Rp 1.899.000</p>
+                </td>
+              </tr>
+
+              <tr class="table-row-hover transition cursor-pointer">
+                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+                <td class="px-6 py-4 font-outfit font-black text-slate-800">#ORD-9020</td>
+                <td class="px-6 py-4">
+                  <p class="font-bold text-slate-800">Diana Maharani</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">18 Mei 2026, 11:15 WIB</p>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex -space-x-2">
+                    <img class="w-8 h-8 rounded-full border-2 border-white object-cover bg-slate-100" src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=100&q=80">
+                  </div>
+                  <p class="text-[10px] font-bold text-slate-400 mt-1">1 Item</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider mb-1 block w-max"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Paid</span>
+                  <p class="text-[10px] text-slate-400 font-bold">Credit Card</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-brand-blueLight text-brand-blueRoyal text-[10px] font-bold uppercase tracking-wider"><i class="ti ti-truck-delivery text-xs"></i> Shipped</span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <p class="font-black text-slate-800">Rp 4.500.000</p>
+                </td>
+              </tr>
+              
+              <tr class="table-row-hover transition cursor-pointer">
+                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+                <td class="px-6 py-4 font-outfit font-black text-slate-800">#ORD-9019</td>
+                <td class="px-6 py-4">
+                  <p class="font-bold text-slate-800">Budi Kurniawan</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">18 Mei 2026, 09:45 WIB</p>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex -space-x-2">
+                    <img class="w-8 h-8 rounded-full border-2 border-white object-cover bg-slate-100" src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=100&q=80">
+                  </div>
+                  <p class="text-[10px] font-bold text-slate-400 mt-1">1 Item</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider mb-1 block w-max"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pending</span>
+                  <p class="text-[10px] text-slate-400 font-bold">Virtual Account</p>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider"><i class="ti ti-clock-pause text-xs"></i> Awaiting</span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <p class="font-black text-slate-800">Rp 850.000</p>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="p-6 border-t border-slate-100 flex items-center justify-between">
+          <p class="text-xs font-bold text-slate-400">Menampilkan 1 - 10 dari 1,204 Pesanan</p>
+          <div class="flex items-center gap-2">
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition"><i class="ti ti-chevron-left"></i></button>
+            <button class="w-8 h-8 rounded-lg bg-brand-blueRoyal text-white font-bold text-xs shadow">1</button>
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 font-bold text-xs transition">2</button>
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 font-bold text-xs transition">3</button>
+            <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition"><i class="ti ti-chevron-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle logic
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    function toggleSubmenu(menuId, arrowId) {
+      const menu = document.getElementById(menuId);
+      const arrow = document.getElementById(arrowId);
+      if(menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        menu.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Dynamic Orders Table
+    document.addEventListener("DOMContentLoaded", function() {
+      const tbody = document.getElementById('orders-table-body');
+      const searchInput = document.getElementById('search-input');
+      const filterPayment = document.getElementById('filter-payment');
+      const filterShipping = document.getElementById('filter-shipping');
+
+      function renderOrders() {
+        const orders = BizmateDB.getOrders();
+        
+        // 1. Calculate Metrics
+        let newCount = 0;
+        let readyCount = 0;
+        let shippingCount = 0;
+        let completedCount = 0;
+
+        orders.forEach(o => {
+          if (o.paymentStatus === 'Pending') newCount++;
+          if (o.paymentStatus === 'Paid' && o.shippingStatus === 'Unfulfilled') readyCount++;
+          if (o.shippingStatus === 'Shipped') shippingCount++;
+          if (o.shippingStatus === 'Delivered') completedCount++;
+        });
+
+        // Seeded base metrics
+        document.getElementById('orders-new').textContent = newCount + 12;
+        document.getElementById('orders-ready').textContent = readyCount + 8;
+        document.getElementById('orders-shipping').textContent = shippingCount + 22;
+        document.getElementById('orders-completed').textContent = completedCount + 814;
+
+        // 2. Filter Orders
+        const query = searchInput.value.toLowerCase().trim();
+        const payStatus = filterPayment.value;
+        const shipStatus = filterShipping.value;
+
+        let filtered = orders.filter(o => {
+          const displayCustomer = o.customer || o.customerName || '';
+          const displayEmail = o.email || o.customerEmail || '';
+          const matchQuery = o.id.toLowerCase().includes(query) || displayCustomer.toLowerCase().includes(query) || displayEmail.toLowerCase().includes(query);
+          const matchPay = payStatus === 'Semua Status Pembayaran' || o.paymentStatus === payStatus;
+          const matchShip = shipStatus === 'Semua Status Pengiriman' || o.shippingStatus === shipStatus;
+
+          return matchQuery && matchPay && matchShip;
+        });
+
+        // 3. Render HTML
+        tbody.innerHTML = '';
+        if (filtered.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="px-6 py-12 text-center text-slate-400 font-medium">
+                <i class="ti ti-receipt-off text-4xl block mb-2 opacity-50"></i>
+                Tidak ada pesanan ditemukan.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        filtered.forEach(o => {
+          // Status styling
+          let payBadge = '';
+          if (o.paymentStatus === 'Paid') {
+            payBadge = `bg-emerald-50 text-emerald-600 border-emerald-200`;
+          } else if (o.paymentStatus === 'Pending') {
+            payBadge = `bg-amber-50 text-amber-600 border-amber-200`;
+          } else {
+            payBadge = `bg-rose-50 text-rose-600 border-rose-200`;
+          }
+
+          let shipBadge = '';
+          if (o.shippingStatus === 'Delivered') {
+            shipBadge = `bg-emerald-50 text-emerald-600 border-emerald-200`;
+          } else if (o.shippingStatus === 'Shipped') {
+            shipBadge = `bg-brand-blueLight text-brand-blueRoyal border-brand-blueRoyal/20`;
+          } else {
+            shipBadge = `bg-slate-100 text-slate-600 border-slate-200`;
+          }
+
+          // Image stack
+          let imagesStackHtml = '';
+          if (o.items && o.items.length > 0) {
+            imagesStackHtml = o.items.map((item, idx) => {
+              // Find product image if available
+              const imgUrl = item.image || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=100&q=80';
+              return `<img class="w-8 h-8 rounded-full border-2 border-white object-cover bg-slate-100" src="${imgUrl}" title="${item.name} x${item.qty || item.quantity}">`;
+            }).join('');
+          } else {
+            imagesStackHtml = `<img class="w-8 h-8 rounded-full border-2 border-white object-cover bg-slate-100" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=100&q=80">`;
+          }
+
+          const productNames = o.items ? o.items.map(item => `${item.name} (${item.qty || item.quantity}x)`).join(', ') : 'Produk Rumah';
+          const displayCustomer = o.customer || o.customerName || 'Unknown Customer';
+          const displayAmount = o.amount || o.total || 0;
+
+          tbody.innerHTML += `
+            <tr class="table-row-hover transition">
+              <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+              <td class="px-6 py-4 font-outfit font-black text-slate-800">${o.id}</td>
+              <td class="px-6 py-4">
+                <p class="font-bold text-slate-800">${displayCustomer}</p>
+                <p class="text-[11px] text-slate-500 mt-0.5">${o.date}</p>
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="flex -space-x-2 shrink-0">
+                    ${imagesStackHtml}
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-xs font-semibold text-slate-600 truncate max-w-[200px]" title="${productNames}">${productNames}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <select onchange="updatePayment('${o.id}', this.value)" class="text-[10px] font-bold py-1 px-2 border rounded-lg focus:outline-none ${payBadge}">
+                  <option value="Paid" ${o.paymentStatus === 'Paid' ? 'selected' : ''}>Paid</option>
+                  <option value="Pending" ${o.paymentStatus === 'Pending' ? 'selected' : ''}>Pending</option>
+                  <option value="Failed" ${o.paymentStatus === 'Failed' ? 'selected' : ''}>Failed</option>
+                </select>
+              </td>
+              <td class="px-6 py-4">
+                <select onchange="updateShipping('${o.id}', this.value)" class="text-[10px] font-bold py-1 px-2 border rounded-lg focus:outline-none ${shipBadge}">
+                  <option value="Unfulfilled" ${o.shippingStatus === 'Unfulfilled' ? 'selected' : ''}>Unfulfilled</option>
+                  <option value="Shipped" ${o.shippingStatus === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                  <option value="Delivered" ${o.shippingStatus === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                </select>
+              </td>
+              <td class="px-6 py-4 font-black text-slate-800 text-right">Rp ${displayAmount.toLocaleString('id-ID')}</td>
+            </tr>
+          `;
+        });
+      }
+
+      // Event listeners
+      searchInput.addEventListener('input', renderOrders);
+      filterPayment.addEventListener('change', renderOrders);
+      filterShipping.addEventListener('change', renderOrders);
+
+      // Status updates
+      window.updatePayment = function(orderId, newStatus) {
+        BizmateDB.updateOrderPayment(orderId, newStatus);
+        renderOrders();
+      };
+
+      window.updateShipping = function(orderId, newStatus) {
+        BizmateDB.updateOrderShipping(orderId, newStatus);
+        renderOrders();
+      };
+
+      // Initial Render
+      renderOrders();
+    });
+  </script>
+
+</body>
+</html>

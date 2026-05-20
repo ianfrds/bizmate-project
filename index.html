@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate Showcase Hub - Pilih Opsi Desain E-Commerce</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#1161F5',        // Royal Blue (Opsi 1)
+              blueRoyal: '#0c4cb4',   // Deep Blue (Opsi 2)
+              accentBlue: '#2563eb',  // Electric Blue (Opsi 3)
+              orangeHighlight: '#f97316', // Orange Accent (Opsi 4)
+              light: '#f8fafc',
+              dark: '#0f172a'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between py-12 px-4 sm:px-6 lg:px-8">
+
+  <!-- MAIN CONTAINER -->
+  <div class="max-w-7xl mx-auto w-full space-y-12 my-auto">
+    
+    <!-- Simple Header -->
+    <div class="text-center space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/5 border border-brand-blue/10 text-xs font-bold tracking-widest text-brand-blue uppercase font-outfit">
+        Bizmate Design Hub
+      </div>
+      <h1 class="font-outfit font-black text-3xl sm:text-4xl md:text-5xl tracking-tighter text-brand-dark leading-none">
+        Pilih Desain E-Commerce
+      </h1>
+      <p class="text-slate-500 text-xs sm:text-sm max-w-lg mx-auto font-normal leading-relaxed">
+        Silakan pilih salah satu konsep antarmuka Bizmate di bawah ini yang paling sesuai dengan kebutuhan produk Anda.
+      </p>
+      <div class="pt-2">
+        <a href="admin/index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-full text-sm font-bold transition shadow-xl shadow-slate-900/20 font-outfit tracking-wide">
+          <i class="ti ti-device-laptop text-lg"></i>
+          Masuk ke Admin Console
+        </a>
+      </div>
+    </div>
+
+    <!-- Simple Hub Cards Grid (4 Columns) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- CARD OPSI 1 -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-brand-blue/30 transition-all duration-300">
+        <div class="space-y-4">
+          <!-- Icon & Color Tag -->
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-brand-blue/5 flex items-center justify-center text-brand-blue border border-brand-blue/10">
+              <i class="ti ti-shirt text-xl"></i>
+            </div>
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#1161F5]" title="Royal Blue"></span>
+              <span class="w-3 h-3 rounded-full bg-[#DBE2E8]" title="Light Grey"></span>
+              <span class="w-3 h-3 rounded-full bg-[#131415]" title="Dark"></span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] font-bold text-brand-blue font-outfit uppercase tracking-widest block">Konsep 1</span>
+            <h3 class="font-outfit font-bold text-lg text-brand-dark">Bizmate Fashion Catalog</h3>
+            <p class="text-xs text-slate-500 font-light leading-relaxed">
+              E-commerce pakaian dengan tampilan modern, bersih, minimalis, dan animasi laci keranjang belanja premium.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <a href="opsi 1/index.html" class="w-full py-3 bg-brand-blue hover:bg-blue-600 text-white font-bold rounded-xl text-xs transition duration-205 flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider shadow-sm">
+            Buka Opsi 1
+            <i class="ti ti-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- CARD OPSI 2 -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-brand-blueRoyal/30 transition-all duration-300">
+        <div class="space-y-4">
+          <!-- Icon & Color Tag -->
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-brand-blueRoyal/5 flex items-center justify-center text-brand-blueRoyal border border-brand-blueRoyal/10">
+              <i class="ti ti-shirt text-xl"></i>
+            </div>
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#0c4cb4]" title="Blue Royal"></span>
+              <span class="w-3 h-3 rounded-full bg-[#0f172a]" title="Dark Slate"></span>
+              <span class="w-3 h-3 rounded-full bg-[#f8fafc]" title="Light White"></span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] font-bold text-brand-blueRoyal font-outfit uppercase tracking-widest block">Konsep 2</span>
+            <h3 class="font-outfit font-bold text-lg text-brand-dark">Bizmate Fashion Retail</h3>
+            <p class="text-xs text-slate-500 font-light leading-relaxed">
+              E-commerce pakaian UMKM dengan menu kategori di sidebar kiri, layout departemen terstruktur, dan font berukuran besar.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <a href="opsi 2/index.html" class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition duration-205 flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider shadow-sm">
+            Buka Opsi 2
+            <i class="ti ti-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- CARD OPSI 3 -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-brand-accentBlue/30 transition-all duration-300">
+        <div class="space-y-4">
+          <!-- Icon & Color Tag -->
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-brand-accentBlue/5 flex items-center justify-center text-brand-accentBlue border border-brand-accentBlue/10">
+              <i class="ti ti-crown text-xl"></i>
+            </div>
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#0c4cb4]" title="Blue Royal"></span>
+              <span class="w-3 h-3 rounded-full bg-[#2563eb]" title="Electric Blue"></span>
+              <span class="w-3 h-3 rounded-full bg-[#f8fafc]" title="Light White"></span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] font-bold text-brand-accentBlue font-outfit uppercase tracking-widest block">Konsep 3</span>
+            <h3 class="font-outfit font-bold text-lg text-brand-dark">Bizmate Fashion Boutique</h3>
+            <p class="text-xs text-slate-500 font-light leading-relaxed">
+              E-commerce butik pakaian UMKM eksklusif dengan spanduk bento modern, menu minimalis, dan bar filter kategori horizontal.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <a href="opsi 3/index.html" class="w-full py-3 bg-brand-accentBlue hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition duration-205 flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider shadow-sm">
+            Buka Opsi 3
+            <i class="ti ti-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- CARD OPSI 4 (NEW HYBRID) -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md hover:border-brand-orangeHighlight/30 transition-all duration-300 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-brand-orangeHighlight/10 to-transparent rounded-bl-full pointer-events-none transition-transform duration-300 group-hover:scale-110"></div>
+        <div class="space-y-4">
+          <!-- Icon & Color Tag -->
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-brand-orangeHighlight/5 flex items-center justify-center text-brand-orangeHighlight border border-brand-orangeHighlight/10">
+              <i class="ti ti-sparkles text-xl"></i>
+            </div>
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#0c4cb4]" title="Deep Royal Blue"></span>
+              <span class="w-3 h-3 rounded-full bg-[#f97316]" title="Orange Highlight"></span>
+              <span class="w-3 h-3 rounded-full bg-[#f8fafc]" title="Slate Light"></span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] font-bold text-brand-orangeHighlight font-outfit uppercase tracking-widest block flex items-center gap-1">
+              Konsep 4 <span class="bg-brand-orangeHighlight/10 text-brand-orangeHighlight px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase animate-pulse">Baru</span>
+            </span>
+            <h3 class="font-outfit font-bold text-lg text-brand-dark">Bizmate Hybrid Premium</h3>
+            <p class="text-xs text-slate-500 font-light leading-relaxed">
+              Konsep visual premium Opsi 2 (Deep Royal Blue) yang menyatukan katalog fashion lengkap, grid 10 kategori (show/hide), & detail varian ganda.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <a href="opsi 4/index.html" class="w-full py-3 bg-brand-orangeHighlight hover:bg-orange-600 text-white font-bold rounded-xl text-xs transition duration-205 flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider shadow-sm">
+            Buka Opsi 4
+            <i class="ti ti-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WEB ADMIN LINK SECTION -->
+    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 rounded-3xl p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl relative overflow-hidden group">
+      <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="space-y-2 text-center md:text-left z-10">
+        <span class="text-[10px] font-black text-blue-400 font-outfit uppercase tracking-widest block">Manajemen E-Commerce</span>
+        <h2 class="font-outfit font-extrabold text-2xl text-white tracking-tight">Console Web Admin Bizmate</h2>
+        <p class="text-slate-400 text-sm max-w-xl font-normal leading-relaxed">
+          Kelola katalog produk, pantau metrik analitik tren pendapatan, dan kelola status transaksi pesanan pelanggan secara terpusat.
+        </p>
+      </div>
+      <div class="z-10 w-full md:w-auto shrink-0">
+        <a href="admin/index.html" class="w-full md:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl text-sm transition duration-200 flex items-center justify-center gap-3 font-outfit uppercase tracking-wider shadow-lg shadow-blue-500/20">
+          <i class="ti ti-settings text-lg"></i>
+          Buka Web Admin
+          <i class="ti ti-arrow-right text-sm"></i>
+        </a>
+      </div>
+    </div>
+
+  <!-- Simple Footer -->
+  <footer class="text-center text-[10px] text-slate-400 mt-12 font-outfit uppercase tracking-wider">
+    &copy; 2026 Bizmate Showcase Lab. Seluruh Hak Cipta Dilindungi.
+  </footer>
+
+</body>
+</html>

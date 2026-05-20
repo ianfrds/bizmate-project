@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Detail Mebel Furnitur</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Tabler Icons CSS Webfont -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4', // Deep Blue brand primary
+              blueDark: '#08337a',
+              orangeAccent: '#f97316', // Highlighting from template
+              orangeHover: '#ea580c',
+              slateLight: '#f8fafc',
+              slateBorder: '#e2e8f0',
+              slateDark: '#0f172a'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          boxShadow: {
+            'premium': '0 8px 30px rgba(12, 76, 180, 0.04)',
+            'premium-hover': '0 20px 40px rgba(12, 76, 180, 0.08)',
+            'card': '0 4px 20px rgba(15, 23, 42, 0.02)',
+            'card-hover': '0 12px 30px rgba(15, 23, 42, 0.05)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #ffffff;
+      color: #0f172a;
+    }
+
+    .font-outfit {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .hover-scale {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hover-scale:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col relative overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== 1. TOP BAR ==================== -->
+  <div
+    class="bg-brand-blueRoyal text-white text-[11px] py-2 px-4 sm:px-6 border-b border-white/10 font-outfit uppercase tracking-wider font-semibold">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div>🚀 Dapatkan Bebas Ongkir Se-Indonesia dengan minimal belanja Rp 150.000!</div>
+      <div class="flex items-center gap-4 text-white/90">
+        <a href="#" class="hover:text-brand-orangeAccent transition">Hubungi CS</a>
+        <span>|</span>
+        <a href="index.html#faq" class="hover:text-brand-orangeAccent transition">Pertanyaan (FAQ)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. HEADER ==================== -->
+  <header class="bg-white border-b border-brand-slateBorder py-4 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2 shrink-0 group">
+        <div
+          class="w-10 h-10 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white font-outfit font-black text-xl shadow-md transform group-hover:scale-105 transition duration-300">
+          <i class="ti ti-sofa"></i>
+        </div>
+        <span class="font-outfit font-extrabold text-2xl tracking-tighter text-brand-slateDark">
+          biz<span class="text-brand-orangeAccent">mate</span>
+        </span>
+      </a>
+
+      <!-- Search Box -->
+      <div class="hidden md:flex items-center flex-grow max-w-xl relative">
+        <div
+          class="flex w-full items-center border border-brand-slateBorder bg-brand-slateLight rounded-xl overflow-hidden focus-within:border-brand-blueRoyal focus-within:bg-white transition-all">
+          <input id="header-search-input" onkeyup="handleQuickSearch(this.value)" type="text"
+            placeholder="Cari kursi sofa, meja makan, lampu estetik..."
+            class="w-full pl-4 pr-10 py-3 text-xs text-brand-slateDark bg-transparent focus:outline-none font-medium">
+          <button onclick="triggerSearch()"
+            class="px-6 py-3.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-extrabold text-[10px] transition shrink-0 uppercase tracking-wider font-outfit">
+            Cari
+          </button>
+        </div>
+
+        <!-- Suggestions dropdown -->
+        <div id="quick-search-card"
+          class="hidden absolute top-14 left-0 right-0 bg-white rounded-2xl border border-brand-slateBorder shadow-2xl p-4 z-50 max-h-80 overflow-y-auto space-y-3">
+          <p class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-wider font-outfit">Hasil Pencarian
+            Cepat</p>
+          <div id="suggestions-container" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Action Widgets -->
+      <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+        <!-- Wishlist -->
+        <button
+          class="relative p-2.5 bg-brand-slateLight hover:bg-brand-slateBorder text-brand-slateDark rounded-full transition">
+          <i class="ti ti-heart text-lg"></i>
+        </button>
+
+        <!-- Cart Trigger widget -->
+        <div onclick="toggleCartDrawer(true)" class="flex items-center gap-3 cursor-pointer group">
+          <div
+            class="relative w-10 h-10 rounded-full bg-brand-slateLight flex items-center justify-center text-brand-slateDark group-hover:text-brand-blueRoyal group-hover:bg-brand-slateBorder transition duration-300">
+            <i class="ti ti-shopping-cart text-lg"></i>
+            <span id="cart-badge"
+              class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-brand-orangeAccent text-white font-extrabold text-[10px] flex items-center justify-center border-2 border-white">0</span>
+          </div>
+          <div class="text-left leading-tight hidden sm:block">
+            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Keranjang</p>
+            <p id="cart-total-price-tag" class="text-xs font-black text-brand-slateDark font-outfit">Rp 0</p>
+          </div>
+        </div>
+
+        <!-- Mobile Nav Toggle -->
+        <button onclick="toggleMobileMenu()"
+          class="p-2.5 md:hidden bg-brand-slateLight hover:bg-brand-slateBorder text-brand-slateDark transition rounded-xl">
+          <i class="ti ti-menu-2 text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== 3. NAVIGATION BAR ==================== -->
+  <nav class="bg-brand-slateLight border-b border-brand-slateBorder">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
+
+      <!-- Navigation Links -->
+      <div
+        class="flex items-center gap-8 h-full text-xs font-bold font-outfit uppercase tracking-widest text-slate-600">
+        <a href="index.html" class="hover:text-brand-blueRoyal transition py-3">Beranda</a>
+        <a href="produk.html" class="hover:text-brand-blueRoyal transition py-3">Semua Produk</a>
+        <a href="produk.html?cat=Kursi%20%26%20Sofa" class="hover:text-brand-blueRoyal transition py-3">Kursi & Sofa</a>
+        <a href="produk.html?cat=Meja%20%26%20Rak" class="hover:text-brand-blueRoyal transition py-3">Meja & Rak</a>
+        <a href="produk.html?cat=Lampu%20%26%20Dekorasi" class="hover:text-brand-blueRoyal transition py-3">Lampu &
+          Dekorasi</a>
+        <a href="produk.html?cat=Kasur%20%26%20Kamar" class="hover:text-brand-blueRoyal transition py-3">Kasur &
+          Kamar</a>
+      </div>
+
+      <!-- Hotline widget on right -->
+      <div class="hidden xl:flex items-center gap-2 text-brand-slateDark font-outfit text-xs font-extrabold">
+        <i class="ti ti-phone-call text-base text-brand-orangeAccent"></i>
+        <span>Hotline: 0800-1-BIZMATE</span>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div id="mobile-menu"
+      class="hidden md:hidden border-t border-brand-slateBorder bg-white px-4 py-4 space-y-2 shadow-lg">
+      <a href="index.html"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Beranda</a>
+      <a href="produk.html"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Semua
+        Produk</a>
+      <a href="produk.html?cat=Kursi%20%26%20Sofa"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Kursi &
+        Sofa</a>
+      <a href="produk.html?cat=Meja%20%26%20Rak"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Meja &
+        Rak</a>
+      <a href="produk.html?cat=Lampu%20%26%20Dekorasi"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Lampu &
+        Dekorasi</a>
+      <a href="produk.html?cat=Kasur%20%26%20Kamar"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Kasur &
+        Kamar</a>
+    </div>
+  </nav>
+
+  <!-- ==================== BREADCRUMBS ==================== -->
+  <nav
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs font-semibold text-slate-400 font-outfit border-b border-brand-slateBorder/40">
+    <div class="flex items-center gap-2 flex-wrap">
+      <a href="index.html" class="hover:text-brand-blueRoyal transition">Beranda</a>
+      <i class="ti ti-chevron-right text-[10px]"></i>
+      <a href="produk.html" class="hover:text-brand-blueRoyal transition">Katalog Mebel</a>
+      <i class="ti ti-chevron-right text-[10px]"></i>
+      <span id="breadcrumb-active" class="text-brand-slateDark font-black">Detail Produk</span>
+    </div>
+  </nav>
+
+  <!-- ==================== PRODUCT DETAILS BLOCK ==================== -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+      <!-- Left Column: Product Image Big view -->
+      <div class="space-y-4">
+        <div
+          class="w-full h-[400px] sm:h-[500px] bg-brand-slateLight border border-brand-slateBorder/60 rounded-3xl overflow-hidden flex items-center justify-center p-6 relative group">
+          <img id="detail-image" src="" alt=""
+            class="max-h-full max-w-full object-contain rounded-2xl transition duration-500 transform group-hover:scale-105">
+        </div>
+      </div>
+
+      <!-- Right Column: Mebel Details specifications and actions -->
+      <div class="space-y-6">
+
+        <div class="space-y-2">
+          <span id="detail-category"
+            class="px-3 py-1 rounded bg-brand-blueRoyal/5 text-brand-blueRoyal text-[10px] font-black uppercase tracking-widest font-outfit">KATEGORI</span>
+          <h1 id="detail-name" class="font-outfit font-black text-2xl sm:text-3xl text-brand-slateDark mt-2">Nama
+            Furnitur</h1>
+
+          <div class="flex items-center gap-2.5 py-1">
+            <div class="flex text-brand-orangeAccent text-xs">
+              <i class="ti ti-star-filled"></i>
+            </div>
+            <span id="detail-rating" class="text-xs font-black text-brand-slateDark">4.8</span>
+            <span class="text-xs text-slate-350">|</span>
+            <span id="detail-reviews" class="text-xs text-slate-400 font-medium">100+ Ulasan Sukses</span>
+          </div>
+        </div>
+
+        <div class="p-5 bg-brand-slateLight rounded-2xl border border-brand-slateBorder/60 space-y-1.5">
+          <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest block font-outfit">Harga
+            Terbaik</span>
+          <div class="flex items-baseline gap-3">
+            <span id="detail-price-final" class="font-outfit font-black text-2xl text-brand-orangeAccent">Rp 0</span>
+            <span id="detail-price-original" class="text-sm text-slate-400 line-through font-light hidden">Rp 0</span>
+          </div>
+        </div>
+
+        <!-- Short Description -->
+        <p id="detail-short-desc" class="text-xs sm:text-sm text-slate-500 font-light leading-relaxed">
+          Karya mebel buatan UMKM Jepara berbahan premium dengan finishing halus, sangat kokoh dan awet digunakan untuk
+          ruang tamu atau kamar tidur Anda.
+        </p>
+
+        <!-- Variant Selector -->
+        <div class="space-y-4">
+          <div class="space-y-2">
+            <h4 class="font-bold text-xs text-brand-slateDark uppercase tracking-wider font-outfit">Pilihan Warna / Bahan</h4>
+            <div id="variant-buttons-container" class="flex gap-2.5 flex-wrap"></div>
+          </div>
+          <div class="space-y-2">
+            <h4 class="font-bold text-xs text-brand-slateDark uppercase tracking-wider font-outfit">Pilihan Ukuran / Dimensi</h4>
+            <div id="size-buttons-container" class="flex gap-2.5 flex-wrap"></div>
+          </div>
+        </div>
+
+        <!-- Quantity & Add to Cart -->
+        <div class="pt-4 border-t border-brand-slateBorder/60 space-y-4">
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+
+            <!-- Quantity counter -->
+            <div
+              class="flex items-center border border-brand-slateBorder rounded-xl bg-brand-slateLight h-12 overflow-hidden w-full sm:w-32 shrink-0">
+              <button onclick="changeQty(-1)"
+                class="w-10 h-full text-slate-500 hover:bg-brand-slateBorder flex items-center justify-center font-bold text-sm"><i
+                  class="ti ti-minus"></i></button>
+              <span id="qty-value"
+                class="flex-grow text-center text-xs font-bold text-brand-slateDark font-outfit">1</span>
+              <button onclick="changeQty(1)"
+                class="w-10 h-full text-slate-500 hover:bg-brand-slateBorder flex items-center justify-center font-bold text-sm"><i
+                  class="ti ti-plus"></i></button>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3 w-full">
+              <button onclick="handleAddCartClick()"
+                class="flex-grow py-3.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-extrabold rounded-xl text-xs transition uppercase tracking-widest font-outfit flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 h-12">
+                <i class="ti ti-shopping-cart text-base"></i>
+                + Keranjang
+              </button>
+
+              <button onclick="handleCheckoutImmediate()"
+                class="flex-grow py-3.5 bg-brand-orangeAccent hover:bg-brand-orangeHover text-white font-extrabold rounded-xl text-xs transition uppercase tracking-widest font-outfit flex items-center justify-center gap-2 shadow-lg shadow-brand-orangeAccent/10 h-12">
+                Beli Sekarang
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TABS AREA ==================== -->
+    <section class="mt-16 border-t border-brand-slateBorder pt-8 space-y-6">
+      <div
+        class="flex items-center gap-6 border-b border-brand-slateBorder/65 pb-3 text-xs font-bold font-outfit uppercase tracking-widest text-slate-400">
+        <button onclick="toggleTab('desc')" id="tab-btn-desc"
+          class="text-brand-blueRoyal pb-2 border-b-2 border-brand-orangeAccent font-black">Deskripsi</button>
+        <button onclick="toggleTab('specs')" id="tab-btn-specs"
+          class="hover:text-brand-blueRoyal transition pb-2">Spesifikasi Mebel</button>
+        <button onclick="toggleTab('reviews')" id="tab-btn-reviews"
+          class="hover:text-brand-blueRoyal transition pb-2">Ulasan Pembeli</button>
+      </div>
+
+      <!-- Tab Content: Deskripsi -->
+      <div id="tab-content-desc" class="space-y-4 text-xs sm:text-sm text-slate-500 font-light leading-relaxed">
+        <p>Bizmate selalu berkomitmen menghadirkan furnitur rumah terbaik yang ramah lingkungan dan dibuat langsung oleh
+          tangan-tangan terampil perajin kayu lokal terpercaya. Produk ini dirancang dengan penuh ketelitian estetika
+          tinggi untuk menghadirkan kenyamanan abadi di hunian impian Anda.</p>
+        <p>Setiap produk diproses secara khusus dengan teknologi antikarat dan antimikroba, dilapisi pelindung
+          berkualitas ekspor agar warnanya tahan lama, tidak mudah pudar, serta mudah dibersihkan dari debu sehari-hari.
+        </p>
+      </div>
+
+      <!-- Tab Content: Spesifikasi -->
+      <div id="tab-content-specs" class="hidden space-y-3 max-w-xl text-xs sm:text-sm text-slate-500">
+        <div class="grid grid-cols-2 py-2 border-b border-brand-slateBorder/50 font-medium">
+          <span class="text-brand-slateDark">Bahan Utama Rangka</span>
+          <span id="spec-frame" class="font-light">Kayu Solid Pilihan</span>
+        </div>
+        <div class="grid grid-cols-2 py-2 border-b border-brand-slateBorder/50 font-medium">
+          <span class="text-brand-slateDark">Pelapis / Kain</span>
+          <span id="spec-fabric" class="font-light">Kain Linen / Beludru Premium</span>
+        </div>
+        <div class="grid grid-cols-2 py-2 border-b border-brand-slateBorder/50 font-medium">
+          <span class="text-brand-slateDark">Garansi Pabrik</span>
+          <span class="font-light">30 Hari Garansi Resmi</span>
+        </div>
+        <div class="grid grid-cols-2 py-2 border-b border-brand-slateBorder/50 font-medium">
+          <span class="text-brand-slateDark">Asal Pembuatan</span>
+          <span class="font-light">Jepara / Indonesia</span>
+        </div>
+      </div>
+
+      <!-- Tab Content: Ulasan -->
+      <div id="tab-content-reviews" class="hidden space-y-6">
+        <div
+          class="flex items-center gap-4 bg-brand-slateLight p-5 rounded-2xl border border-brand-slateBorder/60 max-w-lg">
+          <div class="text-center shrink-0">
+            <h3 class="font-outfit font-black text-3xl text-brand-orangeAccent">4.9</h3>
+            <span class="text-[9px] font-bold text-slate-400 block font-outfit mt-1">DARI 5 BINTANG</span>
+          </div>
+          <div class="text-xs text-slate-500 font-light">
+            <p class="font-bold text-brand-slateDark">Kepuasan Pelanggan Sangat Tinggi</p>
+            <p class="mt-1">98% pembeli memberikan bintang 5 atas kualitas kehalusan pengerjaan kayu dan kerapihan
+              jahitan busa mebel.</p>
+          </div>
+        </div>
+
+        <div class="space-y-4 max-w-2xl font-outfit">
+          <div class="p-4 border border-brand-slateBorder rounded-2xl space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-brand-slateDark">Budi Santoso (Surabaya)</span>
+              <span class="text-slate-450">Bintang 5</span>
+            </div>
+            <p class="text-xs text-slate-500 font-light leading-relaxed">"Sumpah bagus banget sofanya empuk dan kayunya
+              beneran solid wangi jati. Bizmate emang juara mebel lokalnya!"</p>
+          </div>
+
+          <div class="p-4 border border-brand-slateBorder rounded-2xl space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-brand-slateDark">Riana Eka (Bandung)</span>
+              <span class="text-slate-450">Bintang 5</span>
+            </div>
+            <p class="text-xs text-slate-500 font-light leading-relaxed">"Warna kuning mustard-nya cantik banget sesuai
+              ekspektasi. Pengiriman cepat dan dikemas sangat tebal aman."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RELATED PRODUCTS CAROUSEL ==================== -->
+    <section class="mt-16 space-y-6 border-t border-brand-slateBorder pt-12">
+      <div class="border-b border-brand-slateBorder pb-4">
+        <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-wider font-outfit block">Pilihan
+          Serupa</span>
+        <h2 class="font-outfit font-black text-xl text-brand-slateDark">Produk Terkait</h2>
+      </div>
+
+      <div id="related-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Dynamic via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== DRAWER CART ==================== -->
+  <div id="cart-drawer-backdrop" onclick="toggleCartDrawer(false)"
+    class="fixed inset-0 bg-brand-slateDark/40 z-50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm">
+  </div>
+  <div id="cart-drawer"
+    class="fixed right-0 top-0 bottom-0 w-full sm:w-[420px] bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+
+    <div class="px-6 py-5 border-b border-brand-slateBorder flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="ti ti-shopping-cart text-xl text-brand-blueRoyal"></i>
+        <h3 class="font-outfit font-extrabold text-sm text-brand-slateDark">Keranjang Belanja</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)"
+        class="p-2 text-slate-400 hover:text-brand-slateDark rounded-full hover:bg-brand-slateLight transition">
+        <i class="ti ti-x text-base"></i>
+      </button>
+    </div>
+
+    <div class="px-6 py-4 bg-brand-slateLight border-b border-brand-slateBorder space-y-2">
+      <div
+        class="flex justify-between items-center text-[10px] font-bold text-brand-slateDark uppercase tracking-wider font-outfit">
+        <span>Bebas Ongkir</span>
+        <span id="shipping-tracker-pct" class="text-brand-blueRoyal font-black">0%</span>
+      </div>
+      <div class="w-full h-1.5 bg-brand-slateBorder rounded-full overflow-hidden">
+        <div id="shipping-tracker-bar" class="h-full bg-brand-blueRoyal rounded-full transition-all duration-500"
+          style="width: 0%;"></div>
+      </div>
+      <p id="shipping-tracker-desc" class="text-[10px] text-slate-500 font-light">Belanja Rp 150.000 lagi untuk Bebas
+        Ongkir se-Indonesia!</p>
+    </div>
+
+    <!-- Scrollable container of cart list -->
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4"></div>
+
+    <div class="px-6 py-3 border-t border-brand-slateBorder bg-brand-slateLight/40 flex gap-2">
+      <input type="text" id="cart-coupon-input" placeholder="KUPON BIZMATEBLUE..."
+        class="w-full px-3.5 py-2 rounded-xl bg-white border border-brand-slateBorder text-[10px] text-brand-slateDark focus:outline-none focus:border-brand-blueRoyal uppercase font-bold tracking-wider">
+      <button onclick="applyCoupon()"
+        class="px-4 py-2 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-[10px] transition uppercase tracking-wider font-outfit">Klaim</button>
+    </div>
+
+    <div class="p-6 border-t border-brand-slateBorder bg-brand-slateLight space-y-4">
+      <div class="space-y-1.5 text-xs text-slate-500">
+        <div class="flex items-center justify-between font-semibold">
+          <span>Subtotal Awal</span>
+          <span id="cart-original-subtotal" class="font-medium text-brand-slateDark">Rp 0</span>
+        </div>
+        <div class="flex items-center justify-between font-semibold text-red-500">
+          <span>Diskon Promo</span>
+          <span id="cart-discount-total">-Rp 0</span>
+        </div>
+        <div class="flex items-center justify-between font-semibold text-emerald-600 hidden" id="cart-coupon-row">
+          <span>Kupon Diskon (10%)</span>
+          <span id="cart-coupon-discount">-Rp 0</span>
+        </div>
+        <div
+          class="flex items-center justify-between text-sm font-semibold text-brand-slateDark border-t border-brand-slateBorder pt-2.5">
+          <span>Total Pembayaran</span>
+          <span id="cart-final-subtotal" class="text-brand-blueRoyal font-outfit text-base font-black">Rp 0</span>
+        </div>
+      </div>
+
+      <div class="pt-2 grid grid-cols-2 gap-3">
+        <button onclick="clearCart()"
+          class="w-full py-3 border border-brand-slateBorder hover:border-brand-slateDark text-brand-slateDark font-semibold rounded-xl text-xs transition uppercase font-outfit">Hapus</button>
+        <button onclick="checkout()"
+          class="w-full py-3 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-xs transition shadow flex items-center justify-center gap-1 font-outfit uppercase tracking-wider">Bayar
+          &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+  </div>
+
+  <!-- INTERACTIVE SPECIFIC SCRIPT -->
+  <script>
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: "Kursi Sofa Single Premium",
+        category: "Kursi & Sofa",
+        price: 1850000,
+        promoPrice: 1299000,
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 204,
+        variants: ["Kuning Mustard", "Abu-Abu Elegan"],
+        specs: ["Kayu Solid Pilihan", "Kain Linen Premium"]
+      },
+      {
+        id: 2,
+        name: "Meja Kopi Minimalis Jati",
+        category: "Meja & Rak",
+        price: 1200000,
+        promoPrice: 850000,
+        image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 187,
+        variants: ["Kayu Jati Alami", "Putih Marmer"],
+        specs: ["Kayu Jati Pilihan", "Top Table Marmer Sintetis"]
+      },
+      {
+        id: 3,
+        name: "Kursi Santai Telur Merah",
+        category: "Kursi & Sofa",
+        price: 2500000,
+        promoPrice: 1899000,
+        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 92,
+        variants: ["Merah Membara", "Biru Royal"],
+        specs: ["Chrome Besi Antikarat", "Kain Suede Empuk"]
+      },
+      {
+        id: 4,
+        name: "Sofa Klasik 3 Dudukan",
+        category: "Kursi & Sofa",
+        price: 3800000,
+        promoPrice: 3200000,
+        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 154,
+        variants: ["Beige Mewah", "Abu-Abu Kasual"],
+        specs: ["Kayu Solid Mahoni", "Kain Beludru Premium"]
+      },
+      {
+        id: 5,
+        name: "Kursi Sofa Biru Samudra",
+        category: "Kursi & Sofa",
+        price: 1950000,
+        promoPrice: 1499000,
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 231,
+        variants: ["Hijau Beludru", "Biru Samudra"],
+        specs: ["Kaki Kayu Solid Emas", "Kain Velvet Premium"]
+      },
+      {
+        id: 6,
+        name: "Rak Buku Minimalis Hitam",
+        category: "Meja & Rak",
+        price: 950000,
+        promoPrice: 750000,
+        image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
+        rating: 4.6,
+        reviewsCount: 68,
+        variants: ["Hitam Doff", "Putih Bersih"],
+        specs: ["Besi Powder Coating", "Kayu MDF Tebal"]
+      },
+      {
+        id: 7,
+        name: "Meja Kerja Belajar Kayu",
+        category: "Meja & Rak",
+        price: 1100000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 115,
+        variants: ["Natural Oak", "Dark Walnut"],
+        specs: ["Kayu Pinus Solid", "Rangka Besi Minimalis"]
+      },
+      {
+        id: 8,
+        name: "Lampu Tidur Stand Elegan",
+        category: "Lampu & Dekorasi",
+        price: 450000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 123,
+        variants: ["Putih Hangat", "Kuning Klasik"],
+        specs: ["Logam Chrome Antikarat", "Kain Kap Fabric"]
+      },
+      {
+        id: 9,
+        name: "Tempat Tidur Luxury King",
+        category: "Kasur & Kamar",
+        price: 5500000,
+        promoPrice: 4899000,
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 78,
+        variants: ["Putih Salju", "Abu-Abu Urban"],
+        specs: ["Kayu Mahoni Oven", "Headboard Empuk Beludru"]
+      },
+      {
+        id: 10,
+        name: "Cermin Dinding Bulat Estetik",
+        category: "Lampu & Dekorasi",
+        price: 350000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 42,
+        variants: ["Frame Emas", "Frame Hitam"],
+        specs: ["Kaca Cermin 5mm", "Aluminium Frame"]
+      },
+      {
+        id: 11,
+        name: "Tanaman Hias Monstera Palsu",
+        category: "Lampu & Dekorasi",
+        price: 199000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 110,
+        variants: ["Monstera King", "Monstera Deliciosa"],
+        specs: ["Bahan Lateks Impor", "Pot Plastik Putih"]
+      },
+      {
+        id: 12,
+        name: "Karpet Bulu Domba Lembut",
+        category: "Kasur & Kamar",
+        price: 299000,
+        promoPrice: 220000,
+        image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 89,
+        variants: ["Putih Murni", "Abu-Abu Kabut"],
+        specs: ["Bulu Microfiber Soft", "Alas Antiselip TPR"]
+      },
+      {
+        id: 13,
+        name: "Rak Dinding Gantungan Kunci",
+        category: "Lampu & Dekorasi",
+        price: 150000,
+        promoPrice: 99000,
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80",
+        rating: 4.6,
+        reviewsCount: 35,
+        variants: ["Warna Kayu", "Putih Minimalis"],
+        specs: ["Kayu Pinus Solid", "Gantungan Logam Kuningan"]
+      },
+      {
+        id: 14,
+        name: "Sofa Bed Lipat Multifungsi",
+        category: "Kursi & Sofa",
+        price: 2850000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 54,
+        variants: ["Abu-Abu Modern", "Hijau Toska"],
+        specs: ["Rangka Besi Tempa", "Busa Rebounded Densitas Tinggi"]
+      }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('bizmate_cart')) || [];
+    let currentProd = null;
+    let selectedColor = "";
+    let selectedSize = "Standar";
+    let selectedVariant = "";
+    let currentQty = 1;
+    let isCouponApplied = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Parse ID from URL query
+      const params = new URLSearchParams(window.location.search);
+      const prodId = parseInt(params.get('id'));
+
+      currentProd = PRODUCTS.find(p => p.id === prodId);
+      if (!currentProd) {
+        // Fallback to first product if invalid
+        currentProd = PRODUCTS[0];
+      }
+
+      renderProductDetails();
+      renderRelatedProducts();
+
+      window.addEventListener('storage', () => {
+        cart = JSON.parse(localStorage.getItem('bizmate_cart')) || [];
+        updateCartBadge();
+        renderCartItems();
+      });
+
+      updateCartBadge();
+      renderCartItems();
+    });
+
+    function formatIDR(val) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(val);
+    }
+
+    function renderProductDetails() {
+      if (!currentProd) return;
+
+      document.getElementById('breadcrumb-active').textContent = currentProd.name;
+      document.getElementById('detail-image').src = currentProd.image;
+      document.getElementById('detail-image').alt = currentProd.name;
+      document.getElementById('detail-name').textContent = currentProd.name;
+      document.getElementById('detail-category').textContent = currentProd.category;
+      document.getElementById('detail-rating').textContent = currentProd.rating;
+      document.getElementById('detail-reviews').textContent = `${currentProd.reviewsCount} Ulasan Sukses`;
+
+      const hasPromo = currentProd.promoPrice !== null && currentProd.promoPrice !== undefined;
+      const finalPrice = hasPromo ? currentProd.promoPrice : currentProd.price;
+
+      document.getElementById('detail-price-final').textContent = formatIDR(finalPrice);
+
+      const origPriceEl = document.getElementById('detail-price-original');
+      if (hasPromo) {
+        origPriceEl.textContent = formatIDR(currentProd.price);
+        origPriceEl.classList.remove('hidden');
+      } else {
+        origPriceEl.classList.add('hidden');
+      }
+
+      // Specs mapping
+      document.getElementById('spec-frame').textContent = currentProd.specs[0];
+      document.getElementById('spec-fabric').textContent = currentProd.specs[1];
+
+      // Variants
+      selectedColor = currentProd.variants[0];
+      selectedSize = "Standar";
+      selectedVariant = `${selectedColor} - ${selectedSize}`;
+
+      const container = document.getElementById('variant-buttons-container');
+      container.innerHTML = currentProd.variants.map((v, i) => {
+        const isSelected = v === selectedColor;
+        return `
+          <button onclick="selectColor(this, '${v}')" class="px-4 py-2 border text-xs font-bold rounded-xl transition ${isSelected ? 'border-brand-blueRoyal bg-brand-blueRoyal/5 text-brand-blueRoyal font-black shadow-sm' : 'border-brand-slateBorder hover:border-slate-400 text-slate-655'}">
+            ${v}
+          </button>
+        `;
+      }).join('');
+
+      // Sizes / Dimensi
+      const sizeContainer = document.getElementById('size-buttons-container');
+      const sizes = ["Standar", "Premium (Besar)", "Kustom"];
+      sizeContainer.innerHTML = sizes.map((s, i) => {
+        const isSelected = s === selectedSize;
+        return `
+          <button onclick="selectSize(this, '${s}')" class="px-4 py-2 border text-xs font-bold rounded-xl transition ${isSelected ? 'border-brand-blueRoyal bg-brand-blueRoyal/5 text-brand-blueRoyal font-black shadow-sm' : 'border-brand-slateBorder hover:border-slate-400 text-slate-655'}">
+            ${s}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectColor(el, val) {
+      selectedColor = val;
+      selectedVariant = `${selectedColor} - ${selectedSize}`;
+
+      // Reset siblings styles
+      const btns = el.parentNode.querySelectorAll('button');
+      btns.forEach(btn => {
+        btn.className = "px-4 py-2 border text-xs font-bold rounded-xl transition border-brand-slateBorder hover:border-slate-400 text-slate-655";
+      });
+
+      // Style active button
+      el.className = "px-4 py-2 border text-xs font-bold rounded-xl transition border-brand-blueRoyal bg-brand-blueRoyal/5 text-brand-blueRoyal font-black shadow-sm";
+      showToast("Warna Terpilih!", `Warna/Bahan: ${val}`);
+    }
+
+    function selectSize(el, val) {
+      selectedSize = val;
+      selectedVariant = `${selectedColor} - ${selectedSize}`;
+
+      // Reset siblings styles
+      const btns = el.parentNode.querySelectorAll('button');
+      btns.forEach(btn => {
+        btn.className = "px-4 py-2 border text-xs font-bold rounded-xl transition border-brand-slateBorder hover:border-slate-400 text-slate-655";
+      });
+
+      // Style active button
+      el.className = "px-4 py-2 border text-xs font-bold rounded-xl transition border-brand-blueRoyal bg-brand-blueRoyal/5 text-brand-blueRoyal font-black shadow-sm";
+      showToast("Ukuran Terpilih!", `Dimensi: ${val}`);
+    }
+
+    function changeQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      document.getElementById('qty-value').textContent = currentQty;
+    }
+
+    function handleAddCartClick() {
+      if (!currentProd) return;
+      addToCart(currentProd.id, selectedVariant, currentQty);
+      currentQty = 1;
+      document.getElementById('qty-value').textContent = "1";
+    }
+
+    function handleCheckoutImmediate() {
+      if (!currentProd) return;
+      addToCart(currentProd.id, selectedVariant, currentQty);
+      currentQty = 1;
+      document.getElementById('qty-value').textContent = "1";
+      toggleCartDrawer(true);
+    }
+
+    function renderRelatedProducts() {
+      const container = document.getElementById('related-products-grid');
+      if (!container || !currentProd) return;
+
+      const filtered = PRODUCTS.filter(p => p.id !== currentProd.id && p.category === currentProd.category).slice(0, 4);
+      const fallback = filtered.length === 0 ? PRODUCTS.filter(p => p.id !== currentProd.id).slice(0, 4) : filtered;
+
+      container.innerHTML = fallback.map(p => {
+        const hasPromo = p.promoPrice !== null && p.promoPrice !== undefined;
+        return `
+          <div class="bg-white rounded-3xl p-5 border border-brand-slateBorder/60 hover:border-brand-blueRoyal/30 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between h-full group hover-scale">
+            
+            <div onclick="window.location.href='detail.html?id=${p.id}'" class="h-44 w-full bg-brand-slateLight rounded-2xl overflow-hidden flex items-center justify-center p-4 cursor-pointer relative">
+              ${hasPromo ? `
+                <div class="absolute top-2.5 left-2.5 bg-brand-orangeAccent text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded shadow uppercase">
+                  PROMO
+                </div>
+              ` : ''}
+              <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain rounded-xl transform group-hover:scale-105 transition duration-300">
+            </div>
+
+            <div class="mt-4 flex-grow flex flex-col justify-between space-y-3">
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-widest block font-outfit">${p.category}</span>
+                <h4 onclick="window.location.href='detail.html?id=${p.id}'" class="font-outfit font-bold text-sm hover:text-brand-blueRoyal cursor-pointer transition line-clamp-1">${p.name}</h4>
+                <div class="flex items-center gap-1">
+                  <div class="flex text-brand-orangeAccent text-[10px]">
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="text-xs font-bold text-brand-slateDark">${p.rating}</span>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-brand-slateBorder/60 flex flex-col gap-2">
+                <div class="flex flex-col">
+                  ${hasPromo ? `
+                    <span class="font-outfit font-black text-sm text-brand-orangeAccent">${formatIDR(p.promoPrice)}</span>
+                    <span class="text-[10px] text-slate-400 line-through font-light mt-0.5">${formatIDR(p.price)}</span>
+                  ` : `
+                    <span class="font-outfit font-black text-sm text-brand-slateDark">${formatIDR(p.price)}</span>
+                  `}
+                </div>
+                <button onclick="addToCart(${p.id}, '${p.variants[0]}', 1)" class="w-full py-2 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider">
+                  <i class="ti ti-shopping-cart text-sm"></i>
+                  + Keranjang
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- QUICK SEARCH & REDIRECT ---
+
+    function handleQuickSearch(q) {
+      const card = document.getElementById('quick-search-card');
+      const container = document.getElementById('suggestions-container');
+
+      if (!q.trim()) {
+        card.classList.add('hidden');
+        return;
+      }
+
+      const match = PRODUCTS.filter(p =>
+        p.name.toLowerCase().includes(q.toLowerCase()) ||
+        p.category.toLowerCase().includes(q.toLowerCase())
+      ).slice(0, 5);
+
+      if (match.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 py-2">Mebel tidak ditemukan...</p>`;
+      } else {
+        container.innerHTML = match.map(p => `
+          <div onclick="window.location.href='detail.html?id=${p.id}'" class="flex items-center gap-3 p-2 hover:bg-brand-slateLight rounded-xl cursor-pointer transition">
+            <img src="${p.image}" class="w-8 h-8 rounded object-cover">
+            <div>
+              <p class="text-xs font-bold text-brand-slateDark line-clamp-1">${p.name}</p>
+              <p class="text-[9px] text-brand-blueRoyal uppercase font-bold tracking-wider">${p.category}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      card.classList.remove('hidden');
+    }
+
+    function triggerSearch() {
+      const q = document.getElementById('header-search-input').value.trim();
+      if (q) {
+        window.location.href = `produk.html?q=${encodeURIComponent(q)}`;
+      }
+    }
+
+    // --- TABS BEHAVIOR ---
+
+    function toggleTab(tabId) {
+      ['desc', 'specs', 'reviews'].forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        const cnt = document.getElementById(`tab-content-${t}`);
+
+        if (btn) btn.className = "hover:text-brand-blueRoyal transition pb-2";
+        if (cnt) cnt.classList.add('hidden');
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      const activeCnt = document.getElementById(`tab-content-${tabId}`);
+
+      if (activeBtn) activeBtn.className = "text-brand-blueRoyal pb-2 border-b-2 border-brand-orangeAccent font-black";
+      if (activeCnt) activeCnt.classList.remove('hidden');
+    }
+
+    // --- CART SYSTEM ---
+
+    function addToCart(productId, variantName, qty) {
+      const targetProd = PRODUCTS.find(p => p.id === productId);
+      if (!targetProd) return;
+
+      const existing = cart.find(item => item.product.id === productId && item.variant === variantName);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.push({
+          product: targetProd,
+          variant: variantName,
+          quantity: qty
+        });
+      }
+
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Berhasil Masuk Keranjang!", `${targetProd.name} (${variantName}) ditambahkan.`);
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cart-badge');
+      const tag = document.getElementById('cart-total-price-tag');
+      if (!badge) return;
+
+      const totalItems = cart.reduce((tot, item) => tot + item.quantity, 0);
+      badge.textContent = totalItems;
+
+      let totalPrice = 0;
+      cart.forEach(item => {
+        const p = item.product.promoPrice || item.product.price;
+        totalPrice += p * item.quantity;
+      });
+
+      if (tag) {
+        tag.textContent = formatIDR(totalPrice);
+      }
+
+      const shippingBar = document.getElementById('shipping-tracker-bar');
+      const shippingPct = document.getElementById('shipping-tracker-pct');
+      const shippingDesc = document.getElementById('shipping-tracker-desc');
+      if (shippingBar) {
+        const pct = Math.min(Math.round((totalPrice / 150000) * 100), 100);
+        shippingBar.style.width = `${pct}%`;
+        shippingPct.textContent = `${pct}%`;
+        if (pct >= 100) {
+          shippingDesc.textContent = "Bebas ongkir nasional Anda aktif!";
+        } else {
+          shippingDesc.textContent = `Belanja Rp ${formatIDR(150000 - totalPrice)} lagi untuk bebas ongkir.`;
+        }
+      }
+    }
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('cart-drawer-backdrop');
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100');
+        renderCartItems();
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cart-items-container');
+      const origSub = document.getElementById('cart-original-subtotal');
+      const discTot = document.getElementById('cart-discount-total');
+      const finalSub = document.getElementById('cart-final-subtotal');
+      const couponRow = document.getElementById('cart-coupon-row');
+      const couponDiscountEl = document.getElementById('cart-coupon-discount');
+
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 font-light text-center py-8">Keranjang belanja kosong.</p>`;
+        origSub.textContent = "Rp 0";
+        discTot.textContent = "-Rp 0";
+        finalSub.textContent = "Rp 0";
+        couponRow.classList.add('hidden');
+        return;
+      }
+
+      let orig = 0, disc = 0, final = 0;
+
+      container.innerHTML = cart.map((item, index) => {
+        const p = item.product;
+        const current = p.promoPrice || p.price;
+        orig += p.price * item.quantity;
+        disc += (p.price - current) * item.quantity;
+        final += current * item.quantity;
+
+        return `
+          <div class="flex items-center gap-4 bg-brand-slateLight p-3 rounded-2xl border border-brand-slateBorder relative">
+            <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-slate-400 hover:text-red-500 transition"><i class="ti ti-trash text-sm"></i></button>
+            <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center p-1 shrink-0"><img src="${p.image}" class="max-h-full max-w-full object-contain"></div>
+            <div class="flex-grow">
+              <h4 class="font-bold text-xs text-brand-slateDark line-clamp-1 pr-6">${p.name}</h4>
+              <p class="text-[9px] text-brand-blueRoyal font-bold">${item.variant}</p>
+              <div class="flex justify-between items-center mt-2">
+                <span class="text-xs font-bold text-slate-500">x${item.quantity}</span>
+                <span class="font-outfit font-black text-xs text-brand-blueRoyal">${formatIDR(current * item.quantity)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let couponDiscount = 0;
+      if (isCouponApplied) {
+        couponDiscount = Math.round(final * 0.1);
+        final = final - couponDiscount;
+        couponRow.classList.remove('hidden');
+        couponDiscountEl.textContent = `- ${formatIDR(couponDiscount)}`;
+      } else {
+        couponRow.classList.add('hidden');
+      }
+
+      origSub.textContent = formatIDR(orig);
+      discTot.textContent = `- ${formatIDR(disc)}`;
+      finalSub.textContent = formatIDR(final);
+    }
+
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Dihapus!", "Mebel dikeluarkan dari keranjang.");
+    }
+
+    function clearCart() {
+      cart = [];
+      isCouponApplied = false;
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Dikosongkan!", "Semua produk dihapus.");
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      showToast("Pesanan Diterima!", "Terima kasih telah berbelanja di Bizmate.");
+      clearCart();
+      toggleCartDrawer(false);
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById('cart-coupon-input').value.trim().toUpperCase();
+      if (code === 'BIZMATEBLUE') {
+        isCouponApplied = true;
+        showToast("Kupon Diterapkan!", "Potongan tambahan 10% di keranjang belanja.");
+        renderCartItems();
+      } else {
+        showToast("Kupon Gagal!", "Kode kupon tidak valid.");
+      }
+    }
+
+    function showToast(title, message) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toastId = 'toast-' + Math.random().toString(36).substr(2, 9);
+      container.insertAdjacentHTML('beforeend', `
+        <div id="${toastId}" class="bg-white text-brand-slateDark p-4 rounded-2xl shadow-xl flex items-start gap-3 border border-brand-blueRoyal/20 pointer-events-auto transform translate-x-full transition-transform duration-300">
+          <div class="p-1.5 bg-brand-blueRoyal/5 text-brand-blueRoyal rounded-lg"><i class="ti ti-circle-check text-xl animate-bounce"></i></div>
+          <div>
+            <p class="font-bold text-xs sm:text-sm font-outfit">${title}</p>
+            <p class="text-xs text-slate-500 font-outfit">${message}</p>
+          </div>
+        </div>
+      `);
+
+      setTimeout(() => {
+        const el = document.getElementById(toastId);
+        if (el) el.classList.remove('translate-x-full');
+      }, 50);
+
+      setTimeout(() => {
+        const el = document.getElementById(toastId);
+        if (el) {
+          el.classList.add('translate-x-full');
+          setTimeout(() => el.remove(), 300);
+        }
+      }, 4000);
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+  </script>
+</body>
+
+</html>

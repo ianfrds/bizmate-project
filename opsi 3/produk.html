@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Butik Busana UMKM Terbaik</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Tabler Icons CSS Webfont -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#0c4cb4',       // Deep Royal Blue
+              accentBlue: '#2563eb', // Vivid Electric Blue
+              lightBg: '#f8fafc',
+              dark: '#0f172a'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-blue': '0 0 20px rgba(12, 76, 180, 0.15)',
+            'premium': '0 8px 30px rgba(12, 76, 180, 0.04)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    .font-outfit {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .product-card-hover {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .product-card-hover:hover {
+      transform: translateY(-6px);
+    }
+
+    .banner-poly-bg {
+      background: linear-gradient(135deg, #0c4cb4 0%, #033690 100%);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col relative overflow-x-hidden selection:bg-brand-blue selection:text-white">
+
+  <!-- ==================== 1. TOP BAR ==================== -->
+  <div class="bg-brand-blue text-white/95 text-xs py-2.5 px-4 sm:px-6 lg:px-8 border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold font-outfit uppercase tracking-wider text-xs">Selamat Datang di BIZMATE - Kualitas
+          Lokal Terbaik</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-medium">
+        <a href="#" class="hover:underline transition">Lacak Pesanan</a>
+        <span class="text-white/20">|</span>
+        <a href="index.html#faq" class="hover:underline transition">Pertanyaan Umum (FAQ)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thick Blue Header Bar -->
+  <header class="bg-brand-blue py-4 sticky top-0 z-40 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+
+      <!-- Hamburger Menu & Logo -->
+      <div class="flex items-center gap-3 shrink-0">
+        <button onclick="toggleMobileMenu()" class="p-2.5 text-white hover:bg-white/10 transition rounded-lg md:hidden">
+          <i class="ti ti-menu-2 text-2xl"></i>
+        </button>
+
+        <!-- Logo Bizmate -->
+        <a href="index.html" class="flex items-center gap-1.5 group font-outfit">
+          <span class="font-black italic text-2xl tracking-tighter text-white">
+            biz<span class="text-sky-300">mate</span>
+          </span>
+          <span class="w-2 h-2 rounded-full bg-sky-300"></span>
+        </a>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="hidden md:flex items-center flex-grow max-w-2xl relative">
+        <div class="flex w-full items-center rounded-lg bg-white overflow-hidden shadow-sm">
+          <input id="desktop-search-input" oninput="showSearchSuggestions()" onkeyup="handleSearch()" type="text"
+            placeholder="Cari baju batik, kemeja tenun, hijab, celana..."
+            class="w-full pl-4 pr-10 py-3 text-sm text-slate-800 bg-transparent focus:outline-none font-medium">
+          <button onclick="handleSearch()"
+            class="px-6 py-3.5 bg-brand-accentBlue hover:bg-blue-700 text-white font-extrabold text-sm transition duration-300 shrink-0">
+            <i class="ti ti-search text-base"></i>
+          </button>
+        </div>
+
+        <div id="search-suggestions-card"
+          class="hidden absolute top-14 left-0 right-0 bg-white rounded-xl border border-slate-200 shadow-xl p-4 z-50 max-h-80 overflow-y-auto space-y-3">
+          <p class="text-xs font-bold text-brand-blue uppercase tracking-wider">Hasil Pencarian Cepat</p>
+          <div id="suggestions-container" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Action Widgets -->
+      <div class="flex items-center gap-6 shrink-0 text-white">
+        <div onclick="toggleCartDrawer(true)" class="flex items-center gap-3 cursor-pointer group">
+          <div
+            class="relative w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white/20 transition duration-300">
+            <i class="ti ti-shopping-cart text-xl"></i>
+            <span id="cart-badge"
+              class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white font-extrabold text-xs flex items-center justify-center border-2 border-brand-blue">0</span>
+          </div>
+          <div class="text-left leading-tight hidden sm:block">
+            <p class="text-[10px] text-white/75 font-semibold font-outfit uppercase tracking-wider">Keranjang</p>
+            <p id="cart-total-price-tag" class="text-sm font-black text-sky-200 font-outfit">Rp 0</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu"
+      class="hidden border-t border-white/10 bg-brand-blue px-4 py-4 space-y-3 shadow-lg text-white">
+      <a href="index.html" class="block text-sm font-semibold text-sky-200 py-2"
+        onclick="toggleMobileMenu()">Beranda</a>
+      <a href="produk.html" class="block text-sm font-medium text-slate-100 hover:text-sky-200 py-2"
+        onclick="toggleMobileMenu()">Semua Produk</a>
+      <a href="index.html#categories-section" class="block text-sm font-medium text-slate-100 hover:text-sky-200 py-2"
+        onclick="toggleMobileMenu()">Kategori Produk</a>
+      <a href="index.html#flash-sale" class="block text-sm font-medium text-slate-100 hover:text-sky-200 py-2"
+        onclick="toggleMobileMenu()">PROMO KILAT</a>
+      <a href="index.html#best-sellers" class="block text-sm font-medium text-slate-100 hover:text-sky-200 py-2"
+        onclick="toggleMobileMenu()">Produk Terbaru</a>
+      <a href="index.html#faq" class="block text-sm font-medium text-slate-100 hover:text-sky-200 py-2"
+        onclick="toggleMobileMenu()">FAQ</a>
+    </div>
+  </header>
+
+  <!-- Sub-Header Bar (Desktop Nav Row) -->
+  <nav class="hidden md:block bg-brand-blue border-t border-white/10 py-3 shadow-md">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-8 text-xs font-bold font-outfit uppercase tracking-widest text-white/90">
+      <a href="index.html" class="hover:text-sky-200 transition">Beranda</a>
+      <a href="produk.html" class="text-sky-200 hover:text-white transition">Semua Produk</a>
+      <a href="index.html#categories-section" class="hover:text-sky-200 transition">Kategori Busana</a>
+      <a href="index.html#flash-sale" class="hover:text-sky-200 transition">Promo Kilat</a>
+      <a href="index.html#best-sellers" class="hover:text-sky-200 transition">Katalog Terpopuler</a>
+      <a href="index.html#faq" class="hover:text-sky-200 transition">Tanya Jawab</a>
+    </div>
+  </nav>
+
+  <!-- ==================== BREADCRUMBS ==================== -->
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm font-semibold text-slate-400">
+    <div class="flex items-center gap-2 flex-wrap font-outfit">
+      <a href="index.html" class="hover:text-brand-blue transition">Beranda</a>
+      <i class="ti ti-chevron-right text-xs"></i>
+      <span class="text-slate-800 font-black">Butik Galeri Koleksi</span>
+    </div>
+  </nav>
+
+  <!-- ==================== MAIN CATALOG ==================== -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-12">
+
+    <!-- Title Area -->
+    <div class="mb-8 text-center sm:text-left">
+      <span class="text-brand-blue font-semibold text-xs tracking-wider uppercase font-outfit">Bizmate Premium
+        Collection</span>
+      <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-900 mt-1">Koleksi Busana UMKM Terbaik</h1>
+      <p class="text-sm text-slate-500 font-light mt-2 max-w-xl">Nikmati kemudahan berbelanja busana batik tulis
+        pilihan, tenun eksklusif ATBM, dan outerwear modis hasil karya UMKM lokal terkemuka.</p>
+    </div>
+
+    <!-- Interactive Bento Top Filtering Box -->
+    <section class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm mb-10 space-y-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Search bar -->
+        <div class="space-y-2">
+          <h4 class="font-bold text-xs text-slate-800 uppercase tracking-wider font-outfit">Cari Nama Busana</h4>
+          <div class="relative flex items-center">
+            <input id="catalog-search" oninput="handleFilterChange()" type="text"
+              placeholder="Batik, tenun, outerwear..."
+              class="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl border border-slate-250 bg-slate-50 focus:outline-none focus:border-brand-blue focus:bg-white transition-all font-medium">
+            <i class="ti ti-search text-slate-400 absolute left-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Price Range Slider -->
+        <div class="space-y-2">
+          <div class="flex justify-between items-center">
+            <h4 class="font-bold text-xs text-slate-800 uppercase tracking-wider font-outfit">Maksimal Anggaran</h4>
+            <span id="price-label" class="text-xs font-bold text-brand-blue font-outfit">Rp 600.000</span>
+          </div>
+          <input id="price-range" type="range" min="50000" max="600000" step="10000" value="600000"
+            oninput="handlePriceRangeInput(this.value)" onchange="handleFilterChange()"
+            class="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-brand-blue">
+          <div class="flex justify-between text-[10px] text-slate-400 font-bold">
+            <span>Rp 50.000</span>
+            <span>Rp 600.000</span>
+          </div>
+        </div>
+
+        <!-- Sorting -->
+        <div class="space-y-2">
+          <h4 class="font-bold text-xs text-slate-800 uppercase tracking-wider font-outfit">Urutkan Koleksi</h4>
+          <select id="sort-select" onchange="handleFilterChange()"
+            class="w-full bg-slate-50 border border-slate-250 rounded-xl px-3 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:border-brand-blue">
+            <option value="default">Paling Sesuai</option>
+            <option value="price-asc">Harga Terendah</option>
+            <option value="price-desc">Harga Tertinggi</option>
+            <option value="rating-desc">Rating Tertinggi</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Categories row -->
+      <div class="border-t border-slate-100 pt-4 space-y-3">
+        <h4 class="font-bold text-xs text-slate-800 uppercase tracking-wider font-outfit">Kategori Busana</h4>
+        <div class="flex flex-wrap gap-2" id="category-filters-container">
+          <button onclick="selectCategory('all')" id="cat-btn-all"
+            class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition border border-brand-blue bg-brand-blue text-white shadow shadow-brand-blue/20 font-outfit">Semua</button>
+          <button onclick="selectCategory('Batik & Tenun')" id="cat-btn-batik"
+            class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-outfit">Batik
+            & Tenun</button>
+          <button onclick="selectCategory('Atasan')" id="cat-btn-atasan"
+            class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-outfit">Atasan</button>
+          <button onclick="selectCategory('Bawahan')" id="cat-btn-bawahan"
+            class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-outfit">Bawahan</button>
+          <button onclick="selectCategory('Jaket & Outer')" id="cat-btn-outer"
+            class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-outfit">Jaket
+            & Outer</button>
+          <button onclick="selectCategory('Hijab & Aksesoris')" id="cat-btn-hijab"
+            class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-outfit">Hijab
+            & Aksesoris</button>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex justify-between items-center border-t border-slate-100 pt-4 font-outfit flex-wrap gap-2">
+        <span id="result-count" class="text-xs text-slate-500 font-bold">Menampilkan 0 Baju</span>
+        <button onclick="resetFilters()"
+          class="text-xs font-black text-brand-blue hover:underline uppercase tracking-wider">Reset Semua
+          Filter</button>
+      </div>
+
+    </section>
+
+    <!-- Grid Products Catalog -->
+    <div id="catalog-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Dynamically populated -->
+    </div>
+
+    <!-- Pagination Bar -->
+    <div id="pagination-container" class="flex items-center justify-center gap-2 pt-10">
+      <!-- Dynamically populated -->
+    </div>
+
+  </main>
+
+  <!-- NEWSLETTER BAR -->
+  <section class="bg-brand-blue text-white py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+      <div class="max-w-xl text-center lg:text-left space-y-1.5">
+        <h3 class="font-outfit font-black text-xl sm:text-2xl">Berlangganan buletin kami untuk info diskon eksklusif
+          fashion lokal.</h3>
+      </div>
+      <div class="flex gap-2 w-full lg:max-w-md shrink-0">
+        <input type="email" id="newsletter-email" placeholder="Masukkan alamat email aktif Anda..."
+          class="w-full px-4 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none placeholder-slate-350 font-medium">
+        <button onclick="subscribeNewsletter()"
+          class="px-6 py-3.5 bg-brand-accentBlue hover:bg-blue-700 text-white font-extrabold rounded-xl text-xs transition duration-300 font-outfit uppercase tracking-wider shrink-0">
+          Daftar
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-white py-12 text-sm text-slate-500 border-t border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <a href="index.html" class="flex items-center justify-center gap-1 font-outfit">
+        <span class="font-black italic text-2xl tracking-tighter text-slate-800">
+          biz<span class="text-brand-blue">mate</span>
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+      </a>
+      <p class="text-xs text-slate-400 font-light font-outfit">&copy; 2026 Bizmate E-Commerce UMKM Indonesia. Seluruh
+        hak cipta dilindungi undang-undang.</p>
+    </div>
+  </footer>
+
+  <!-- DRAWER CART -->
+  <div id="cart-drawer-backdrop" onclick="toggleCartDrawer(false)"
+    class="fixed inset-0 bg-slate-900/40 z-50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm">
+  </div>
+  <div id="cart-drawer"
+    class="fixed right-0 top-0 bottom-0 w-full sm:w-[450px] bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+
+    <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="ti ti-shopping-cart text-2xl text-brand-blue animate-pulse"></i>
+        <h3 class="font-outfit font-extrabold text-lg text-slate-800">Keranjang Belanja</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)"
+        class="p-2 text-slate-400 hover:text-slate-805 rounded-full hover:bg-slate-50 transition">
+        <i class="ti ti-x text-xl"></i>
+      </button>
+    </div>
+
+    <div class="px-6 py-4 bg-slate-50 border-b border-slate-200/50 space-y-2">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+        <span>Bebas Ongkir Tracker</span>
+        <span id="shipping-tracker-pct" class="text-brand-blue font-black">0%</span>
+      </div>
+      <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+        <div id="shipping-tracker-bar" class="h-full bg-brand-blue rounded-full transition-all duration-500"
+          style="width: 0%;"></div>
+      </div>
+      <p id="shipping-tracker-desc" class="text-xs text-slate-550 font-light">Belanja Rp 150.000 lagi untuk mendapatkan
+        Bebas Ongkir se-Indonesia!</p>
+    </div>
+
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4 font-medium"></div>
+
+    <div class="px-6 py-3 border-t border-slate-100 bg-slate-50/50 flex gap-2">
+      <input type="text" id="cart-coupon-input" placeholder="Kupon BIZMATEBLUE..."
+        class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850 focus:outline-none focus:border-brand-blue uppercase font-bold">
+      <button onclick="applyCoupon()"
+        class="px-4 py-2.5 bg-brand-blue hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition shrink-0 uppercase font-bold">Klaim</button>
+    </div>
+
+    <div class="p-6 border-t border-slate-100 bg-slate-50 space-y-4">
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between text-xs text-slate-500 font-semibold">
+          <span>Subtotal Awal</span>
+          <span id="cart-original-subtotal" class="font-medium">Rp 0</span>
+        </div>
+        <div class="flex items-center justify-between text-xs text-red-500 font-semibold">
+          <span>Diskon Promo</span>
+          <span id="cart-discount-total">-Rp 0</span>
+        </div>
+        <div class="flex items-center justify-between text-xs text-emerald-600 font-semibold hidden"
+          id="cart-coupon-row">
+          <span>Kupon Diskon (10%)</span>
+          <span id="cart-coupon-discount">-Rp 0</span>
+        </div>
+        <div
+          class="flex items-center justify-between text-sm font-semibold text-slate-800 border-t border-slate-100 pt-2.5">
+          <span>Total Pembayaran</span>
+          <span id="cart-final-subtotal" class="text-brand-blue font-outfit text-base font-black">Rp 0</span>
+        </div>
+      </div>
+
+      <div class="pt-2 grid grid-cols-2 gap-3">
+        <button onclick="clearCart()"
+          class="w-full py-3 border border-slate-200 hover:border-slate-450 text-slate-500 font-semibold rounded-xl text-xs transition uppercase font-outfit">Hapus</button>
+        <button onclick="checkout()"
+          class="w-full py-3 bg-brand-blue hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition shadow-sm hover:shadow flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider">Bayar
+          &rarr;</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+  </div>
+
+  <!-- INTERACTIVE LOGIC SCRIPT -->
+  <script>
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: "Kemeja Batik Tulis Modern Premium",
+        category: "Batik & Tenun",
+        price: 450000,
+        promoPrice: 315000,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 204,
+        variants: ["Motif Parang Blue", "Motif Sidomukti Blue"]
+      },
+      {
+        id: 2,
+        name: "Kemeja Tenun Ikat ATBM Jepara",
+        category: "Batik & Tenun",
+        price: 550000,
+        promoPrice: 385000,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 187,
+        variants: ["Biru Samudra", "Biru Langit"]
+      },
+      {
+        id: 3,
+        name: "Jaket Bomber Kanvas Katun Bizmate",
+        category: "Jaket & Outer",
+        price: 350000,
+        promoPrice: 280000,
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 92,
+        variants: ["Navy Blue", "Dark Slate Blue"]
+      },
+      {
+        id: 4,
+        name: "Scarf Hijab Voal Ultrafine Laser Cut",
+        category: "Hijab & Aksesoris",
+        price: 180000,
+        promoPrice: 126000,
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 154,
+        variants: ["Voal Ocean Blue", "Voal Cloud Grey Blue"]
+      },
+      {
+        id: 5,
+        name: "Celana Chino Slim Fit Stretch Navy",
+        category: "Bawahan",
+        price: 299000,
+        promoPrice: 209000,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 231,
+        variants: ["Biru Navy", "Navy Gelap"]
+      },
+      {
+        id: 6,
+        name: "Dress Kasual Rajut Katun Wanita",
+        category: "Atasan",
+        price: 380000,
+        promoPrice: 266000,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.6,
+        reviewsCount: 68,
+        variants: ["Sky Blue Knit", "Indigo Knit"]
+      },
+      {
+        id: 7,
+        name: "Kaos Polos Cotton Combed 30s Super Soft",
+        category: "Atasan",
+        price: 99000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 115,
+        variants: ["Navy Blue", "Royal Blue"]
+      },
+      {
+        id: 8,
+        name: "Outer Rajut Kardigan Long-Sleeve Lokal",
+        category: "Jaket & Outer",
+        price: 249000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 123,
+        variants: ["Blue Steel", "Navy Klasik"]
+      },
+      {
+        id: 9,
+        name: "Hijab Paris Segi Empat Polos Premium",
+        category: "Hijab & Aksesoris",
+        price: 65000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 42,
+        variants: ["Paris Blue Sky", "Paris Marine Navy"]
+      },
+      {
+        id: 10,
+        name: "Blouse Ruffle Motif Floral Cantik",
+        category: "Atasan",
+        price: 189000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 29,
+        variants: ["Blue Flower", "Soft Denim Blouse"]
+      },
+      {
+        id: 11,
+        name: "Cardigan Rajut Oversize Blue Indigo",
+        category: "Jaket & Outer",
+        price: 215000,
+        promoPrice: 172000,
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 56,
+        variants: ["Indigo Knit", "Ocean Blue Knit"]
+      },
+      {
+        id: 12,
+        name: "Celana Kulot Linen Highwaist Premium",
+        category: "Bawahan",
+        price: 175000,
+        promoPrice: 145000,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 84,
+        variants: ["Linen Navy", "Linen Sky"]
+      },
+      {
+        id: 13,
+        name: "Kemeja Koko Modern Kerah Shanghai",
+        category: "Atasan",
+        price: 220000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 38,
+        variants: ["Koko Navy Murni", "Koko Soft Blue"]
+      },
+      {
+        id: 14,
+        name: "Outer Kimono Batik Cap Klasik",
+        category: "Batik & Tenun",
+        price: 299000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 47,
+        variants: ["Kimono Cap Parang", "Kimono Cap Kawung"]
+      }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('bizmate_cart')) || [];
+    let selectedCategoryVal = 'all';
+    let currentPage = 1;
+    const itemsPerPage = 12;
+    let isCouponApplied = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCatalog();
+      updateCartBadge();
+    });
+
+    function formatIDR(val) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(val);
+    }
+
+    function handlePriceRangeInput(val) {
+      document.getElementById('price-label').textContent = formatIDR(val);
+    }
+
+    function selectCategory(cat) {
+      selectedCategoryVal = cat;
+      currentPage = 1;
+
+      // Update active category button visually
+      const buttons = document.querySelectorAll('.cat-filter-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-brand-blue', 'text-white', 'border-brand-blue', 'shadow', 'shadow-brand-blue/20');
+        btn.classList.add('bg-white', 'text-slate-700', 'border-slate-200', 'hover:bg-slate-50');
+      });
+
+      let activeBtnId = 'cat-btn-all';
+      if (cat === 'Batik & Tenun') activeBtnId = 'cat-btn-batik';
+      else if (cat === 'Atasan') activeBtnId = 'cat-btn-atasan';
+      else if (cat === 'Bawahan') activeBtnId = 'cat-btn-bawahan';
+      else if (cat === 'Jaket & Outer') activeBtnId = 'cat-btn-outer';
+      else if (cat === 'Hijab & Aksesoris') activeBtnId = 'cat-btn-hijab';
+
+      const activeBtn = document.getElementById(activeBtnId);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200', 'hover:bg-slate-50');
+        activeBtn.classList.add('bg-brand-blue', 'text-white', 'border-brand-blue', 'shadow', 'shadow-brand-blue/20');
+      }
+
+      renderCatalog();
+    }
+
+    function resetFilters() {
+      document.getElementById('catalog-search').value = '';
+      document.getElementById('price-range').value = 600000;
+      handlePriceRangeInput(600000);
+      document.getElementById('sort-select').value = 'default';
+      selectCategory('all');
+    }
+
+    function handleFilterChange() {
+      currentPage = 1;
+      renderCatalog();
+    }
+
+    function getFilteredProducts() {
+      const q = document.getElementById('catalog-search').value.toLowerCase().trim();
+      const maxPrice = parseInt(document.getElementById('price-range').value);
+      const sortVal = document.getElementById('sort-select').value;
+
+      let filtered = PRODUCTS.filter(p => {
+        const matchesQuery = p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+        const matchesCat = selectedCategoryVal === 'all' || p.category === selectedCategoryVal;
+        const currentPrice = p.promoPrice || p.price;
+        const matchesPrice = currentPrice <= maxPrice;
+        return matchesQuery && matchesCat && matchesPrice;
+      });
+
+      if (sortVal === 'price-asc') {
+        filtered.sort((a, b) => (a.promoPrice || a.price) - (b.promoPrice || b.price));
+      } else if (sortVal === 'price-desc') {
+        filtered.sort((a, b) => (b.promoPrice || b.price) - (a.promoPrice || a.price));
+      } else if (sortVal === 'rating-desc') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      return filtered;
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-products-grid');
+      const countLabel = document.getElementById('result-count');
+      const paginationRow = document.getElementById('pagination-container');
+
+      if (!grid) return;
+
+      const filtered = getFilteredProducts();
+      countLabel.textContent = `Menampilkan ${filtered.length} Baju`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 flex flex-col items-center justify-center text-center text-slate-400 space-y-3">
+            <i class="ti ti-mood-look-down text-5xl text-slate-350"></i>
+            <p class="font-bold text-sm text-slate-800">Busana Tidak Ditemukan</p>
+            <p class="text-xs font-light max-w-xs">Silakan ubah kata kunci pencarian Anda atau atur ulang slider harga filter.</p>
+          </div>
+        `;
+        paginationRow.innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(filtered.length / itemsPerPage);
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const paginatedItems = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+      grid.innerHTML = paginatedItems.map(p => {
+        const hasPromo = p.promoPrice !== null && p.promoPrice !== undefined;
+        return `
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 hover:border-brand-blue/30 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between h-full product-card-hover">
+            <div onclick="window.location.href='detail.html?id=${p.id}'" class="h-44 w-full bg-slate-50 rounded-2xl overflow-hidden flex items-center justify-center p-4 cursor-pointer relative group">
+              ${hasPromo ? `
+                <div class="absolute top-2.5 left-2.5 bg-brand-blue text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded shadow uppercase">
+                  PROMO
+                </div>
+              ` : ''}
+              <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain rounded transform group-hover:scale-105 transition duration-300 animate-fade-in">
+            </div>
+
+            <div class="mt-4 flex-grow flex flex-col justify-between space-y-3">
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest block font-outfit">${p.category}</span>
+                <h4 onclick="window.location.href='detail.html?id=${p.id}'" class="font-bold text-sm sm:text-base hover:text-brand-blue cursor-pointer transition line-clamp-1">${p.name}</h4>
+                <div class="flex items-center gap-1">
+                  <div class="flex text-brand-blue text-[10px]">
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="text-xs font-bold text-slate-800">${p.rating}</span>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
+                <div class="flex flex-col">
+                  ${hasPromo ? `
+                    <span class="font-outfit font-black text-sm sm:text-base text-brand-blue">${formatIDR(p.promoPrice)}</span>
+                    <span class="text-[10px] text-slate-400 line-through font-light mt-0.5">${formatIDR(p.price)}</span>
+                  ` : `
+                    <span class="font-outfit font-black text-sm sm:text-base text-slate-800">${formatIDR(p.price)}</span>
+                  `}
+                </div>
+                <button onclick="addToCart(${p.id}, '${p.variants[0]}', 1)" class="w-full py-2 bg-brand-blue hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 font-outfit uppercase">
+                  <i class="ti ti-shopping-cart text-sm"></i>
+                  + Keranjang
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      const container = document.getElementById('pagination-container');
+      if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+      }
+
+      let html = '';
+
+      // Previous button
+      html += `
+        <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center bg-white text-slate-400 hover:text-brand-blue disabled:opacity-40 transition">
+          <i class="ti ti-chevron-left"></i>
+        </button>
+      `;
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        const isActive = i === currentPage;
+        html += `
+          <button onclick="changePage(${i})" class="w-8 h-8 rounded-lg border font-bold text-xs ${isActive ? 'bg-brand-blue border-brand-blue text-white shadow' : 'bg-white border-slate-200 text-slate-500 hover:text-brand-blue'} transition">
+            ${i}
+          </button>
+        `;
+      }
+
+      // Next button
+      html += `
+        <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center bg-white text-slate-400 hover:text-brand-blue disabled:opacity-40 transition">
+          <i class="ti ti-chevron-right"></i>
+        </button>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function changePage(page) {
+      currentPage = page;
+      renderCatalog();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function addToCart(productId, variantName, qty) {
+      const targetProd = PRODUCTS.find(p => p.id === productId);
+      if (!targetProd) return;
+
+      const existing = cart.find(item => item.product.id === productId && item.variant === variantName);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.push({
+          product: targetProd,
+          variant: variantName,
+          quantity: qty
+        });
+      }
+
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Berhasil Masuk Keranjang!", `${targetProd.name} (${variantName}) ditambahkan.`);
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cart-badge');
+      const tag = document.getElementById('cart-total-price-tag');
+      if (!badge) return;
+
+      const totalItems = cart.reduce((tot, item) => tot + item.quantity, 0);
+      badge.textContent = totalItems;
+
+      let totalPrice = 0;
+      cart.forEach(item => {
+        const p = item.product.promoPrice || item.product.price;
+        totalPrice += p * item.quantity;
+      });
+
+      if (tag) {
+        tag.textContent = formatIDR(totalPrice);
+      }
+
+      const shippingBar = document.getElementById('shipping-tracker-bar');
+      const shippingPct = document.getElementById('shipping-tracker-pct');
+      const shippingDesc = document.getElementById('shipping-tracker-desc');
+      if (shippingBar) {
+        const pct = Math.min(Math.round((totalPrice / 150000) * 100), 100);
+        shippingBar.style.width = `${pct}%`;
+        shippingPct.textContent = `${pct}%`;
+        if (pct >= 100) {
+          shippingDesc.textContent = "Bebas ongkir nasional Anda aktif!";
+        } else {
+          shippingDesc.textContent = `Belanja Rp ${150000 - totalPrice} lagi untuk bebas ongkir.`;
+        }
+      }
+    }
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('cart-drawer-backdrop');
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100');
+        renderCartItems();
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cart-items-container');
+      const origSub = document.getElementById('cart-original-subtotal');
+      const discTot = document.getElementById('cart-discount-total');
+      const finalSub = document.getElementById('cart-final-subtotal');
+      const couponRow = document.getElementById('cart-coupon-row');
+      const couponDiscountEl = document.getElementById('cart-coupon-discount');
+
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-sm text-slate-500 font-light text-center py-8 font-outfit">Keranjang belanja kosong.</p>`;
+        origSub.textContent = "Rp 0";
+        discTot.textContent = "-Rp 0";
+        finalSub.textContent = "Rp 0";
+        couponRow.classList.add('hidden');
+        return;
+      }
+
+      let orig = 0, disc = 0, final = 0;
+
+      container.innerHTML = cart.map((item, index) => {
+        const p = item.product;
+        const current = p.promoPrice || p.price;
+        orig += p.price * item.quantity;
+        disc += (p.price - current) * item.quantity;
+        final += current * item.quantity;
+
+        return `
+          <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-2xl border border-slate-200 relative">
+            <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-slate-450 hover:text-red-500"><i class="ti ti-trash text-sm"></i></button>
+            <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center p-1 shrink-0"><img src="${p.image}" class="max-h-full max-w-full object-contain"></div>
+            <div class="flex-grow">
+              <h4 class="font-bold text-xs text-slate-800 line-clamp-1 pr-6">${p.name}</h4>
+              <p class="text-[10px] text-brand-blue font-bold">${item.variant}</p>
+              <div class="flex justify-between items-center mt-1">
+                <span class="text-xs font-bold text-slate-700">x${item.quantity}</span>
+                <span class="font-outfit font-black text-xs text-brand-blue">${formatIDR(current * item.quantity)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let couponDiscount = 0;
+      if (isCouponApplied) {
+        couponDiscount = Math.round(final * 0.1);
+        final = final - couponDiscount;
+        couponRow.classList.remove('hidden');
+        couponDiscountEl.textContent = `- ${formatIDR(couponDiscount)}`;
+      } else {
+        couponRow.classList.add('hidden');
+      }
+
+      origSub.textContent = formatIDR(orig);
+      discTot.textContent = `- ${formatIDR(disc)}`;
+      finalSub.textContent = formatIDR(final);
+    }
+
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Dihapus!", "Baju dikeluarkan dari keranjang belanja.");
+    }
+
+    function clearCart() {
+      cart = [];
+      isCouponApplied = false;
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Keranjang Dikosongkan!", "Semua produk dihapus.");
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      showToast("Transaksi Berhasil!", "Pesanan pakaian aman terkirim. Terima kasih dukung UMKM!");
+      clearCart();
+      toggleCartDrawer(false);
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById('cart-coupon-input').value.trim().toUpperCase();
+      if (code === 'BIZMATEBLUE') {
+        isCouponApplied = true;
+        showToast("Kupon Diskon Diterapkan!", "Potongan tambahan 10% di keranjang belanja.");
+        renderCartItems();
+      } else {
+        showToast("Kupon Gagal!", "Kode kupon tidak valid.");
+      }
+    }
+
+    function showSearchSuggestions() {
+      const q = document.getElementById('desktop-search-input').value.toLowerCase().trim();
+      const card = document.getElementById('search-suggestions-card');
+      const container = document.getElementById('suggestions-container');
+
+      if (q.length < 1) {
+        card.classList.add('hidden');
+        return;
+      }
+
+      const filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 py-2">Pencarian tidak ditemukan.</p>`;
+      } else {
+        container.innerHTML = filtered.map(p => `
+          <div onclick="window.location.href='detail.html?id=${p.id}'" class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl cursor-pointer font-outfit">
+            <div class="w-10 h-10 bg-slate-100 rounded p-1"><img src="${p.image}" class="max-h-full max-w-full object-contain"></div>
+            <div>
+              <p class="font-bold text-xs text-slate-800 line-clamp-1">${p.name}</p>
+              <p class="text-[10px] text-brand-blue font-bold">${formatIDR(p.promoPrice || p.price)}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+      card.classList.remove('hidden');
+    }
+
+    function handleSearch() {
+      const q = document.getElementById('desktop-search-input').value.toLowerCase().trim();
+      if (q.length > 0) {
+        const match = PRODUCTS.find(p => p.name.toLowerCase().includes(q));
+        if (match) {
+          window.location.href = `detail.html?id=${match.id}`;
+        }
+      }
+    }
+
+    function showToast(title, message) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toastId = 'toast-' + Math.random().toString(36).substr(2, 9);
+      container.insertAdjacentHTML('beforeend', `
+        <div id="${toastId}" class="bg-white text-slate-800 p-4 rounded-2xl shadow-xl flex items-start gap-3 border border-brand-blue/20 pointer-events-auto transform translate-x-full transition-transform duration-300">
+          <div class="p-1.5 bg-brand-blue/5 text-brand-blue rounded-lg"><i class="ti ti-circle-check text-xl animate-bounce"></i></div>
+          <div>
+            <p class="font-bold text-xs sm:text-sm font-outfit">${title}</p>
+            <p class="text-xs text-slate-500 font-outfit">${message}</p>
+          </div>
+        </div>
+      `);
+
+      setTimeout(() => {
+        const el = document.getElementById(toastId);
+        if (el) el.classList.remove('translate-x-full');
+      }, 50);
+
+      setTimeout(() => {
+        const el = document.getElementById(toastId);
+        if (el) {
+          el.classList.add('translate-x-full');
+          setTimeout(() => el.remove(), 300);
+        }
+      }, 4000);
+    }
+
+    function subscribeNewsletter() {
+      const val = document.getElementById('newsletter-email').value.trim();
+      if (val === '') {
+        showToast("Email Tidak Valid!", "Silakan masukkan email aktif Anda.");
+        return;
+      }
+      showToast("Berhasil Berlangganan!", "Terima kasih telah bergabung.");
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu) {
+        menu.classList.toggle('hidden');
+      }
+    }
+  </script>
+</body>
+
+</html>

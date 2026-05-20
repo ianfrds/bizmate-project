@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Let's Make Home Happy Place</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Tabler Icons CSS Webfont -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4', // Deep Blue brand primary
+              blueDark: '#08337a',
+              orangeAccent: '#f97316', // Highlighting from template
+              orangeHover: '#ea580c',
+              slateLight: '#f8fafc',
+              slateBorder: '#e2e8f0',
+              slateDark: '#0f172a'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          boxShadow: {
+            'premium': '0 8px 30px rgba(12, 76, 180, 0.04)',
+            'premium-hover': '0 20px 40px rgba(12, 76, 180, 0.08)',
+            'card': '0 4px 20px rgba(15, 23, 42, 0.02)',
+            'card-hover': '0 12px 30px rgba(15, 23, 42, 0.05)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #ffffff;
+      color: #0f172a;
+    }
+
+    .font-outfit {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .hover-scale {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hover-scale:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col relative overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== 1. TOP BAR ==================== -->
+  <div
+    class="bg-brand-blueRoyal text-white text-[11px] py-2 px-4 sm:px-6 border-b border-white/10 font-outfit uppercase tracking-wider font-semibold">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div>🚀 Dapatkan Bebas Ongkir Se-Indonesia dengan minimal belanja Rp 150.000!</div>
+      <div class="flex items-center gap-4 text-white/90">
+        <a href="#" class="hover:text-brand-orangeAccent transition">Hubungi CS</a>
+        <span>|</span>
+        <a href="#faq" class="hover:text-brand-orangeAccent transition">Pertanyaan (FAQ)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. MAIN HEADER ==================== -->
+  <header class="bg-white border-b border-brand-slateBorder py-4 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2 shrink-0 group">
+        <div
+          class="w-10 h-10 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white font-outfit font-black text-xl shadow-md transform group-hover:scale-105 transition duration-300">
+          <i class="ti ti-sofa"></i>
+        </div>
+        <span class="font-outfit font-extrabold text-2xl tracking-tighter text-brand-slateDark">
+          biz<span class="text-brand-orangeAccent">mate</span>
+        </span>
+      </a>
+
+      <!-- Search Box (Matches Image layout) -->
+      <div class="hidden md:flex items-center flex-grow max-w-xl relative">
+        <div
+          class="flex w-full items-center border border-brand-slateBorder bg-brand-slateLight rounded-xl overflow-hidden focus-within:border-brand-blueRoyal focus-within:bg-white transition-all">
+          <input id="header-search-input" onkeyup="handleQuickSearch(this.value)" type="text"
+            placeholder="Cari kursi sofa, meja makan, lampu estetik..."
+            class="w-full pl-4 pr-10 py-3 text-xs text-brand-slateDark bg-transparent focus:outline-none font-medium">
+          <button onclick="triggerSearch()"
+            class="px-6 py-3.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-extrabold text-[10px] transition shrink-0 uppercase tracking-wider font-outfit">
+            Cari
+          </button>
+        </div>
+
+        <!-- Suggestions dropdown -->
+        <div id="quick-search-card"
+          class="hidden absolute top-14 left-0 right-0 bg-white rounded-2xl border border-brand-slateBorder shadow-2xl p-4 z-50 max-h-80 overflow-y-auto space-y-3">
+          <p class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-wider font-outfit">Hasil Pencarian
+            Cepat</p>
+          <div id="suggestions-container" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Action Widgets -->
+      <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+        <!-- Wishlist -->
+        <button
+          class="relative p-2.5 bg-brand-slateLight hover:bg-brand-slateBorder text-brand-slateDark rounded-full transition">
+          <i class="ti ti-heart text-lg"></i>
+        </button>
+
+        <!-- Cart Trigger widget -->
+        <div onclick="toggleCartDrawer(true)" class="flex items-center gap-3 cursor-pointer group">
+          <div
+            class="relative w-10 h-10 rounded-full bg-brand-slateLight flex items-center justify-center text-brand-slateDark group-hover:text-brand-blueRoyal group-hover:bg-brand-slateBorder transition duration-300">
+            <i class="ti ti-shopping-cart text-lg"></i>
+            <span id="cart-badge"
+              class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-brand-orangeAccent text-white font-extrabold text-[10px] flex items-center justify-center border-2 border-white">0</span>
+          </div>
+          <div class="text-left leading-tight hidden sm:block">
+            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Keranjang</p>
+            <p id="cart-total-price-tag" class="text-xs font-black text-brand-slateDark font-outfit">Rp 0</p>
+          </div>
+        </div>
+
+        <!-- Mobile Nav Toggle -->
+        <button onclick="toggleMobileMenu()"
+          class="p-2.5 md:hidden bg-brand-slateLight hover:bg-brand-slateBorder text-brand-slateDark transition rounded-xl">
+          <i class="ti ti-menu-2 text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== 3. NAVIGATION BAR ==================== -->
+  <nav class="bg-brand-slateLight border-b border-brand-slateBorder">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
+
+      <!-- Navigation Links -->
+      <div
+        class="flex items-center gap-8 h-full text-xs font-bold font-outfit uppercase tracking-widest text-slate-600">
+        <a href="index.html"
+          class="text-brand-blueRoyal relative after:content-[''] after:absolute after:bottom-[-6px] after:left-0 after:w-full after:h-0.5 after:bg-brand-orangeAccent">Beranda</a>
+        <a href="produk.html" class="hover:text-brand-blueRoyal transition py-3">Semua Produk</a>
+        <a href="produk.html?cat=Kursi%20%26%20Sofa" class="hover:text-brand-blueRoyal transition py-3">Kursi & Sofa</a>
+        <a href="produk.html?cat=Meja%20%26%20Rak" class="hover:text-brand-blueRoyal transition py-3">Meja & Rak</a>
+        <a href="produk.html?cat=Lampu%20%26%20Dekorasi" class="hover:text-brand-blueRoyal transition py-3">Lampu &
+          Dekorasi</a>
+        <a href="produk.html?cat=Kasur%20%26%20Kamar" class="hover:text-brand-blueRoyal transition py-3">Kasur &
+          Kamar</a>
+      </div>
+
+      <!-- Hotline widget on right -->
+      <div class="hidden xl:flex items-center gap-2 text-brand-slateDark font-outfit text-xs font-extrabold">
+        <i class="ti ti-phone-call text-base text-brand-orangeAccent animate-bounce"></i>
+        <span>Hotline: 0800-1-BIZMATE</span>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div id="mobile-menu"
+      class="hidden md:hidden border-t border-brand-slateBorder bg-white px-4 py-4 space-y-2 shadow-lg">
+      <a href="index.html" class="block text-xs font-bold text-brand-blueRoyal font-outfit uppercase py-2">Beranda</a>
+      <a href="produk.html"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Semua
+        Produk</a>
+      <a href="produk.html?cat=Kursi%20%26%20Sofa"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Kursi &
+        Sofa</a>
+      <a href="produk.html?cat=Meja%20%26%20Rak"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Meja &
+        Rak</a>
+      <a href="produk.html?cat=Lampu%20%26%20Dekorasi"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Lampu &
+        Dekorasi</a>
+      <a href="produk.html?cat=Kasur%20%26%20Kamar"
+        class="block text-xs font-bold text-slate-600 hover:text-brand-blueRoyal font-outfit uppercase py-2">Kasur &
+        Kamar</a>
+    </div>
+  </nav>
+
+  <!-- ==================== 4. HERO SECTION (Perfect layout from image) ==================== -->
+  <section class="bg-brand-slateLight py-12 md:py-20 relative overflow-hidden">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 items-center gap-8 relative z-10">
+
+      <!-- Hero Left Text Content -->
+      <div class="space-y-6 text-left">
+        <span
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-orangeAccent/10 text-brand-orangeAccent text-[10px] font-black uppercase tracking-widest font-outfit">
+          Koleksi Pilihan Terbaik
+        </span>
+        <h1
+          class="font-outfit font-black text-4xl sm:text-5xl md:text-6xl tracking-tight text-brand-slateDark leading-tight">
+          Let's make home<br><span class="text-brand-blueRoyal">happy place</span>
+        </h1>
+        <p class="text-sm sm:text-base text-slate-500 font-light max-w-md">
+          Ubah ruang hunian Anda menjadi lebih nyaman, hangat, dan indah dengan rangkaian mebel lokal buatan perajin
+          kayu terpercaya.
+        </p>
+        <div>
+          <a href="produk.html"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-brand-orangeAccent hover:bg-brand-orangeHover text-white text-xs font-black rounded-xl transition shadow-lg shadow-brand-orangeAccent/30 uppercase tracking-widest font-outfit">
+            Belanja Sekarang
+            <i class="ti ti-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Right Image Frame (Matches green sofa image on template) -->
+      <div class="relative flex justify-center items-center">
+        <!-- Background circle glow decoration -->
+        <div
+          class="absolute w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] rounded-full bg-brand-blueRoyal/5 -z-10 animate-pulse">
+        </div>
+        <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=700&q=80"
+          alt="Green Sofa Luxury"
+          class="max-h-[350px] sm:max-h-[450px] w-auto object-contain rounded-3xl drop-shadow-2xl hover:scale-105 transition duration-500">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 5. DOUBLE PROMO BANNER (Matches template image) ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Left Banner: Armchair You Need For Relax -->
+    <div
+      class="bg-brand-slateLight rounded-3xl p-8 border border-brand-slateBorder/60 flex items-center justify-between gap-4 overflow-hidden relative group hover:shadow-md transition">
+      <div class="space-y-4 max-w-[60%] z-10">
+        <span class="text-[9px] font-bold text-brand-orangeAccent uppercase tracking-widest font-outfit block">Koleksi
+          Kursi</span>
+        <h3 class="font-outfit font-black text-xl sm:text-2xl text-brand-slateDark leading-tight">
+          You Need For Relax
+        </h3>
+        <p class="text-xs text-slate-500 font-light">Mulai dari Rp 850.000</p>
+        <a href="produk.html?cat=Kursi%20%26%20Sofa"
+          class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white text-[10px] font-black rounded-lg transition uppercase tracking-wider font-outfit">
+          Beli Sekarang
+        </a>
+      </div>
+      <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=350&q=80"
+        alt="Grey Chair"
+        class="w-[140px] sm:w-[180px] h-auto object-contain transform group-hover:scale-110 transition duration-300">
+    </div>
+
+    <!-- Right Banner: Smart Choice Sofa -->
+    <div
+      class="bg-brand-slateLight rounded-3xl p-8 border border-brand-slateBorder/60 flex items-center justify-between gap-4 overflow-hidden relative group hover:shadow-md transition">
+      <div class="space-y-4 max-w-[60%] z-10">
+        <span class="text-[9px] font-bold text-brand-blueRoyal uppercase tracking-widest font-outfit block">Pilihan
+          Cerdas</span>
+        <h3 class="font-outfit font-black text-xl sm:text-2xl text-brand-slateDark leading-tight">
+          Cozy Velvet Sofa
+        </h3>
+        <p class="text-xs text-slate-500 font-light">Diskon hingga 25% OFF</p>
+        <a href="produk.html?cat=Kursi%20%26%20Sofa"
+          class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-brand-orangeAccent hover:bg-brand-orangeHover text-white text-[10px] font-black rounded-lg transition uppercase tracking-wider font-outfit">
+          Lihat Promo
+        </a>
+      </div>
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=350&q=80"
+        alt="Speaker / Sofa"
+        class="w-[140px] sm:w-[180px] h-auto object-contain transform group-hover:scale-110 transition duration-300">
+    </div>
+
+  </section>
+
+  <!-- ==================== 6. NEW ARRIVALS TABS ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-brand-slateBorder pb-4 gap-4">
+      <div class="space-y-1">
+        <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-wider font-outfit block">Katalog
+          Terbaru</span>
+        <h2 class="font-outfit font-black text-2xl text-brand-slateDark">New Arrivals</h2>
+      </div>
+      <!-- Tabs matching template layout -->
+      <div class="flex items-center gap-4 text-xs font-bold font-outfit uppercase tracking-widest text-slate-400">
+        <button onclick="filterNewArrivals('all')" id="tab-na-all"
+          class="text-brand-blueRoyal pb-1 border-b-2 border-brand-orangeAccent">All</button>
+        <button onclick="filterNewArrivals('Kursi & Sofa')" id="tab-na-sofa"
+          class="hover:text-brand-blueRoyal transition pb-1">Sofa & Kursi</button>
+        <button onclick="filterNewArrivals('Meja & Rak')" id="tab-na-table"
+          class="hover:text-brand-blueRoyal transition pb-1">Meja</button>
+        <button onclick="filterNewArrivals('Lampu & Dekorasi')" id="tab-na-decor"
+          class="hover:text-brand-blueRoyal transition pb-1">Dekorasi</button>
+      </div>
+    </div>
+
+    <!-- Product Grid: 4 items (Matches top row on template: yellow armchair, coffee table, red chair, beige sofa) -->
+    <div id="new-arrivals-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- ==================== 7. FEATURES BAR (Free Shipping, Secure Payments) ==================== -->
+  <section class="bg-brand-slateLight border-y border-brand-slateBorder py-8">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center lg:text-left">
+
+      <div
+        class="flex flex-col lg:flex-row items-center gap-3.5 p-4 rounded-2xl hover:bg-white hover:shadow-sm transition duration-300">
+        <div
+          class="w-12 h-12 rounded-xl bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-2xl shrink-0">
+          <i class="ti ti-truck-delivery"></i></div>
+        <div class="leading-tight">
+          <h4 class="font-outfit font-bold text-sm text-brand-slateDark">Bebas Ongkir</h4>
+          <p class="text-[11px] text-slate-500 font-light mt-0.5">Minimal belanja Rp 150.000 se-Indonesia</p>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col lg:flex-row items-center gap-3.5 p-4 rounded-2xl hover:bg-white hover:shadow-sm transition duration-300">
+        <div
+          class="w-12 h-12 rounded-xl bg-brand-orangeAccent/5 text-brand-orangeAccent flex items-center justify-center text-2xl shrink-0">
+          <i class="ti ti-rotate-clockwise-2"></i></div>
+        <div class="leading-tight">
+          <h4 class="font-outfit font-bold text-sm text-brand-slateDark">Garansi 30 Hari</h4>
+          <p class="text-[11px] text-slate-500 font-light mt-0.5">Jaminan retur jika produk rusak/cacat</p>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col lg:flex-row items-center gap-3.5 p-4 rounded-2xl hover:bg-white hover:shadow-sm transition duration-300">
+        <div
+          class="w-12 h-12 rounded-xl bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-2xl shrink-0">
+          <i class="ti ti-shield-lock"></i></div>
+        <div class="leading-tight">
+          <h4 class="font-outfit font-bold text-sm text-brand-slateDark">100% Secure Payment</h4>
+          <p class="text-[11px] text-slate-500 font-light mt-0.5">Enkripsi pembayaran digital aman</p>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col lg:flex-row items-center gap-3.5 p-4 rounded-2xl hover:bg-white hover:shadow-sm transition duration-300">
+        <div
+          class="w-12 h-12 rounded-xl bg-brand-orangeAccent/5 text-brand-orangeAccent flex items-center justify-center text-2xl shrink-0">
+          <i class="ti ti-headset"></i></div>
+        <div class="leading-tight">
+          <h4 class="font-outfit font-bold text-sm text-brand-slateDark">Dukungan CS 24/7</h4>
+          <p class="text-[11px] text-slate-500 font-light mt-0.5">Layanan bantuan pelanggan dedikatif</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 8. BEST SELLERS SECTION (6 items grid) ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-brand-slateBorder pb-4 gap-4">
+      <div class="space-y-1">
+        <span
+          class="text-[10px] font-bold text-brand-orangeAccent uppercase tracking-wider font-outfit block font-black">Produk
+          Terlaris</span>
+        <h2 class="font-outfit font-black text-2xl text-brand-slateDark">Best Sellers</h2>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-bold font-outfit uppercase tracking-widest text-slate-400">
+        <button onclick="filterBestSellers('all')" id="tab-bs-all"
+          class="text-brand-blueRoyal pb-1 border-b-2 border-brand-orangeAccent">All</button>
+        <button onclick="filterBestSellers('Kursi & Sofa')" id="tab-bs-sofa"
+          class="hover:text-brand-blueRoyal transition pb-1">Sofa</button>
+        <button onclick="filterBestSellers('Meja & Rak')" id="tab-bs-table"
+          class="hover:text-brand-blueRoyal transition pb-1">Meja</button>
+        <button onclick="filterBestSellers('Kasur & Kamar')" id="tab-bs-bedroom"
+          class="hover:text-brand-blueRoyal transition pb-1">Kamar Tidur</button>
+      </div>
+    </div>
+
+    <!-- Product Grid: 6 items (matches best sellers section on template) -->
+    <div id="best-sellers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- ==================== 9. TOP CATEGORIES THIS WEEK (Matches grid on template) ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    <div class="border-b border-brand-slateBorder pb-4">
+      <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-wider font-outfit block">Kategori
+        Terpopuler</span>
+      <h2 class="font-outfit font-black text-2xl text-brand-slateDark">Top Categories This Week</h2>
+    </div>
+
+    <!-- Layout Grid: Big Red Chair Left, 2x2 Small Categories Right -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Big Card Left: Red Chair "Single Wheel" / "Kursi Santai Telur" -->
+      <div
+        class="lg:col-span-1 bg-brand-slateLight rounded-3xl p-8 border border-brand-slateBorder/60 flex flex-col justify-between overflow-hidden relative group hover:shadow-md transition min-h-[400px]">
+        <div class="space-y-3 z-10">
+          <span
+            class="px-2.5 py-0.5 bg-brand-orangeAccent text-white text-[9px] font-extrabold rounded font-outfit uppercase">Promo
+            Minggu Ini</span>
+          <h3 class="font-outfit font-black text-2xl text-brand-slateDark">Kursi Santai Telur</h3>
+          <p class="text-xs text-slate-500 font-light">Rp 1.899.000 <span class="line-through text-slate-400 ml-1">Rp
+              2.500.000</span></p>
+          <a href="detail.html?id=3"
+            class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blueRoyal hover:text-brand-orangeAccent transition font-outfit">
+            Belanja Sekarang &rarr;
+          </a>
+        </div>
+        <div class="relative flex justify-center mt-6">
+          <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=400&q=80"
+            alt="Red Chair" class="h-64 w-auto object-contain transform group-hover:scale-105 transition duration-300">
+        </div>
+      </div>
+
+      <!-- 2x2 Grid Right Side (Expanded to support more categories) -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="category-grid-right">
+          <!-- Small Card 1: Kursi Sofa -->
+          <div onclick="window.location.href='produk.html?cat=Kursi%20%26%20Sofa'"
+            class="bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Sofa Premium</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=180&q=80"
+              alt="Sofa" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 2: Meja & Kopi -->
+          <div onclick="window.location.href='produk.html?cat=Meja%20%26%20Rak'"
+            class="bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Meja Kopi Jati</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=180&q=80"
+              alt="Table" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 3: Lampu Tidur -->
+          <div onclick="window.location.href='produk.html?cat=Lampu%20%26%20Dekorasi'"
+            class="bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Lampu & Dekor</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=180&q=80"
+              alt="Lamp" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 4: Tempat Tidur -->
+          <div onclick="window.location.href='produk.html?cat=Kasur%20%26%20Kamar'"
+            class="bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Kamar Tidur</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=180&q=80"
+              alt="Bed" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 5: Lemari & Rak -->
+          <div onclick="window.location.href='produk.html?cat=Meja%20%26%20Rak'"
+            class="bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Lemari & Rak</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=180&q=80"
+              alt="Cabinet" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 6: Kursi Makan (Last shown by default) -->
+          <div onclick="window.location.href='produk.html?cat=Kursi%20%26%20Sofa'"
+            class="bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Kursi Makan</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=180&q=80"
+              alt="Dining Chair" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 7 (Hidden initially): Peralatan Dapur -->
+          <div onclick="window.location.href='produk.html?cat=Lampu%20%26%20Dekorasi'"
+            class="hidden-category bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition hidden">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Peralatan Dapur</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=180&q=80"
+              alt="Kitchen" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 8 (Hidden initially): Furnitur Outdoor -->
+          <div onclick="window.location.href='produk.html?cat=Kursi%20%26%20Sofa'"
+            class="hidden-category bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition hidden">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Mebel Outdoor</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=180&q=80"
+              alt="Outdoor" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 9 (Hidden initially): Meja Belajar & Kerja -->
+          <div onclick="window.location.href='produk.html?cat=Meja%20%26%20Rak'"
+            class="hidden-category bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition hidden">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Meja Belajar</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=180&q=80"
+              alt="Study Desk" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+
+          <!-- Small Card 10 (Hidden initially): Karpet & Tekstil -->
+          <div onclick="window.location.href='produk.html?cat=Lampu%20%26%20Dekorasi'"
+            class="hidden-category bg-brand-slateLight rounded-3xl p-6 border border-brand-slateBorder/60 flex items-center justify-between cursor-pointer group hover:shadow-md transition hidden">
+            <div class="space-y-1.5">
+              <h4 class="font-outfit font-black text-lg text-brand-slateDark">Karpet & Tekstil</h4>
+              <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-outfit">Lihat Koleksi &rarr;
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=180&q=80"
+              alt="Carpet" class="w-24 h-20 object-cover rounded transform group-hover:scale-105 transition duration-300">
+          </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <div class="text-center pt-2">
+          <button id="btn-toggle-categories" onclick="toggleCategoriesVisibility()"
+            class="inline-flex items-center gap-2 px-6 py-2.5 border border-brand-blueRoyal/30 hover:border-brand-blueRoyal text-brand-blueRoyal font-bold text-xs rounded-full transition-all duration-300 uppercase tracking-wider font-outfit shadow-sm bg-white hover:bg-brand-slateLight">
+            <span>Kategori Lainnya</span>
+            <i class="ti ti-chevron-down text-sm" id="icon-toggle-categories"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 10. POPULAR PRODUCTS (Matches layout from image) ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    <div class="border-b border-brand-slateBorder pb-4">
+      <span class="text-[10px] font-bold text-brand-orangeAccent uppercase tracking-wider font-outfit block">Koleksi
+        Terpopuler</span>
+      <h2 class="font-outfit font-black text-2xl text-brand-slateDark">Popular Products</h2>
+    </div>
+
+    <!-- Product Grid: 4 items (Meja Kerja Belajar, Sofa Hijau Velour, Lampu Bedside, Bed Frame King) -->
+    <div id="popular-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- ==================== 11. LATEST NEWS / BLOG (Matches template image) ==================== -->
+  <section class="bg-brand-slateLight/50 border-t border-brand-slateBorder py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <div class="flex justify-between items-end border-b border-brand-slateBorder pb-4">
+        <div class="space-y-1">
+          <span
+            class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-wider font-outfit block font-black">Inspirasi
+            Desain</span>
+          <h2 class="font-outfit font-black text-2xl text-brand-slateDark">Latest News</h2>
+        </div>
+        <a href="#"
+          class="text-xs font-bold text-brand-blueRoyal hover:text-brand-orangeAccent transition uppercase tracking-widest font-outfit">Lihat
+          Semua Blog &rarr;</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Blog Card 1 -->
+        <article
+          class="bg-white rounded-3xl overflow-hidden border border-brand-slateBorder/60 shadow-sm group hover:shadow-md transition duration-300">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80"
+              alt="Blog 1" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+            <span
+              class="absolute top-4 left-4 bg-brand-blueRoyal text-white text-[9px] font-extrabold px-2.5 py-1 rounded font-outfit uppercase">Interior</span>
+          </div>
+          <div class="p-6 space-y-3">
+            <span class="text-[10px] text-slate-400 font-bold block font-outfit">18 MEI 2026</span>
+            <h4
+              class="font-outfit font-bold text-base text-brand-slateDark hover:text-brand-blueRoyal cursor-pointer transition line-clamp-2">
+              Tips Menata Ruang Tamu Minimalis Agar Terlihat Luas</h4>
+            <p class="text-xs text-slate-500 font-light line-clamp-3">Temukan cara menata furnitur, memilih warna sofa,
+              dan mengatur pencahayaan lampu untuk menciptakan ruang tamu minimalis yang estetik dan lapang.</p>
+          </div>
+        </article>
+
+        <!-- Blog Card 2 -->
+        <article
+          class="bg-white rounded-3xl overflow-hidden border border-brand-slateBorder/60 shadow-sm group hover:shadow-md transition duration-300">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80"
+              alt="Blog 2" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+            <span
+              class="absolute top-4 left-4 bg-brand-orangeAccent text-white text-[9px] font-extrabold px-2.5 py-1 rounded font-outfit uppercase">Panduan
+              Kayu</span>
+          </div>
+          <div class="p-6 space-y-3">
+            <span class="text-[10px] text-slate-400 font-bold block font-outfit">12 MEI 2026</span>
+            <h4
+              class="font-outfit font-bold text-base text-brand-slateDark hover:text-brand-blueRoyal cursor-pointer transition line-clamp-2">
+              Cara Merawat Meja Kayu Jati Agar Awet Hingga Puluhan Tahun</h4>
+            <p class="text-xs text-slate-500 font-light line-clamp-3">Kayu jati terkenal kokoh, namun membutuhkan
+              perawatan khusus agar serat kayunya tetap bersinar indah. Simak rahasianya di sini.</p>
+          </div>
+        </article>
+
+        <!-- Blog Card 3 -->
+        <article
+          class="bg-white rounded-3xl overflow-hidden border border-brand-slateBorder/60 shadow-sm group hover:shadow-md transition duration-300">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80"
+              alt="Blog 3" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+            <span
+              class="absolute top-4 left-4 bg-brand-blueRoyal text-white text-[9px] font-extrabold px-2.5 py-1 rounded font-outfit uppercase">Pencahayaan</span>
+          </div>
+          <div class="p-6 space-y-3">
+            <span class="text-[10px] text-slate-400 font-bold block font-outfit">05 MEI 2026</span>
+            <h4
+              class="font-outfit font-bold text-base text-brand-slateDark hover:text-brand-blueRoyal cursor-pointer transition line-clamp-2">
+              Memilih Lampu Tidur Yang Tepat Untuk Kualitas Istirahat Maksimal</h4>
+            <p class="text-xs text-slate-500 font-light line-clamp-3">Pencahayaan kamar tidur sangat memengaruhi
+              kenyamanan tidur Anda. Pelajari cara menentukan watt lampu dan posisi terbaiknya.</p>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 12. NEWSLETTER BAR (Matches image teal/blue block) ==================== -->
+  <section class="bg-brand-blueRoyal text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+      <div class="max-w-xl text-center lg:text-left space-y-1.5">
+        <h3 class="font-outfit font-black text-xl sm:text-2xl">Mendaftar ke Buletin Bizmate Furnitur</h3>
+        <p class="text-xs text-white/70 font-light">Dapatkan potongan kupon diskon sebesar 10% untuk transaksi furnitur
+          pertama Anda.</p>
+      </div>
+      <div class="flex gap-2 w-full lg:max-w-md shrink-0">
+        <input type="email" id="newsletter-email" placeholder="Masukkan alamat email aktif Anda..."
+          class="w-full px-4 py-3 rounded-xl bg-white text-xs text-brand-slateDark focus:outline-none placeholder-slate-400 font-medium">
+        <button onclick="subscribeNewsletter()"
+          class="px-6 py-3 bg-brand-orangeAccent hover:bg-brand-orangeHover text-white font-extrabold rounded-xl text-[10px] transition font-outfit uppercase tracking-wider shrink-0">
+          Daftar
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 13. MULTI COLUMN FOOTER ==================== -->
+  <footer class="bg-white border-t border-brand-slateBorder py-16 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Column 1: Info -->
+      <div class="space-y-4 text-left">
+        <a href="index.html" class="flex items-center gap-2 font-outfit">
+          <div
+            class="w-8 h-8 rounded-lg bg-brand-blueRoyal flex items-center justify-center text-white font-outfit font-black text-base shadow">
+            <i class="ti ti-sofa"></i>
+          </div>
+          <span class="font-outfit font-extrabold text-xl tracking-tighter text-brand-slateDark">
+            biz<span class="text-brand-orangeAccent">mate</span>
+          </span>
+        </a>
+        <p class="font-light leading-relaxed">Pusat kerajinan mebel berkualitas tinggi hasil karya perajin lokal UMKM
+          Indonesia untuk kenyamanan hunian Anda.</p>
+        <p class="font-semibold text-brand-slateDark"><i class="ti ti-map-pin mr-1 text-brand-orangeAccent"></i> Jl.
+          Mebel Jati Indah No. 45, Jepara</p>
+      </div>
+
+      <!-- Column 2: Customer Service -->
+      <div class="space-y-3">
+        <h4 class="font-outfit font-black text-sm text-brand-slateDark uppercase tracking-wider">Layanan Pelanggan</h4>
+        <ul class="space-y-2 font-semibold">
+          <li><a href="#" class="hover:text-brand-blueRoyal transition">Cara Pemesanan</a></li>
+          <li><a href="#" class="hover:text-brand-blueRoyal transition">Konfirmasi Pembayaran</a></li>
+          <li><a href="#" class="hover:text-brand-blueRoyal transition">Lacak Pengiriman</a></li>
+          <li><a href="#" class="hover:text-brand-blueRoyal transition">Kebijakan Garansi Mebel</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Categories -->
+      <div class="space-y-3">
+        <h4 class="font-outfit font-black text-sm text-brand-slateDark uppercase tracking-wider">Kategori Pilihan</h4>
+        <ul class="space-y-2 font-semibold">
+          <li><a href="produk.html?cat=Kursi%20%26%20Sofa" class="hover:text-brand-blueRoyal transition">Kursi & Sofa
+              Tamu</a></li>
+          <li><a href="produk.html?cat=Meja%20%26%20Rak" class="hover:text-brand-blueRoyal transition">Meja Kopi &
+              Kerja</a></li>
+          <li><a href="produk.html?cat=Lampu%20%26%20Dekorasi" class="hover:text-brand-blueRoyal transition">Lampu Hias
+              & Cermin</a></li>
+          <li><a href="produk.html?cat=Kasur%20%26%20Kamar" class="hover:text-brand-blueRoyal transition">Kasur & Kamar
+              Tidur</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter Box Footer / Contact -->
+      <div class="space-y-3">
+        <h4 class="font-outfit font-black text-sm text-brand-slateDark uppercase tracking-wider">Ikuti Sosial Media Kami
+        </h4>
+        <div class="flex items-center gap-3">
+          <a href="#"
+            class="w-8 h-8 rounded-full bg-brand-slateLight hover:bg-brand-blueRoyal hover:text-white transition flex items-center justify-center text-base border border-brand-slateBorder"><i
+              class="ti ti-brand-instagram"></i></a>
+          <a href="#"
+            class="w-8 h-8 rounded-full bg-brand-slateLight hover:bg-brand-blueRoyal hover:text-white transition flex items-center justify-center text-base border border-brand-slateBorder"><i
+              class="ti ti-brand-facebook"></i></a>
+          <a href="#"
+            class="w-8 h-8 rounded-full bg-brand-slateLight hover:bg-brand-blueRoyal hover:text-white transition flex items-center justify-center text-base border border-brand-slateBorder"><i
+              class="ti ti-brand-youtube"></i></a>
+        </div>
+        <p class="font-light text-slate-400 pt-2">&copy; 2026 Bizmate Furnitur UMKM Indonesia. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== 14. DRAWER CART ==================== -->
+  <div id="cart-drawer-backdrop" onclick="toggleCartDrawer(false)"
+    class="fixed inset-0 bg-brand-slateDark/40 z-50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm">
+  </div>
+  <div id="cart-drawer"
+    class="fixed right-0 top-0 bottom-0 w-full sm:w-[420px] bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+
+    <div class="px-6 py-5 border-b border-brand-slateBorder flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="ti ti-shopping-cart text-xl text-brand-blueRoyal"></i>
+        <h3 class="font-outfit font-extrabold text-sm text-brand-slateDark">Keranjang Belanja</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)"
+        class="p-2 text-slate-400 hover:text-brand-slateDark rounded-full hover:bg-brand-slateLight transition">
+        <i class="ti ti-x text-base"></i>
+      </button>
+    </div>
+
+    <div class="px-6 py-4 bg-brand-slateLight border-b border-brand-slateBorder space-y-2">
+      <div
+        class="flex justify-between items-center text-[10px] font-bold text-brand-slateDark uppercase tracking-wider font-outfit">
+        <span>Bebas Ongkir</span>
+        <span id="shipping-tracker-pct" class="text-brand-blueRoyal font-black">0%</span>
+      </div>
+      <div class="w-full h-1.5 bg-brand-slateBorder rounded-full overflow-hidden">
+        <div id="shipping-tracker-bar" class="h-full bg-brand-blueRoyal rounded-full transition-all duration-500"
+          style="width: 0%;"></div>
+      </div>
+      <p id="shipping-tracker-desc" class="text-[10px] text-slate-500 font-light">Belanja Rp 150.000 lagi untuk Bebas
+        Ongkir se-Indonesia!</p>
+    </div>
+
+    <!-- Scrollable container of cart list -->
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4"></div>
+
+    <div class="px-6 py-3 border-t border-brand-slateBorder bg-brand-slateLight/40 flex gap-2">
+      <input type="text" id="cart-coupon-input" placeholder="KUPON BIZMATEBLUE..."
+        class="w-full px-3.5 py-2 rounded-xl bg-white border border-brand-slateBorder text-[10px] text-brand-slateDark focus:outline-none focus:border-brand-blueRoyal uppercase font-bold tracking-wider">
+      <button onclick="applyCoupon()"
+        class="px-4 py-2 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-[10px] transition uppercase tracking-wider font-outfit">Klaim</button>
+    </div>
+
+    <div class="p-6 border-t border-brand-slateBorder bg-brand-slateLight space-y-4">
+      <div class="space-y-1.5 text-xs text-slate-500">
+        <div class="flex items-center justify-between font-semibold">
+          <span>Subtotal Awal</span>
+          <span id="cart-original-subtotal" class="font-medium text-brand-slateDark">Rp 0</span>
+        </div>
+        <div class="flex items-center justify-between font-semibold text-red-500">
+          <span>Diskon Promo</span>
+          <span id="cart-discount-total">-Rp 0</span>
+        </div>
+        <div class="flex items-center justify-between font-semibold text-emerald-600 hidden" id="cart-coupon-row">
+          <span>Kupon Diskon (10%)</span>
+          <span id="cart-coupon-discount">-Rp 0</span>
+        </div>
+        <div
+          class="flex items-center justify-between text-sm font-semibold text-brand-slateDark border-t border-brand-slateBorder pt-2.5">
+          <span>Total Pembayaran</span>
+          <span id="cart-final-subtotal" class="text-brand-blueRoyal font-outfit text-base font-black">Rp 0</span>
+        </div>
+      </div>
+
+      <div class="pt-2 grid grid-cols-2 gap-3">
+        <button onclick="clearCart()"
+          class="w-full py-3 border border-brand-slateBorder hover:border-brand-slateDark text-brand-slateDark font-semibold rounded-xl text-xs transition uppercase font-outfit">Hapus</button>
+        <button onclick="checkout()"
+          class="w-full py-3 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-xs transition shadow flex items-center justify-center gap-1 font-outfit uppercase tracking-wider">Bayar
+          &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+  </div>
+
+  <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+  <script>
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: "Kursi Sofa Single Premium",
+        category: "Kursi & Sofa",
+        price: 1850000,
+        promoPrice: 1299000,
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 204,
+        variants: ["Kuning Mustard", "Abu-Abu Elegan"]
+      },
+      {
+        id: 2,
+        name: "Meja Kopi Minimalis Jati",
+        category: "Meja & Rak",
+        price: 1200000,
+        promoPrice: 850000,
+        image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 187,
+        variants: ["Kayu Jati Alami", "Putih Marmer"]
+      },
+      {
+        id: 3,
+        name: "Kursi Santai Telur Merah",
+        category: "Kursi & Sofa",
+        price: 2500000,
+        promoPrice: 1899000,
+        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 92,
+        variants: ["Merah Membara", "Biru Royal"]
+      },
+      {
+        id: 4,
+        name: "Sofa Klasik 3 Dudukan",
+        category: "Kursi & Sofa",
+        price: 3800000,
+        promoPrice: 3200000,
+        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 154,
+        variants: ["Beige Mewah", "Abu-Abu Kasual"]
+      },
+      {
+        id: 5,
+        name: "Kursi Sofa Biru Samudra",
+        category: "Kursi & Sofa",
+        price: 1950000,
+        promoPrice: 1499000,
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 231,
+        variants: ["Hijau Beludru", "Biru Samudra"]
+      },
+      {
+        id: 6,
+        name: "Rak Buku Minimalis Hitam",
+        category: "Meja & Rak",
+        price: 950000,
+        promoPrice: 750000,
+        image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
+        rating: 4.6,
+        reviewsCount: 68,
+        variants: ["Hitam Doff", "Putih Bersih"]
+      },
+      {
+        id: 7,
+        name: "Meja Kerja Belajar Kayu",
+        category: "Meja & Rak",
+        price: 1100000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 115,
+        variants: ["Natural Oak", "Dark Walnut"]
+      },
+      {
+        id: 8,
+        name: "Lampu Tidur Stand Elegan",
+        category: "Lampu & Dekorasi",
+        price: 450000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 123,
+        variants: ["Putih Hangat", "Kuning Klasik"]
+      },
+      {
+        id: 9,
+        name: "Tempat Tidur Luxury King",
+        category: "Kasur & Kamar",
+        price: 5500000,
+        promoPrice: 4899000,
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80",
+        rating: 4.9,
+        reviewsCount: 78,
+        variants: ["Putih Salju", "Abu-Abu Urban"]
+      },
+      {
+        id: 10,
+        name: "Cermin Dinding Bulat Estetik",
+        category: "Lampu & Dekorasi",
+        price: 350000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 42,
+        variants: ["Frame Emas", "Frame Hitam"]
+      },
+      {
+        id: 11,
+        name: "Tanaman Hias Monstera Palsu",
+        category: "Lampu & Dekorasi",
+        price: 199000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=600&q=80",
+        rating: 4.7,
+        reviewsCount: 110,
+        variants: ["Monstera King", "Monstera Deliciosa"]
+      },
+      {
+        id: 12,
+        name: "Karpet Bulu Domba Lembut",
+        category: "Kasur & Kamar",
+        price: 299000,
+        promoPrice: 220000,
+        image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 89,
+        variants: ["Putih Murni", "Abu-Abu Kabut"]
+      },
+      {
+        id: 13,
+        name: "Rak Dinding Gantungan Kunci",
+        category: "Lampu & Dekorasi",
+        price: 150000,
+        promoPrice: 99000,
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80",
+        rating: 4.6,
+        reviewsCount: 35,
+        variants: ["Warna Kayu", "Putih Minimalis"]
+      },
+      {
+        id: 14,
+        name: "Sofa Bed Lipat Multifungsi",
+        category: "Kursi & Sofa",
+        price: 2850000,
+        promoPrice: null,
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80",
+        rating: 4.8,
+        reviewsCount: 54,
+        variants: ["Abu-Abu Modern", "Hijau Toska"]
+      }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('bizmate_cart')) || [];
+    let isCouponApplied = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Sync across multi-window testing
+      window.addEventListener('storage', () => {
+        cart = JSON.parse(localStorage.getItem('bizmate_cart')) || [];
+        updateCartBadge();
+        renderCartItems();
+      });
+
+      renderNewArrivals('all');
+      renderBestSellers('all');
+      renderPopularProducts();
+      updateCartBadge();
+      renderCartItems();
+    });
+
+    function formatIDR(val) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(val);
+    }
+
+    // --- RENDER DYNAMIC PRODUCTS ---
+
+    function renderNewArrivals(cat) {
+      const container = document.getElementById('new-arrivals-grid');
+      if (!container) return;
+
+      // Update active tab buttons
+      ['all', 'sofa', 'table', 'decor'].forEach(id => {
+        const el = document.getElementById(`tab-na-${id}`);
+        if (el) el.className = "hover:text-brand-blueRoyal transition pb-1";
+      });
+
+      const activeId = cat === 'all' ? 'all' : (cat === 'Kursi & Sofa' ? 'sofa' : (cat === 'Meja & Rak' ? 'table' : 'decor'));
+      const activeEl = document.getElementById(`tab-na-${activeId}`);
+      if (activeEl) activeEl.className = "text-brand-blueRoyal pb-1 border-b-2 border-brand-orangeAccent font-black";
+
+      // Filter products (take top 4 matching category)
+      let filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === cat);
+      filtered = filtered.slice(0, 4);
+
+      container.innerHTML = filtered.map(p => {
+        const hasPromo = p.promoPrice !== null && p.promoPrice !== undefined;
+        const finalPrice = hasPromo ? p.promoPrice : p.price;
+
+        return `
+          <div class="bg-white rounded-3xl p-5 border border-brand-slateBorder/60 hover:border-brand-blueRoyal/30 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between h-full group hover-scale">
+            
+            <div onclick="window.location.href='detail.html?id=${p.id}'" class="h-48 w-full bg-brand-slateLight rounded-2xl overflow-hidden flex items-center justify-center p-4 cursor-pointer relative">
+              ${hasPromo ? `
+                <div class="absolute top-3 left-3 bg-brand-orangeAccent text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded-md shadow uppercase tracking-wider font-outfit">
+                  SALE
+                </div>
+              ` : ''}
+              <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain rounded-xl transform group-hover:scale-105 transition duration-300">
+            </div>
+
+            <div class="mt-4 flex-grow flex flex-col justify-between space-y-3">
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-widest block font-outfit">${p.category}</span>
+                <h4 onclick="window.location.href='detail.html?id=${p.id}'" class="font-outfit font-bold text-sm hover:text-brand-blueRoyal cursor-pointer transition line-clamp-1">${p.name}</h4>
+                <div class="flex items-center gap-1">
+                  <div class="flex text-brand-orangeAccent text-[10px]">
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="text-xs font-bold text-brand-slateDark">${p.rating}</span>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-brand-slateBorder/60 flex flex-col gap-2">
+                <div class="flex flex-col">
+                  ${hasPromo ? `
+                    <span class="font-outfit font-black text-sm text-brand-orangeAccent">${formatIDR(p.promoPrice)}</span>
+                    <span class="text-[10px] text-slate-400 line-through font-light mt-0.5">${formatIDR(p.price)}</span>
+                  ` : `
+                    <span class="font-outfit font-black text-sm text-brand-slateDark">${formatIDR(p.price)}</span>
+                  `}
+                </div>
+                <button onclick="addToCart(${p.id}, '${p.variants[0]}', 1)" class="w-full py-2.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-[10px] transition flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider">
+                  <i class="ti ti-shopping-cart text-sm"></i>
+                  + Keranjang
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderBestSellers(cat) {
+      const container = document.getElementById('best-sellers-grid');
+      if (!container) return;
+
+      // Update active tab buttons
+      ['all', 'sofa', 'table', 'bedroom'].forEach(id => {
+        const el = document.getElementById(`tab-bs-${id}`);
+        if (el) el.className = "hover:text-brand-blueRoyal transition pb-1";
+      });
+
+      const activeId = cat === 'all' ? 'all' : (cat === 'Kursi & Sofa' ? 'sofa' : (cat === 'Meja & Rak' ? 'table' : 'bedroom'));
+      const activeEl = document.getElementById(`tab-bs-${activeId}`);
+      if (activeEl) activeEl.className = "text-brand-blueRoyal pb-1 border-b-2 border-brand-orangeAccent font-black";
+
+      // Filter products (take 6 products)
+      let filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === cat);
+      filtered = filtered.slice(0, 6);
+
+      container.innerHTML = filtered.map(p => {
+        const hasPromo = p.promoPrice !== null && p.promoPrice !== undefined;
+
+        return `
+          <div class="bg-white rounded-3xl p-5 border border-brand-slateBorder/60 hover:border-brand-blueRoyal/30 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between h-full group hover-scale">
+            
+            <div onclick="window.location.href='detail.html?id=${p.id}'" class="h-44 w-full bg-brand-slateLight rounded-2xl overflow-hidden flex items-center justify-center p-4 cursor-pointer relative">
+              ${hasPromo ? `
+                <div class="absolute top-3 left-3 bg-brand-orangeAccent text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded-md shadow uppercase tracking-wider font-outfit">
+                  SALE
+                </div>
+              ` : ''}
+              <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain rounded-xl transform group-hover:scale-105 transition duration-300">
+            </div>
+
+            <div class="mt-4 flex-grow flex flex-col justify-between space-y-3">
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-widest block font-outfit">${p.category}</span>
+                <h4 onclick="window.location.href='detail.html?id=${p.id}'" class="font-outfit font-bold text-sm hover:text-brand-blueRoyal cursor-pointer transition line-clamp-1">${p.name}</h4>
+                <div class="flex items-center gap-1">
+                  <div class="flex text-brand-orangeAccent text-[10px]">
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="text-xs font-bold text-brand-slateDark">${p.rating}</span>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-brand-slateBorder/60 flex flex-col gap-2">
+                <div class="flex flex-col">
+                  ${hasPromo ? `
+                    <span class="font-outfit font-black text-sm text-brand-orangeAccent">${formatIDR(p.promoPrice)}</span>
+                    <span class="text-[10px] text-slate-400 line-through font-light mt-0.5">${formatIDR(p.price)}</span>
+                  ` : `
+                    <span class="font-outfit font-black text-sm text-brand-slateDark">${formatIDR(p.price)}</span>
+                  `}
+                </div>
+                <button onclick="addToCart(${p.id}, '${p.variants[0]}', 1)" class="w-full py-2.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-[10px] transition flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider">
+                  <i class="ti ti-shopping-cart text-sm"></i>
+                  + Keranjang
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPopularProducts() {
+      const container = document.getElementById('popular-products-grid');
+      if (!container) return;
+
+      // Select specific items: Meja Kerja Belajar (7), Kursi Sofa Velvet (5), Lampu Stand (8), Bed Frame King (9)
+      const targetIds = [7, 5, 8, 9];
+      const filtered = PRODUCTS.filter(p => targetIds.includes(p.id));
+
+      container.innerHTML = filtered.map(p => {
+        const hasPromo = p.promoPrice !== null && p.promoPrice !== undefined;
+
+        return `
+          <div class="bg-white rounded-3xl p-5 border border-brand-slateBorder/60 hover:border-brand-blueRoyal/30 shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between h-full group hover-scale">
+            
+            <div onclick="window.location.href='detail.html?id=${p.id}'" class="h-44 w-full bg-brand-slateLight rounded-2xl overflow-hidden flex items-center justify-center p-4 cursor-pointer relative">
+              ${hasPromo ? `
+                <div class="absolute top-3 left-3 bg-brand-orangeAccent text-white font-extrabold text-[9px] px-2.5 py-0.5 rounded-md shadow uppercase tracking-wider font-outfit">
+                  SALE
+                </div>
+              ` : ''}
+              <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain rounded-xl transform group-hover:scale-105 transition duration-300">
+            </div>
+
+            <div class="mt-4 flex-grow flex flex-col justify-between space-y-3">
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold text-brand-blueRoyal uppercase tracking-widest block font-outfit">${p.category}</span>
+                <h4 onclick="window.location.href='detail.html?id=${p.id}'" class="font-outfit font-bold text-sm hover:text-brand-blueRoyal cursor-pointer transition line-clamp-1">${p.name}</h4>
+                <div class="flex items-center gap-1">
+                  <div class="flex text-brand-orangeAccent text-[10px]">
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="text-xs font-bold text-brand-slateDark">${p.rating}</span>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-brand-slateBorder/60 flex flex-col gap-2">
+                <div class="flex flex-col">
+                  ${hasPromo ? `
+                    <span class="font-outfit font-black text-sm text-brand-orangeAccent">${formatIDR(p.promoPrice)}</span>
+                    <span class="text-[10px] text-slate-400 line-through font-light mt-0.5">${formatIDR(p.price)}</span>
+                  ` : `
+                    <span class="font-outfit font-black text-sm text-brand-slateDark">${formatIDR(p.price)}</span>
+                  `}
+                </div>
+                <button onclick="addToCart(${p.id}, '${p.variants[0]}', 1)" class="w-full py-2.5 bg-brand-blueRoyal hover:bg-brand-blueDark text-white font-bold rounded-xl text-[10px] transition flex items-center justify-center gap-1.5 font-outfit uppercase tracking-wider">
+                  <i class="ti ti-shopping-cart text-sm"></i>
+                  + Keranjang
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterNewArrivals(cat) {
+      renderNewArrivals(cat);
+    }
+
+    function filterBestSellers(cat) {
+      renderBestSellers(cat);
+    }
+
+    // --- QUICK SEARCH & REDIRECT ---
+
+    function handleQuickSearch(q) {
+      const card = document.getElementById('quick-search-card');
+      const container = document.getElementById('suggestions-container');
+
+      if (!q.trim()) {
+        card.classList.add('hidden');
+        return;
+      }
+
+      const match = PRODUCTS.filter(p =>
+        p.name.toLowerCase().includes(q.toLowerCase()) ||
+        p.category.toLowerCase().includes(q.toLowerCase())
+      ).slice(0, 5);
+
+      if (match.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 py-2">Mebel tidak ditemukan...</p>`;
+      } else {
+        container.innerHTML = match.map(p => `
+          <div onclick="window.location.href='detail.html?id=${p.id}'" class="flex items-center gap-3 p-2 hover:bg-brand-slateLight rounded-xl cursor-pointer transition">
+            <img src="${p.image}" class="w-8 h-8 rounded object-cover">
+            <div>
+              <p class="text-xs font-bold text-brand-slateDark line-clamp-1">${p.name}</p>
+              <p class="text-[9px] text-brand-blueRoyal uppercase font-bold tracking-wider">${p.category}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      card.classList.remove('hidden');
+    }
+
+    function triggerSearch() {
+      const q = document.getElementById('header-search-input').value.trim();
+      if (q) {
+        window.location.href = `produk.html?q=${encodeURIComponent(q)}`;
+      }
+    }
+
+    // --- INTERACTIVE CART DRAWER SYSTEM ---
+
+    function addToCart(productId, variantName, qty) {
+      const targetProd = PRODUCTS.find(p => p.id === productId);
+      if (!targetProd) return;
+
+      const existing = cart.find(item => item.product.id === productId && item.variant === variantName);
+      if (existing) {
+        existing.quantity += qty;
+      } else {
+        cart.push({
+          product: targetProd,
+          variant: variantName,
+          quantity: qty
+        });
+      }
+
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Berhasil Masuk Keranjang!", `${targetProd.name} (${variantName}) ditambahkan.`);
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cart-badge');
+      const tag = document.getElementById('cart-total-price-tag');
+      if (!badge) return;
+
+      const totalItems = cart.reduce((tot, item) => tot + item.quantity, 0);
+      badge.textContent = totalItems;
+
+      let totalPrice = 0;
+      cart.forEach(item => {
+        const p = item.product.promoPrice || item.product.price;
+        totalPrice += p * item.quantity;
+      });
+
+      if (tag) {
+        tag.textContent = formatIDR(totalPrice);
+      }
+
+      // Shipping Progress Bar
+      const shippingBar = document.getElementById('shipping-tracker-bar');
+      const shippingPct = document.getElementById('shipping-tracker-pct');
+      const shippingDesc = document.getElementById('shipping-tracker-desc');
+      if (shippingBar) {
+        const pct = Math.min(Math.round((totalPrice / 150000) * 100), 100);
+        shippingBar.style.width = `${pct}%`;
+        shippingPct.textContent = `${pct}%`;
+        if (pct >= 100) {
+          shippingDesc.textContent = "Bebas ongkir nasional Anda aktif!";
+        } else {
+          shippingDesc.textContent = `Belanja Rp ${formatIDR(150000 - totalPrice)} lagi untuk bebas ongkir.`;
+        }
+      }
+    }
+
+    function toggleCartDrawer(open) {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('cart-drawer-backdrop');
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100');
+        renderCartItems();
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cart-items-container');
+      const origSub = document.getElementById('cart-original-subtotal');
+      const discTot = document.getElementById('cart-discount-total');
+      const finalSub = document.getElementById('cart-final-subtotal');
+      const couponRow = document.getElementById('cart-coupon-row');
+      const couponDiscountEl = document.getElementById('cart-coupon-discount');
+
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 font-light text-center py-8 font-outfit">Keranjang belanja kosong.</p>`;
+        origSub.textContent = "Rp 0";
+        discTot.textContent = "-Rp 0";
+        finalSub.textContent = "Rp 0";
+        couponRow.classList.add('hidden');
+        return;
+      }
+
+      let orig = 0, disc = 0, final = 0;
+
+      container.innerHTML = cart.map((item, index) => {
+        const p = item.product;
+        const current = p.promoPrice || p.price;
+        orig += p.price * item.quantity;
+        disc += (p.price - current) * item.quantity;
+        final += current * item.quantity;
+
+        return `
+          <div class="flex items-center gap-4 bg-brand-slateLight p-3 rounded-2xl border border-brand-slateBorder relative">
+            <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-slate-400 hover:text-red-500 transition"><i class="ti ti-trash text-sm"></i></button>
+            <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center p-1 shrink-0"><img src="${p.image}" class="max-h-full max-w-full object-contain"></div>
+            <div class="flex-grow">
+              <h4 class="font-bold text-xs text-brand-slateDark line-clamp-1 pr-6">${p.name}</h4>
+              <p class="text-[9px] text-brand-blueRoyal font-bold">${item.variant}</p>
+              <div class="flex justify-between items-center mt-2">
+                <span class="text-xs font-bold text-slate-500">x${item.quantity}</span>
+                <span class="font-outfit font-black text-xs text-brand-blueRoyal">${formatIDR(current * item.quantity)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let couponDiscount = 0;
+      if (isCouponApplied) {
+        couponDiscount = Math.round(final * 0.1);
+        final = final - couponDiscount;
+        couponRow.classList.remove('hidden');
+        couponDiscountEl.textContent = `- ${formatIDR(couponDiscount)}`;
+      } else {
+        couponRow.classList.add('hidden');
+      }
+
+      origSub.textContent = formatIDR(orig);
+      discTot.textContent = `- ${formatIDR(disc)}`;
+      finalSub.textContent = formatIDR(final);
+    }
+
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Dihapus!", "Mebel dikeluarkan dari keranjang belanja.");
+    }
+
+    function clearCart() {
+      cart = [];
+      isCouponApplied = false;
+      localStorage.setItem('bizmate_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderCartItems();
+      showToast("Dikosongkan!", "Semua produk dihapus.");
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById('cart-coupon-input').value.trim().toUpperCase();
+      if (code === 'BIZMATEBLUE') {
+        isCouponApplied = true;
+        showToast("Kupon Diterapkan!", "Potongan tambahan 10% di keranjang belanja.");
+        renderCartItems();
+      } else {
+        showToast("Kupon Gagal!", "Kode kupon tidak valid.");
+      }
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      showToast("Pesanan Diterima!", "Terima kasih telah berbelanja furnitur di Bizmate.");
+      clearCart();
+      toggleCartDrawer(false);
+    }
+
+    function subscribeNewsletter() {
+      const email = document.getElementById('newsletter-email').value.trim();
+      if (email) {
+        showToast("Terima Kasih!", "Berhasil berlangganan buletin diskon furnitur.");
+        document.getElementById('newsletter-email').value = '';
+      }
+    }
+
+    function showToast(title, message) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toastId = 'toast-' + Math.random().toString(36).substr(2, 9);
+      container.insertAdjacentHTML('beforeend', `
+        <div id="${toastId}" class="bg-white text-brand-slateDark p-4 rounded-2xl shadow-xl flex items-start gap-3 border border-brand-blueRoyal/20 pointer-events-auto transform translate-x-full transition-transform duration-300">
+          <div class="p-1.5 bg-brand-blueRoyal/5 text-brand-blueRoyal rounded-lg"><i class="ti ti-circle-check text-xl animate-bounce"></i></div>
+          <div>
+            <p class="font-bold text-xs sm:text-sm font-outfit">${title}</p>
+            <p class="text-xs text-slate-500 font-outfit">${message}</p>
+          </div>
+        </div>
+      `);
+
+      setTimeout(() => {
+        const el = document.getElementById(toastId);
+        if (el) el.classList.remove('translate-x-full');
+      }, 50);
+
+      setTimeout(() => {
+        const el = document.getElementById(toastId);
+        if (el) {
+          el.classList.add('translate-x-full');
+          setTimeout(() => el.remove(), 300);
+        }
+      }, 4000);
+    }
+
+    function toggleCategoriesVisibility() {
+      const hiddenCards = document.querySelectorAll('.hidden-category');
+      const btn = document.getElementById('btn-toggle-categories');
+      const btnText = btn.querySelector('span');
+      const btnIcon = document.getElementById('icon-toggle-categories');
+      
+      let currentlyHidden = false;
+      hiddenCards.forEach(card => {
+        if (card.classList.contains('hidden')) {
+          currentlyHidden = true;
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (currentlyHidden) {
+        btnText.textContent = 'Sembunyikan Kategori';
+        btnIcon.classList.remove('ti-chevron-down');
+        btnIcon.classList.add('ti-chevron-up');
+      } else {
+        btnText.textContent = 'Kategori Lainnya';
+        btnIcon.classList.remove('ti-chevron-up');
+        btnIcon.classList.add('ti-chevron-down');
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function toggleSidebarMenu() {
+      window.location.href = 'produk.html';
+    }
+  </script>
+</body>
+
+</html>

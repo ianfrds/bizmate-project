@@ -128,24 +128,40 @@
               <input id="search-input" type="text" placeholder="Cari Nama Produk, SKU..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
             </div>
           </div>
-          <div class="flex gap-2 overflow-x-auto custom-scrollbar w-full sm:w-auto pb-2 sm:pb-0">
-            <select id="filter-category" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
-              <option>Semua Kategori</option>
-              <option>Kursi & Sofa</option>
-              <option>Meja & Rak</option>
-              <option>Lampu & Dekorasi</option>
-              <option>Mebel Outdoor</option>
-            </select>
-            <select id="filter-status" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
-              <option>Status: Semua</option>
-              <option>Status: Aktif</option>
-              <option>Status: Draft</option>
-            </select>
+          <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
+            <div class="flex gap-2 overflow-x-auto custom-scrollbar">
+              <select id="filter-category" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+                <option>Semua Kategori</option>
+                <option>Kursi & Sofa</option>
+                <option>Meja & Rak</option>
+                <option>Lampu & Dekorasi</option>
+                <option>Mebel Outdoor</option>
+              </select>
+              <select id="filter-status" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+                <option>Status: Semua</option>
+                <option>Status: Aktif</option>
+                <option>Status: Draft</option>
+              </select>
+            </div>
+            
+            <div class="h-6 w-px bg-slate-200 hidden sm:block"></div>
+            
+            <!-- View Switcher -->
+            <div class="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shrink-0">
+              <button id="btn-view-list" onclick="setViewMode('list')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-brand-blueRoyal shadow-sm border border-slate-200/50" aria-label="Tampilan Daftar">
+                <i class="ti ti-list text-sm"></i>
+                <span class="hidden sm:inline">Daftar</span>
+              </button>
+              <button id="btn-view-grid" onclick="setViewMode('grid')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-500 hover:text-slate-800" aria-label="Tampilan Kartu">
+                <i class="ti ti-layout-grid text-sm"></i>
+                <span class="hidden sm:inline">Kartu</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Table -->
-        <div class="overflow-x-auto flex-grow">
+        <!-- Table List View Container -->
+        <div id="products-table-container" class="overflow-x-auto flex-grow">
           <table class="w-full text-left border-collapse min-w-[1000px]">
             <thead>
               <tr class="bg-white">
@@ -254,6 +270,11 @@
           </table>
         </div>
 
+        <!-- Grid Card View Container -->
+        <div id="products-grid-container" class="hidden p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 bg-slate-50/20">
+          <!-- Grid items will be rendered here dynamically -->
+        </div>
+
         <!-- Pagination -->
         <div class="p-6 border-t border-slate-100 flex items-center justify-between">
           <p id="table-pagination-info" class="text-xs font-bold text-slate-400">Menampilkan 1 - 10 dari 342 Produk</p>
@@ -276,6 +297,7 @@
     // Dynamic Products Catalog
     document.addEventListener("DOMContentLoaded", function() {
       const tbody = document.getElementById('products-table-body');
+      const gridContainer = document.getElementById('products-grid-container');
       const searchInput = document.getElementById('search-input');
       const filterCategory = document.getElementById('filter-category');
       const filterStatus = document.getElementById('filter-status');
@@ -305,6 +327,37 @@
         const baseQty = (seedValue % 45) + 8;
         return baseQty + dbQty;
       }
+
+      // View switcher logic
+      let currentViewMode = localStorage.getItem('bizmate-product-view-mode') || 'list';
+
+      window.setViewMode = function(mode) {
+        currentViewMode = mode;
+        localStorage.setItem('bizmate-product-view-mode', mode);
+
+        const tableContainer = document.getElementById('products-table-container');
+        const gridContainerEl = document.getElementById('products-grid-container');
+
+        const btnList = document.getElementById('btn-view-list');
+        const btnGrid = document.getElementById('btn-view-grid');
+
+        if (mode === 'grid') {
+          tableContainer.classList.add('hidden');
+          gridContainerEl.classList.remove('hidden');
+
+          btnGrid.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-brand-blueRoyal shadow-sm border border-slate-200/50";
+          btnList.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-500 hover:text-slate-800";
+        } else {
+          tableContainer.classList.remove('hidden');
+          gridContainerEl.classList.add('hidden');
+
+          btnList.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-brand-blueRoyal shadow-sm border border-slate-200/50";
+          btnGrid.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-500 hover:text-slate-800";
+        }
+      };
+
+      // Set initial view mode
+      window.setViewMode(currentViewMode);
 
       // Main Render Function
       function renderTable() {
@@ -338,6 +391,8 @@
 
         // 3. Render HTML
         tbody.innerHTML = '';
+        gridContainer.innerHTML = '';
+
         if (filtered.length === 0) {
           tbody.innerHTML = `
             <tr>
@@ -347,13 +402,20 @@
               </td>
             </tr>
           `;
+          gridContainer.innerHTML = `
+            <div class="col-span-full py-16 text-center text-slate-400 font-medium bg-white rounded-3xl border border-slate-200/60 shadow-soft flex flex-col items-center justify-center w-full">
+              <i class="ti ti-box-off text-5xl block mb-3 text-slate-300"></i>
+              <p class="font-outfit font-bold text-slate-700 text-base">Tidak ada produk ditemukan</p>
+              <p class="text-xs text-slate-400 mt-1">Coba sesuaikan kata kunci pencarian atau filter Anda.</p>
+            </div>
+          `;
           paginationInfo.textContent = 'Menampilkan 0 dari 0 Produk';
           return;
         }
 
         filtered.forEach(p => {
           const opacityClass = p.active ? '' : 'opacity-60 grayscale';
-          const titleClass = p.active ? 'text-slate-800 hover:text-brand-blueRoyal' : 'text-slate-400';
+          const titleClass = p.active ? 'text-slate-800 hover:text-brand-blueRoyal font-outfit' : 'text-slate-400 font-outfit';
 
           // 1. Calculate price, stock, performa dynamically based on variant presence
           let priceDisplay = '';
@@ -382,15 +444,22 @@
             parentRevenue = p.price * parentSoldQty;
           }
 
-          // Merged Harga & Stok cell content for parent
+          // Merged Harga & Stok cell content for parent (List View)
           let stockTextClass = 'text-slate-500 font-medium';
           let stockText = `stok: ${totalStock}`;
+          let stockTextBadge = `Stok: ${totalStock}`;
+          let stockBadgeClass = 'bg-emerald-50 text-emerald-600 border-emerald-200';
+
           if (totalStock === 0) {
             stockTextClass = 'text-red-500 font-extrabold uppercase';
             stockText = 'stok: Habis';
+            stockTextBadge = 'Stok Habis';
+            stockBadgeClass = 'bg-red-50 text-red-500 border-red-200';
           } else if (totalStock <= p.minStock) {
             stockTextClass = 'text-amber-600 font-bold';
             stockText = `stok: ${totalStock} (Low)`;
+            stockTextBadge = `Stok Tipis (${totalStock})`;
+            stockBadgeClass = 'bg-amber-50 text-amber-600 border-amber-200';
           }
 
           const hargaStokCell = `
@@ -417,8 +486,11 @@
 
           // Check for variants expander
           let variantIndicator = '';
+          let variantIndicatorCard = '';
           let expandButton = '';
+          let variantExpandButtonCard = '';
           let variantRowsHtml = '';
+          let variantCollapsibleHtml = '';
 
           if (p.hasVariants && p.variantList && p.variantList.length > 0) {
             variantIndicator = `
@@ -427,14 +499,34 @@
                   <i class="ti ti-layers-difference text-[10px]"></i>
                   <span>${p.variantList.length} Varian</span>
                 </span>
-                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/40 uppercase tracking-wide">
+                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/40 uppercase tracking-wide truncate max-w-[120px]" title="${p.variations.map(v => v.name).join(', ')}">
                   ${p.variations.map(v => v.name).join(', ')}
                 </span>
               </div>
             `;
+
+            variantIndicatorCard = `
+              <div class="flex flex-col gap-1.5 mt-2.5">
+                <span class="inline-flex items-center gap-1.5 self-start px-2 py-0.5 bg-brand-blueLight text-brand-blueRoyal border border-blue-100 rounded-lg text-[9px] font-black uppercase tracking-wider">
+                  <i class="ti ti-layers-difference text-[10px]"></i>
+                  <span>${p.variantList.length} Varian</span>
+                </span>
+                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 self-start px-2 py-0.5 rounded-lg border border-slate-200/40 truncate max-w-full uppercase tracking-wide" title="${p.variations.map(v => v.name).join(', ')}">
+                  ${p.variations.map(v => v.name).join(', ')}
+                </span>
+              </div>
+            `;
+
             expandButton = `
-              <button onclick="toggleVariantDrawer('${p.sku}', event)" class="w-7 h-7 rounded-xl bg-slate-50 hover:bg-brand-blueLight hover:text-brand-blueRoyal border border-slate-200/60 hover:border-brand-blueRoyal/20 flex items-center justify-center text-slate-400 transition duration-200 shrink-0 shadow-soft" title="Lihat variasi">
+              <button onclick="toggleVariantDrawer('${p.sku}', event)" class="w-7 h-7 rounded-xl bg-slate-50 hover:bg-brand-blueLight hover:text-brand-blueRoyal border border-slate-200/60 hover:border-brand-blueRoyal/20 flex items-center justify-center text-slate-400 transition duration-200 shrink-0 shadow-soft" title="Lihat variasi" aria-label="Tampilkan variasi ${p.name}">
                 <i id="chevron-${p.sku}" class="ti ti-chevron-down text-xs transition-transform duration-300"></i>
+              </button>
+            `;
+
+            variantExpandButtonCard = `
+              <button onclick="toggleCardVariants('${p.sku}', event)" class="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-brand-blueLight hover:text-brand-blueRoyal border border-slate-200/60 hover:border-brand-blueRoyal/20 flex items-center gap-1 text-slate-500 hover:text-brand-blueRoyal font-extrabold text-xs transition duration-200 shadow-soft" aria-label="Tampilkan variasi ${p.name}">
+                <span>Varian</span>
+                <i id="card-chevron-${p.sku}" class="ti ti-chevron-down text-[10px] transition-transform duration-300"></i>
               </button>
             `;
 
@@ -498,8 +590,52 @@
                 </tr>
               `;
             }).join('');
+
+            variantCollapsibleHtml = `
+              <div id="card-variants-${p.sku}" class="hidden mt-3 pt-3 border-t border-dashed border-slate-200/80 space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+                ${p.variantList.map(variant => {
+                  let vStockTextClass = 'text-slate-400 font-medium';
+                  let vStockText = `stok: ${variant.stock}`;
+                  if (variant.stock === 0) {
+                    vStockTextClass = 'text-red-500 font-bold uppercase';
+                    vStockText = 'stok: Habis';
+                  } else if (variant.stock <= p.minStock) {
+                    vStockTextClass = 'text-amber-600 font-bold';
+                    vStockText = `stok: ${variant.stock} (Low)`;
+                  }
+
+                  const vSold = getProductSoldQty(variant.sku);
+                  const vRevenue = variant.price * vSold;
+
+                  return `
+                    <div class="flex items-start gap-2.5 p-2 bg-slate-50/50 hover:bg-slate-50 border border-slate-100 rounded-xl transition duration-150">
+                      ${variant.image ? `
+                        <img class="w-9 h-9 rounded-lg border border-slate-200 object-cover bg-white shrink-0" src="${variant.image}">
+                      ` : `
+                        <div class="w-9 h-9 rounded-lg bg-white border border-dashed border-slate-200 flex items-center justify-center text-slate-400 shrink-0">
+                          <i class="ti ti-box text-xs"></i>
+                        </div>
+                      `}
+                      <div class="flex-grow min-w-0">
+                        <p class="font-bold text-xs text-slate-700 truncate" title="${variant.name}">${variant.name}</p>
+                        <p class="text-[9px] text-slate-400 font-mono">SKU: ${variant.sku}</p>
+                        <div class="flex items-center justify-between mt-1 text-[10px]">
+                          <span class="font-extrabold text-slate-700">Rp ${variant.price.toLocaleString('id-ID')}</span>
+                          <span class="${vStockTextClass} uppercase tracking-wider">${vStockText}</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-0.5 text-[9px] text-slate-400 font-bold">
+                          <span class="text-emerald-600 flex items-center gap-0.5"><i class="ti ti-trending-up"></i> ${vSold} Terjual</span>
+                          <span>Omset: Rp ${vRevenue.toLocaleString('id-ID')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            `;
           }
 
+          // 1. List View Render
           tbody.innerHTML += `
             <tr class="table-row-hover transition ${p.active ? '' : 'bg-slate-50/30'}">
               <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
@@ -520,17 +656,98 @@
               ${hargaStokCell}
               ${performaCell}
               <td class="px-6 py-4 text-center">
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleActive('${p.sku}')">
+                <label class="relative inline-flex items-center cursor-pointer" title="Tampilkan/Sembunyikan">
+                  <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleActive('${p.sku}')" aria-label="Aktifkan produk ${p.name}">
                   <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
                 </label>
               </td>
               <td class="px-6 py-4 text-right">
-                <button onclick="editProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="Edit"><i class="ti ti-edit"></i></button>
-                <button onclick="deleteProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition" title="Delete"><i class="ti ti-trash"></i></button>
+                <button onclick="editProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="Edit" aria-label="Edit produk ${p.name}"><i class="ti ti-edit"></i></button>
+                <button onclick="deleteProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition" title="Delete" aria-label="Hapus produk ${p.name}"><i class="ti ti-trash"></i></button>
               </td>
             </tr>
             ${variantRowsHtml}
+          `;
+
+          // 2. Card View Render
+          const draftBadge = p.active ? '' : `
+            <span class="absolute top-3 right-3 px-2 py-0.5 bg-slate-100/90 backdrop-blur border border-slate-200 rounded-lg text-[9px] font-extrabold uppercase tracking-wider text-slate-500 shadow-soft">
+              Draft
+            </span>
+          `;
+
+          gridContainer.innerHTML += `
+            <div class="rounded-3xl border border-slate-200 bg-white hover:shadow-card hover:border-slate-300/80 transition-all duration-300 flex flex-col justify-between overflow-hidden relative group p-4 space-y-4">
+              
+              <!-- Image Container -->
+              <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-50 border border-slate-100">
+                <img class="w-full h-full object-cover group-hover:scale-105 transition duration-500 ${opacityClass}" src="${p.image}">
+                
+                <!-- Category Badge -->
+                <span class="absolute top-3 left-3 px-2 py-0.5 bg-white/95 backdrop-blur border border-slate-100 rounded-lg text-[9px] font-black uppercase tracking-wider text-slate-600 shadow-soft">
+                  ${p.category}
+                </span>
+
+                ${draftBadge}
+
+                <!-- Status Badge -->
+                <span class="absolute bottom-3 left-3 px-2 py-0.5 ${stockBadgeClass} border rounded-lg text-[9px] font-black uppercase tracking-wider shadow-soft">
+                  ${stockTextBadge}
+                </span>
+              </div>
+
+              <!-- Info Area -->
+              <div class="flex-grow flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="min-w-0 flex-grow">
+                      <h4 class="font-outfit font-bold text-sm cursor-pointer transition line-clamp-2 ${p.active ? 'text-slate-800 hover:text-brand-blueRoyal' : 'text-slate-400'}" onclick="editProduct('${p.sku}')" title="${p.name}">
+                        ${p.name}
+                      </h4>
+                      <p class="text-[10px] text-slate-400 font-mono mt-1">SKU Induk: ${p.sku}</p>
+                    </div>
+                    
+                    <!-- Toggle Active Status -->
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0 animate-fade-in" title="Tampilkan/Sembunyikan">
+                      <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleActive('${p.sku}')" aria-label="Aktifkan produk ${p.name}">
+                      <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+
+                  <!-- Price & Variations Info -->
+                  <div class="mt-3">
+                    <p class="font-outfit font-black text-slate-800 text-[15px] leading-none">${priceDisplay}</p>
+                    ${variantIndicatorCard}
+                  </div>
+                </div>
+
+                <!-- Stats & Performance Metrics -->
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-bold">
+                  <div class="flex items-center gap-1 text-emerald-600">
+                    <i class="ti ti-trending-up"></i>
+                    <span>${parentSoldQty} Terjual</span>
+                  </div>
+                  <span class="text-slate-400 uppercase tracking-wide">Omset: Rp ${parentRevenue.toLocaleString('id-ID')}</span>
+                </div>
+              </div>
+
+              <!-- Collapsible Variants Area -->
+              ${variantCollapsibleHtml}
+
+              <!-- Action Buttons Footer -->
+              <div class="pt-3 border-t border-slate-100/80 flex items-center justify-between gap-2 shrink-0">
+                ${variantExpandButtonCard ? variantExpandButtonCard : '<div class="h-8"></div>'}
+                <div class="flex items-center gap-1.5 ml-auto">
+                  <button onclick="editProduct('${p.sku}')" class="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 hover:bg-brand-blueRoyal/5 hover:text-brand-blueRoyal hover:border-brand-blueRoyal/20 flex items-center justify-center text-slate-500 transition duration-200 shadow-soft" aria-label="Edit produk ${p.name}">
+                    <i class="ti ti-edit text-sm"></i>
+                  </button>
+                  <button onclick="deleteProduct('${p.sku}')" class="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 hover:bg-red-50 hover:text-red-500 hover:border-red-200 flex items-center justify-center text-slate-500 transition duration-200 shadow-soft" aria-label="Hapus produk ${p.name}">
+                    <i class="ti ti-trash text-sm"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
           `;
         });
 
@@ -543,7 +760,7 @@
       filterCategory.addEventListener('change', renderTable);
       filterStatus.addEventListener('change', renderTable);
 
-      // Global functions for inline table actions
+      // Global functions for inline actions
       window.toggleActive = function(sku) {
         BizmateDB.toggleProductStatus(sku);
         renderTable();
@@ -581,6 +798,22 @@
           } else {
             chevron.classList.remove('rotate-180');
           }
+        }
+      };
+
+      window.toggleCardVariants = function(sku, event) {
+        if (event) event.stopPropagation();
+        const drawer = document.getElementById(`card-variants-${sku}`);
+        const chevron = document.getElementById(`card-chevron-${sku}`);
+        if (!drawer) return;
+        
+        const isHidden = drawer.classList.contains('hidden');
+        if (isHidden) {
+          drawer.classList.remove('hidden');
+          if (chevron) chevron.classList.add('rotate-180');
+        } else {
+          drawer.classList.add('hidden');
+          if (chevron) chevron.classList.remove('rotate-180');
         }
       };
 

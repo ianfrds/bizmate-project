@@ -1,0 +1,195 @@
+/* ==========================================================================
+   BIZMATE ADMIN CONSOLE CENTRAL STYLESHEET
+   Offline-First Premium Design System
+   ========================================================================== */
+
+/* --- Base Body & Background --- */
+body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* --- Reusable Smooth Scrollbar --- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+/* --- Sidebar Dark Theme Navigation --- */
+.nav-item {
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(12, 76, 180, 0.15) 0%, transparent 100%);
+  color: #ffffff;
+  border-left: 3px solid #fa7315;
+}
+
+/* --- Reusable Shared UI Components --- */
+
+/* 1. Premium Metrics & Analytics Cards */
+.admin-card-stats {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.5rem; /* 24px */
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.admin-card-stats:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+}
+
+/* Specific card left-border brand highlights */
+.admin-card-stats.stats-blue { border-left: 4px solid #0c4cb4; }
+.admin-card-stats.stats-emerald { border-left: 4px solid #10b981; }
+.admin-card-stats.stats-amber { border-left: 4px solid #f59e0b; }
+.admin-card-stats.stats-orange { border-left: 4px solid #fa7315; }
+.admin-card-stats.stats-rose { border-left: 4px solid #f43f5e; }
+
+/* 2. Form & Container Panels */
+.admin-panel {
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* 3. Reusable Tables */
+.admin-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.admin-table-row, .table-row-hover {
+  transition: background-color 0.15s ease;
+  border-bottom: 1px solid #f1f5f9;
+}
+.admin-table-row:hover, .table-row-hover:hover {
+  background-color: #f8fafc;
+}
+.admin-table-header {
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background-color: rgba(248, 250, 252, 0.4);
+}
+
+/* 4. Beautiful Badges */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+.admin-badge-success {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+.admin-badge-inactive {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+/* Pulse Dot animation for active badges */
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.badge-dot-pulse {
+  background-color: #10b981;
+  animation: pulse-glow 2s infinite;
+}
+.badge-dot-static {
+  background-color: #94a3b8;
+}
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* 5. iOS Toggle Switches */
+.admin-toggle-switch {
+  position: relative;
+  display: inline-flex;
+  height: 1.5rem;
+  width: 2.75rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  outline: none;
+}
+.admin-toggle-switch.switch-active {
+  background-color: #0c4cb4;
+}
+.admin-toggle-switch.switch-inactive {
+  background-color: #e2e8f0;
+}
+.admin-toggle-dot {
+  pointer-events: none;
+  display: inline-block;
+  height: 1.25rem;
+  width: 1.25rem;
+  transform: translate(0, 0);
+  border-radius: 9999px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+}
+.admin-toggle-switch.switch-active .admin-toggle-dot {
+  transform: translate(1.25rem, 0);
+}
+
+/* --- CMS Landing Page Specific Utilities --- */
+.mockup-screen::-webkit-scrollbar {
+  width: 4px;
+}
+.mockup-screen::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mockup-screen::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.tab-active {
+  color: #0c4cb4;
+  border-bottom: 2px solid #0c4cb4;
+}

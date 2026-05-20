@@ -193,6 +193,43 @@ const SEED_CATEGORIES = [
   }
 ];
 
+const SEED_CUSTOMERS = [
+  { id: 'CUST-001', name: 'Totiyono Nugroho', email: 'totiyono.n@email.com', phone: '6285656629097', address: 'Jl Bratang 1H No 23, Surabaya, Jawa Timur', joinedDate: '2026-01-15', status: 'Aktif' },
+  { id: 'CUST-002', name: 'Syah Reza', email: 'syah.reza@email.com', phone: '6285179720622', address: 'Komp. Bungkal, Ponorogo, Jawa Timur', joinedDate: '2026-02-10', status: 'Aktif' },
+  { id: 'CUST-003', name: 'Budi Anto', email: 'budi.anto@email.com', phone: '628123456789', address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur', joinedDate: '2026-02-18', status: 'Aktif' },
+  { id: 'CUST-004', name: 'Citra Kirana', email: 'citrak@email.com', phone: '628571234567', address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten', joinedDate: '2026-03-01', status: 'Aktif' },
+  { id: 'CUST-005', name: 'Sarah Wijaya', email: 'sarah.w@email.com', phone: '628998877665', address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta', joinedDate: '2026-03-12', status: 'Suspend' }
+];
+
+const SEED_ADMINS = [
+  { username: 'superadmin@bizmate.id', name: 'Admin Utama', role: 'Super Admin', status: 'Aktif', lastActive: 'Sekarang' },
+  { username: 'keuangan@bizmate.id', name: 'Dewi Lestari', role: 'Admin Keuangan', status: 'Aktif', lastActive: '2 menit yang lalu' },
+  { username: 'gudang@bizmate.id', name: 'Joko Susilo', role: 'Admin Gudang', status: 'Aktif', lastActive: '1 jam yang lalu' },
+  { username: 'sales@bizmate.id', name: 'Rian Hidayat', role: 'CS / Sales', status: 'Nonaktif', lastActive: '3 hari yang lalu' }
+];
+
+const SEED_CMS_LANDING = {
+  announcement: '✨ Promo Kejutan! Gratis Ongkir Seluruh Indonesia Khusus Transaksi Bulan Ini!',
+  heroTitle: 'Temukan Furniture Premium untuk Rumah Impian Anda',
+  heroSub: 'Mulai dari sofa velvet mewah hingga meja jati pilihan dengan kualitas terbaik langsung dari pengrajin terpercaya.',
+  heroCta: 'Belanja Sekarang',
+  heroImage: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
+  aboutDesc: 'Bizmate adalah penyedia mebel dan furniture berkualitas tinggi yang berfokus pada desain modern, kenyamanan premium, dan ketahanan jangka panjang untuk setiap sudut ruangan Anda.',
+  yearsOfService: 12,
+  customerCount: '8.5K+',
+  whatsapp: '6285179720622',
+  instagram: 'bizmate.premium',
+  tiktok: 'bizmate.official',
+  address: 'Jl. Raya Darmo No. 12-14, Tegalsari, Kota Surabaya, Jawa Timur 60264'
+};
+
+const SEED_PROMOS = [
+  { id: 'PRM-001', code: 'GRATISONGKIR', name: 'Gratis Ongkir Seluruh Jawa', type: 'Gratis Ongkir', value: 20000, minPurchase: 150000, active: true, usageCount: 42, maxUsage: 100, startDate: '2026-05-01', expiry: '2026-06-30', scope: 'all', appliedProducts: [] },
+  { id: 'PRM-002', code: 'BIZMATE10', name: 'Diskon Spesial 10% Velvet', type: 'Diskon Persen', value: 10, minPurchase: 500000, active: true, usageCount: 15, maxUsage: 50, startDate: '2026-05-10', expiry: '2026-06-15', scope: 'specific', appliedProducts: ['SFA-VLV-002', 'CHR-RED-001', 'TBL-JTI-003', 'CHR-OUT-004', 'SFA-MIN-005'] },
+  { id: 'PRM-003', code: 'MEBELHEMAT', name: 'Potongan Harga Khusus Kursi Telur', type: 'Potongan Harga', value: 100000, minPurchase: 2000000, active: false, usageCount: 8, maxUsage: 10, startDate: '2026-05-01', expiry: '2026-05-18', scope: 'specific', appliedProducts: ['CHR-RED-001'] },
+  { id: 'PRM-004', code: 'FLASHSALE50', name: 'Flash Sale Kilat Kursi & Sofa', type: 'Flash Sale', value: 50, minPurchase: 0, active: true, usageCount: 5, maxUsage: 30, startDate: '2026-05-20', expiry: '2026-06-25', scope: 'specific', appliedProducts: ['SFA-VLV-002'], isFlashSale: true, startTime: '15:00', endTime: '18:00', tagline: 'Diskon Kilat Sofa Velvet 50%!' }
+];
+
 // Initialize database
 function initDatabase() {
   const DB_VERSION = 'v2';
@@ -200,6 +237,10 @@ function initDatabase() {
   let products = localStorage.getItem('bizmate_products');
   let orders = localStorage.getItem('bizmate_orders');
   let categories = localStorage.getItem('bizmate_categories');
+  let customers = localStorage.getItem('bizmate_customers');
+  let admins = localStorage.getItem('bizmate_admins');
+  let cmsLanding = localStorage.getItem('bizmate_cms_landing');
+  let promos = localStorage.getItem('bizmate_promos');
 
   if (!products || dbVer !== DB_VERSION) {
     localStorage.setItem('bizmate_products', JSON.stringify(SEED_PRODUCTS));
@@ -213,6 +254,22 @@ function initDatabase() {
   
   if (!categories) {
     localStorage.setItem('bizmate_categories', JSON.stringify(SEED_CATEGORIES));
+  }
+
+  if (!customers) {
+    localStorage.setItem('bizmate_customers', JSON.stringify(SEED_CUSTOMERS));
+  }
+
+  if (!admins) {
+    localStorage.setItem('bizmate_admins', JSON.stringify(SEED_ADMINS));
+  }
+
+  if (!cmsLanding) {
+    localStorage.setItem('bizmate_cms_landing', JSON.stringify(SEED_CMS_LANDING));
+  }
+
+  if (!promos || !promos.includes('startDate') || !promos.includes('CHR-OUT-004')) {
+    localStorage.setItem('bizmate_promos', JSON.stringify(SEED_PROMOS));
   }
 }
 
@@ -329,10 +386,103 @@ const BizmateDB = {
     return categories;
   },
 
+  // Customers API
+  getCustomers() {
+    initDatabase();
+    return JSON.parse(localStorage.getItem('bizmate_customers'));
+  },
+
+  saveCustomer(customer) {
+    const customers = this.getCustomers();
+    const idx = customers.findIndex(c => c.id === customer.id);
+    if (idx !== -1) {
+      customers[idx] = { ...customers[idx], ...customer };
+    } else {
+      customers.push({
+        id: `CUST-${Math.floor(100 + Math.random() * 900)}`,
+        joinedDate: new Date().toISOString().split('T')[0],
+        status: 'Aktif',
+        ...customer
+      });
+    }
+    localStorage.setItem('bizmate_customers', JSON.stringify(customers));
+    return customers;
+  },
+
+  deleteCustomer(id) {
+    let customers = this.getCustomers();
+    customers = customers.filter(c => c.id !== id);
+    localStorage.setItem('bizmate_customers', JSON.stringify(customers));
+    return customers;
+  },
+
+  toggleCustomerStatus(id) {
+    const customers = this.getCustomers();
+    const idx = customers.findIndex(c => c.id === id);
+    if (idx !== -1) {
+      customers[idx].status = customers[idx].status === 'Aktif' ? 'Suspend' : 'Aktif';
+      localStorage.setItem('bizmate_customers', JSON.stringify(customers));
+    }
+    return customers;
+  },
+
+  // Admins API
+  getAdmins() {
+    initDatabase();
+    return JSON.parse(localStorage.getItem('bizmate_admins'));
+  },
+
+  saveAdmin(admin) {
+    const admins = this.getAdmins();
+    const idx = admins.findIndex(a => a.username === admin.username);
+    if (idx !== -1) {
+      admins[idx] = { ...admins[idx], ...admin };
+    } else {
+      admins.push({
+        status: 'Aktif',
+        lastActive: 'Baru saja ditambahkan',
+        ...admin
+      });
+    }
+    localStorage.setItem('bizmate_admins', JSON.stringify(admins));
+    return admins;
+  },
+
+  deleteAdmin(username) {
+    let admins = this.getAdmins();
+    admins = admins.filter(a => a.username !== username);
+    localStorage.setItem('bizmate_admins', JSON.stringify(admins));
+    return admins;
+  },
+
+  toggleAdminStatus(username) {
+    const admins = this.getAdmins();
+    const idx = admins.findIndex(a => a.username === username);
+    if (idx !== -1) {
+      admins[idx].status = admins[idx].status === 'Aktif' ? 'Nonaktif' : 'Aktif';
+      localStorage.setItem('bizmate_admins', JSON.stringify(admins));
+    }
+    return admins;
+  },
+
+  // CMS API
+  getCMSLanding() {
+    initDatabase();
+    return JSON.parse(localStorage.getItem('bizmate_cms_landing'));
+  },
+
+  saveCMSLanding(config) {
+    const current = this.getCMSLanding();
+    const updated = { ...current, ...config };
+    localStorage.setItem('bizmate_cms_landing', JSON.stringify(updated));
+    return updated;
+  },
+
   // Global Statistics API
   getStats() {
     const products = this.getProducts();
     const orders = this.getOrders();
+    const customers = this.getCustomers();
     
     // Revenue from PAID orders
     const paidOrders = orders.filter(o => o.paymentStatus === 'Paid');
@@ -341,14 +491,14 @@ const BizmateDB = {
     // Static base + dynamic addition to keep enterprise feel
     const baseRevenue = 45200000000; // Rp 45.2M base
     const displayRevenue = baseRevenue + ordersAmount;
-
+ 
     const baseOrders = 1204;
     const displayOrdersCount = baseOrders + orders.length;
-
+ 
     const activeProducts = products.filter(p => p.active).length;
     const outOfStockProducts = products.filter(p => p.stock === 0).length;
     const draftProducts = products.filter(p => !p.active && p.stock > 0).length;
-
+ 
     return {
       revenueRaw: displayRevenue,
       revenueFormatted: `Rp ${(displayRevenue / 1000000000).toFixed(1)}M`,
@@ -357,8 +507,48 @@ const BizmateDB = {
       activeProductsCount: activeProducts + 308,
       draftProductsCount: draftProducts + 22,
       outOfStockProductsCount: outOfStockProducts + 8,
-      customersCount: 8591 + orders.length
+      customersCount: customers.length + 8586 // Keep enterprise scale
     };
+  },
+
+  // Promos API
+  getPromos() {
+    initDatabase();
+    return JSON.parse(localStorage.getItem('bizmate_promos')) || [];
+  },
+
+  savePromo(promo) {
+    const promos = this.getPromos();
+    const idx = promos.findIndex(p => p.id === promo.id);
+    if (idx !== -1) {
+      promos[idx] = { ...promos[idx], ...promo };
+    } else {
+      promos.push({
+        id: `PRM-${Math.floor(100 + Math.random() * 900)}`,
+        usageCount: 0,
+        active: true,
+        ...promo
+      });
+    }
+    localStorage.setItem('bizmate_promos', JSON.stringify(promos));
+    return promos;
+  },
+
+  deletePromo(id) {
+    let promos = this.getPromos();
+    promos = promos.filter(p => p.id !== id);
+    localStorage.setItem('bizmate_promos', JSON.stringify(promos));
+    return promos;
+  },
+
+  togglePromoStatus(id) {
+    const promos = this.getPromos();
+    const idx = promos.findIndex(p => p.id === id);
+    if (idx !== -1) {
+      promos[idx].active = !promos[idx].active;
+      localStorage.setItem('bizmate_promos', JSON.stringify(promos));
+    }
+    return promos;
   }
 };
 

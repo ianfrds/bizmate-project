@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Tambah Promosi Baru</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Shared LocalStorage Database -->
+  <script src="js/database.js"></script>
+  <script src="js/sidebar.js" defer></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              orange: '#fa7315',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <div class="flex items-center gap-2 font-outfit hidden sm:flex">
+          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 shrink-0">
+        <button class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative">
+          <i class="ti ti-bell text-xl"></i>
+          <span class="absolute top-2 right-2.5 w-2 h-2 bg-red-500 border-2 border-slate-50 rounded-full"></span>
+        </button>
+        <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1200px] mx-auto">
+      
+      <!-- Page Header -->
+      <div class="flex flex-col gap-1 mb-6">
+        <h2 id="page-title" class="font-outfit font-black text-2xl text-slate-800">Buat Promosi Baru</h2>
+        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Konfigurasikan diskon, kupon, atau promo flash sale untuk toko Anda</p>
+      </div>
+
+      <!-- Page Navigation / Back Button -->
+      <div class="flex items-center justify-between gap-4 mb-6">
+        <a href="promosi.html" class="flex items-center gap-2 px-3.5 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition duration-200 shadow-soft bg-white">
+          <i class="ti ti-arrow-left text-sm"></i>
+          <span>Kembali ke Promosi</span>
+        </a>
+      </div>
+
+      <form id="promo-form" class="bg-white rounded-3xl border border-slate-200 shadow-card overflow-hidden">
+        <input type="hidden" id="promo-id">
+
+        <!-- Form Header Banner -->
+        <div class="p-6 sm:p-8 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 class="font-outfit font-black text-xl text-slate-800">Formulir Pengaturan Promosi</h3>
+            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Konfigurasi Kupon Belanja & Target Produk</p>
+          </div>
+          <span id="promo-badge" class="px-3 py-1.5 bg-brand-blueRoyal/5 text-brand-blueRoyal text-xs font-black tracking-widest rounded-xl self-start uppercase">
+            Mode Pembuatan
+          </span>
+        </div>
+
+        <!-- Form Body -->
+        <div class="p-6 sm:p-8 space-y-8">
+          
+          <!-- SECTION 1: INFORMASI DASAR -->
+          <div class="space-y-6">
+            <h4 class="text-xs font-black text-brand-blueRoyal uppercase tracking-widest flex items-center gap-2">
+              <span class="w-5 h-5 rounded-lg bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-xs">1</span>
+              Informasi Dasar Promosi
+            </h4>
+
+            <!-- Kategori Promosi Selector -->
+            <div class="space-y-3">
+              <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit">Kategori Promosi *</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                
+                <!-- Promo Toko Card -->
+                <div id="cat-promo-toko" onclick="handleCategoryChange('promo_toko')" class="relative flex flex-col py-8 px-6 min-h-[200px] justify-between border-2 border-slate-200/80 rounded-3xl cursor-pointer focus:outline-none transition bg-white hover:bg-slate-50/50 shadow-soft">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <input type="radio" id="promo-cat-toko" name="promo-category" value="promo_toko" class="h-4 w-4 text-brand-blueRoyal border-slate-300 focus:ring-brand-blueRoyal pointer-events-none">
+                      <label for="promo-cat-toko" class="text-xs font-bold text-slate-800 uppercase tracking-wider font-outfit cursor-pointer">Promo Toko</label>
+                    </div>
+                    <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[9px] font-black uppercase tracking-wider rounded-lg">Direct</span>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-3 font-medium leading-relaxed">Diskon langsung pada produk pilihan di toko tanpa menggunakan kode kupon saat checkout.</span>
+                </div>
+
+                <!-- Voucher Card -->
+                <div id="cat-voucher" onclick="handleCategoryChange('voucher')" class="relative flex flex-col py-8 px-6 min-h-[200px] justify-between border-2 border-indigo-600 ring-1 ring-indigo-500/20 rounded-3xl cursor-pointer focus:outline-none transition bg-white shadow-soft">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <input type="radio" id="promo-cat-voucher" name="promo-category" value="voucher" checked class="h-4 w-4 text-indigo-600 border-slate-300 focus:ring-indigo-500 pointer-events-none">
+                      <label for="promo-cat-voucher" class="text-xs font-bold text-slate-800 uppercase tracking-wider font-outfit cursor-pointer">Voucher Belanja</label>
+                    </div>
+                    <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase tracking-wider rounded-lg">Coupon Code</span>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-3 font-medium leading-relaxed">Pelanggan harus memasukkan kode kupon yang valid saat pembayaran/checkout.</span>
+                </div>
+
+                <!-- Flash Sale Card -->
+                <div id="cat-flash-sale" onclick="handleCategoryChange('flash_sale')" class="relative flex flex-col py-8 px-6 min-h-[200px] justify-between border-2 border-slate-200/80 rounded-3xl cursor-pointer focus:outline-none transition bg-white hover:bg-slate-50/50 shadow-soft">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <input type="radio" id="promo-cat-flash" name="promo-category" value="flash_sale" class="h-4 w-4 text-brand-orange border-slate-300 focus:ring-brand-orange pointer-events-none">
+                      <label for="promo-cat-flash" class="text-xs font-bold text-slate-800 uppercase tracking-wider font-outfit cursor-pointer">Flash Sale</label>
+                    </div>
+                    <span class="px-2.5 py-1 bg-brand-orange/10 text-brand-orange text-[9px] font-black uppercase tracking-wider rounded-lg animate-pulse">Kilat</span>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-3 font-medium leading-relaxed">Diskon kilat berjadwal (terbatas jam & stok) yang terpasang langsung pada produk pilihan.</span>
+                </div>
+
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="form-name" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Nama Promosi *</label>
+                <input id="form-name" type="text" required placeholder="Contoh: Diskon Flash Sale Mebel Velvet" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+              
+              <div>
+                <label for="form-code" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Kode Kupon *</label>
+                <input id="form-code" type="text" required placeholder="Contoh: BIZMATEKILAT" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-bold tracking-wider text-brand-blueRoyal focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                <span class="text-[10px] text-slate-400 font-semibold mt-1 block">Kode promo otomatis diseragamkan menjadi alfanumerik huruf kapital.</span>
+              </div>
+            </div>
+
+            <!-- Status Aktif Toggle Control -->
+            <div class="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-2xl max-w-md">
+              <div class="pr-4">
+                <span class="block text-xs font-bold text-slate-800 uppercase tracking-wider">Status Aktif Kupon</span>
+                <span class="block text-[10px] text-slate-400 font-medium mt-0.5">Kupon yang aktif dapat langsung digunakan oleh pelanggan di kasir storefront.</span>
+              </div>
+              <button type="button" id="form-active-toggle" onclick="toggleFormActive()" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-brand-blueRoyal shrink-0">
+                <span id="form-active-dot" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5"></span>
+              </button>
+              <input type="hidden" id="form-active" value="true">
+            </div>
+          </div>
+
+          <!-- SECTION 2: TIPE & FLASHSALE -->
+          <div class="space-y-4 pt-6 border-t border-slate-100">
+            <h4 class="text-xs font-black text-brand-blueRoyal uppercase tracking-widest flex items-center gap-2">
+              <span class="w-5 h-5 rounded-lg bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-xs">2</span>
+              Jenis Kupon & Tipe Promosi
+            </h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="form-type" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tipe Kupon Promosi *</label>
+                <select id="form-type" onchange="handleTypeChange()" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 font-semibold focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                  <option value="Gratis Ongkir">Gratis Ongkir (Subsidi Pengiriman)</option>
+                  <option value="Diskon Persen">Diskon Persen (%)</option>
+                  <option value="Potongan Harga">Potongan Harga (Nominal Rupiah)</option>
+                  <option value="Flash Sale">⚡ Flash Sale (Diskon Kilat Berjadwal)</option>
+                </select>
+              </div>
+
+              <!-- Nilai Potongan -->
+              <div>
+                <label for="form-value" id="label-value" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Nilai Potongan (Rp) *</label>
+                <input id="form-value" type="number" required min="1" placeholder="20000" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+            </div>
+
+            <!-- Dynamic Flash Sale Container -->
+            <div id="flash-sale-panel" class="hidden bg-orange-50/50 border border-brand-orange/20 rounded-3xl p-6 mt-4 space-y-4 transition-all duration-300">
+              <div class="flex items-center gap-2.5 text-brand-orange">
+                <i class="ti ti-bolt text-lg"></i>
+                <h5 class="text-xs font-black uppercase tracking-widest">Konfigurasi Jadwal Flash Sale</h5>
+              </div>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label for="form-start-time" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Jam Mulai *</label>
+                  <input id="form-start-time" type="time" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 font-semibold focus:outline-none focus:border-brand-orange bg-white transition duration-200">
+                </div>
+                <div>
+                  <label for="form-end-time" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Jam Selesai *</label>
+                  <input id="form-end-time" type="time" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 font-semibold focus:outline-none focus:border-brand-orange bg-white transition duration-200">
+                </div>
+                <div>
+                  <label for="form-tagline" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tagline Promosi *</label>
+                  <input id="form-tagline" type="text" placeholder="Contoh: Diskon Kilat Sore Hari!" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-orange bg-white transition duration-200">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 3: NILAI & BATASAN -->
+          <div class="space-y-4 pt-6 border-t border-slate-100">
+            <h4 class="text-xs font-black text-brand-blueRoyal uppercase tracking-widest flex items-center gap-2">
+              <span class="w-5 h-5 rounded-lg bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-xs">3</span>
+              Ketentuan Nominal & Masa Aktif
+            </h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+              <div>
+                <label for="form-min" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Minimal Pembelian (Rp) *</label>
+                <input id="form-min" type="number" required min="0" placeholder="150000" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+
+              <div>
+                <label for="form-max" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Batas Maksimal Kuota Klaim *</label>
+                <input id="form-max" type="number" required min="1" placeholder="100" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+
+              <div>
+                <label for="form-start-date" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tanggal Mulai Promo *</label>
+                <input id="form-start-date" type="date" required class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+
+              <div>
+                <label for="form-expiry" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tanggal Selesai Promo *</label>
+                <input id="form-expiry" type="date" required class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 4: TARGET PRODUK (SCOPE) -->
+          <div class="space-y-4 pt-6 border-t border-slate-100">
+            <h4 class="text-xs font-black text-brand-blueRoyal uppercase tracking-widest flex items-center gap-2">
+              <span class="w-5 h-5 rounded-lg bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-xs">4</span>
+              Target & Jangkauan Produk
+            </h4>
+
+            <!-- Scope Choice Radio Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- All products card -->
+              <div id="scope-card-all" onclick="handleScopeChange('all')" class="relative flex p-5 border rounded-2xl cursor-pointer focus:outline-none bg-slate-50/35 hover:bg-slate-50 border-slate-200 transition duration-150">
+                <input type="radio" id="promo-scope-all" name="promo-scope" value="all" checked class="mt-1 h-4 w-4 shrink-0 text-brand-blueRoyal border-slate-300 focus:ring-brand-blueRoyal pointer-events-none">
+                <div class="ml-3.5">
+                  <label for="promo-scope-all" class="block text-xs font-bold text-slate-800 uppercase tracking-wider cursor-pointer">Semua Produk Toko</label>
+                  <span class="block text-xs text-slate-400 mt-1 font-medium">Kupon ini otomatis berlaku untuk seluruh daftar katalog furniture di bizmate.</span>
+                </div>
+              </div>
+
+              <!-- Specific products card -->
+              <div id="scope-card-specific" onclick="handleScopeChange('specific')" class="relative flex p-5 border rounded-2xl cursor-pointer focus:outline-none bg-slate-50/35 hover:bg-slate-50 border-slate-200 transition duration-150">
+                <input type="radio" id="promo-scope-specific" name="promo-scope" value="specific" class="mt-1 h-4 w-4 shrink-0 text-brand-blueRoyal border-slate-300 focus:ring-brand-blueRoyal pointer-events-none">
+                <div class="ml-3.5">
+                  <label for="promo-scope-specific" class="block text-xs font-bold text-slate-800 uppercase tracking-wider cursor-pointer">Produk Pilihan Spesifik</label>
+                  <span class="block text-xs text-slate-400 mt-1 font-medium">Tentukan dan pilih secara manual produk furniture apa saja yang layak menggunakan promo ini.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Specific Product Selector Panel -->
+            <div id="product-selector-panel" class="hidden border border-slate-200/80 rounded-3xl p-6 bg-slate-50/20 space-y-6 transition-all duration-300">
+              
+              <!-- Selection Header & Action Button -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/50 pb-4">
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-slate-700">Daftar Target Produk Terpilih</span>
+                  <span class="text-[10px] text-slate-400 font-semibold mt-0.5 font-outfit">Tentukan nilai potongan harga secara individu atau gunakan panel ubah massal di bawah.</span>
+                </div>
+                <button type="button" onclick="openProductSelectModal()" class="px-4 py-2.5 bg-brand-blueRoyal/5 hover:bg-brand-blueRoyal/10 text-brand-blueRoyal font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+                  <i class="ti ti-plus text-sm"></i>
+                  <span>Pilih & Atur Produk</span>
+                </button>
+              </div>
+
+              <!-- BULK DISCOUNT PANEL -->
+              <div id="bulk-discount-panel" class="hidden bg-white border border-slate-200/80 rounded-2xl p-4 shadow-soft space-y-3">
+                <div class="flex items-center gap-2 text-slate-700">
+                  <i class="ti ti-settings text-sm text-brand-orange"></i>
+                  <span class="text-[11px] font-black uppercase tracking-wider font-outfit">Ubah Massal Potongan Produk</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                  <div class="w-36 shrink-0">
+                    <label for="bulk-type" class="sr-only">Tipe Potongan Massal</label>
+                    <select id="bulk-type" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
+                      <option value="percentage">Diskon Persen (%)</option>
+                      <option value="nominal">Potongan Harga (Rp)</option>
+                    </select>
+                  </div>
+                  <div class="w-36 shrink-0">
+                    <label for="bulk-value" class="sr-only">Nilai Potongan Massal</label>
+                    <input id="bulk-value" type="number" min="0" placeholder="Nilai potongan..." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-700 focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
+                  </div>
+                  <div class="w-36 shrink-0">
+                    <label for="bulk-promo-stock" class="sr-only">Stok Promo Massal</label>
+                    <input id="bulk-promo-stock" type="number" min="0" placeholder="Stok Promo (Ops)..." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-700 focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
+                  </div>
+                  <button type="button" onclick="applyBulkDiscount()" class="px-4 py-2 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl text-xs transition duration-150 uppercase tracking-wider font-outfit">Terapkan Ke Semua</button>
+                </div>
+              </div>
+
+              <!-- Empty Selected Products State -->
+              <div id="selected-empty-state" class="flex flex-col items-center justify-center py-8 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
+                <div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 text-xl mb-2">
+                  <i class="ti ti-package"></i>
+                </div>
+                <p class="text-xs text-slate-500 font-semibold">Belum ada produk target yang dipilih.</p>
+                <button type="button" onclick="openProductSelectModal()" class="mt-2.5 px-3.5 py-1.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-lg text-[10px] uppercase tracking-wider transition">Pilih Produk Sekarang</button>
+              </div>
+
+              <!-- Selected products table container -->
+              <div id="selected-products-table-container" class="hidden overflow-x-auto border border-slate-200/80 rounded-2xl bg-white shadow-soft">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-100 font-bold text-slate-400 uppercase tracking-wider bg-slate-50/60 sticky top-0 z-10">
+                      <th class="px-4 py-3">Produk</th>
+                      <th class="px-4 py-3 text-right">Harga Dasar</th>
+                      <th class="px-4 py-3 w-40">Tipe Potongan</th>
+                      <th class="px-4 py-3 w-36">Nilai Potongan</th>
+                      <th class="px-4 py-3 w-28">Stok Promo</th>
+                      <th class="px-4 py-3 text-right">Harga Akhir Promo</th>
+                      <th class="px-4 py-3 text-center w-12">Hapus</th>
+                    </tr>
+                  </thead>
+                  <tbody id="selected-products-tbody" class="divide-y divide-slate-100 text-slate-600">
+                    <!-- Dynamic product rows with individual inputs go here -->
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Form Footer Buttons -->
+        <div class="p-6 border-t border-slate-100 bg-slate-50/30 flex items-center justify-end gap-3">
+          <a href="promosi.html" class="px-6 py-3.5 border border-slate-200 hover:bg-slate-50 text-slate-500 font-bold rounded-2xl text-xs transition duration-200 uppercase tracking-wider font-outfit">Batal</a>
+          <button type="submit" class="px-6 py-3.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 shadow-lg shadow-brand-blueRoyal/20 uppercase tracking-wider font-outfit">Simpan Promosi</button>
+        </div>
+
+      </form>
+
+    </main>
+  </div>
+
+  <!-- ==================== PRODUCT SELECT MODAL ==================== -->
+  <div id="product-select-modal" class="fixed inset-0 z-50 hidden pointer-events-none bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div id="modal-card" class="bg-white rounded-[2rem] border border-slate-200/80 shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden transform scale-95 translate-y-4 opacity-0 transition-all duration-300">
+      
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div>
+          <h3 class="font-outfit font-black text-lg text-slate-800">Pilih Produk Target</h3>
+          <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Pilih produk furniture yang akan dikenakan promosi</p>
+        </div>
+        <button type="button" onclick="closeProductSelectModal()" class="w-8 h-8 rounded-xl bg-slate-100 text-slate-500 hover:text-slate-800 hover:bg-slate-200 flex items-center justify-center transition">
+          <i class="ti ti-x text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Search & Select Counter -->
+      <div class="px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full sm:max-w-xs">
+          <i class="ti ti-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+          <label for="product-search" class="sr-only">Cari Produk</label>
+          <input id="product-search" type="text" oninput="filterProductSelector()" placeholder="Cari nama produk atau SKU..." class="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-brand-blueRoyal bg-slate-50/50 focus:bg-white transition duration-200">
+        </div>
+        <span id="selected-count-badge" class="px-2.5 py-1 bg-brand-blueRoyal/5 text-brand-blueRoyal text-[10px] font-black tracking-wider uppercase rounded-lg">
+          0 Terpilih
+        </span>
+      </div>
+
+      <!-- Selected Chips Row -->
+      <div class="px-6 py-3 border-b border-slate-100 bg-slate-50/30 overflow-x-auto custom-scrollbar flex items-center gap-2 min-h-[46px]" id="selected-chips-container">
+        <span class="text-xs text-slate-400 italic font-medium">Belum ada produk spesifik terpilih.</span>
+      </div>
+
+      <!-- Modal Content: Product Table -->
+      <div class="flex-grow overflow-y-auto custom-scrollbar p-6">
+        <div class="overflow-x-auto border border-slate-200/80 rounded-2xl bg-white shadow-soft">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-100 font-bold text-slate-400 uppercase tracking-wider bg-slate-50/60 sticky top-0 z-10">
+                <th class="px-4 py-3 text-center w-12">
+                  <label for="check-all-products" class="sr-only">Pilih Semua Produk</label>
+                  <input type="checkbox" id="check-all-products" onchange="toggleSelectAllProducts()" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                </th>
+                <th class="px-4 py-3">Produk</th>
+                <th class="px-4 py-3">Kategori</th>
+                <th class="px-4 py-3 text-right">Harga</th>
+                <th class="px-4 py-3 text-center w-16">Stok</th>
+              </tr>
+            </thead>
+            <tbody id="product-selector-tbody" class="divide-y divide-slate-100 text-slate-600">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-6 border-t border-slate-100 bg-slate-50/30 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="closeProductSelectModal()" class="px-4 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-500 font-bold rounded-xl text-[11px] uppercase tracking-wider transition">Batal</button>
+        <button type="button" onclick="saveModalSelection()" class="px-5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-[11px] uppercase tracking-wider transition shadow-md shadow-brand-blueRoyal/10">Simpan Pilihan</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Define toggleFormActive globally so it can be called via onclick="toggleFormActive()"
+    window.toggleFormActive = function() {
+      const activeInput = document.getElementById("form-active");
+      const toggleBtn = document.getElementById("form-active-toggle");
+      const toggleDot = document.getElementById("form-active-dot");
+      
+      const isActive = activeInput.value === "true";
+      if (isActive) {
+        activeInput.value = "false";
+        toggleBtn.classList.remove("bg-brand-blueRoyal");
+        toggleBtn.classList.add("bg-slate-200");
+        toggleDot.classList.remove("translate-x-5");
+        toggleDot.classList.add("translate-x-0");
+      } else {
+        activeInput.value = "true";
+        toggleBtn.classList.remove("bg-slate-200");
+        toggleBtn.classList.add("bg-brand-blueRoyal");
+        toggleDot.classList.remove("translate-x-0");
+        toggleDot.classList.add("translate-x-5");
+      }
+    };
+
+    // Define handleCategoryChange globally
+    window.handleCategoryChange = function(category) {
+      // 1. Highlight the selected category card and reset the others
+      const cards = {
+        promo_toko: {
+          id: 'cat-promo-toko',
+          activeClass: 'border-brand-blueRoyal ring-1 ring-brand-blueRoyal/20',
+          inactiveClass: 'border-slate-200/80 hover:bg-slate-50/50'
+        },
+        voucher: {
+          id: 'cat-voucher',
+          activeClass: 'border-indigo-600 ring-1 ring-indigo-500/20',
+          inactiveClass: 'border-slate-200/80 hover:bg-slate-50/50'
+        },
+        flash_sale: {
+          id: 'cat-flash-sale',
+          activeClass: 'border-brand-orange ring-1 ring-brand-orange/20',
+          inactiveClass: 'border-slate-200/80 hover:bg-slate-50/50'
+        }
+      };
+
+      // Set corresponding radio input to checked
+      const radio = document.querySelector(`input[name="promo-category"][value="${category}"]`);
+      if (radio) radio.checked = true;
+
+      Object.keys(cards).forEach(key => {
+        const cardEl = document.getElementById(cards[key].id);
+        if (!cardEl) return;
+        
+        // Remove standard and custom outline highlighting classes
+        cardEl.classList.remove('border-indigo-600', 'border-brand-blueRoyal', 'border-brand-orange', 'ring-1', 'ring-brand-blueRoyal/20', 'ring-indigo-500/20', 'ring-brand-orange/20');
+        cardEl.classList.remove('border-slate-200/80', 'hover:bg-slate-50/50');
+        
+        if (key === category) {
+          cards[key].activeClass.split(' ').forEach(cls => cardEl.classList.add(cls));
+        } else {
+          cards[key].inactiveClass.split(' ').forEach(cls => cardEl.classList.add(cls));
+        }
+      });
+
+      // 2. Hide/Show Fields and options based on selected category
+      const codeInput = document.getElementById("form-code");
+      const codeInputWrapper = codeInput ? codeInput.closest('div') : null;
+      const scopeGlobalCard = document.getElementById("scope-card-all");
+      const scopeSpecificCard = document.getElementById("promo-scope-specific");
+      const typeSelect = document.getElementById("form-type");
+      const scopeGridContainer = scopeGlobalCard ? scopeGlobalCard.parentNode : null;
+
+      if (category === 'promo_toko') {
+        // Direct Discount: Silent autogenerated code, hide field
+        if (codeInputWrapper) codeInputWrapper.classList.add('hidden');
+        if (codeInput) {
+          codeInput.required = false;
+          if (!codeInput.value || !codeInput.value.startsWith('TOKO_')) {
+            codeInput.value = 'TOKO_' + Math.random().toString(36).substring(2, 8).toUpperCase();
+          }
+        }
+
+        // Allow all scopes (Semua Produk & Pilihan Spesifik)
+        if (scopeGlobalCard) scopeGlobalCard.classList.remove('hidden');
+        if (scopeGridContainer) {
+          scopeGridContainer.classList.remove('sm:grid-cols-1');
+          scopeGridContainer.classList.add('sm:grid-cols-2');
+        }
+
+        // Allow all discount types EXCEPT Flash Sale
+        if (typeSelect) {
+          for (let i = 0; i < typeSelect.options.length; i++) {
+            const opt = typeSelect.options[i];
+            if (opt.value === 'Flash Sale') {
+              opt.disabled = true;
+            } else {
+              opt.disabled = false;
+            }
+          }
+          if (typeSelect.value === 'Flash Sale') {
+            typeSelect.value = 'Diskon Persen';
+          }
+        }
+      } else if (category === 'flash_sale') {
+        // Flash Sale: Silent code, hide field
+        if (codeInputWrapper) codeInputWrapper.classList.add('hidden');
+        if (codeInput) {
+          codeInput.required = false;
+          if (!codeInput.value || !codeInput.value.startsWith('FLASH_')) {
+            codeInput.value = 'FLASH_' + Math.random().toString(36).substring(2, 8).toUpperCase();
+          }
+        }
+
+        // Force 'specific' product target
+        if (scopeSpecificCard) scopeSpecificCard.checked = true;
+        if (scopeGlobalCard) scopeGlobalCard.classList.add('hidden');
+        if (scopeGridContainer) {
+          scopeGridContainer.classList.remove('sm:grid-cols-2');
+          scopeGridContainer.classList.add('sm:grid-cols-1');
+        }
+
+        // Force & lock 'Flash Sale' type selection
+        if (typeSelect) {
+          for (let i = 0; i < typeSelect.options.length; i++) {
+            const opt = typeSelect.options[i];
+            if (opt.value === 'Flash Sale') {
+              opt.disabled = false;
+            } else {
+              opt.disabled = true;
+            }
+          }
+          typeSelect.value = 'Flash Sale';
+        }
+      } else {
+        // Voucher (Coupon Code)
+        if (codeInputWrapper) codeInputWrapper.classList.remove('hidden');
+        if (codeInput) {
+          codeInput.required = true;
+          // Clear silent autogenerated prefix codes when going back to custom input voucher
+          if (codeInput.value.startsWith('TOKO_') || codeInput.value.startsWith('FLASH_')) {
+            codeInput.value = '';
+          }
+        }
+
+        // Allow all scopes (Semua Produk & Pilihan Spesifik)
+        if (scopeGlobalCard) scopeGlobalCard.classList.remove('hidden');
+        if (scopeGridContainer) {
+          scopeGridContainer.classList.remove('sm:grid-cols-1');
+          scopeGridContainer.classList.add('sm:grid-cols-2');
+        }
+
+        // Allow all types EXCEPT Flash Sale
+        if (typeSelect) {
+          for (let i = 0; i < typeSelect.options.length; i++) {
+            const opt = typeSelect.options[i];
+            if (opt.value === 'Flash Sale') {
+              opt.disabled = true;
+            } else {
+              opt.disabled = false;
+            }
+          }
+          if (typeSelect.value === 'Flash Sale') {
+            typeSelect.value = 'Diskon Persen';
+          }
+        }
+      }
+
+      // Re-trigger standard visibility event handlers
+      if (window.handleTypeChange) window.handleTypeChange();
+      if (window.handleScopeChange) window.handleScopeChange();
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      // Track states
+      let selectedProductSKUs = [];
+      let productDiscounts = {}; // Map of { SKU: { type: 'percentage'|'nominal', value: number } }
+      let modalDraftSKUs = [];
+
+      window.handleTypeChange = function() {
+        const type = document.getElementById("form-type").value;
+        const valInput = document.getElementById("form-value");
+        const valLabel = document.getElementById("label-value");
+        const fsPanel = document.getElementById("flash-sale-panel");
+
+        if (type === 'Flash Sale') {
+          fsPanel.classList.remove("hidden");
+          document.getElementById("form-start-time").required = true;
+          document.getElementById("form-end-time").required = true;
+          document.getElementById("form-tagline").required = true;
+          
+          valLabel.innerText = "Nilai Diskon Flash Sale (%) *";
+          valInput.placeholder = "50";
+          valInput.max = "100";
+        } else {
+          fsPanel.classList.add("hidden");
+          document.getElementById("form-start-time").required = false;
+          document.getElementById("form-end-time").required = false;
+          document.getElementById("form-tagline").required = false;
+
+          valInput.removeAttribute("max");
+          if (type === 'Gratis Ongkir') {
+            valLabel.innerText = "Subsidi Ongkir Maksimal (Rp) *";
+            valInput.placeholder = "20000";
+          } else if (type === 'Diskon Persen') {
+            valLabel.innerText = "Nilai Diskon (%) *";
+            valInput.placeholder = "10";
+            valInput.max = "100";
+          } else {
+            valLabel.innerText = "Nilai Potongan Harga (Rp) *";
+            valInput.placeholder = "100000";
+          }
+        }
+
+        // Keep table baseline up-to-date
+        if (selectedProductSKUs.length > 0) {
+          renderSelectedProductsTable();
+        }
+      };
+
+      window.handleScopeChange = function(scopeVal) {
+        if (scopeVal) {
+          const radio = document.querySelector(`input[name="promo-scope"][value="${scopeVal}"]`);
+          if (radio) radio.checked = true;
+        }
+
+        const checkedInput = document.querySelector('input[name="promo-scope"]:checked');
+        const scope = checkedInput ? checkedInput.value : 'all';
+        const selectorPanel = document.getElementById("product-selector-panel");
+        
+        // Highlight scope cards beautifully
+        const cardAll = document.getElementById("scope-card-all");
+        const cardSpecific = document.getElementById("scope-card-specific");
+        
+        if (cardAll && cardSpecific) {
+          if (scope === 'all') {
+            cardAll.classList.remove('border-slate-200');
+            cardAll.classList.add('border-brand-blueRoyal', 'ring-1', 'ring-brand-blueRoyal/20');
+            cardSpecific.classList.remove('border-brand-blueRoyal', 'ring-1', 'ring-brand-blueRoyal/20');
+            cardSpecific.classList.add('border-slate-200');
+          } else {
+            cardSpecific.classList.remove('border-slate-200');
+            cardSpecific.classList.add('border-brand-blueRoyal', 'ring-1', 'ring-brand-blueRoyal/20');
+            cardAll.classList.remove('border-brand-blueRoyal', 'ring-1', 'ring-brand-blueRoyal/20');
+            cardAll.classList.add('border-slate-200');
+          }
+        }
+
+        if (scope === 'specific') {
+          selectorPanel.classList.remove("hidden");
+          renderSelectedProductsTable();
+        } else {
+          selectorPanel.classList.add("hidden");
+        }
+      };
+
+      // Setup default Start Date (today) and Expiry (7 days from now)
+      const today = new Date();
+      document.getElementById("form-start-date").value = today.toISOString().split('T')[0];
+
+      const defaultDate = new Date();
+      defaultDate.setDate(defaultDate.getDate() + 7);
+      document.getElementById("form-expiry").value = defaultDate.toISOString().split('T')[0];
+
+      function renderProductSelectorList() {
+        const products = BizmateDB.getProducts();
+        const tbody = document.getElementById("product-selector-tbody");
+        tbody.innerHTML = "";
+
+        if (!products || products.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-6 text-center text-slate-400 italic">Tidak ada produk tersedia dalam database.</td></tr>`;
+          return;
+        }
+
+        products.forEach(p => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50 transition duration-100 cursor-pointer product-row";
+          tr.dataset.sku = p.sku.toLowerCase();
+          tr.dataset.name = p.name.toLowerCase();
+          tr.onclick = function(e) {
+            // Prevent double triggers if clicking check directly
+            if (e.target.type === 'checkbox') return;
+            const chk = document.getElementById(`chk-prod-${p.sku}`);
+            chk.checked = !chk.checked;
+            handleProductCheckChange(p.sku, p.name, chk.checked);
+          };
+
+          tr.innerHTML = `
+            <td class="px-4 py-3 text-center" onclick="event.stopPropagation()">
+              <label for="chk-prod-${p.sku}" class="sr-only">Pilih ${p.name}</label>
+              <input type="checkbox" id="chk-prod-${p.sku}" value="${p.sku}" onchange="handleProductCheckChange('${p.sku}', '${p.name}', this.checked)" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-3">
+                <img src="${p.image || 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=50&q=80'}" alt="${p.name}" class="w-8 h-8 rounded-lg object-cover bg-slate-50 border border-slate-100 shrink-0">
+                <div class="flex flex-col overflow-hidden max-w-[250px]">
+                  <span class="font-bold text-slate-800 truncate">${p.name}</span>
+                  <span class="text-[10px] text-slate-400 font-mono tracking-wider font-semibold">${p.sku}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-500 font-semibold rounded text-[10px] inline-block truncate max-w-[120px]">${p.category}</span></td>
+            <td class="px-4 py-3 text-right font-bold text-slate-700">Rp ${p.price.toLocaleString('id-ID')}</td>
+            <td class="px-4 py-3 text-center"><span class="font-bold text-xs ${p.stock === 0 ? 'text-rose-500' : 'text-slate-500'}">${p.stock}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // --- MODAL DRAFT STATE LOGIC ---
+      window.openProductSelectModal = function() {
+        modalDraftSKUs = [...selectedProductSKUs];
+        
+        // Sync checkboxes in modal with draft SKUs
+        const products = BizmateDB.getProducts();
+        products.forEach(p => {
+          const chk = document.getElementById(`chk-prod-${p.sku}`);
+          if (chk) {
+            chk.checked = modalDraftSKUs.includes(p.sku);
+          }
+        });
+
+        updateModalChips();
+
+        const modal = document.getElementById("product-select-modal");
+        const card = document.getElementById("modal-card");
+        
+        modal.classList.remove("hidden", "pointer-events-none");
+        setTimeout(() => {
+          modal.classList.add("opacity-100");
+          card.classList.remove("scale-95", "opacity-0", "translate-y-4");
+          card.classList.add("scale-100", "opacity-100", "translate-y-0");
+        }, 10);
+      };
+
+      window.closeProductSelectModal = function() {
+        const modal = document.getElementById("product-select-modal");
+        const card = document.getElementById("modal-card");
+        
+        card.classList.remove("scale-100", "opacity-100", "translate-y-0");
+        card.classList.add("scale-95", "opacity-0", "translate-y-4");
+        modal.classList.remove("opacity-100");
+        
+        setTimeout(() => {
+          modal.classList.add("hidden", "pointer-events-none");
+        }, 300);
+      };
+
+      window.handleProductCheckChange = function(sku, name, isChecked) {
+        if (isChecked) {
+          if (!modalDraftSKUs.includes(sku)) {
+            modalDraftSKUs.push(sku);
+          }
+        } else {
+          modalDraftSKUs = modalDraftSKUs.filter(s => s !== sku);
+        }
+        
+        const chk = document.getElementById(`chk-prod-${sku}`);
+        if (chk) chk.checked = isChecked;
+
+        updateModalChips();
+      };
+
+      window.removeChip = function(sku) {
+        modalDraftSKUs = modalDraftSKUs.filter(s => s !== sku);
+        const chk = document.getElementById(`chk-prod-${sku}`);
+        if (chk) chk.checked = false;
+        updateModalChips();
+      };
+
+      function updateModalChips() {
+        const container = document.getElementById("selected-chips-container");
+        const countBadge = document.getElementById("selected-count-badge");
+        container.innerHTML = "";
+
+        countBadge.innerText = `${modalDraftSKUs.length} Terpilih`;
+
+        if (modalDraftSKUs.length === 0) {
+          container.innerHTML = `<span class="text-xs text-slate-400 italic font-medium">Belum ada produk spesifik terpilih.</span>`;
+          document.getElementById("check-all-products").checked = false;
+          return;
+        }
+
+        const products = BizmateDB.getProducts();
+        
+        // Sync check-all checkbox
+        if (products.length > 0 && modalDraftSKUs.length === products.length) {
+          document.getElementById("check-all-products").checked = true;
+        } else {
+          document.getElementById("check-all-products").checked = false;
+        }
+
+        modalDraftSKUs.forEach(sku => {
+          const p = products.find(prod => prod.sku === sku);
+          const name = p ? p.name : sku;
+
+          const chip = document.createElement("div");
+          chip.className = "flex items-center gap-1.5 px-3 py-1 bg-brand-orange/5 text-brand-orange border border-brand-orange/20 rounded-full text-xs font-bold shadow-soft shrink-0";
+          chip.innerHTML = `
+            <span>${name}</span>
+            <button type="button" onclick="removeChip('${sku}')" class="text-brand-orange/70 hover:text-brand-orange transition shrink-0"><i class="ti ti-x text-xs"></i></button>
+          `;
+          container.appendChild(chip);
+        });
+      }
+
+      window.toggleSelectAllProducts = function() {
+        const isChecked = document.getElementById("check-all-products").checked;
+        const products = BizmateDB.getProducts();
+        
+        products.forEach(p => {
+          const chk = document.getElementById(`chk-prod-${p.sku}`);
+          if (chk) {
+            chk.checked = isChecked;
+            if (isChecked) {
+              if (!modalDraftSKUs.includes(p.sku)) {
+                modalDraftSKUs.push(p.sku);
+              }
+            } else {
+              modalDraftSKUs = modalDraftSKUs.filter(s => s !== p.sku);
+            }
+          }
+        });
+        updateModalChips();
+      };
+
+      window.saveModalSelection = function() {
+        selectedProductSKUs = [...modalDraftSKUs];
+        renderSelectedProductsTable();
+        closeProductSelectModal();
+      };
+
+      window.filterProductSelector = function() {
+        const query = document.getElementById("product-search").value.toLowerCase().trim();
+        const rows = document.querySelectorAll(".product-row");
+        
+        rows.forEach(r => {
+          const name = r.dataset.name;
+          const sku = r.dataset.sku;
+          
+          if (name.includes(query) || sku.includes(query)) {
+            r.classList.remove("hidden");
+          } else {
+            r.classList.add("hidden");
+          }
+        });
+      };
+
+      // --- MAIN TABLE RENDERING & INDIVIDUAL VALUES ---
+      function renderSelectedProductsTable() {
+        const tbody = document.getElementById("selected-products-tbody");
+        const tableContainer = document.getElementById("selected-products-table-container");
+        const emptyState = document.getElementById("selected-empty-state");
+        const bulkPanel = document.getElementById("bulk-discount-panel");
+
+        tbody.innerHTML = "";
+
+        if (selectedProductSKUs.length === 0) {
+          tableContainer.classList.add("hidden");
+          bulkPanel.classList.add("hidden");
+          emptyState.classList.remove("hidden");
+          return;
+        }
+
+        tableContainer.classList.remove("hidden");
+        bulkPanel.classList.remove("hidden");
+        emptyState.classList.add("hidden");
+
+        const products = BizmateDB.getProducts();
+
+        // Baseline default config matching global discount
+        const globalType = document.getElementById("form-type").value;
+        const globalValue = parseInt(document.getElementById("form-value").value) || 0;
+        let defaultType = 'nominal';
+        if (globalType === 'Diskon Persen' || globalType === 'Flash Sale') {
+          defaultType = 'percentage';
+        }
+
+        // Clean up unselected overrides
+        Object.keys(productDiscounts).forEach(sku => {
+          if (!selectedProductSKUs.includes(sku)) {
+            delete productDiscounts[sku];
+          }
+        });
+
+        selectedProductSKUs.forEach(sku => {
+          const p = products.find(prod => prod.sku === sku);
+          if (!p) return;
+
+          // Default fallback
+          if (!productDiscounts[sku]) {
+            productDiscounts[sku] = {
+              type: defaultType,
+              value: globalValue,
+              promoStock: ''
+            };
+          } else if (productDiscounts[sku].promoStock === undefined) {
+            productDiscounts[sku].promoStock = '';
+          }
+
+          const discount = productDiscounts[sku];
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50 transition duration-150";
+          tr.innerHTML = `
+            <td class="px-4 py-3.5">
+              <div class="flex items-center gap-3">
+                <img src="${p.image || 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=50&q=80'}" alt="${p.name}" class="w-9 h-9 rounded-xl object-cover bg-slate-50 border border-slate-100 shrink-0">
+                <div class="flex flex-col overflow-hidden max-w-[200px]">
+                  <span class="font-bold text-slate-800 truncate">${p.name}</span>
+                  <span class="text-[10px] text-slate-400 font-mono tracking-wider font-semibold">${p.sku}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3.5 text-right font-semibold text-slate-700">Rp ${p.price.toLocaleString('id-ID')}</td>
+            <td class="px-4 py-3.5">
+              <label for="discount-type-select-${sku}" class="sr-only">Tipe Diskon ${p.name}</label>
+              <select id="discount-type-select-${sku}" onchange="updateProductDiscountType('${sku}', this.value)" class="w-full px-2.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
+                <option value="percentage" ${discount.type === 'percentage' ? 'selected' : ''}>% Persen</option>
+                <option value="nominal" ${discount.type === 'nominal' ? 'selected' : ''}>Rp Rupiah</option>
+              </select>
+            </td>
+            <td class="px-4 py-3.5">
+              <label for="discount-value-input-${sku}" class="sr-only">Nilai Diskon ${p.name}</label>
+              <input id="discount-value-input-${sku}" type="number" min="0" value="${discount.value}" oninput="updateProductDiscountValue('${sku}', this.value)" class="w-full px-2.5 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 font-bold focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
+            </td>
+            <td class="px-4 py-3.5">
+              <label for="promo-stock-input-${sku}" class="sr-only">Stok Promo ${p.name}</label>
+              <input id="promo-stock-input-${sku}" type="number" min="0" placeholder="Tak terbatas" value="${discount.promoStock !== undefined ? discount.promoStock : ''}" oninput="updateProductPromoStock('${sku}', this.value)" class="w-full px-2.5 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 font-bold focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
+            </td>
+            <td class="px-4 py-3.5 text-right font-black text-brand-blueRoyal" id="final-price-${sku}">
+              Rp 0
+            </td>
+            <td class="px-4 py-3.5 text-center">
+              <button type="button" onclick="removeProductFromTable('${sku}')" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition duration-150">
+                <i class="ti ti-trash text-sm"></i>
+              </button>
+            </td>
+          `;
+          
+          tbody.appendChild(tr);
+          recalculateFinalPrice(sku, p.price);
+        });
+      }
+
+      window.recalculateFinalPrice = function(sku, basePrice) {
+        const discount = productDiscounts[sku];
+        if (!discount) return;
+
+        let finalPrice = basePrice;
+        let val = parseFloat(discount.value) || 0;
+
+        if (discount.type === 'percentage') {
+          if (val > 100) val = 100;
+          const discountAmt = basePrice * (val / 100);
+          finalPrice = Math.max(0, basePrice - discountAmt);
+        } else {
+          finalPrice = Math.max(0, basePrice - val);
+        }
+
+        const elem = document.getElementById(`final-price-${sku}`);
+        if (elem) {
+          elem.innerText = `Rp ${Math.round(finalPrice).toLocaleString('id-ID')}`;
+        }
+      };
+
+      window.updateProductDiscountType = function(sku, type) {
+        if (productDiscounts[sku]) {
+          productDiscounts[sku].type = type;
+          if (type === 'percentage' && productDiscounts[sku].value > 100) {
+            productDiscounts[sku].value = 100;
+            const input = document.getElementById(`discount-value-input-${sku}`);
+            if (input) input.value = 100;
+          }
+          const products = BizmateDB.getProducts();
+          const p = products.find(prod => prod.sku === sku);
+          if (p) {
+            recalculateFinalPrice(sku, p.price);
+          }
+        }
+      };
+
+      window.updateProductDiscountValue = function(sku, value) {
+        if (productDiscounts[sku]) {
+          let parsed = parseFloat(value) || 0;
+          if (productDiscounts[sku].type === 'percentage' && parsed > 100) {
+            parsed = 100;
+            const input = document.getElementById(`discount-value-input-${sku}`);
+            if (input) input.value = 100;
+          }
+          productDiscounts[sku].value = parsed;
+          const products = BizmateDB.getProducts();
+          const p = products.find(prod => prod.sku === sku);
+          if (p) {
+            recalculateFinalPrice(sku, p.price);
+          }
+        }
+      };
+
+      window.updateProductPromoStock = function(sku, value) {
+        if (productDiscounts[sku]) {
+          let parsed = parseInt(value);
+          if (isNaN(parsed) || parsed <= 0) {
+            productDiscounts[sku].promoStock = '';
+            const input = document.getElementById(`promo-stock-input-${sku}`);
+            if (input && value !== '') {
+              input.value = '';
+            }
+          } else {
+            productDiscounts[sku].promoStock = parsed;
+          }
+        }
+      };
+
+      window.removeProductFromTable = function(sku) {
+        selectedProductSKUs = selectedProductSKUs.filter(s => s !== sku);
+        delete productDiscounts[sku];
+        renderSelectedProductsTable();
+      };
+
+      // --- BULK DISCOUNT CONTROL ---
+      window.applyBulkDiscount = function() {
+        const bulkType = document.getElementById("bulk-type").value;
+        const bulkValueInput = document.getElementById("bulk-value");
+        let bulkValue = parseFloat(bulkValueInput.value) || 0;
+
+        if (bulkType === 'percentage' && bulkValue > 100) {
+          bulkValue = 100;
+          bulkValueInput.value = 100;
+        }
+
+        const bulkPromoStockInput = document.getElementById("bulk-promo-stock");
+        let bulkPromoStock = parseInt(bulkPromoStockInput.value);
+        if (isNaN(bulkPromoStock) || bulkPromoStock <= 0) {
+          bulkPromoStock = '';
+        }
+
+        selectedProductSKUs.forEach(sku => {
+          if (!productDiscounts[sku]) {
+            productDiscounts[sku] = {};
+          }
+          productDiscounts[sku].type = bulkType;
+          productDiscounts[sku].value = bulkValue;
+          productDiscounts[sku].promoStock = bulkPromoStock;
+        });
+
+        renderSelectedProductsTable();
+      };
+
+      // Render the product selection list inside the modal
+      renderProductSelectorList();
+
+      // Check if page in EDIT mode (URL parameter '?id=PRM-XXX')
+      const urlParams = new URLSearchParams(window.location.search);
+      const promoId = urlParams.get('id');
+      
+      if (promoId) {
+        loadPromoForEdit(promoId);
+      } else {
+        handleCategoryChange('voucher');
+      }
+
+      // --- EDIT MODE LOADER ---
+      function loadPromoForEdit(id) {
+        const promos = BizmateDB.getPromos();
+        const promo = promos.find(p => p.id === id);
+        if (!promo) return;
+
+        // Populate fields
+        document.getElementById("promo-id").value = promo.id;
+        document.getElementById("form-name").value = promo.name;
+        document.getElementById("form-code").value = promo.code;
+        document.getElementById("form-type").value = promo.type;
+        document.getElementById("form-value").value = promo.value;
+        document.getElementById("form-min").value = promo.minPurchase;
+        document.getElementById("form-max").value = promo.maxUsage;
+        document.getElementById("form-start-date").value = promo.startDate || new Date().toISOString().split('T')[0];
+        document.getElementById("form-expiry").value = promo.expiry;
+
+        // Restore active status
+        const activeInput = document.getElementById("form-active");
+        const toggleBtn = document.getElementById("form-active-toggle");
+        const toggleDot = document.getElementById("form-active-dot");
+        
+        const isActive = promo.active !== false; // default true
+        activeInput.value = isActive ? "true" : "false";
+        if (isActive) {
+          toggleBtn.className = "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-brand-blueRoyal shrink-0";
+          toggleDot.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5";
+        } else {
+          toggleBtn.className = "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-200 shrink-0";
+          toggleDot.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0";
+        }
+
+        // Custom Flash Sale values
+        if (promo.isFlashSale || promo.type === 'Flash Sale') {
+          document.getElementById("form-start-time").value = promo.startTime || "12:00";
+          document.getElementById("form-end-time").value = promo.endTime || "18:00";
+          document.getElementById("form-tagline").value = promo.tagline || "";
+        }
+
+        // Restore category with legacy fallback
+        let category = promo.category;
+        if (!category) {
+          if (promo.isFlashSale || promo.type === 'Flash Sale') {
+            category = 'flash_sale';
+          } else if (promo.code && promo.code.startsWith('TOKO_')) {
+            category = 'promo_toko';
+          } else if (promo.scope === 'specific' && !promo.code) {
+            category = 'promo_toko';
+          } else {
+            category = 'voucher';
+          }
+        }
+        
+        // Trigger handleCategoryChange
+        handleCategoryChange(category);
+
+        // Handle scope
+        const scope = promo.scope || "all";
+        const scopeRadio = document.querySelector(`input[name="promo-scope"][value="${scope}"]`);
+        if (scopeRadio) {
+          scopeRadio.checked = true;
+        }
+        handleScopeChange(scope);
+        
+        // Restore individual discounts or fallback
+        productDiscounts = promo.productDiscounts || {};
+
+        if (scope === 'specific' && promo.appliedProducts) {
+          selectedProductSKUs = [...promo.appliedProducts];
+          
+          // Pre-populate productDiscounts fallback for older campaigns
+          const globalType = promo.type;
+          const globalValue = promo.value || 0;
+          let defaultType = 'nominal';
+          if (globalType === 'Diskon Persen' || globalType === 'Flash Sale') {
+            defaultType = 'percentage';
+          }
+          
+          selectedProductSKUs.forEach(sku => {
+            if (!productDiscounts[sku]) {
+              productDiscounts[sku] = {
+                type: defaultType,
+                value: globalValue,
+                promoStock: ''
+              };
+            } else if (productDiscounts[sku].promoStock === undefined) {
+              productDiscounts[sku].promoStock = '';
+            }
+          });
+
+          renderSelectedProductsTable();
+        }
+
+        // Adjust GUI elements
+        handleTypeChange();
+        handleScopeChange();
+
+        // Update titles & labels
+        document.getElementById("page-title").innerText = "Ubah Detail Promosi";
+        document.getElementById("promo-badge").className = "px-3 py-1.5 bg-brand-orange/5 text-brand-orange text-xs font-black tracking-widest rounded-xl self-start uppercase";
+        document.getElementById("promo-badge").innerText = "Mode Sunting";
+      }
+
+      // Form submit handler
+      const form = document.getElementById("promo-form");
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const id = document.getElementById("promo-id").value;
+        const name = document.getElementById("form-name").value.trim();
+        const code = document.getElementById("form-code").value.trim().toUpperCase();
+        const type = document.getElementById("form-type").value;
+        const value = parseInt(document.getElementById("form-value").value);
+        const minPurchase = parseInt(document.getElementById("form-min").value);
+        const maxUsage = parseInt(document.getElementById("form-max").value);
+        const startDate = document.getElementById("form-start-date").value;
+        const expiry = document.getElementById("form-expiry").value;
+        const active = document.getElementById("form-active").value === "true";
+        const scope = document.querySelector('input[name="promo-scope"]:checked').value;
+        const category = document.querySelector('input[name="promo-category"]:checked').value;
+
+        // Diskon Persen validation
+        if ((type === 'Diskon Persen' || type === 'Flash Sale') && value > 100) {
+          alert('Diskon persentase tidak boleh melebihi 100%');
+          return;
+        }
+
+        // Specific scope validation
+        if (scope === 'specific' && selectedProductSKUs.length === 0) {
+          alert('Silakan pilih minimal 1 produk target spesifik yang dipromosikan.');
+          return;
+        }
+
+        const promoData = {
+          name,
+          code,
+          category,
+          type,
+          value,
+          minPurchase,
+          maxUsage,
+          startDate,
+          expiry,
+          active,
+          scope,
+          appliedProducts: scope === 'specific' ? selectedProductSKUs : [],
+          productDiscounts: scope === 'specific' ? productDiscounts : {}
+        };
+
+        if (type === 'Flash Sale') {
+          promoData.isFlashSale = true;
+          promoData.startTime = document.getElementById("form-start-time").value;
+          promoData.endTime = document.getElementById("form-end-time").value;
+          promoData.tagline = document.getElementById("form-tagline").value.trim();
+        }
+
+        if (id) {
+          promoData.id = id;
+          // Preserve usageCount
+          const existing = BizmateDB.getPromos().find(p => p.id === id);
+          if (existing) {
+            promoData.usageCount = existing.usageCount || 0;
+          }
+          BizmateDB.savePromo(promoData);
+          sessionStorage.setItem('promo_toast', `Kupon <strong>${code}</strong> berhasil diperbarui!`);
+        } else {
+          BizmateDB.savePromo(promoData);
+          sessionStorage.setItem('promo_toast', `Kupon promo <strong>${code}</strong> berhasil ditambahkan!`);
+        }
+
+        window.location.href = 'promosi.html';
+      });
+    });
+  </script>
+</body>
+</html>

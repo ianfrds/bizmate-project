@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Pengaturan Promosi</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Shared LocalStorage Database & Sidebar Component -->
+  <script src="js/database.js"></script>
+  <script src="js/sidebar.js" defer></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              orange: '#fa7315',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <div class="flex items-center gap-2 font-outfit hidden sm:flex">
+          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 shrink-0">
+        <button class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative">
+          <i class="ti ti-bell text-xl"></i>
+          <span class="absolute top-2 right-2.5 w-2 h-2 bg-red-500 border-2 border-slate-50 rounded-full"></span>
+        </button>
+        <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1400px] mx-auto space-y-8">
+      
+      <!-- Page Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h3 class="font-outfit font-black text-2xl text-slate-800">Pengaturan Promosi</h3>
+          <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Kupon Belanja & Voucher Potongan Harga</p>
+        </div>
+      </div>
+      
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Penjualan -->
+        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              <i class="ti ti-wallet"></i>
+            </div>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+              <i class="ti ti-trending-up text-sm"></i> +14.2%
+            </span>
+          </div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Penjualan</p>
+          <h3 id="stat-revenue" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">Rp 0</h3>
+          <p class="text-[10px] text-slate-400 font-semibold mt-1">vs 7 hari terakhir</p>
+        </div>
+
+        <!-- Pesanan -->
+        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              <i class="ti ti-shopping-cart"></i>
+            </div>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+              <i class="ti ti-trending-up text-sm"></i> +8.5%
+            </span>
+          </div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Pesanan</p>
+          <h3 id="stat-orders" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+          <p class="text-[10px] text-slate-400 font-semibold mt-1">vs 7 hari terakhir</p>
+        </div>
+
+        <!-- Jumlah Terjual -->
+        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              <i class="ti ti-box"></i>
+            </div>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+              <i class="ti ti-trending-up text-sm"></i> +12.1%
+            </span>
+          </div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Jumlah Terjual</p>
+          <h3 id="stat-items" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+          <p class="text-[10px] text-slate-400 font-semibold mt-1">vs 7 hari terakhir</p>
+        </div>
+
+        <!-- Pembeli -->
+        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              <i class="ti ti-users"></i>
+            </div>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+              <i class="ti ti-trending-up text-sm"></i> +6.3%
+            </span>
+          </div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Pembeli</p>
+          <h3 id="stat-buyers" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+          <p class="text-[10px] text-slate-400 font-semibold mt-1">vs 7 hari terakhir</p>
+        </div>
+
+      </div>
+
+      <!-- Main Controls & Table Area -->
+      <div class="bg-white rounded-3xl border border-slate-200/80 shadow-soft overflow-hidden">
+        
+        <!-- Controls Bar -->
+        <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-slate-50/10">
+          <!-- Left: Filter Tabs -->
+          <div class="flex items-center gap-2 p-1 bg-slate-100 rounded-xl self-start shrink-0">
+            <button id="filter-semua" onclick="setFilter('Semua')" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 bg-white text-slate-800 shadow-soft">Semua</button>
+            <button id="filter-aktif" onclick="setFilter('Aktif')" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800">Aktif</button>
+            <button id="filter-nonaktif" onclick="setFilter('Nonaktif')" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800">Nonaktif</button>
+          </div>
+
+          <!-- Right: Search and Add -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-grow md:justify-end">
+            <div class="relative flex-grow sm:max-w-xs">
+              <i class="ti ti-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+              <input id="search-input" type="text" placeholder="Cari kode promo..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-blueRoyal bg-slate-50/50 focus:bg-white transition duration-200 font-medium">
+            </div>
+            <a href="tambah-promosi.html" class="px-5 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/20 transition duration-200 uppercase tracking-wider font-outfit">
+              <i class="ti ti-plus text-sm"></i>
+              Tambah Promosi
+            </a>
+          </div>
+        </div>
+
+        <!-- Table View -->
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50/40">
+                <th class="px-8 py-8 font-outfit">Kode & Nama Promo</th>
+                <th class="px-8 py-8 font-outfit">Tipe Promo</th>
+                <th class="px-8 py-8 font-outfit">Periode Promo</th>
+                <th class="px-8 py-8 font-outfit">Produk Promo</th>
+                <th class="px-8 py-8 font-outfit">Status</th>
+                <th class="px-8 py-8 font-outfit text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="promo-table-body" class="divide-y divide-slate-100 text-sm text-slate-600">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden flex-col items-center justify-center py-16 px-4 text-center">
+          <div class="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 text-3xl mb-4">
+            <i class="ti ti-ticket-off"></i>
+          </div>
+          <h4 class="font-outfit font-extrabold text-slate-800 text-base mb-1">Tidak ada kupon ditemukan</h4>
+          <p class="text-slate-400 text-xs max-w-xs">Silakan ubah kata pencarian atau buat promo baru sekarang.</p>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div class="p-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-bold bg-slate-50/20">
+          <p id="showing-text">Menampilkan 0 dari 0 Kupon</p>
+          <div class="flex items-center gap-2">
+            <button class="p-2 border border-slate-200 hover:bg-slate-50 rounded-lg text-slate-400 cursor-not-allowed"><i class="ti ti-chevron-left"></i></button>
+            <button class="px-3.5 py-2 bg-brand-blueRoyal text-white rounded-lg">1</button>
+            <button class="p-2 border border-slate-200 hover:bg-slate-50 rounded-lg"><i class="ti ti-chevron-right"></i></button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- JavaScript Logika Bisnis -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let activeFilter = 'Semua';
+      let searchQuery = '';
+
+      function formatIndoDate(dateStr) {
+        if (!dateStr) return "-";
+        const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        const day = d.getDate();
+        const month = months[d.getMonth()];
+        const year = d.getFullYear();
+        return `${day} ${month} ${year}`;
+      }
+
+      // Initialize render
+      renderPromotions();
+
+      // Scan sessionStorage for toast confirmations
+      const storedToast = sessionStorage.getItem('promo_toast');
+      if (storedToast) {
+        showToast(storedToast, 'success');
+        sessionStorage.removeItem('promo_toast');
+      }
+
+      // Hook search inputs
+      const searchInput = document.getElementById("search-input");
+      searchInput.addEventListener("input", function() {
+        searchQuery = searchInput.value.toLowerCase().trim();
+        renderPromotions();
+      });
+
+      // Redirect edit page
+      window.openEditModal = function(id) {
+        window.location.href = `tambah-promosi.html?id=${id}`;
+      };
+
+      // Set filter tab
+      window.setFilter = function(filter) {
+        activeFilter = filter;
+        
+        // Reset button classes
+        ['Semua', 'Aktif', 'Nonaktif'].forEach(f => {
+          const btn = document.getElementById(`filter-${f.toLowerCase()}`);
+          if (f === filter) {
+            btn.className = "px-4 py-2 rounded-lg text-xs font-bold transition duration-200 bg-white text-slate-800 shadow-soft";
+          } else {
+            btn.className = "px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800";
+          }
+        });
+
+        renderPromotions();
+      };
+
+      // Inline Toggle switch status handler
+      window.toggleStatus = function(id) {
+        BizmateDB.togglePromoStatus(id);
+        const promo = BizmateDB.getPromos().find(p => p.id === id);
+        showToast(`Kupon <strong>${promo.code}</strong> berhasil ${promo.active ? 'diaktifkan' : 'dinonaktifkan'}!`, 'success');
+        renderPromotions();
+      };
+
+      // Delete handler
+      window.deletePromo = function(id, code) {
+        if (confirm(`Apakah Anda yakin ingin menghapus kupon promo ${code}?`)) {
+          BizmateDB.deletePromo(id);
+          showToast(`Kupon promo <strong>${code}</strong> berhasil dihapus!`, 'warning');
+          renderPromotions();
+        }
+      };
+
+      // Render function
+      function renderPromotions() {
+        const promos = BizmateDB.getPromos();
+        const allProducts = BizmateDB.getProducts() || [];
+        
+        // Calculate metrics
+        let totalRevenue = 0;
+        let totalOrders = 0;
+        let totalItemsSold = 0;
+        let totalUniqueBuyers = 0;
+
+        promos.forEach(p => {
+          const usages = p.usageCount || 0;
+          totalOrders += usages;
+          totalItemsSold += Math.round(usages * 1.5);
+          totalUniqueBuyers += Math.round(usages * 0.85);
+
+          // Calculate revenue based on the promo type & value
+          let avgOrderValue = 850000; // default average
+          if (p.code === 'GRATISONGKIR') avgOrderValue = 450000;
+          else if (p.code === 'BIZMATE10') avgOrderValue = 1200000;
+          else if (p.code === 'MEBELHEMAT') avgOrderValue = 2100000;
+          else if (p.code === 'FLASHSALE50') avgOrderValue = 4500000;
+          else if (p.minPurchase && p.minPurchase > 0) {
+            avgOrderValue = p.minPurchase * 1.3;
+          }
+          totalRevenue += usages * avgOrderValue;
+        });
+
+        // Format Penjualan as Rp 148.6M / Rp 12.5Jt etc.
+        let formattedRevenue = "Rp 0";
+        if (totalRevenue >= 1000000000) {
+          formattedRevenue = `Rp ${(totalRevenue / 1000000000).toFixed(1)}M`;
+        } else if (totalRevenue >= 1000000) {
+          formattedRevenue = `Rp ${(totalRevenue / 1000000).toFixed(1)}Jt`;
+        } else {
+          formattedRevenue = `Rp ${totalRevenue.toLocaleString('id-ID')}`;
+        }
+
+        document.getElementById("stat-revenue").innerText = formattedRevenue;
+        document.getElementById("stat-orders").innerText = totalOrders.toLocaleString('id-ID');
+        document.getElementById("stat-items").innerText = totalItemsSold.toLocaleString('id-ID');
+        document.getElementById("stat-buyers").innerText = totalUniqueBuyers.toLocaleString('id-ID');
+
+        // Apply filters
+        let filtered = promos.filter(p => {
+          const matchesSearch = p.code.toLowerCase().includes(searchQuery) || p.name.toLowerCase().includes(searchQuery);
+          
+          if (activeFilter === 'Aktif') {
+            return matchesSearch && p.active;
+          } else if (activeFilter === 'Nonaktif') {
+            return matchesSearch && !p.active;
+          }
+          return matchesSearch;
+        });
+
+        const tbody = document.getElementById("promo-table-body");
+        const emptyState = document.getElementById("empty-state");
+        
+        tbody.innerHTML = "";
+
+        if (filtered.length === 0) {
+          emptyState.classList.remove("hidden");
+          emptyState.classList.add("flex");
+          document.getElementById("showing-text").innerText = "Menampilkan 0 dari 0 Kupon";
+          return;
+        }
+
+        emptyState.classList.remove("flex");
+        emptyState.classList.add("hidden");
+
+        filtered.forEach(p => {
+          const usagePercent = Math.min(100, Math.round(((p.usageCount || 0) / p.maxUsage) * 100));
+          const formattedStart = formatIndoDate(p.startDate);
+          const formattedEnd = formatIndoDate(p.expiry);
+          
+          const expDate = new Date(p.expiry);
+          const startDate = new Date(p.startDate || p.expiry);
+          const now = new Date();
+          now.setHours(0,0,0,0);
+          
+          const startDateTime = new Date(startDate);
+          startDateTime.setHours(0,0,0,0);
+          
+          const expDateTime = new Date(expDate);
+          expDateTime.setHours(0,0,0,0);
+          
+          const diffTime = expDateTime - now;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          const timeToStart = startDateTime - now;
+          const daysToStart = Math.ceil(timeToStart / (1000 * 60 * 60 * 24));
+
+          // Type formatting: Promo Toko, Voucher, Flash Sale
+          let typeBadge = "";
+          let finalCategory = p.category;
+          if (!finalCategory) {
+            if (p.type === 'Flash Sale' || p.isFlashSale) {
+              finalCategory = 'flash_sale';
+            } else if (p.code && p.code.startsWith('TOKO_')) {
+              finalCategory = 'promo_toko';
+            } else if (p.scope === 'specific') {
+              finalCategory = 'promo_toko';
+            } else {
+              finalCategory = 'voucher';
+            }
+          }
+
+          if (finalCategory === 'flash_sale') {
+            typeBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-orange-50 text-brand-orange rounded-full inline-flex items-center gap-1 animate-pulse"><i class="ti ti-bolt text-xs"></i> Flash Sale</span>`;
+          } else if (finalCategory === 'promo_toko') {
+            typeBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-brand-blueLight text-brand-blueRoyal rounded-full inline-flex items-center gap-1"><i class="ti ti-building-store text-xs"></i> Promo Toko</span>`;
+          } else {
+            typeBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-indigo-50 text-indigo-600 rounded-full inline-flex items-center gap-1"><i class="ti ti-ticket text-xs"></i> Voucher</span>`;
+          }
+
+          // Value formatting
+          let valueFormatted = "";
+          if (p.type === 'Diskon Persen' || p.type === 'Flash Sale') {
+            valueFormatted = `${p.value}%`;
+          } else {
+            valueFormatted = `Rp ${p.value.toLocaleString('id-ID')}`;
+          }
+
+          // Min. Belanja info
+          const minPurchaseText = p.minPurchase > 0 
+            ? `<span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Min. Belanja Rp ${p.minPurchase.toLocaleString('id-ID')}</span>`
+            : `<span class="text-[10px] text-emerald-500 font-semibold block mt-0.5">Tanpa Min. Belanja</span>`;
+
+          // Scope formatting
+          let scopeBadge = "";
+          if (p.scope === 'specific') {
+            const count = p.appliedProducts ? p.appliedProducts.length : 0;
+            const productNames = (p.appliedProducts || []).map(sku => {
+              const found = allProducts.find(prod => prod.sku === sku);
+              const name = found ? found.name : sku;
+              let discountStr = "";
+              if (p.productDiscounts && p.productDiscounts[sku]) {
+                const disc = p.productDiscounts[sku];
+                let discountText = "";
+                if (disc.type === 'percentage') {
+                  discountText = `Diskon ${disc.value}%`;
+                } else if (disc.type === 'nominal') {
+                  discountText = `Diskon Rp ${disc.value.toLocaleString('id-ID')}`;
+                }
+                
+                let stockText = "";
+                if (disc.promoStock && parseInt(disc.promoStock) > 0) {
+                  stockText = `, Stok Promo: ${disc.promoStock}`;
+                }
+                discountStr = ` (${discountText}${stockText})`;
+              } else {
+                let globalVal = p.value || 0;
+                let discountText = "";
+                if (p.type === 'Diskon Persen' || p.type === 'Flash Sale') {
+                  discountText = `Diskon ${globalVal}%`;
+                } else {
+                  discountText = `Diskon Rp ${globalVal.toLocaleString('id-ID')}`;
+                }
+                discountStr = ` (${discountText})`;
+              }
+              return name + discountStr;
+            }).join(', ');
+            scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-brand-orange bg-orange-50 border border-brand-orange/20 px-2 py-0.5 rounded-lg w-fit cursor-help" title="${productNames}"><i class="ti ti-package text-[11px]"></i> ${count} Produk</span>`;
+          } else {
+            scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-lg w-fit"><i class="ti ti-world text-[11px]"></i> Semua Produk</span>`;
+          }
+
+          // Product thumbnails listing for specific scope
+          let productImagesHtml = "";
+          if (p.scope === 'specific' && p.appliedProducts && p.appliedProducts.length > 0) {
+            const count = p.appliedProducts.length;
+            productImagesHtml = `<div class="flex items-center gap-1.5 mt-2">`;
+            const maxToShow = 3;
+            for (let i = 0; i < Math.min(count, maxToShow); i++) {
+              const sku = p.appliedProducts[i];
+              const prod = allProducts.find(item => item.sku === sku);
+              const imgUrl = (prod && prod.image) ? prod.image : 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=80&q=80';
+              const name = prod ? prod.name : sku;
+              
+              if (i === 2 && count > 3) {
+                productImagesHtml += `
+                  <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-slate-200/80 shadow-soft shrink-0" title="${name}">
+                    <img class="w-full h-full object-cover" src="${imgUrl}" alt="${name}">
+                    <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center text-[10px] font-black text-white font-outfit">
+                      +${count - 2}
+                    </div>
+                  </div>
+                `;
+              } else {
+                productImagesHtml += `
+                  <img class="w-8 h-8 rounded-lg object-cover border border-slate-200/80 shadow-soft shrink-0" src="${imgUrl}" alt="${name}" title="${name}">
+                `;
+              }
+            }
+            productImagesHtml += `</div>`;
+          }
+
+          // Flash Sale scheduler formatting
+          let flashSaleInfo = "";
+          if (p.type === 'Flash Sale' || p.isFlashSale) {
+            flashSaleInfo = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200/50 px-2 py-0.5 rounded-lg w-fit" title="${p.tagline || ''}"><i class="ti ti-clock text-[11px]"></i> ${p.startTime || '12:00'} - ${p.endTime || '18:00'}</span>`;
+          }
+
+          // Active status badge
+          let statusBadge = "";
+          if (!p.active) {
+            statusBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-slate-100 text-slate-500 rounded-full inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Nonaktif</span>`;
+          } else if (diffDays < 0) {
+            statusBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-rose-50 text-rose-600 rounded-full inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Kadaluarsa</span>`;
+          } else if (daysToStart > 0) {
+            statusBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-blue-50 text-brand-blueRoyal rounded-full inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-brand-blueRoyal"></span> Akan Datang</span>`;
+          } else if (diffDays === 0) {
+            statusBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-amber-50 text-amber-600 rounded-full inline-flex items-center gap-1 animate-pulse"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Hari Terakhir</span>`;
+          } else if (diffDays <= 3) {
+            statusBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-amber-50 text-amber-600 rounded-full inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> ${diffDays} Hari Lagi</span>`;
+          } else {
+            statusBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-50 text-emerald-600 rounded-full inline-flex items-center gap-1 shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Aktif</span>`;
+          }
+
+          const tr = document.createElement("tr");
+          tr.className = "table-row-hover transition duration-150 border-b border-slate-100";
+          tr.innerHTML = `
+            <td class="px-8 py-8">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-lg shrink-0">
+                  <i class="ti ${p.type === 'Flash Sale' ? 'ti-bolt text-brand-orange animate-bounce' : 'ti-ticket'}"></i>
+                </div>
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-2">
+                    <span class="font-outfit font-black text-slate-800 tracking-wide text-sm">${p.code}</span>
+                    ${p.type === 'Flash Sale' ? '<span class="px-1.5 py-0.5 bg-brand-orange/10 text-brand-orange font-black text-[9px] rounded uppercase tracking-wider">Flash Sale</span>' : ''}
+                  </div>
+                  <span class="text-xs text-slate-400 font-medium">${p.name}</span>
+                  ${flashSaleInfo ? `<div class="flex flex-wrap gap-1 mt-1">${flashSaleInfo}</div>` : ''}
+                </div>
+              </div>
+            </td>
+            <td class="px-8 py-8">
+              ${typeBadge}
+            </td>
+            <td class="px-8 py-8">
+              <span class="text-xs font-semibold text-slate-600">${formattedStart} - ${formattedEnd}</span>
+            </td>
+            <td class="px-8 py-8">
+              <div class="flex flex-col gap-1.5 justify-center">
+                ${scopeBadge}
+                ${productImagesHtml}
+              </div>
+            </td>
+            <td class="px-8 py-8">
+              ${statusBadge}
+            </td>
+            <td class="px-8 py-8 text-center">
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="openEditModal('${p.id}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal hover:bg-brand-blueRoyal/5 rounded-xl transition duration-200" title="Ubah Promo">
+                  <i class="ti ti-edit text-base"></i>
+                </button>
+                <button onclick="deletePromo('${p.id}', '${p.code}')" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition duration-200" title="Hapus Promo">
+                  <i class="ti ti-trash text-base"></i>
+                </button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById("showing-text").innerText = `Menampilkan ${filtered.length} dari ${totalCount} Kupon`;
+      }
+
+      // Beautiful Toast notification function
+      function showToast(message, type = 'success') {
+        const container = document.getElementById("toast-container");
+        
+        const toast = document.createElement("div");
+        toast.className = "flex items-center gap-3 px-5 py-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xl pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300 max-w-sm shrink-0 border-l-4";
+        
+        if (type === 'success') {
+          toast.classList.add("border-l-emerald-500");
+          toast.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg shrink-0">
+              <i class="ti ti-circle-check"></i>
+            </div>
+            <div class="text-xs text-slate-700 font-medium">${message}</div>
+          `;
+        } else if (type === 'warning') {
+          toast.classList.add("border-l-amber-500");
+          toast.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center text-lg shrink-0">
+              <i class="ti ti-alert-circle"></i>
+            </div>
+            <div class="text-xs text-slate-700 font-medium">${message}</div>
+          `;
+        }
+
+        container.appendChild(toast);
+        
+        // Trigger entrance animation
+        setTimeout(() => {
+          toast.classList.remove("translate-y-2", "opacity-0");
+        }, 10);
+
+        // Auto fade out after 3 seconds
+        setTimeout(() => {
+          toast.classList.add("translate-y-[-10px]", "opacity-0");
+          setTimeout(() => {
+            toast.remove();
+          }, 300);
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Konten CMS Landing Page</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  
+  <!-- Shared LocalStorage Database & Sidebar Component -->
+  <script src="js/database.js"></script>
+  <script src="js/sidebar.js" defer></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4',
+              orange: '#fa7315',
+              blueLight: '#eef2ff',
+              sidebar: '#0B1120',
+            }
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
+            'mockup': '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <div class="flex items-center gap-2 font-outfit hidden sm:flex">
+          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 shrink-0">
+        <button class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative">
+          <i class="ti ti-bell text-xl"></i>
+          <span class="absolute top-2 right-2.5 w-2 h-2 bg-red-500 border-2 border-slate-50 rounded-full"></span>
+        </button>
+        <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1400px] mx-auto space-y-6">
+
+      <!-- Page Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Konten CMS Landing Page</h1>
+          <p class="text-xs text-slate-500 font-medium">Editor &amp; Manajemen Konten Halaman Toko Utama</p>
+        </div>
+      </div>
+      
+      <!-- 2-Column Grid Layout: Editor on Left, Live Mockup on Right -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- ==================== COLUMN 1: EDITOR PANEL ==================== -->
+        <section class="lg:col-span-7 bg-white rounded-3xl border border-slate-200/80 shadow-card overflow-hidden">
+          
+          <!-- Editor Title & Tabs Header -->
+          <div class="p-6 border-b border-slate-100 bg-slate-50/20">
+            <h3 class="font-outfit font-black text-lg text-slate-800 mb-4 flex items-center gap-2">
+              <i class="ti ti-edit text-brand-blueRoyal text-xl"></i>
+              <span>Editor Kustomisasi Toko</span>
+            </h3>
+            
+            <!-- Tab Buttons -->
+            <div class="flex border-b border-slate-200">
+              <button onclick="switchTab('hero-banner')" id="tab-btn-hero-banner" class="flex-grow py-3 text-xs font-bold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition duration-200 flex items-center justify-center gap-2 tab-active">
+                <i class="ti ti-speakerphone text-sm"></i>
+                Promo & Banner Hero
+              </button>
+              <button onclick="switchTab('about-contact')" id="tab-btn-about-contact" class="flex-grow py-3 text-xs font-bold text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition duration-200 flex items-center justify-center gap-2">
+                <i class="ti ti-brand-instagram text-sm"></i>
+                Profil & Kontak Sosmed
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Area -->
+          <form id="cms-form" onsubmit="event.preventDefault();" class="p-6 space-y-6">
+            
+            <!-- TAB 1: Promo & Banner Hero -->
+            <div id="tab-hero-banner" class="space-y-5">
+              
+              <!-- Announcement Ticker -->
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Teks Pengumuman (Promo Ticker) *</label>
+                <input id="announcement" type="text" placeholder="Masukkan promo gratis ongkir atau pengumuman lainnya..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                <p class="text-[10px] text-slate-400 mt-1 font-medium">Pengumuman berjalan/statis di bagian paling atas halaman.</p>
+              </div>
+
+              <!-- Hero Title -->
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Judul Utama Hero (Hero Title) *</label>
+                <textarea id="heroTitle" rows="2" placeholder="Judul besar banner utama..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200 resize-none"></textarea>
+              </div>
+
+              <!-- Hero Subtitle -->
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Sub-Judul Hero (Hero Subtitle) *</label>
+                <textarea id="heroSub" rows="3" placeholder="Deskripsi singkat atau penjelasan promo..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200 resize-none"></textarea>
+              </div>
+
+              <!-- Hero CTA Text -->
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Teks Tombol Aksi (CTA Button) *</label>
+                <input id="heroCta" type="text" placeholder="Contoh: Belanja Sekarang" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+
+              <!-- Hero Background Image URL -->
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">URL Gambar Latar Belakang (Hero Image) *</label>
+                  <div class="flex gap-2">
+                    <input id="heroImage" type="text" placeholder="https://images.unsplash.com/..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                  </div>
+                </div>
+
+                <!-- Preset Images Quick Selection -->
+                <div>
+                  <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2 font-outfit">Rekomendasi Foto Studio (Klik untuk pilih)</label>
+                  <div class="grid grid-cols-4 gap-3">
+                    <button onclick="setHeroPreset('sofa-premium', 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80')" class="relative h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-brand-blueRoyal transition cursor-pointer group focus:outline-none" id="preset-sofa-premium">
+                      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=150&q=80" alt="Sofa Premium" class="w-full h-full object-cover">
+                      <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-[8px] text-white font-extrabold uppercase">Sofa</div>
+                    </button>
+                    <button onclick="setHeroPreset('living-room', 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80')" class="relative h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-brand-blueRoyal transition cursor-pointer group focus:outline-none" id="preset-living-room">
+                      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=150&q=80" alt="Living Room" class="w-full h-full object-cover">
+                      <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-[8px] text-white font-extrabold uppercase">Ruang Tamu</div>
+                    </button>
+                    <button onclick="setHeroPreset('workspace', 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80')" class="relative h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-brand-blueRoyal transition cursor-pointer group focus:outline-none" id="preset-workspace">
+                      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=150&q=80" alt="Workspace" class="w-full h-full object-cover">
+                      <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-[8px] text-white font-extrabold uppercase">Kerja</div>
+                    </button>
+                    <button onclick="setHeroPreset('dining-room', 'https://images.unsplash.com/photo-1617806118233-18e1db207f62?auto=format&fit=crop&w=1200&q=80')" class="relative h-14 rounded-xl overflow-hidden border-2 border-transparent hover:border-brand-blueRoyal transition cursor-pointer group focus:outline-none" id="preset-dining-room">
+                      <img src="https://images.unsplash.com/photo-1617806118233-18e1db207f62?auto=format&fit=crop&w=150&q=80" alt="Dining Room" class="w-full h-full object-cover">
+                      <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-[8px] text-white font-extrabold uppercase">Makan</div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- TAB 2: Profil & Kontak Sosmed -->
+            <div id="tab-about-contact" class="space-y-5 hidden">
+              
+              <!-- About description -->
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tentang Toko (About Us) *</label>
+                <textarea id="aboutDesc" rows="4" placeholder="Deskripsikan filosofi, keunggulan, atau sejarah singkat toko Anda..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200 resize-none"></textarea>
+              </div>
+
+              <!-- Stat Badges Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tahun Pengalaman (Melayani) *</label>
+                  <input id="yearsOfService" type="number" placeholder="Contoh: 12" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Metrik Pelanggan Setia *</label>
+                  <input id="customerCount" type="text" placeholder="Contoh: 8.5K+" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                </div>
+              </div>
+
+              <!-- Social links row -->
+              <div class="space-y-3">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit border-b border-slate-100 pb-1">Link Kontak & Sosial Media</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <!-- WhatsApp -->
+                  <div>
+                    <label class="block text-[9px] font-bold text-slate-500 mb-1 flex items-center gap-1">
+                      <i class="ti ti-brand-whatsapp text-emerald-500"></i> No WhatsApp *
+                    </label>
+                    <input id="whatsapp" type="text" placeholder="628123456789" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                  </div>
+                  <!-- Instagram -->
+                  <div>
+                    <label class="block text-[9px] font-bold text-slate-500 mb-1 flex items-center gap-1">
+                      <i class="ti ti-brand-instagram text-pink-500"></i> Username Instagram
+                    </label>
+                    <input id="instagram" type="text" placeholder="username" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                  </div>
+                  <!-- TikTok -->
+                  <div>
+                    <label class="block text-[9px] font-bold text-slate-500 mb-1 flex items-center gap-1">
+                      <i class="ti ti-brand-tiktok text-slate-800"></i> Username TikTok
+                    </label>
+                    <input id="tiktok" type="text" placeholder="username" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Address -->
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Alamat Fisik Toko *</label>
+                <textarea id="address" rows="3" placeholder="Masukkan alamat lengkap toko fisik..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200 resize-none"></textarea>
+              </div>
+
+            </div>
+
+            <!-- Action Buttons Footer -->
+            <div class="pt-5 border-t border-slate-100 flex items-center justify-between gap-3">
+              <button type="button" onclick="resetToDefaults()" class="px-5 py-3 border border-slate-200 hover:bg-slate-50 text-slate-500 font-bold rounded-2xl text-xs transition duration-200 uppercase tracking-wider font-outfit flex items-center gap-1.5">
+                <i class="ti ti-reload"></i>
+                Reset Bawaan
+              </button>
+              
+              <button type="button" onclick="saveCMSData()" class="px-6 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 shadow-lg shadow-brand-blueRoyal/20 uppercase tracking-wider font-outfit flex items-center gap-2">
+                <i class="ti ti-device-floppy text-base"></i>
+                <span>Simpan Pengaturan</span>
+              </button>
+            </div>
+            
+          </form>
+        </section>
+
+        <!-- ==================== COLUMN 2: LIVE MINI MOCKUP ==================== -->
+        <section class="lg:col-span-5 flex flex-col items-center justify-center sticky top-28">
+          
+          <div class="w-full max-w-[360px] flex flex-col items-center">
+            
+            <!-- Mockup Header Badge info -->
+            <div class="flex items-center gap-2 mb-4 bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full border border-emerald-200/50 text-[10px] font-extrabold uppercase tracking-wider shadow-sm animate-pulse">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Live Visual Preview Mockup
+            </div>
+
+            <!-- SMARTPHONE FRAME -->
+            <div class="relative w-[340px] h-[640px] rounded-[48px] border-[12px] border-slate-900 bg-slate-950 shadow-mockup overflow-hidden flex flex-col">
+              
+              <!-- Speaker & Camera Notch -->
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-2xl z-50 flex items-center justify-center gap-1.5">
+                <span class="w-12 h-1 bg-slate-800 rounded-full"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-800"></span>
+              </div>
+
+              <!-- Phone Status Bar -->
+              <div class="h-8 bg-white px-7 flex items-center justify-between text-[9px] font-bold text-slate-700 select-none shrink-0 pt-1.5">
+                <span>13:45</span>
+                <div class="flex items-center gap-1">
+                  <i class="ti ti-wifi"></i>
+                  <i class="ti ti-cell-signal-5"></i>
+                  <i class="ti ti-battery-4"></i>
+                </div>
+              </div>
+
+              <!-- WEB STOREFRONT PREVIEW WINDOW (Scrollable) -->
+              <div class="flex-grow bg-slate-50 overflow-y-auto mockup-screen flex flex-col relative custom-scrollbar">
+                
+                <!-- Promo Ticker Banner -->
+                <div id="mock-announcement-bg" class="bg-gradient-to-r from-brand-orange to-red-500 text-white py-1.5 px-4 text-center text-[9px] font-extrabold uppercase tracking-wide shrink-0 min-h-[24px]">
+                  <span id="mock-announcement">✨ Promo Kejutan! Gratis Ongkir Seluruh Indonesia</span>
+                </div>
+
+                <!-- Web Header/Navbar -->
+                <header class="bg-white/90 backdrop-blur-md h-12 border-b border-slate-100 flex items-center justify-between px-4 sticky top-0 z-30 shrink-0 select-none shadow-sm">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 rounded-md bg-gradient-to-tr from-brand-blueRoyal to-brand-orange flex items-center justify-center text-[10px] text-white">
+                      <i class="ti ti-sofa"></i>
+                    </div>
+                    <span class="font-outfit font-extrabold text-[13px] text-slate-800">
+                      biz<span class="text-brand-orange">mate</span>
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2.5 text-slate-500">
+                    <i class="ti ti-search text-xs hover:text-slate-800 cursor-pointer"></i>
+                    <i class="ti ti-shopping-cart text-xs hover:text-slate-800 cursor-pointer"></i>
+                    <i class="ti ti-menu text-xs hover:text-slate-800 cursor-pointer"></i>
+                  </div>
+                </header>
+
+                <!-- HERO SECTION -->
+                <section id="mock-hero" class="relative min-h-[200px] flex flex-col justify-end px-5 py-6 bg-cover bg-center shrink-0" style="background-image: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80');">
+                  <!-- Gradient Overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-slate-950/20"></div>
+                  
+                  <div class="relative z-10 space-y-2.5">
+                    <h1 id="mock-hero-title" class="font-outfit font-black text-base text-white leading-tight">
+                      Temukan Furniture Premium untuk Rumah Impian Anda
+                    </h1>
+                    <p id="mock-hero-sub" class="text-[10px] text-slate-200 leading-normal line-clamp-3">
+                      Mulai dari sofa velvet mewah hingga meja jati pilihan dengan kualitas terbaik langsung dari pengrajin terpercaya.
+                    </p>
+                    <div>
+                      <button id="mock-hero-cta" class="px-3.5 py-1.5 bg-brand-orange text-white font-extrabold rounded-lg text-[9px] uppercase tracking-wider hover:bg-orange-600 transition shadow-lg shadow-brand-orange/20 select-none">
+                        Belanja Sekarang
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- BRAND METRICS BAR -->
+                <section class="grid grid-cols-2 divide-x divide-slate-100 bg-white border-y border-slate-100 py-3 text-center shrink-0">
+                  <div>
+                    <span id="mock-stat-years" class="block font-outfit font-black text-brand-blueRoyal text-sm leading-none mb-1">12</span>
+                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Tahun Melayani</span>
+                  </div>
+                  <div>
+                    <span id="mock-stat-customers" class="block font-outfit font-black text-brand-orange text-sm leading-none mb-1">8.5K+</span>
+                    <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Pelanggan Puas</span>
+                  </div>
+                </section>
+
+                <!-- INTERACTIVE PRODUCT CATEGORY PREVIEW -->
+                <section class="p-4 bg-white space-y-3 shrink-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="font-outfit font-extrabold text-[11px] text-slate-800 uppercase tracking-wider">Kategori Pilihan</h3>
+                    <span class="text-[8px] text-brand-blueRoyal font-extrabold uppercase tracking-widest hover:underline cursor-pointer">Lihat Semua</span>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2">
+                    <div class="bg-slate-50 border border-slate-100/50 rounded-xl p-2 flex flex-col items-center justify-center text-center shadow-sm">
+                      <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-1.5"><i class="ti ti-sofa"></i></div>
+                      <span class="text-[8px] font-bold text-slate-700 leading-tight">Kursi & Sofa</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100/50 rounded-xl p-2 flex flex-col items-center justify-center text-center shadow-sm">
+                      <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm mb-1.5"><i class="ti ti-table"></i></div>
+                      <span class="text-[8px] font-bold text-slate-700 leading-tight">Meja & Rak</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-100/50 rounded-xl p-2 flex flex-col items-center justify-center text-center shadow-sm">
+                      <div class="w-7 h-7 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center text-sm mb-1.5"><i class="ti ti-lamp"></i></div>
+                      <span class="text-[8px] font-bold text-slate-700 leading-tight">Lampu Hias</span>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- ABOUT COMPANY SECTION -->
+                <section class="p-5 bg-slate-50 border-t border-slate-100 space-y-2 shrink-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-4 h-[2px] bg-brand-orange"></span>
+                    <h3 class="font-outfit font-extrabold text-[10px] text-brand-orange uppercase tracking-widest">Tentang Kami</h3>
+                  </div>
+                  <h4 class="font-outfit font-black text-xs text-slate-800">Menciptakan Kenyamanan Premium</h4>
+                  <p id="mock-about-desc" class="text-[9px] text-slate-500 leading-relaxed text-justify">
+                    Bizmate adalah penyedia mebel dan furniture berkualitas tinggi yang berfokus pada desain modern, kenyamanan premium, dan ketahanan jangka panjang untuk setiap sudut ruangan Anda.
+                  </p>
+                </section>
+
+                <!-- FOOTER PREVIEW -->
+                <footer class="bg-slate-900 text-slate-400 p-5 mt-auto border-t border-slate-800 space-y-4 shrink-0 text-[8px] font-semibold select-none">
+                  
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-1.5 text-white">
+                      <div class="w-4 h-4 rounded bg-brand-orange flex items-center justify-center text-[8px]">
+                        <i class="ti ti-sofa"></i>
+                      </div>
+                      <span class="font-outfit font-extrabold text-[10px]">bizmate</span>
+                    </div>
+                    <p id="mock-footer-address" class="text-slate-400 leading-relaxed">
+                      Jl. Raya Darmo No. 12-14, Tegalsari, Kota Surabaya, Jawa Timur 60264
+                    </p>
+                  </div>
+
+                  <!-- Contact Links icons -->
+                  <div class="flex items-center gap-2 border-t border-slate-800 pt-3">
+                    <a id="mock-link-wa" href="https://wa.me/6285179720622" target="_blank" class="w-6 h-6 rounded-md bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition text-xs border border-slate-700/50"><i class="ti ti-brand-whatsapp text-emerald-400"></i></a>
+                    <a id="mock-link-ig" href="https://instagram.com/bizmate.premium" target="_blank" class="w-6 h-6 rounded-md bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition text-xs border border-slate-700/50"><i class="ti ti-brand-instagram text-pink-400"></i></a>
+                    <a id="mock-link-tt" href="https://tiktok.com/@bizmate.official" target="_blank" class="w-6 h-6 rounded-md bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition text-xs border border-slate-700/50"><i class="ti ti-brand-tiktok text-slate-300"></i></a>
+                  </div>
+                  
+                  <p class="text-[7px] text-slate-500 text-center pt-2">© 2026 Bizmate Premium. All Rights Reserved.</p>
+                </footer>
+
+              </div>
+              
+            </div>
+
+            <!-- Footer indicator text -->
+            <p class="text-[10px] text-slate-400 font-bold text-center mt-3 flex items-center gap-1 justify-center">
+              <i class="ti ti-info-circle"></i>
+              Preview di atas terikat secara instan dengan input form editor!
+            </p>
+            
+          </div>
+          
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- JavaScript Logika Bisnis & Binding Preview -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. Ambil data dari LocalStorage
+      const cmsLandingData = BizmateDB.getCMSLanding();
+      
+      // 2. Populasi input-input form
+      populateForm(cmsLandingData);
+
+      // 3. Kaitkan event listener 'input' pada form input untuk instan Live Preview binding
+      setupLiveBinding();
+
+      // Set active preset highlight awal
+      highlightActivePreset(cmsLandingData.heroImage);
+    });
+
+    // Populasi form input dan update preview awal
+    function populateForm(data) {
+      if (!data) return;
+      
+      document.getElementById("announcement").value = data.announcement || '';
+      document.getElementById("heroTitle").value = data.heroTitle || '';
+      document.getElementById("heroSub").value = data.heroSub || '';
+      document.getElementById("heroCta").value = data.heroCta || '';
+      document.getElementById("heroImage").value = data.heroImage || '';
+      document.getElementById("aboutDesc").value = data.aboutDesc || '';
+      document.getElementById("yearsOfService").value = data.yearsOfService || '';
+      document.getElementById("customerCount").value = data.customerCount || '';
+      document.getElementById("whatsapp").value = data.whatsapp || '';
+      document.getElementById("instagram").value = data.instagram || '';
+      document.getElementById("tiktok").value = data.tiktok || '';
+      document.getElementById("address").value = data.address || '';
+      
+      // Trigger update visual mockup
+      updateVisualMockup();
+    }
+
+    // Set Live Bindings
+    function setupLiveBinding() {
+      const inputs = [
+        { id: 'announcement', mockId: 'mock-announcement', attr: 'innerText' },
+        { id: 'heroTitle', mockId: 'mock-hero-title', attr: 'innerText' },
+        { id: 'heroSub', mockId: 'mock-hero-sub', attr: 'innerText' },
+        { id: 'heroCta', mockId: 'mock-hero-cta', attr: 'innerText' },
+        { id: 'aboutDesc', mockId: 'mock-about-desc', attr: 'innerText' },
+        { id: 'yearsOfService', mockId: 'mock-stat-years', attr: 'innerText' },
+        { id: 'customerCount', mockId: 'mock-stat-customers', attr: 'innerText' },
+        { id: 'address', mockId: 'mock-footer-address', attr: 'innerText' }
+      ];
+
+      inputs.forEach(item => {
+        const inputEl = document.getElementById(item.id);
+        const mockEl = document.getElementById(item.mockId);
+        
+        if (inputEl && mockEl) {
+          inputEl.addEventListener('input', function() {
+            mockEl.innerText = this.value;
+          });
+        }
+      });
+
+      // Special binding for background image
+      const heroImageInput = document.getElementById('heroImage');
+      const mockHero = document.getElementById('mock-hero');
+      if (heroImageInput && mockHero) {
+        heroImageInput.addEventListener('input', function() {
+          mockHero.style.backgroundImage = `url('${this.value}')`;
+          highlightActivePreset(this.value);
+        });
+      }
+
+      // Social Links bindings
+      const whatsappInput = document.getElementById('whatsapp');
+      const instagramInput = document.getElementById('instagram');
+      const tiktokInput = document.getElementById('tiktok');
+
+      const mockWa = document.getElementById('mock-link-wa');
+      const mockIg = document.getElementById('mock-link-ig');
+      const mockTt = document.getElementById('mock-link-tt');
+
+      if (whatsappInput && mockWa) {
+        whatsappInput.addEventListener('input', function() {
+          const val = this.value.trim().replace('+', '');
+          mockWa.href = `https://wa.me/${val}`;
+        });
+      }
+
+      if (instagramInput && mockIg) {
+        instagramInput.addEventListener('input', function() {
+          const val = this.value.trim().replace('@', '');
+          mockIg.href = `https://instagram.com/${val}`;
+        });
+      }
+
+      if (tiktokInput && mockTt) {
+        tiktokInput.addEventListener('input', function() {
+          const val = this.value.trim().replace('@', '');
+          mockTt.href = `https://tiktok.com/@${val}`;
+        });
+      }
+    }
+
+    // Update manual all preview aspects
+    function updateVisualMockup() {
+      document.getElementById('mock-announcement').innerText = document.getElementById('announcement').value;
+      document.getElementById('mock-hero-title').innerText = document.getElementById('heroTitle').value;
+      document.getElementById('mock-hero-sub').innerText = document.getElementById('heroSub').value;
+      document.getElementById('mock-hero-cta').innerText = document.getElementById('heroCta').value;
+      document.getElementById('mock-hero').style.backgroundImage = `url('${document.getElementById('heroImage').value}')`;
+      document.getElementById('mock-about-desc').innerText = document.getElementById('aboutDesc').value;
+      document.getElementById('mock-stat-years').innerText = document.getElementById('yearsOfService').value;
+      document.getElementById('mock-stat-customers').innerText = document.getElementById('customerCount').value;
+      document.getElementById('mock-footer-address').innerText = document.getElementById('address').value;
+      
+      const whatsapp = document.getElementById('whatsapp').value.trim().replace('+', '');
+      document.getElementById('mock-link-wa').href = `https://wa.me/${whatsapp}`;
+
+      const instagram = document.getElementById('instagram').value.trim().replace('@', '');
+      document.getElementById('mock-link-ig').href = `https://instagram.com/${instagram}`;
+
+      const tiktok = document.getElementById('tiktok').value.trim().replace('@', '');
+      document.getElementById('mock-link-tt').href = `https://tiktok.com/@${tiktok}`;
+    }
+
+    // Switch Editor Tab Panels
+    window.switchTab = function(tabName) {
+      // Buttons styling
+      const heroBtn = document.getElementById('tab-btn-hero-banner');
+      const contactBtn = document.getElementById('tab-btn-about-contact');
+
+      // Panels
+      const heroPanel = document.getElementById('tab-hero-banner');
+      const contactPanel = document.getElementById('tab-about-contact');
+
+      if (tabName === 'hero-banner') {
+        heroBtn.classList.add('tab-active');
+        contactBtn.classList.remove('tab-active');
+        heroPanel.classList.remove('hidden');
+        contactPanel.classList.add('hidden');
+      } else {
+        contactBtn.classList.add('tab-active');
+        heroBtn.classList.remove('tab-active');
+        contactPanel.classList.remove('hidden');
+        heroPanel.classList.add('hidden');
+      }
+    };
+
+    // Quick preset selection function for background image
+    window.setHeroPreset = function(id, url) {
+      document.getElementById('heroImage').value = url;
+      document.getElementById('mock-hero').style.backgroundImage = `url('${url}')`;
+      highlightActivePreset(url);
+      showToastPreset("Preset gambar interior terpilih!");
+    };
+
+    function highlightActivePreset(url) {
+      const presets = [
+        { id: 'preset-sofa-premium', url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80' },
+        { id: 'preset-living-room', url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80' },
+        { id: 'preset-workspace', url: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80' },
+        { id: 'preset-dining-room', url: 'https://images.unsplash.com/photo-1617806118233-18e1db207f62?auto=format&fit=crop&w=1200&q=80' }
+      ];
+
+      presets.forEach(p => {
+        const btn = document.getElementById(p.id);
+        if (btn) {
+          if (url === p.url) {
+            btn.classList.add('border-brand-blueRoyal', 'ring-2', 'ring-brand-blueRoyal/20');
+          } else {
+            btn.classList.remove('border-brand-blueRoyal', 'ring-2', 'ring-brand-blueRoyal/20');
+          }
+        }
+      });
+    }
+
+    // Save CMS Landing configuration
+    window.saveCMSData = function() {
+      const announcement = document.getElementById("announcement").value.trim();
+      const heroTitle = document.getElementById("heroTitle").value.trim();
+      const heroSub = document.getElementById("heroSub").value.trim();
+      const heroCta = document.getElementById("heroCta").value.trim();
+      const heroImage = document.getElementById("heroImage").value.trim();
+      const aboutDesc = document.getElementById("aboutDesc").value.trim();
+      const yearsOfService = parseInt(document.getElementById("yearsOfService").value) || 0;
+      const customerCount = document.getElementById("customerCount").value.trim();
+      const whatsapp = document.getElementById("whatsapp").value.trim();
+      const instagram = document.getElementById("instagram").value.trim();
+      const tiktok = document.getElementById("tiktok").value.trim();
+      const address = document.getElementById("address").value.trim();
+
+      // Validasi data penting
+      if (!announcement || !heroTitle || !heroSub || !heroCta || !heroImage || !aboutDesc || !yearsOfService || !customerCount || !whatsapp || !address) {
+        alert('Mohon lengkapi semua kolom bertanda * sebelum menyimpan.');
+        return;
+      }
+
+      const updatedConfig = {
+        announcement,
+        heroTitle,
+        heroSub,
+        heroCta,
+        heroImage,
+        aboutDesc,
+        yearsOfService,
+        customerCount,
+        whatsapp,
+        instagram,
+        tiktok,
+        address
+      };
+
+      // Save using global BizmateDB helper
+      BizmateDB.saveCMSLanding(updatedConfig);
+      
+      // Show gorgeous toast
+      showToast("Pengaturan Landing Page berhasil disimpan!");
+    };
+
+    // Reset to defaults SEED values
+    window.resetToDefaults = function() {
+      if (confirm("Apakah Anda yakin ingin memulihkan pengaturan default untuk Landing Page?")) {
+        const SEED_CMS_LANDING = {
+          announcement: '✨ Promo Kejutan! Gratis Ongkir Seluruh Indonesia Khusus Transaksi Bulan Ini!',
+          heroTitle: 'Temukan Furniture Premium untuk Rumah Impian Anda',
+          heroSub: 'Mulai dari sofa velvet mewah hingga meja jati pilihan dengan kualitas terbaik langsung dari pengrajin terpercaya.',
+          heroCta: 'Belanja Sekarang',
+          heroImage: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
+          aboutDesc: 'Bizmate adalah penyedia mebel dan furniture berkualitas tinggi yang berfokus pada desain modern, kenyamanan premium, dan ketahanan jangka panjang untuk setiap sudut ruangan Anda.',
+          yearsOfService: 12,
+          customerCount: '8.5K+',
+          whatsapp: '6285179720622',
+          instagram: 'bizmate.premium',
+          tiktok: 'bizmate.official',
+          address: 'Jl. Raya Darmo No. 12-14, Tegalsari, Kota Surabaya, Jawa Timur 60264'
+        };
+
+        populateForm(SEED_CMS_LANDING);
+        highlightActivePreset(SEED_CMS_LANDING.heroImage);
+        showToast("Pengaturan telah dipulihkan ke setelan default!");
+      }
+    };
+
+    // Toast feedback helper
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = `fixed top-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 transform translate-y-2 opacity-0 font-sans`;
+      toast.innerHTML = `
+        <i class="ti ti-circle-check text-emerald-400 text-xl animate-pulse"></i>
+        <div>
+          <p class="text-xs font-black text-white font-outfit uppercase tracking-wider">CMS Landing</p>
+          <p class="text-[11px] text-slate-400 font-medium mt-0.5">${message}</p>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 100);
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    function showToastPreset(message) {
+      const toast = document.createElement('div');
+      toast.className = `fixed top-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 transform translate-y-2 opacity-0 font-sans`;
+      toast.innerHTML = `
+        <i class="ti ti-photo text-brand-orange text-xl animate-pulse"></i>
+        <div>
+          <p class="text-xs font-black text-white font-outfit uppercase tracking-wider">Kamera & Preset</p>
+          <p class="text-[11px] text-slate-400 font-medium mt-0.5">${message}</p>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 100);
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>

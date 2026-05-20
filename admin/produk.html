@@ -14,6 +14,7 @@
   
   <!-- Shared LocalStorage Database -->
   <script src="js/database.js"></script>
+  <script src="js/sidebar.js" defer></script>
 
   <script>
     tailwind.config = {
@@ -27,6 +28,7 @@
           colors: {
             brand: {
               blueRoyal: '#0c4cb4',
+              orange: '#fa7315',
               blueLight: '#eef2ff',
               sidebar: '#0B1120',
             }
@@ -50,7 +52,7 @@
     .nav-item.active {
       background: linear-gradient(90deg, rgba(12, 76, 180, 0.15) 0%, transparent 100%);
       color: #ffffff;
-      border-left: 3px solid #3b82f6;
+      border-left: 3px solid #fa7315;
     }
     .nav-item {
       border-left: 3px solid transparent;
@@ -62,135 +64,7 @@
 <body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
 
   <!-- ==================== SIDEBAR ==================== -->
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
-    
-    <!-- Logo Area -->
-    <div class="h-20 flex items-center justify-between px-6 border-b border-white/10 shrink-0">
-      <a href="index.html" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-brand-blueRoyal flex items-center justify-center text-white shadow-lg shadow-brand-blueRoyal/30 transform group-hover:scale-105 transition">
-          <i class="ti ti-sofa text-xl"></i>
-        </div>
-        <div class="flex flex-col">
-          <span class="font-outfit font-extrabold text-xl text-white tracking-tight leading-none">
-            biz<span class="text-brand-blueRoyal">mate</span>
-          </span>
-          <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Admin Console</span>
-        </div>
-      </a>
-      <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:text-white transition">
-        <i class="ti ti-x text-xl"></i>
-      </button>
-    </div>
-
-    <!-- Navigation Menu -->
-    <div class="flex-grow overflow-y-auto custom-scrollbar py-6 px-4 space-y-8">
-      
-      <!-- Core -->
-      <div class="space-y-1">
-        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
-        <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
-          <i class="ti ti-layout-dashboard text-lg"></i>
-          Dashboard
-        </a>
-        <a href="keuangan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
-          <i class="ti ti-chart-pie text-lg"></i>
-          Keuangan
-        </a>
-      </div>
-
-      <!-- E-Commerce -->
-      <div class="space-y-1">
-        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Store Management</p>
-        
-        <!-- Pesanan Dropdown -->
-        <div class="space-y-0.5">
-          <button onclick="toggleSubmenu('sub-pesanan', 'arrow-pesanan')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
-            <div class="flex items-center gap-3">
-              <i class="ti ti-shopping-cart text-lg"></i>
-              Pesanan
-            </div>
-            <i id="arrow-pesanan" class="ti ti-chevron-down text-sm transition-transform"></i>
-          </button>
-          <div id="sub-pesanan" class="hidden pl-11 pr-4 py-1 space-y-1">
-            <a href="pesanan.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Daftar Pesanan</a>
-          </div>
-        </div>
-
-        <!-- Produk Dropdown -->
-        <div class="space-y-0.5">
-          <button onclick="toggleSubmenu('sub-produk', 'arrow-produk')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg nav-item active text-sm font-semibold text-white transition">
-            <div class="flex items-center gap-3">
-              <i class="ti ti-box text-lg text-blue-400"></i>
-              Produk
-            </div>
-            <i id="arrow-produk" class="ti ti-chevron-down text-sm transition-transform rotate-180"></i>
-          </button>
-          <div id="sub-produk" class="pl-11 pr-4 py-1 space-y-1">
-            <a href="produk.html" class="flex items-center gap-2 py-2 text-[13px] font-bold text-white transition">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)] animate-pulse"></span>
-              Semua Produk
-            </a>
-            <a href="kategori.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Kategori</a>
-            <a href="tambah-produk.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Tambah Produk <span class="ml-2 px-1.5 py-0.5 bg-blue-500/20 text-blue-400 rounded-[4px] text-[9px] font-bold">NEW</span></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Master Data & System -->
-      <div class="space-y-1">
-        <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">System & Config</p>
-        
-        <!-- Master Data Dropdown -->
-        <div class="space-y-0.5">
-          <button onclick="toggleSubmenu('sub-master', 'arrow-master')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
-            <div class="flex items-center gap-3">
-              <i class="ti ti-database text-lg"></i>
-              Master Data
-            </div>
-            <i id="arrow-master" class="ti ti-chevron-down text-sm transition-transform"></i>
-          </button>
-          <div id="sub-master" class="hidden pl-11 pr-4 py-1 space-y-1">
-            <a href="customer.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Customer</a>
-            <a href="admin-users.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Admin Users</a>
-          </div>
-        </div>
-
-        <!-- Konten Dropdown -->
-        <div class="space-y-0.5">
-          <button onclick="toggleSubmenu('sub-konten', 'arrow-konten')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold hover:text-white hover:bg-white/5 transition">
-            <div class="flex items-center gap-3">
-              <i class="ti ti-layout-kanban text-lg"></i>
-              Konten (CMS)
-            </div>
-            <i id="arrow-konten" class="ti ti-chevron-down text-sm transition-transform"></i>
-          </button>
-          <div id="sub-konten" class="hidden pl-11 pr-4 py-1 space-y-1">
-            <a href="landing-page.html" class="block py-2 text-[13px] font-medium text-slate-400 hover:text-white transition pl-3.5">Landing Page</a>
-          </div>
-        </div>
-
-        <a href="pengaturan.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold hover:text-white hover:bg-white/5">
-          <i class="ti ti-settings text-lg"></i>
-          Pengaturan
-        </a>
-      </div>
-
-    </div>
-
-    <!-- User Profile Footer -->
-    <div class="p-4 border-t border-white/10 shrink-0">
-      <div class="flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blueRoyal to-purple-600 p-0.5">
-          <img src="https://ui-avatars.com/api/?name=Admin+Utama&background=0D8ABC&color=fff" alt="Avatar" class="w-full h-full rounded-full border-2 border-brand-sidebar object-cover">
-        </div>
-        <div class="flex-grow overflow-hidden">
-          <p class="text-sm font-bold text-white truncate">Admin Utama</p>
-          <p class="text-[11px] text-slate-500 font-medium truncate">superadmin@bizmate.id</p>
-        </div>
-        <i class="ti ti-selector text-slate-500"></i>
-      </div>
-    </div>
-  </aside>
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5"></aside>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
   <div class="flex-grow lg:pl-72 flex flex-col min-h-screen">
@@ -276,8 +150,8 @@
                 <th class="px-6 py-4 w-12 border-b border-slate-100"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal"></th>
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Info Produk</th>
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Kategori</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Harga</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Stok</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Harga & Stok</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Performa</th>
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-center">Tampilkan</th>
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-right">Aksi</th>
               </tr>
@@ -396,23 +270,6 @@
   </div>
 
   <script>
-    // Sidebar toggle logic
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('-translate-x-full');
-    }
-
-    function toggleSubmenu(menuId, arrowId) {
-      const menu = document.getElementById(menuId);
-      const arrow = document.getElementById(arrowId);
-      if(menu.classList.contains('hidden')) {
-        menu.classList.remove('hidden');
-        arrow.style.transform = 'rotate(180deg)';
-      } else {
-        menu.classList.add('hidden');
-        arrow.style.transform = 'rotate(0deg)';
-      }
-    }
 
     // Dynamic Products Catalog
     document.addEventListener("DOMContentLoaded", function() {
@@ -421,6 +278,31 @@
       const filterCategory = document.getElementById('filter-category');
       const filterStatus = document.getElementById('filter-status');
       const paginationInfo = document.getElementById('table-pagination-info');
+
+      // Helper function to calculate sold quantity dynamically with seed offset
+      function getProductSoldQty(sku) {
+        const orders = BizmateDB.getOrders();
+        let dbQty = 0;
+        orders.forEach(o => {
+          if (o.paymentStatus === 'Paid' || o.shippingStatus === 'Shipped' || o.shippingStatus === 'Delivered') {
+            if (o.items && Array.isArray(o.items)) {
+              o.items.forEach(item => {
+                if (item.sku === sku) {
+                  dbQty += item.qty;
+                }
+              });
+            }
+          }
+        });
+
+        // Deterministic seed value based on SKU to give an active feel
+        let seedValue = 0;
+        for (let i = 0; i < sku.length; i++) {
+          seedValue += sku.charCodeAt(i);
+        }
+        const baseQty = (seedValue % 45) + 8;
+        return baseQty + dbQty;
+      }
 
       // Main Render Function
       function renderTable() {
@@ -468,35 +350,173 @@
         }
 
         filtered.forEach(p => {
-          let stockBadge = '';
-          if (p.stock === 0) {
-            stockBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-red-50 text-red-500 border border-red-200 rounded text-[10px] font-bold">0 (Habis)</span>`;
-          } else if (p.stock <= p.minStock) {
-            stockBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[10px] font-bold">${p.stock} Unit (Low)</span>`;
-          } else {
-            stockBadge = `<p class="font-bold text-emerald-600">${p.stock} Unit</p>`;
-          }
-
           const opacityClass = p.active ? '' : 'opacity-60 grayscale';
           const titleClass = p.active ? 'text-slate-800 hover:text-brand-blueRoyal' : 'text-slate-400';
+
+          // 1. Calculate price, stock, performa dynamically based on variant presence
+          let priceDisplay = '';
+          let totalStock = p.stock;
+          let parentSoldQty = 0;
+          let parentRevenue = 0;
+
+          if (p.hasVariants && p.variantList && p.variantList.length > 0) {
+            const prices = p.variantList.map(v => v.price);
+            const minPrice = Math.min(...prices);
+            const maxPrice = Math.max(...prices);
+            priceDisplay = minPrice === maxPrice 
+              ? `Rp ${minPrice.toLocaleString('id-ID')}` 
+              : `Rp ${minPrice.toLocaleString('id-ID')} - Rp ${maxPrice.toLocaleString('id-ID')}`;
+
+            totalStock = p.variantList.reduce((sum, v) => sum + v.stock, 0);
+
+            p.variantList.forEach(v => {
+              const vSold = getProductSoldQty(v.sku);
+              parentSoldQty += vSold;
+              parentRevenue += v.price * vSold;
+            });
+          } else {
+            priceDisplay = `Rp ${p.price.toLocaleString('id-ID')}`;
+            parentSoldQty = getProductSoldQty(p.sku);
+            parentRevenue = p.price * parentSoldQty;
+          }
+
+          // Merged Harga & Stok cell content for parent
+          let stockTextClass = 'text-slate-500 font-medium';
+          let stockText = `stok: ${totalStock}`;
+          if (totalStock === 0) {
+            stockTextClass = 'text-red-500 font-extrabold uppercase';
+            stockText = 'stok: Habis';
+          } else if (totalStock <= p.minStock) {
+            stockTextClass = 'text-amber-600 font-bold';
+            stockText = `stok: ${totalStock} (Low)`;
+          }
+
+          const hargaStokCell = `
+            <td class="px-6 py-4">
+              <div class="flex flex-col">
+                <span class="font-black text-slate-800 text-[13px] whitespace-nowrap">${priceDisplay}</span>
+                <span class="text-[11px] ${stockTextClass} mt-0.5 uppercase tracking-wider">${stockText}</span>
+              </div>
+            </td>
+          `;
+
+          // Performa cell
+          const performaCell = `
+            <td class="px-6 py-4">
+              <div class="flex flex-col">
+                <div class="flex items-center gap-1 text-slate-700 font-extrabold text-[13px]">
+                  <i class="ti ti-trending-up text-emerald-500"></i>
+                  <span>Penjualan ${parentSoldQty}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-bold mt-0.5 uppercase tracking-wide">Omset: Rp ${parentRevenue.toLocaleString('id-ID')}</span>
+              </div>
+            </td>
+          `;
+
+          // Check for variants expander
+          let variantIndicator = '';
+          let expandButton = '';
+          let variantRowsHtml = '';
+
+          if (p.hasVariants && p.variantList && p.variantList.length > 0) {
+            variantIndicator = `
+              <div class="flex items-center gap-1.5 mt-1.5">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-brand-blueLight text-brand-blueRoyal border border-blue-100 rounded-md text-[9px] font-extrabold uppercase tracking-wider">
+                  <i class="ti ti-layers-difference text-[10px]"></i>
+                  <span>${p.variantList.length} Varian</span>
+                </span>
+                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/40 uppercase tracking-wide">
+                  ${p.variations.map(v => v.name).join(', ')}
+                </span>
+              </div>
+            `;
+            expandButton = `
+              <button onclick="toggleVariantDrawer('${p.sku}', event)" class="w-7 h-7 rounded-xl bg-slate-50 hover:bg-brand-blueLight hover:text-brand-blueRoyal border border-slate-200/60 hover:border-brand-blueRoyal/20 flex items-center justify-center text-slate-400 transition duration-200 shrink-0 shadow-soft" title="Lihat variasi">
+                <i id="chevron-${p.sku}" class="ti ti-chevron-down text-xs transition-transform duration-300"></i>
+              </button>
+            `;
+
+            variantRowsHtml = p.variantList.map(variant => {
+              let vStockTextClass = 'text-slate-400 font-medium';
+              let vStockText = `stok: ${variant.stock}`;
+              if (variant.stock === 0) {
+                vStockTextClass = 'text-red-500 font-bold uppercase';
+                vStockText = 'stok: Habis';
+              } else if (variant.stock <= p.minStock) {
+                vStockTextClass = 'text-amber-600 font-bold';
+                vStockText = `stok: ${variant.stock} (Low)`;
+              }
+
+              const vSold = getProductSoldQty(variant.sku);
+              const vRevenue = variant.price * vSold;
+
+              return `
+                <tr class="variant-row-${p.sku} hidden bg-slate-50/20 hover:bg-slate-50/50 border-b border-slate-100/80 transition duration-150">
+                  <td class="px-6 py-3"></td>
+                  <td class="px-6 py-3 pl-16">
+                    <div class="flex items-center gap-3">
+                      <div class="w-3.5 h-3.5 border-l-2 border-b-2 border-slate-200 rounded-bl-md -mt-2.5 shrink-0 ml-1"></div>
+                      ${variant.image ? `
+                        <img class="w-10 h-10 rounded-lg border border-slate-200 object-cover bg-slate-50 shrink-0" src="${variant.image}">
+                      ` : `
+                        <div class="w-10 h-10 rounded-lg bg-slate-50 border border-dashed border-slate-200 flex items-center justify-center text-slate-400 shrink-0">
+                          <i class="ti ti-box text-sm"></i>
+                        </div>
+                      `}
+                      <div>
+                        <p class="font-bold text-xs text-slate-700 truncate max-w-[220px]" title="${variant.name}">${variant.name}</p>
+                        <p class="text-[10px] text-slate-400 font-mono mt-0.5">Kode Variasi: ${variant.sku}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-3">
+                    <span class="text-slate-300 font-semibold text-xs">-</span>
+                  </td>
+                  <td class="px-6 py-3">
+                    <div class="flex flex-col">
+                      <span class="font-extrabold text-xs text-slate-700">Rp ${variant.price.toLocaleString('id-ID')}</span>
+                      <span class="text-[10px] ${vStockTextClass} mt-0.5 uppercase tracking-wider">${vStockText}</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-3">
+                    <div class="flex flex-col">
+                      <div class="flex items-center gap-1 text-slate-700 font-extrabold text-[13px]">
+                        <i class="ti ti-trending-up text-emerald-500"></i>
+                        <span>Penjualan ${vSold}</span>
+                      </div>
+                      <span class="text-[10px] text-slate-400 font-bold mt-0.5 uppercase tracking-wide">Omset: Rp ${vRevenue.toLocaleString('id-ID')}</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-3 text-center">
+                    <span class="text-slate-300 font-semibold text-xs">-</span>
+                  </td>
+                  <td class="px-6 py-3 text-right">
+                    <span class="text-slate-300 font-semibold text-xs">-</span>
+                  </td>
+                </tr>
+              `;
+            }).join('');
+          }
 
           tbody.innerHTML += `
             <tr class="table-row-hover transition ${p.active ? '' : 'bg-slate-50/30'}">
               <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-4 ${opacityClass}">
+                  ${expandButton ? expandButton : '<div class="w-7 h-7 shrink-0"></div>'}
                   <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50" src="${p.image}">
                   <div>
-                    <p class="font-bold cursor-pointer transition ${titleClass}" onclick="editProduct('${p.sku}')">${p.name}</p>
-                    <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU: ${p.sku}</p>
+                    <p class="font-bold cursor-pointer transition ${titleClass} truncate max-w-[280px]" onclick="editProduct('${p.sku}')" title="${p.name}">${p.name}</p>
+                    <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU Induk: ${p.sku}</p>
+                    ${variantIndicator}
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600">${p.category}</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 max-w-[120px] truncate" title="${p.category}">${p.category}</span>
               </td>
-              <td class="px-6 py-4 font-black text-slate-800">Rp ${p.price.toLocaleString('id-ID')}</td>
-              <td class="px-6 py-4">${stockBadge}</td>
+              ${hargaStokCell}
+              ${performaCell}
               <td class="px-6 py-4 text-center">
                 <label class="relative inline-flex items-center cursor-pointer">
                   <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleActive('${p.sku}')">
@@ -508,6 +528,7 @@
                 <button onclick="deleteProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition" title="Delete"><i class="ti ti-trash"></i></button>
               </td>
             </tr>
+            ${variantRowsHtml}
           `;
         });
 
@@ -535,6 +556,30 @@
 
       window.editProduct = function(sku) {
         window.location.href = `tambah-produk.html?sku=${sku}`;
+      };
+
+      window.toggleVariantDrawer = function(sku, event) {
+        if (event) event.stopPropagation();
+        const rows = document.querySelectorAll(`.variant-row-${sku}`);
+        const chevron = document.getElementById(`chevron-${sku}`);
+        if (rows.length === 0) return;
+        
+        const isHidden = rows[0].classList.contains('hidden');
+        rows.forEach(row => {
+          if (isHidden) {
+            row.classList.remove('hidden');
+          } else {
+            row.classList.add('hidden');
+          }
+        });
+        
+        if (chevron) {
+          if (isHidden) {
+            chevron.classList.add('rotate-180');
+          } else {
+            chevron.classList.remove('rotate-180');
+          }
+        }
       };
 
       // Initial Render

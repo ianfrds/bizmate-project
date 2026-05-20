@@ -24,13 +24,39 @@ const SEED_PRODUCTS = [
     category: 'Kursi & Sofa',
     price: 4500000,
     cost: 2800000,
-    stock: 2,
+    stock: 14,
     minStock: 5,
     status: 'Tersedia (In Stock)',
     description: 'Sofa berbalut kain velvet mewah dengan kaki logam elegan untuk ruang tamu modern.',
     image: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=150&q=80',
     active: true,
-    created: '2026-05-19T11:15:00Z'
+    created: '2026-05-19T11:15:00Z',
+    hasVariants: true,
+    useVariantImages: true,
+    variations: [
+      {
+        id: 'var_1',
+        name: 'Warna',
+        options: [
+          { id: 'opt_red', name: 'Merah Velvet', description: 'Velvet merah cabai mewah', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=150&q=80' },
+          { id: 'opt_blue', name: 'Biru Navy', description: 'Velvet biru malam elegan', image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=150&q=80' }
+        ]
+      },
+      {
+        id: 'var_2',
+        name: 'Ukuran',
+        options: [
+          { id: 'opt_2s', name: '2 Seater', description: 'Lebar 160cm', image: '' },
+          { id: 'opt_3s', name: '3 Seater', description: 'Lebar 210cm', image: '' }
+        ]
+      }
+    ],
+    variantList: [
+      { id: 'opt_red_opt_2s', name: 'Merah Velvet - 2 Seater', sku: 'SFA-VLV-RED-2S', price: 4500000, stock: 5, image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=150&q=80' },
+      { id: 'opt_red_opt_3s', name: 'Merah Velvet - 3 Seater', sku: 'SFA-VLV-RED-3S', price: 5200000, stock: 3, image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=150&q=80' },
+      { id: 'opt_blue_opt_2s', name: 'Biru Navy - 2 Seater', sku: 'SFA-VLV-BLU-2S', price: 4500000, stock: 4, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=150&q=80' },
+      { id: 'opt_blue_opt_3s', name: 'Biru Navy - 3 Seater', sku: 'SFA-VLV-BLU-3S', price: 5200000, stock: 2, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=150&q=80' }
+    ]
   },
   {
     sku: 'TBL-JTI-003',
@@ -50,102 +76,96 @@ const SEED_PRODUCTS = [
 
 const SEED_ORDERS = [
   {
-    id: '#ORD-9025',
-    customer: 'Farhan Maulana',
-    email: 'farhan.m@email.com',
-    date: '19 Mei 2026, 16:20',
-    itemsCount: 1,
-    items: [
-      { sku: 'CHR-RED-001', name: 'Kursi Santai Telur', price: 1899000, qty: 1 }
-    ],
-    amount: 1899000,
-    paymentStatus: 'Paid',
-    paymentMethod: 'QRIS GOTO',
-    shippingStatus: 'Unfulfilled'
-  },
-  {
-    id: '#ORD-9024',
-    customer: 'Citra Kirana',
-    email: 'citrak@email.com',
-    date: '19 Mei 2026, 15:10',
+    id: 'FE-00014',
+    invoice: 'BILL-20260518-IST4NI',
+    customer: 'Totiyono Nugroho',
+    phone: '6285656629097',
+    address: 'Jl Bratang 1H No 23, Surabaya, Ngagel Rejo, Wonokromo, Kota Surabaya, Jawa Timur',
+    email: 'totiyono.n@email.com',
+    date: '18 Mei 2026, 14:47',
     itemsCount: 2,
     items: [
-      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati', price: 850000, qty: 2 }
+      { sku: 'VGD-BPK-001', name: 'Vanguard Training Backpack', price: 850999, qty: 2 }
     ],
-    amount: 1700000,
-    paymentStatus: 'Pending',
-    paymentMethod: 'Virtual Account BNI',
-    shippingStatus: 'Unfulfilled'
+    amount: 2381998,
+    paymentStatus: 'Pending', // Belum Bayar
+    paymentMethod: 'Transfer Bank',
+    shippingStatus: 'Unfulfilled', // Belum Dikirim / Diproses
+    courier: 'Atur kurir...'
   },
   {
-    id: '#ORD-9023',
-    customer: 'Reza Rahadian',
-    email: 'rezar@email.com',
-    date: '19 Mei 2026, 14:55',
+    id: 'FE-00013',
+    invoice: '01-15-20260511-W2SKMX',
+    trackingNumber: '928309203920909302',
+    customer: 'Syah Reza',
+    phone: '6285179720622',
+    address: ',, Nambak, Bungkal, Kab. Ponorogo, Jawa Timur',
+    email: 'syah.reza@email.com',
+    date: '11 Mei 2026, 10:15',
     itemsCount: 1,
     items: [
-      { sku: 'SFA-VLV-002', name: 'Sofa Premium Velvet Modern', price: 4500000, qty: 1 }
+      { sku: 'VLC-SHR-002', name: 'Velocity Split Running Shorts', price: 179900, qty: 1, variant: 'S' }
     ],
-    amount: 4500000,
+    amount: 979900,
+    paymentStatus: 'Paid',
+    paymentMethod: 'Virtual Account BCA',
+    shippingStatus: 'Shipped', // Dikirim
+    courier: 'Atur kurir...'
+  },
+  {
+    id: 'FE-00012',
+    invoice: '01-17-20260417-MMDTNH',
+    trackingNumber: '9840293029',
+    customer: 'Budi Anto',
+    phone: '628123456789',
+    address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur',
+    email: 'budi.anto@email.com',
+    date: '17 April 2026, 11:30',
+    itemsCount: 1,
+    items: [
+      { sku: 'VGD-BPK-001', name: 'Vanguard Training Backpack', price: 850999, qty: 1 }
+    ],
+    amount: 850999,
     paymentStatus: 'Paid',
     paymentMethod: 'ShopeePay',
-    shippingStatus: 'Shipped'
+    shippingStatus: 'Delivered', // Selesai
+    courier: 'SiCepat'
   },
   {
-    id: '#ORD-9022',
-    customer: 'Sarah Wijaya',
-    email: 'sarah.w@email.com',
-    date: '19 Mei 2026, 14:40',
+    id: 'FE-00011',
+    invoice: 'BILL-20260510-AB12CD',
+    customer: 'Citra Kirana',
+    phone: '628571234567',
+    address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten',
+    email: 'citrak@email.com',
+    date: '10 Mei 2026, 15:10',
     itemsCount: 1,
     items: [
-      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati Minimalis', price: 850000, qty: 1 }
+      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati', price: 850000, qty: 1 }
     ],
     amount: 850000,
-    paymentStatus: 'Failed',
-    paymentMethod: 'Credit Card',
-    shippingStatus: 'Unfulfilled'
+    paymentStatus: 'Pending',
+    paymentMethod: 'QRIS',
+    shippingStatus: 'Unfulfilled',
+    courier: 'Atur kurir...'
   },
   {
-    id: '#ORD-9021',
-    customer: 'Ahmad Subagyo',
-    email: 'ahmad@email.com',
-    date: '19 Mei 2026, 14:30',
-    itemsCount: 2,
-    items: [
-      { sku: 'CHR-RED-001', name: 'Kursi Santai Telur (Single Wheel)', price: 1899000, qty: 1 }
-    ],
-    amount: 1899000,
-    paymentStatus: 'Paid',
-    paymentMethod: 'Virtual Account Mandiri',
-    shippingStatus: 'Unfulfilled'
-  },
-  {
-    id: '#ORD-9020',
-    customer: 'Diana Maharani',
-    email: 'diana@email.com',
-    date: '18 Mei 2026, 11:15',
+    id: 'FE-00010',
+    invoice: 'BILL-20260509-XY98ZT',
+    customer: 'Sarah Wijaya',
+    phone: '628998877665',
+    address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta',
+    email: 'sarah.w@email.com',
+    date: '09 Mei 2026, 14:40',
     itemsCount: 1,
     items: [
       { sku: 'SFA-VLV-002', name: 'Sofa Premium Velvet Modern', price: 4500000, qty: 1 }
     ],
     amount: 4500000,
-    paymentStatus: 'Paid',
-    paymentMethod: 'Credit Card (Stripe)',
-    shippingStatus: 'Shipped'
-  },
-  {
-    id: '#ORD-9019',
-    customer: 'Budi Kurniawan',
-    email: 'budi.k@email.com',
-    date: '18 Mei 2026, 09:45',
-    itemsCount: 1,
-    items: [
-      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati Minimalis', price: 850000, qty: 1 }
-    ],
-    amount: 850000,
-    paymentStatus: 'Pending',
-    paymentMethod: 'Virtual Account BCA',
-    shippingStatus: 'Awaiting'
+    paymentStatus: 'Failed',
+    paymentMethod: 'Credit Card',
+    shippingStatus: 'Unfulfilled',
+    courier: 'Atur kurir...'
   }
 ];
 
@@ -175,16 +195,19 @@ const SEED_CATEGORIES = [
 
 // Initialize database
 function initDatabase() {
+  const DB_VERSION = 'v2';
+  let dbVer = localStorage.getItem('bizmate_db_version');
   let products = localStorage.getItem('bizmate_products');
   let orders = localStorage.getItem('bizmate_orders');
   let categories = localStorage.getItem('bizmate_categories');
 
-  if (!products) {
+  if (!products || dbVer !== DB_VERSION) {
     localStorage.setItem('bizmate_products', JSON.stringify(SEED_PRODUCTS));
+    localStorage.setItem('bizmate_db_version', DB_VERSION);
   }
   
-  if (!orders || JSON.parse(orders).length === 3) {
-    // Force refresh if it is empty or has exactly 3 old orders
+  if (!orders || !orders.includes('FE-00014')) {
+    // Force refresh if it is empty or does not have the new orders
     localStorage.setItem('bizmate_orders', JSON.stringify(SEED_ORDERS));
   }
   
@@ -267,6 +290,16 @@ const BizmateDB = {
     const idx = orders.findIndex(o => o.id === id);
     if (idx !== -1) {
       orders[idx].shippingStatus = status;
+      localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+    }
+    return orders;
+  },
+
+  updateOrderCourier(id, courier) {
+    const orders = this.getOrders();
+    const idx = orders.findIndex(o => o.id === id);
+    if (idx !== -1) {
+      orders[idx].courier = courier;
       localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     }
     return orders;

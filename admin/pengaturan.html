@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaturan Terpadu - Bizmate Console</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <!-- Shared LocalStorage Database & Utilities -->
+  <script src="js/database.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js" defer></script>
+  <script src="js/sidebar.js" defer></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blueRoyal: '#0c4cb4', // Primary Brand Color
+              orange: '#fa7315',    // Accent Brand Color
+              blueLight: '#eef2ff',
+              slateBg: '#f8fafc',
+              sidebar: '#0B1120',
+              sidebarHover: '#1e293b',
+            }
+          },
+          boxShadow: {
+            'soft': '0 4px 20px rgba(0, 0, 0, 0.03)',
+            'premium': '0 10px 40px rgba(12, 76, 180, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="min-h-screen flex overflow-x-hidden bg-slate-50 selection:bg-brand-blueRoyal selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+
+  <!-- ==================== MAIN LAYOUT ==================== -->
+  <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
+
+    <!-- Topbar -->
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition" aria-label="Buka Sidebar">
+          <i class="ti ti-menu-2 text-xl"></i>
+        </button>
+        <div class="flex items-center gap-2 font-outfit hidden sm:flex">
+          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Konfigurasi</span>
+          <span class="font-black text-slate-800 tracking-tight">Pengaturan Terpadu</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 shrink-0">
+        <button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi">
+          <i class="ti ti-bell text-xl"></i>
+        </button>
+        <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
+        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Storefront
+          <i class="ti ti-external-link text-sm"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-8">
+      
+      <!-- Page Header & Actions -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Pengaturan Terpadu</h1>
+          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi informasi toko, rekening pembayaran, metode checkout, dan branding warna sistem.</p>
+        </div>
+        <button onclick="saveAllSettings()" class="px-6 py-3 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-sm rounded-2xl shadow-premium hover:shadow-lg transition flex items-center gap-2 self-stretch sm:self-auto justify-center" aria-label="Simpan Semua Pengaturan">
+          <i class="ti ti-device-floppy text-lg"></i>
+          Simpan Semua
+        </button>
+      </div>
+
+      <!-- Bento Settings Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- BENTO BLOCK 1: Informasi Profil Toko (Colspan 8) -->
+        <div class="lg:col-span-8 bg-white border border-slate-100 shadow-soft rounded-3xl p-6 sm:p-8 space-y-6">
+          <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+            <div class="p-2.5 bg-brand-blueLight text-brand-blueRoyal rounded-xl">
+              <i class="ti ti-storefront text-lg"></i>
+            </div>
+            <div>
+              <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Profil & Informasi Toko</h3>
+              <p class="text-xs text-slate-400 font-medium mt-1">Informasi utama toko yang ditampilkan di landing page & invoice</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="input-shop-name" class="text-xs font-bold text-slate-600 block">Nama Toko <span class="text-rose-500">*</span></label>
+              <input type="text" id="input-shop-name" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bizmate Premium Store" required>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-email" class="text-xs font-bold text-slate-600 block">Email Kontak Toko <span class="text-rose-500">*</span></label>
+              <input type="email" id="input-shop-email" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: support@bizmate.id" required>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-phone" class="text-xs font-bold text-slate-600 block">Telepon Toko</label>
+              <input type="text" id="input-shop-phone" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622">
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-whatsapp" class="text-xs font-bold text-slate-600 block">WhatsApp Toko (WA-Link) <span class="text-rose-500">*</span></label>
+              <input type="text" id="input-shop-whatsapp" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622" required>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-instagram" class="text-xs font-bold text-slate-600 block">Instagram Toko</label>
+              <div class="relative">
+                <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
+                <input type="text" id="input-shop-instagram" class="w-full pl-8 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.premium">
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-tiktok" class="text-xs font-bold text-slate-600 block">TikTok Toko</label>
+              <div class="relative">
+                <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
+                <input type="text" id="input-shop-tiktok" class="w-full pl-8 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.official">
+              </div>
+            </div>
+            <div class="space-y-2 sm:col-span-2">
+              <label for="input-shop-description" class="text-xs font-bold text-slate-600 block">Deskripsi Singkat Toko</label>
+              <textarea id="input-shop-description" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-24 resize-none" placeholder="Tuliskan slogan / penjelasan singkat mengenai kelebihan toko Anda..."></textarea>
+            </div>
+            <div class="space-y-2 sm:col-span-2">
+              <label for="input-shop-address" class="text-xs font-bold text-slate-600 block">Alamat Toko Lengkap</label>
+              <textarea id="input-shop-address" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-20 resize-none" placeholder="Contoh: Jl. Raya Darmo No. 12-14, Surabaya, Jawa Timur"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDE: Color theme & Bank & maintenance (Colspan 4) -->
+        <div class="lg:col-span-4 space-y-8">
+          
+          <!-- BENTO BLOCK 2: Color brand dynamic theme selector -->
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-brand-orange/10 text-brand-orange rounded-xl">
+                <i class="ti ti-palette text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Warna Brand (Branding Theme)</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Pilih warna branding yang merambat ke seluruh halaman admin</p>
+              </div>
+            </div>
+
+            <!-- List of dynamic themes -->
+            <div class="space-y-3" id="theme-selector-container">
+              <!-- Dynamically constructed theme buttons -->
+            </div>
+          </div>
+
+          <!-- BENTO BLOCK 3: Informasi Rekening Bank -->
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+                <i class="ti ti-credit-card text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Rekening Pembayaran</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Rekening bank resmi untuk menerima transfer bank customer</p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <label for="input-bank-name" class="text-xs font-bold text-slate-600 block">Nama Bank</label>
+                <input type="text" id="input-bank-name" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bank Central Asia (BCA)">
+              </div>
+              <div class="space-y-2">
+                <label for="input-bank-account" class="text-xs font-bold text-slate-600 block">Nomor Rekening</label>
+                <input type="text" id="input-bank-account" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 8291048590">
+              </div>
+              <div class="space-y-2">
+                <label for="input-bank-holder" class="text-xs font-bold text-slate-600 block">Nama Pemilik Rekening</label>
+                <input type="text" id="input-bank-holder" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: PT Bizmate Solusi Retail">
+              </div>
+            </div>
+          </div>
+
+          <!-- BENTO BLOCK 4: Metode Checkout & Ongkir Flat -->
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-indigo-50 text-brand-blueRoyal rounded-xl">
+                <i class="ti ti-shopping-cart-discount text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Checkout & Ongkir</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi ongkos kirim dan saklar metode bayar</p>
+              </div>
+            </div>
+
+            <div class="space-y-5">
+              <div class="space-y-2">
+                <label for="input-shipping-rate" class="text-xs font-bold text-slate-600 block">Biaya Pengiriman Flat (Rp) <span class="text-rose-500">*</span></label>
+                <input type="number" id="input-shipping-rate" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 50000" required>
+              </div>
+
+              <div class="h-px bg-slate-100"></div>
+
+              <div class="space-y-3.5">
+                <span class="text-xs font-black text-slate-700 uppercase tracking-tight block">Metode Pembayaran Aktif</span>
+                
+                <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+                      <i class="ti ti-cash text-lg"></i>
+                    </div>
+                    <div>
+                      <span class="text-xs font-bold text-slate-800 block">Cash on Delivery (COD)</span>
+                      <span class="text-[10px] text-slate-400 font-semibold block">Bayar ditempat saat kurir tiba</span>
+                    </div>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan COD">
+                    <input type="checkbox" id="check-enable-cod" class="sr-only peer">
+                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </div>
+
+                <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+                      <i class="ti ti-qrcode text-lg"></i>
+                    </div>
+                    <div>
+                      <span class="text-xs font-bold text-slate-800 block">QRIS Dinamis</span>
+                      <span class="text-[10px] text-slate-400 font-semibold block">Scan barcode e-wallet otomatis</span>
+                    </div>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan QRIS">
+                    <input type="checkbox" id="check-enable-qris" class="sr-only peer">
+                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </div>
+
+                <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
+                      <i class="ti ti-building-bank text-lg"></i>
+                    </div>
+                    <div>
+                      <span class="text-xs font-bold text-slate-800 block">Transfer Manual</span>
+                      <span class="text-[10px] text-slate-400 font-semibold block">Verifikasi manual ke rekening bank</span>
+                    </div>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan Transfer Manual">
+                    <input type="checkbox" id="check-enable-bank" class="sr-only peer">
+                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- BENTO BLOCK 5: Pengelolaan Data (Database Maintenance) -->
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl">
+                <i class="ti ti-database text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Database Maintenance</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Pemeliharaan, backup, dan reset database sistem</p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <!-- Backup Button -->
+              <button onclick="backupDatabase()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2" aria-label="Backup Database">
+                <i class="ti ti-download"></i>
+                Backup Database (JSON)
+              </button>
+
+              <!-- Restore file loader -->
+              <div class="space-y-2">
+                <span class="text-xs font-bold text-slate-500 block">Restore Database</span>
+                <div class="relative">
+                  <label for="restore-file-input" class="w-full py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="ti ti-upload"></i> Upload Backup File
+                  </label>
+                  <input type="file" id="restore-file-input" accept=".json" class="hidden" onchange="restoreDatabase(event)">
+                </div>
+              </div>
+
+              <div class="h-px bg-slate-100"></div>
+
+              <!-- Reset Button -->
+              <button onclick="resetDatabase()" class="w-full py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2" aria-label="Reset Ke Kondisi Pabrik">
+                <i class="ti ti-refresh-alert"></i>
+                Reset ke Kondisi Pabrik (Re-seed)
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    let activeThemeId = 'royal-blue';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSettingsToForm();
+      renderThemeSelector();
+    });
+
+    function loadSettingsToForm() {
+      const config = BizmateDB.getSettings();
+
+      // Profil
+      document.getElementById('input-shop-name').value = config.shopName || '';
+      document.getElementById('input-shop-email').value = config.shopEmail || '';
+      document.getElementById('input-shop-phone').value = config.shopPhone || '';
+      document.getElementById('input-shop-whatsapp').value = config.shopWhatsApp || '';
+      document.getElementById('input-shop-instagram').value = config.shopInstagram || '';
+      document.getElementById('input-shop-tiktok').value = config.shopTikTok || '';
+      document.getElementById('input-shop-description').value = config.shopDescription || '';
+      document.getElementById('input-shop-address').value = config.shopAddress || '';
+
+      // Bank
+      document.getElementById('input-bank-name').value = config.bankName || '';
+      document.getElementById('input-bank-account').value = config.bankAccount || '';
+      document.getElementById('input-bank-holder').value = config.bankHolder || '';
+
+      // Checkout & Ongkir
+      document.getElementById('input-shipping-rate').value = config.shippingFlatRate || 0;
+      document.getElementById('check-enable-cod').checked = config.enableCod !== false;
+      document.getElementById('check-enable-qris').checked = config.enableQris !== false;
+      document.getElementById('check-enable-bank').checked = config.enableBankTransfer !== false;
+
+      // Active theme
+      activeThemeId = config.activeTheme || 'royal-blue';
+    }
+
+    function renderThemeSelector() {
+      const container = document.getElementById('theme-selector-container');
+      const themes = window.BizmateThemeEngine.themes;
+
+      container.innerHTML = Object.keys(themes).map(key => {
+        const theme = themes[key];
+        const isActive = key === activeThemeId;
+        const borderClass = isActive ? 'border-brand-blueRoyal ring-2 ring-brand-blueRoyal/20 shadow-md' : 'border-slate-100 hover:border-slate-300';
+        
+        return `
+          <button onclick="selectTheme('${key}')" class="w-full flex items-center justify-between p-3.5 rounded-2xl border text-left transition ${borderClass}" aria-label="Pilih Tema ${theme.name}">
+            <div class="flex items-center gap-3">
+              <div class="flex -space-x-1 shrink-0">
+                <div class="w-5 h-5 rounded-full border border-white z-10" style="background-color: ${theme.primary}"></div>
+                <div class="w-5 h-5 rounded-full border border-white z-0" style="background-color: ${theme.accent}"></div>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">${theme.name}</span>
+                <span class="text-[10px] text-slate-400 font-semibold block uppercase tracking-wider">${key.replace('-', ' ')}</span>
+              </div>
+            </div>
+            
+            ${isActive ? `
+              <div class="w-5 h-5 bg-brand-blueRoyal text-white rounded-full flex items-center justify-center text-xs">
+                <i class="ti ti-check font-black"></i>
+              </div>
+            ` : `
+              <div class="w-5 h-5 border border-slate-200 rounded-full"></div>
+            `}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectTheme(themeId) {
+      activeThemeId = themeId;
+      // Live apply instantly to the current view using the exposed theme engine!
+      window.BizmateThemeEngine.applyTheme(themeId);
+      renderThemeSelector();
+    }
+
+    function saveAllSettings() {
+      const nameInput = document.getElementById('input-shop-name').value.trim();
+      const emailInput = document.getElementById('input-shop-email').value.trim();
+      const waInput = document.getElementById('input-shop-whatsapp').value.trim();
+
+      if (!nameInput || !emailInput || !waInput) {
+        alert('Tolong lengkapi nama toko, email, dan WhatsApp terlebih dahulu.');
+        return;
+      }
+
+      const updated = {
+        shopName: nameInput,
+        shopEmail: emailInput,
+        shopPhone: document.getElementById('input-shop-phone').value.trim(),
+        shopWhatsApp: waInput,
+        shopInstagram: document.getElementById('input-shop-instagram').value.trim(),
+        shopTikTok: document.getElementById('input-shop-tiktok').value.trim(),
+        shopDescription: document.getElementById('input-shop-description').value.trim(),
+        shopAddress: document.getElementById('input-shop-address').value.trim(),
+
+        bankName: document.getElementById('input-bank-name').value.trim(),
+        bankAccount: document.getElementById('input-bank-account').value.trim(),
+        bankHolder: document.getElementById('input-bank-holder').value.trim(),
+
+        shippingFlatRate: Number(document.getElementById('input-shipping-rate').value) || 0,
+        enableCod: document.getElementById('check-enable-cod').checked,
+        enableQris: document.getElementById('check-enable-qris').checked,
+        enableBankTransfer: document.getElementById('check-enable-bank').checked,
+
+        activeTheme: activeThemeId
+      };
+
+      BizmateDB.saveSettings(updated);
+      alert('Pengaturan terpadu dan tema brand berhasil disimpan secara aman.');
+      loadSettingsToForm();
+      renderThemeSelector();
+    }
+
+    // Database Maintenance tools
+    function backupDatabase() {
+      const db = {
+        products: localStorage.getItem('bizmate_products'),
+        orders: localStorage.getItem('bizmate_orders'),
+        categories: localStorage.getItem('bizmate_categories'),
+        customers: localStorage.getItem('bizmate_customers'),
+        admins: localStorage.getItem('bizmate_admins'),
+        cmsLanding: localStorage.getItem('bizmate_cms_landing'),
+        promos: localStorage.getItem('bizmate_promos'),
+        settings: localStorage.getItem('bizmate_settings')
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `bizmate_backup_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function restoreDatabase(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const db = JSON.parse(e.target.result);
+          if (db.products) localStorage.setItem('bizmate_products', db.products);
+          if (db.orders) localStorage.setItem('bizmate_orders', db.orders);
+          if (db.categories) localStorage.setItem('bizmate_categories', db.categories);
+          if (db.customers) localStorage.setItem('bizmate_customers', db.customers);
+          if (db.admins) localStorage.setItem('bizmate_admins', db.admins);
+          if (db.cmsLanding) localStorage.setItem('bizmate_cms_landing', db.cmsLanding);
+          if (db.promos) localStorage.setItem('bizmate_promos', db.promos);
+          if (db.settings) localStorage.setItem('bizmate_settings', db.settings);
+
+          alert('Database berhasil di-restore secara sukses dari berkas backup!');
+          window.location.reload();
+        } catch(err) {
+          alert('Format backup tidak valid atau rusak.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetDatabase() {
+      if (confirm('Apakah Anda yakin ingin menyetel ulang database ke kondisi bawaan pabrik? Seluruh transaksi dan produk kustom Anda akan terhapus secara permanen.')) {
+        localStorage.clear();
+        alert('Database telah dikosongkan dan akan memuat ulang data seeding bawaan.');
+        window.location.reload();
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
 
-        <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold text-slate-400 hover:text-brand-blueRoyal/60 pointer-events-none opacity-55 transition">
+        <a href="pengaturan.html" id="menu-pengaturan" class="flex items-center gap-3 px-4 py-2.5 rounded-lg nav-item text-sm font-semibold text-slate-600 hover:text-brand-blueRoyal hover:bg-brand-blueRoyal/5 transition duration-200">
           <i class="ti ti-settings text-lg"></i>
           Pengaturan
         </a>
@@ -194,6 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (currentPath.includes("pesanan.html")) {
     activateSubmenu("menu-pesanan-list");
     expandDropdown("sub-pesanan", "arrow-pesanan");
+  } else if (currentPath.includes("detail-pesanan.html")) {
+    activateSubmenu("menu-pesanan-list");
+    expandDropdown("sub-pesanan", "arrow-pesanan");
   } else if (currentPath.includes("produk.html")) {
     activateSubmenu("menu-produk-list");
     expandDropdown("sub-produk", "arrow-produk");
@@ -215,6 +218,8 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (currentPath.includes("landing-page.html")) {
     activateSubmenu("menu-landing-page");
     expandDropdown("sub-konten", "arrow-konten");
+  } else if (currentPath.includes("pengaturan.html")) {
+    activateMenu("menu-pengaturan");
   }
 
   function activateMenu(id) {

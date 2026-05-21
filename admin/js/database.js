@@ -85,13 +85,21 @@ const SEED_ORDERS = [
     date: '18 Mei 2026, 14:47',
     itemsCount: 2,
     items: [
-      { sku: 'VGD-BPK-001', name: 'Vanguard Training Backpack', price: 850999, qty: 2 }
+      { sku: 'CHR-RED-001', name: 'Kursi Santai Telur (Single Wheel)', price: 1899000, cost: 1100000, qty: 2, image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=150&q=80' }
     ],
-    amount: 2381998,
-    paymentStatus: 'Pending', // Belum Bayar
+    amount: 3798000,
+    shippingCost: 75000,
+    paymentStatus: 'Pending',
     paymentMethod: 'Transfer Bank',
-    shippingStatus: 'Unfulfilled', // Belum Dikirim / Diproses
-    courier: 'Atur kurir...'
+    shippingStatus: 'Unfulfilled',
+    courier: 'Atur kurir...',
+    customerNote: 'Tolong packing yang aman ya gan. Makasih!',
+    adminNote: 'Customer sempat tanya ketersediaan stok via WA.',
+    returnStatus: '',
+    refundAmount: 0,
+    statusHistory: [
+      { status: 'Pesanan Dibuat', time: '18 Mei 2026, 14:47', note: 'Pesanan berhasil dibuat oleh sistem.' }
+    ]
   },
   {
     id: 'FE-00013',
@@ -104,13 +112,25 @@ const SEED_ORDERS = [
     date: '11 Mei 2026, 10:15',
     itemsCount: 1,
     items: [
-      { sku: 'VLC-SHR-002', name: 'Velocity Split Running Shorts', price: 179900, qty: 1, variant: 'S' }
+      { sku: 'SFA-VLV-002', name: 'Sofa Premium Velvet Modern - Merah', price: 4500000, cost: 2800000, qty: 1, image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=150&q=80' }
     ],
-    amount: 979900,
+    amount: 4500000,
+    shippingCost: 150000,
     paymentStatus: 'Paid',
     paymentMethod: 'Virtual Account BCA',
-    shippingStatus: 'Shipped', // Dikirim
-    courier: 'Atur kurir...'
+    shippingStatus: 'Shipped',
+    courier: 'J&T Express',
+    customerNote: 'Kirim di jam kerja ya.',
+    adminNote: '',
+    returnStatus: 'Requested',
+    refundAmount: 0,
+    statusHistory: [
+      { status: 'Pesanan Dibuat', time: '11 Mei 2026, 10:15', note: 'Pesanan berhasil dibuat.' },
+      { status: 'Pembayaran Lunas', time: '11 Mei 2026, 10:30', note: 'Pembayaran sukses via BCA Virtual Account.' },
+      { status: 'Pesanan Diproses', time: '11 Mei 2026, 14:20', note: 'Pesanan sedang dipersiapkan di gudang.' },
+      { status: 'Pesanan Dikirim', time: '12 Mei 2026, 09:00', note: 'Pesanan diserahkan ke kurir J&T Express dengan resi 928309203920909302.' },
+      { status: 'Pengajuan Retur', time: '13 Mei 2026, 15:45', note: 'Customer mengajukan retur barang karena warna tidak cocok.' }
+    ]
   },
   {
     id: 'FE-00012',
@@ -123,13 +143,24 @@ const SEED_ORDERS = [
     date: '17 April 2026, 11:30',
     itemsCount: 1,
     items: [
-      { sku: 'VGD-BPK-001', name: 'Vanguard Training Backpack', price: 850999, qty: 1 }
+      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati Minimalis', price: 850000, cost: 500000, qty: 1, image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=150&q=80' }
     ],
-    amount: 850999,
+    amount: 850000,
+    shippingCost: 35000,
     paymentStatus: 'Paid',
     paymentMethod: 'ShopeePay',
-    shippingStatus: 'Delivered', // Selesai
-    courier: 'SiCepat'
+    shippingStatus: 'Delivered',
+    courier: 'SiCepat',
+    customerNote: '',
+    adminNote: '',
+    returnStatus: '',
+    refundAmount: 0,
+    statusHistory: [
+      { status: 'Pesanan Dibuat', time: '17 April 2026, 11:30', note: 'Pesanan dibuat oleh sistem.' },
+      { status: 'Pembayaran Lunas', time: '17 April 2026, 11:35', note: 'Pembayaran lunas via ShopeePay.' },
+      { status: 'Pesanan Dikirim', time: '17 April 2026, 16:00', note: 'Pesanan dikirim via SiCepat.' },
+      { status: 'Selesai', time: '19 April 2026, 14:00', note: 'Paket telah diterima oleh Budi Anto.' }
+    ]
   },
   {
     id: 'FE-00011',
@@ -141,13 +172,21 @@ const SEED_ORDERS = [
     date: '10 Mei 2026, 15:10',
     itemsCount: 1,
     items: [
-      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati', price: 850000, qty: 1 }
+      { sku: 'TBL-JTI-003', name: 'Meja Kopi Jati Minimalis', price: 850000, cost: 500000, qty: 1, image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=150&q=80' }
     ],
     amount: 850000,
+    shippingCost: 45000,
     paymentStatus: 'Pending',
     paymentMethod: 'QRIS',
     shippingStatus: 'Unfulfilled',
-    courier: 'Atur kurir...'
+    courier: 'Atur kurir...',
+    customerNote: 'Tolong kirim sebelum jam 5 sore.',
+    adminNote: '',
+    returnStatus: '',
+    refundAmount: 0,
+    statusHistory: [
+      { status: 'Pesanan Dibuat', time: '10 Mei 2026, 15:10', note: 'Pesanan berhasil dibuat.' }
+    ]
   },
   {
     id: 'FE-00010',
@@ -159,13 +198,22 @@ const SEED_ORDERS = [
     date: '09 Mei 2026, 14:40',
     itemsCount: 1,
     items: [
-      { sku: 'SFA-VLV-002', name: 'Sofa Premium Velvet Modern', price: 4500000, qty: 1 }
+      { sku: 'SFA-VLV-002', name: 'Sofa Premium Velvet Modern', price: 4500000, cost: 2800000, qty: 1, image: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=150&q=80' }
     ],
     amount: 4500000,
+    shippingCost: 200000,
     paymentStatus: 'Failed',
     paymentMethod: 'Credit Card',
     shippingStatus: 'Unfulfilled',
-    courier: 'Atur kurir...'
+    courier: 'Atur kurir...',
+    customerNote: 'Mohon dibantu instalasi di lantai 2.',
+    adminNote: 'Gagal transaksi kartu kredit 3x.',
+    returnStatus: '',
+    refundAmount: 0,
+    statusHistory: [
+      { status: 'Pesanan Dibuat', time: '09 Mei 2026, 14:40', note: 'Pesanan berhasil dibuat.' },
+      { status: 'Gagal', time: '09 Mei 2026, 14:45', note: 'Transaksi dibatalkan karena kegagalan pembayaran bank.' }
+    ]
   }
 ];
 
@@ -230,9 +278,28 @@ const SEED_PROMOS = [
   { id: 'PRM-004', code: 'FLASHSALE50', name: 'Flash Sale Kilat Kursi & Sofa', type: 'Flash Sale', value: 50, minPurchase: 0, active: true, usageCount: 5, maxUsage: 30, startDate: '2026-05-20', expiry: '2026-06-25', scope: 'specific', appliedProducts: ['SFA-VLV-002'], isFlashSale: true, startTime: '15:00', endTime: '18:00', tagline: 'Diskon Kilat Sofa Velvet 50%!' }
 ];
 
+const SEED_SETTINGS = {
+  shopName: 'Bizmate Premium Store',
+  shopWhatsApp: '6285179720622',
+  shopInstagram: 'bizmate.premium',
+  shopTikTok: 'bizmate.official',
+  shopEmail: 'support@bizmate.id',
+  shopPhone: '6285179720622',
+  shopAddress: 'Jl. Raya Darmo No. 12-14, Tegalsari, Kota Surabaya, Jawa Timur 60264',
+  shopDescription: 'Toko mebel dan furniture premium berkualitas tinggi langsung dari pengrajin terpercaya.',
+  bankName: 'Bank Central Asia (BCA)',
+  bankAccount: '8291048590',
+  bankHolder: 'PT Bizmate Solusi Retail',
+  activeTheme: 'royal-blue',
+  shippingFlatRate: 50000,
+  enableCod: true,
+  enableQris: true,
+  enableBankTransfer: true
+};
+
 // Initialize database
 function initDatabase() {
-  const DB_VERSION = 'v2';
+  const DB_VERSION = 'v3';
   let dbVer = localStorage.getItem('bizmate_db_version');
   let products = localStorage.getItem('bizmate_products');
   let orders = localStorage.getItem('bizmate_orders');
@@ -241,14 +308,15 @@ function initDatabase() {
   let admins = localStorage.getItem('bizmate_admins');
   let cmsLanding = localStorage.getItem('bizmate_cms_landing');
   let promos = localStorage.getItem('bizmate_promos');
+  let settings = localStorage.getItem('bizmate_settings');
 
   if (!products || dbVer !== DB_VERSION) {
     localStorage.setItem('bizmate_products', JSON.stringify(SEED_PRODUCTS));
     localStorage.setItem('bizmate_db_version', DB_VERSION);
   }
   
-  if (!orders || !orders.includes('FE-00014')) {
-    // Force refresh if it is empty or does not have the new orders
+  if (!orders || !orders.includes('FE-00014') || !orders.includes('returnStatus')) {
+    // Force refresh if it is empty or does not have the new orders or returnStatus
     localStorage.setItem('bizmate_orders', JSON.stringify(SEED_ORDERS));
   }
   
@@ -270,6 +338,10 @@ function initDatabase() {
 
   if (!promos || !promos.includes('startDate') || !promos.includes('CHR-OUT-004')) {
     localStorage.setItem('bizmate_promos', JSON.stringify(SEED_PROMOS));
+  }
+
+  if (!settings || dbVer !== DB_VERSION) {
+    localStorage.setItem('bizmate_settings', JSON.stringify(SEED_SETTINGS));
   }
 }
 
@@ -323,11 +395,21 @@ const BizmateDB = {
 
   saveOrder(order) {
     const orders = this.getOrders();
-    orders.unshift({
-      id: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+    const newOrder = {
+      id: `FE-${Math.floor(10000 + Math.random() * 90000)}`,
+      invoice: `BILL-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.random().toString(36).substring(2,8).toUpperCase()}`,
       date: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' WIB',
+      shippingCost: order.shippingCost || 15000,
+      customerNote: order.customerNote || '',
+      adminNote: order.adminNote || '',
+      returnStatus: '',
+      refundAmount: 0,
+      statusHistory: [
+        { status: 'Pesanan Dibuat', time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }), note: 'Pesanan berhasil dibuat oleh sistem.' }
+      ],
       ...order
-    });
+    };
+    orders.unshift(newOrder);
     localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     return orders;
   },
@@ -337,6 +419,12 @@ const BizmateDB = {
     const idx = orders.findIndex(o => o.id === id);
     if (idx !== -1) {
       orders[idx].paymentStatus = status;
+      if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
+      orders[idx].statusHistory.push({
+        status: status === 'Paid' ? 'Pembayaran Lunas' : (status === 'Failed' ? 'Pembayaran Gagal' : 'Menunggu Pembayaran'),
+        time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        note: status === 'Paid' ? 'Pembayaran sukses diverifikasi.' : 'Status pembayaran diperbarui.'
+      });
       localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     }
     return orders;
@@ -347,6 +435,21 @@ const BizmateDB = {
     const idx = orders.findIndex(o => o.id === id);
     if (idx !== -1) {
       orders[idx].shippingStatus = status;
+      if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
+      let historyStatus = 'Status Pengiriman Diperbarui';
+      let historyNote = `Status pengiriman diubah menjadi ${status}.`;
+      if (status === 'Shipped') {
+        historyStatus = 'Pesanan Dikirim';
+        historyNote = 'Pesanan diserahkan ke kurir.';
+      } else if (status === 'Delivered') {
+        historyStatus = 'Selesai';
+        historyNote = 'Paket telah berhasil diterima oleh customer. Transaksi selesai.';
+      }
+      orders[idx].statusHistory.push({
+        status: historyStatus,
+        time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        note: historyNote
+      });
       localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     }
     return orders;
@@ -359,6 +462,116 @@ const BizmateDB = {
       orders[idx].courier = courier;
       localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     }
+    return orders;
+  },
+
+  updateOrderAdminNote(id, note) {
+    const orders = this.getOrders();
+    const idx = orders.findIndex(o => o.id === id);
+    if (idx !== -1) {
+      orders[idx].adminNote = note;
+      localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+    }
+    return orders;
+  },
+
+  updateOrderReturnStatus(id, returnStatus, refundAmount = 0, note = '') {
+    const orders = this.getOrders();
+    const idx = orders.findIndex(o => o.id === id);
+    if (idx !== -1) {
+      orders[idx].returnStatus = returnStatus;
+      if (refundAmount > 0) {
+        orders[idx].refundAmount = refundAmount;
+      }
+      
+      if (returnStatus === 'Refunded') {
+        orders[idx].paymentStatus = 'Refunded';
+        orders[idx].shippingStatus = 'Returned';
+      }
+      
+      if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
+      
+      let statusLabel = 'Retur Diperbarui';
+      if (returnStatus === 'Requested') statusLabel = 'Pengajuan Retur';
+      else if (returnStatus === 'Approved') statusLabel = 'Retur Disetujui';
+      else if (returnStatus === 'Refunded') statusLabel = 'Returned & Refunded';
+      else if (returnStatus === 'Rejected') statusLabel = 'Retur Ditolak';
+      
+      orders[idx].statusHistory.push({
+        status: statusLabel,
+        time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        note: note || `Status retur diperbarui menjadi ${returnStatus}.`
+      });
+      
+      localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+    }
+    return orders;
+  },
+
+  addOrderStatusHistory(id, status, note) {
+    const orders = this.getOrders();
+    const idx = orders.findIndex(o => o.id === id);
+    if (idx !== -1) {
+      if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
+      orders[idx].statusHistory.push({
+        status: status,
+        time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        note: note
+      });
+      localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+    }
+    return orders;
+  },
+
+  generateTrackingNumber(id, courier) {
+    const orders = this.getOrders();
+    const idx = orders.findIndex(o => o.id === id);
+    if (idx !== -1) {
+      const tracking = 'REG' + Math.floor(100000000000 + Math.random() * 900000000000);
+      orders[idx].trackingNumber = tracking;
+      orders[idx].shippingStatus = 'Shipped';
+      if (courier) orders[idx].courier = courier;
+      
+      if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
+      orders[idx].statusHistory.push({
+        status: 'Pesanan Dikirim',
+        time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        note: `Resi pengiriman otomatis dibuat: ${tracking} (${orders[idx].courier})`
+      });
+      
+      localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+      return tracking;
+    }
+    return '';
+  },
+
+  bulkUpdateCourier(ids, courier) {
+    const orders = this.getOrders();
+    ids.forEach(id => {
+      const idx = orders.findIndex(o => o.id === id);
+      if (idx !== -1) {
+        orders[idx].courier = courier;
+      }
+    });
+    localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+    return orders;
+  },
+
+  bulkUpdateShippingStatus(ids, status) {
+    const orders = this.getOrders();
+    ids.forEach(id => {
+      const idx = orders.findIndex(o => o.id === id);
+      if (idx !== -1) {
+        orders[idx].shippingStatus = status;
+        if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
+        orders[idx].statusHistory.push({
+          status: status === 'Shipped' ? 'Pesanan Dikirim' : (status === 'Delivered' ? 'Selesai' : 'Status Pengiriman Diperbarui'),
+          time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+          note: `Pembaruan massal: status pengiriman diubah menjadi ${status}.`
+        });
+      }
+    });
+    localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     return orders;
   },
 
@@ -549,6 +762,79 @@ const BizmateDB = {
       localStorage.setItem('bizmate_promos', JSON.stringify(promos));
     }
     return promos;
+  },
+
+  // Settings API
+  getSettings() {
+    initDatabase();
+    try {
+      return JSON.parse(localStorage.getItem('bizmate_settings')) || SEED_SETTINGS;
+    } catch(e) {
+      return SEED_SETTINGS;
+    }
+  },
+
+  saveSettings(config) {
+    const current = this.getSettings();
+    const updated = { ...current, ...config };
+    localStorage.setItem('bizmate_settings', JSON.stringify(updated));
+    return updated;
+  },
+
+  // Dynamic Notifications API
+  getNotifications() {
+    const products = this.getProducts();
+    const orders = this.getOrders();
+    const notifications = [];
+
+    // Scan for low stock products
+    products.forEach(p => {
+      if (p.stock === 0) {
+        notifications.push({
+          id: `NOTIF-PROD-EMPTY-${p.sku}`,
+          type: 'danger',
+          title: 'Stok Produk Habis!',
+          message: `Stok untuk produk "${p.name}" (${p.sku}) telah habis. Segera restock!`,
+          time: 'Baru saja',
+          link: 'produk.html'
+        });
+      } else if (p.stock <= p.minStock) {
+        notifications.push({
+          id: `NOTIF-PROD-LOW-${p.sku}`,
+          type: 'warning',
+          title: 'Stok Produk Menipis',
+          message: `Stok produk "${p.name}" tersisa ${p.stock} unit (Batas min: ${p.minStock}).`,
+          time: '1 jam yang lalu',
+          link: 'produk.html'
+        });
+      }
+    });
+
+    // Scan for pending orders & returns
+    orders.forEach(o => {
+      if (o.paymentStatus === 'Pending') {
+        notifications.push({
+          id: `NOTIF-ORD-PEND-${o.id}`,
+          type: 'info',
+          title: 'Menunggu Pembayaran',
+          message: `Pesanan ${o.id} dari ${o.customer} menunggu verifikasi pembayaran sebesar Rp ${o.amount.toLocaleString('id-ID')}.`,
+          time: o.date.split(',')[1] || 'Hari ini',
+          link: `detail-pesanan.html?id=${o.id}`
+        });
+      }
+      if (o.returnStatus === 'Requested') {
+        notifications.push({
+          id: `NOTIF-ORD-RET-${o.id}`,
+          type: 'warning',
+          title: 'Pengajuan Retur Barang',
+          message: `Customer ${o.customer} mengajukan retur & refund untuk pesanan ${o.id}.`,
+          time: 'Kemarin',
+          link: `detail-pesanan.html?id=${o.id}`
+        });
+      }
+    });
+
+    return notifications;
   }
 };
 

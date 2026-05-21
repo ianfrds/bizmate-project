@@ -120,11 +120,11 @@
           <p class="text-xs text-slate-500 font-medium mt-1">Kelola pesanan pelanggan, status pengiriman, dan lacak transaksi</p>
         </div>
         <div class="flex items-center gap-3">
+          <a href="tambah-pesanan.html" class="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition duration-200 shadow-md shadow-emerald-600/20 font-outfit uppercase tracking-wider" aria-label="Tambah pesanan baru">
+            <i class="ti ti-plus text-sm"></i> Tambah Pesanan
+          </a>
           <button class="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition duration-200 shadow-soft" aria-label="Export data pesanan">
             <i class="ti ti-download"></i> Export
-          </button>
-          <button onclick="bulkKemasMasal()" class="flex items-center gap-2 px-5 py-2.5 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold rounded-xl text-xs transition duration-200 shadow-md shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider" aria-label="Proses pengiriman massal">
-            <i class="ti ti-truck text-sm"></i> Proses Pengiriman
           </button>
         </div>
       </div>
@@ -228,8 +228,8 @@
           <button onclick="bulkCetakLabel()" class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1" aria-label="Cetak label terpilih">
             <i class="ti ti-printer text-sm"></i> Cetak Label
           </button>
-          <button onclick="bulkKemasMasal()" class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1" aria-label="Kemas massal terpilih">
-            <i class="ti ti-box text-sm"></i> Kemas Massal
+          <button onclick="openBulkTrackingModal()" class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1" aria-label="Generate resi massal terpilih">
+            <i class="ti ti-barcode text-sm"></i> Generate Resi Massal
           </button>
         </div>
       </div>
@@ -286,8 +286,8 @@
       <button onclick="bulkCetakLabel()" class="flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold text-xs rounded-xl transition" aria-label="Cetak label pesanan terpilih">
         <i class="ti ti-printer text-sm"></i> Cetak Label
       </button>
-      <button onclick="bulkKemasMasal()" class="flex items-center gap-1.5 px-4 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-xs rounded-xl transition shadow-md" aria-label="Kemas massal pesanan terpilih">
-        <i class="ti ti-box text-sm"></i> Kemas Massal
+      <button onclick="openBulkTrackingModal()" class="flex items-center gap-1.5 px-4 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-xs rounded-xl transition shadow-md" aria-label="Generate resi massal pesanan terpilih">
+        <i class="ti ti-barcode text-sm"></i> Generate Resi Massal
       </button>
       <button onclick="clearBulkSelections()" class="p-2 text-slate-400 hover:text-white transition rounded-lg" aria-label="Batalkan pilihan massal">
         <i class="ti ti-x text-sm"></i>
@@ -317,13 +317,78 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL GENERATE RESI MASSAL ==================== -->
+  <div id="bulk-tracking-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print" onclick="if(event.target===this) closeBulkTrackingModal()">
+    <div class="bg-white border border-slate-200 rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-in">
+      <div class="px-6 py-4 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 rounded-2xl bg-brand-blueRoyal text-white flex items-center justify-center shadow-md"><i class="ti ti-barcode text-xl"></i></span>
+          <div>
+            <h3 class="font-outfit font-black text-slate-800 text-base">Generate Resi Massal</h3>
+            <p class="text-[11px] font-semibold text-slate-400"><span id="bulk-tracking-count">0</span> pesanan dipilih dari checkbox</p>
+          </div>
+        </div>
+        <button onclick="closeBulkTrackingModal()" class="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition" aria-label="Tutup modal generate resi massal">
+          <i class="ti ti-x text-lg"></i>
+        </button>
+      </div>
+      <div class="flex-grow overflow-y-auto p-6 space-y-5 custom-scrollbar">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="max-w-sm">
+            <label for="bulk-courier-select" class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Ekspedisi</label>
+            <select id="bulk-courier-select" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs font-bold text-slate-700 bg-slate-50 focus:outline-none focus:border-brand-blueRoyal">
+              <option value="JNE Regular">JNE Regular</option>
+              <option value="J&T Express">J&T Express</option>
+              <option value="SiCepat">SiCepat</option>
+              <option value="GoSend Instant">GoSend Instant</option>
+              <option value="GrabExpress">GrabExpress</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Mode Resi</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <label class="flex items-center gap-2 px-4 py-3 rounded-2xl border border-brand-blueRoyal/20 bg-brand-blueLight/40 cursor-pointer text-xs font-bold text-slate-700">
+                <input type="radio" name="bulk-tracking-mode" value="auto" class="text-brand-blueRoyal focus:ring-brand-blueRoyal/20" checked onchange="setBulkTrackingMode('auto')">
+                Generate Otomatis
+              </label>
+              <label class="flex items-center gap-2 px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer text-xs font-bold text-slate-700">
+                <input type="radio" name="bulk-tracking-mode" value="manual" class="text-brand-blueRoyal focus:ring-brand-blueRoyal/20" onchange="setBulkTrackingMode('manual')">
+                Input Manual
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 overflow-hidden">
+          <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Produk / Pesanan Terpilih</span>
+            <span id="bulk-tracking-helper" class="text-[10px] font-bold text-slate-500">Resi akan dibuat otomatis untuk tiap pesanan.</span>
+          </div>
+          <div id="bulk-tracking-selected-list" class="divide-y divide-slate-100 max-h-[360px] overflow-y-auto custom-scrollbar"></div>
+        </div>
+      </div>
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200/80 flex justify-end gap-3 shrink-0">
+        <button onclick="closeBulkTrackingModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">Batal</button>
+        <button onclick="saveBulkTrackingNumbers()" class="px-5 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/95 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+          <i class="ti ti-device-floppy"></i> Simpan Resi
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ===== STATE =====
     let currentTab = 'Semua';
     let selectedOrders = [];
+    let bulkTrackingMode = 'auto';
     let currentView = localStorage.getItem('bizmate_orders_view') || 'table';
 
     // ===== TOAST =====
+    function maskText(value, visibleStart = 2, visibleEnd = 2) {
+      const text = String(value || '');
+      if (text.length <= visibleStart + visibleEnd) return '*'.repeat(text.length || 1);
+      return text.slice(0, visibleStart) + '*'.repeat(Math.min(8, text.length - visibleStart - visibleEnd)) + text.slice(-visibleEnd);
+    }
+
     function showToast(message, type = 'success') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
@@ -466,6 +531,96 @@
         clearBulkSelections();
         renderOrders();
       }
+    };
+
+    window.openBulkTrackingModal = function() {
+      if (selectedOrders.length === 0) { showToast('Pilih pesanan melalui checkbox terlebih dahulu.', 'error'); return; }
+      bulkTrackingMode = 'auto';
+      const autoRadio = document.querySelector('input[name="bulk-tracking-mode"][value="auto"]');
+      if (autoRadio) autoRadio.checked = true;
+      renderBulkTrackingSelectedOrders();
+      document.getElementById('bulk-tracking-modal').classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    };
+
+    window.setBulkTrackingMode = function(mode) {
+      bulkTrackingMode = mode;
+      renderBulkTrackingSelectedOrders();
+    };
+
+    window.closeBulkTrackingModal = function() {
+      document.getElementById('bulk-tracking-modal').classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    };
+
+    function renderBulkTrackingSelectedOrders() {
+      const orders = BizmateDB.getOrders().filter(o => selectedOrders.includes(o.id));
+      const container = document.getElementById('bulk-tracking-selected-list');
+      document.getElementById('bulk-tracking-count').textContent = orders.length;
+      document.getElementById('bulk-tracking-helper').textContent = bulkTrackingMode === 'auto'
+        ? 'Resi akan dibuat otomatis untuk tiap pesanan.'
+        : 'Input nomor resi satu per satu untuk tiap pesanan.';
+      container.innerHTML = orders.map((o, idx) => `
+        <div class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-4 bg-white hover:bg-slate-50 transition">
+          <div class="lg:col-span-7 flex items-start gap-4 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-xs font-black shrink-0">${idx + 1}</div>
+          <div class="flex-grow min-w-0">
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <span class="text-xs font-black text-slate-800 font-outfit">${o.id}</span>
+              <span class="px-2 py-0.5 rounded-full border ${getShipBadge(o.shippingStatus).cls} text-[10px] font-bold">${getShipBadge(o.shippingStatus).text}</span>
+            </div>
+            <p class="text-xs font-bold text-slate-700 truncate">${maskText(o.customer, 3, 2)}</p>
+            <p class="text-[11px] font-semibold text-slate-400 truncate">${o.items?.map(i => i.name).join(', ') || 'Produk pesanan'} • ${o.itemsCount || o.items?.length || 1} item</p>
+          </div>
+          </div>
+          <div class="lg:col-span-5">
+            <label for="bulk-tracking-input-${o.id}" class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Nomor Resi Pesanan</label>
+            <input id="bulk-tracking-input-${o.id}" data-order-id="${o.id}" type="text" value="${bulkTrackingMode === 'auto' ? `AUTO-${o.id}` : (o.trackingNumber || '')}" placeholder="Input resi untuk ${o.id}" ${bulkTrackingMode === 'auto' ? 'readonly' : ''} class="js-bulk-tracking-input w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold ${bulkTrackingMode === 'auto' ? 'text-brand-blueRoyal bg-brand-blueLight/40' : 'text-slate-700 bg-white'} focus:outline-none focus:border-brand-blueRoyal">
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.saveBulkTrackingNumbers = function() {
+      if (selectedOrders.length === 0) { showToast('Pilih pesanan terlebih dahulu.', 'error'); return; }
+      const courier = document.getElementById('bulk-courier-select').value;
+      const inputs = Array.from(document.querySelectorAll('.js-bulk-tracking-input'));
+      if (bulkTrackingMode === 'auto') {
+        let count = 0;
+        selectedOrders.forEach(id => {
+          BizmateDB.generateTrackingNumber(id, courier);
+          count++;
+        });
+        showToast(`${count} resi otomatis berhasil digenerate.`, 'success');
+        closeBulkTrackingModal();
+        clearBulkSelections();
+        renderOrders();
+        return;
+      }
+      const emptyInput = inputs.find(input => !input.value.trim());
+      if (emptyInput) {
+        showToast('Lengkapi nomor resi untuk setiap pesanan terpilih.', 'error');
+        emptyInput.focus();
+        return;
+      }
+
+      const orders = BizmateDB.getOrders();
+      inputs.forEach(input => {
+        const id = input.getAttribute('data-order-id');
+        BizmateDB.updateOrderCourier(id, courier);
+        const oIdx = orders.findIndex(o => o.id === id);
+        if (oIdx !== -1) {
+          orders[oIdx].trackingNumber = input.value.trim();
+          orders[oIdx].shippingStatus = 'Shipped';
+          orders[oIdx].statusHistory = orders[oIdx].statusHistory || [];
+          orders[oIdx].statusHistory.push({ status: 'Resi Diinput Manual', time: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }), note: `Nomor resi ${input.value.trim()} disimpan untuk ${courier}.` });
+        }
+      });
+      localStorage.setItem('bizmate_orders', JSON.stringify(orders));
+      showToast(`${selectedOrders.length} resi pesanan berhasil disimpan.`, 'success');
+      closeBulkTrackingModal();
+      clearBulkSelections();
+      renderOrders();
     };
 
     // ===== QUICK ACTIONS =====
@@ -643,8 +798,8 @@
                   ${(o.customer || 'CS').split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase()}
                 </div>
                 <div class="min-w-0">
-                  <p class="font-bold text-slate-800 text-xs truncate max-w-[140px]">${o.customer}</p>
-                  <p class="text-[10px] text-slate-400 font-medium">${o.phone || '—'}</p>
+                  <p class="font-bold text-slate-800 text-xs truncate max-w-[140px]">${maskText(o.customer, 3, 2)}</p>
+                  <p class="text-[10px] text-slate-400 font-medium">${o.phone ? maskText(o.phone, 3, 3) : '—'}</p>
                 </div>
               </div>
             </td>
@@ -756,11 +911,11 @@
                     ${(o.customer || 'CS').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase()}
                   </div>
                   <div>
-                    <p class="font-bold text-slate-800 text-xs">${o.customer}</p>
-                    <p class="text-[10px] text-slate-400">${o.phone || '—'}</p>
+                    <p class="font-bold text-slate-800 text-xs">${maskText(o.customer, 3, 2)}</p>
+                    <p class="text-[10px] text-slate-400">${o.phone ? maskText(o.phone, 3, 3) : '—'}</p>
                   </div>
                 </div>
-                <p class="text-[11px] text-slate-500 leading-relaxed pl-[42px]">${o.address || 'Alamat tidak diisi'}</p>
+                <p class="text-[11px] text-slate-500 leading-relaxed pl-[42px]">${o.address ? maskText(o.address, 8, 6) : 'Alamat tidak diisi'}</p>
               </div>
 
               <!-- Courier -->

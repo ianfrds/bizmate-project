@@ -86,13 +86,13 @@
     </header>
 
     <!-- Page Content -->
-    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-8">
+    <main class="flex-grow p-4 sm:p-6 w-full max-w-[1600px] mx-auto space-y-5">
       
       <!-- Page Header & Actions -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Pengaturan Terpadu</h1>
-          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi informasi toko, rekening pembayaran, metode checkout, dan branding warna sistem.</p>
+          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi toko, pembayaran, checkout, dan branding dalam layout ringkas.</p>
         </div>
         <button onclick="saveAllSettings()" class="px-6 py-3 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-sm rounded-2xl shadow-premium hover:shadow-lg transition flex items-center gap-2 self-stretch sm:self-auto justify-center" aria-label="Simpan Semua Pengaturan">
           <i class="ti ti-device-floppy text-lg"></i>
@@ -101,10 +101,10 @@
       </div>
 
       <!-- Bento Settings Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
         
         <!-- BENTO BLOCK 1: Informasi Profil Toko (Colspan 8) -->
-        <div class="lg:col-span-8 bg-white border border-slate-100 shadow-soft rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="xl:col-span-7 bg-white border border-slate-100 shadow-soft rounded-3xl p-5 sm:p-6 space-y-5">
           <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
             <div class="p-2.5 bg-brand-blueLight text-brand-blueRoyal rounded-xl">
               <i class="ti ti-storefront text-lg"></i>
@@ -115,53 +115,53 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="space-y-2">
               <label for="input-shop-name" class="text-xs font-bold text-slate-600 block">Nama Toko <span class="text-rose-500">*</span></label>
-              <input type="text" id="input-shop-name" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bizmate Premium Store" required>
+              <input type="text" id="input-shop-name" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bizmate Premium Store" required>
             </div>
             <div class="space-y-2">
               <label for="input-shop-email" class="text-xs font-bold text-slate-600 block">Email Kontak Toko <span class="text-rose-500">*</span></label>
-              <input type="email" id="input-shop-email" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: support@bizmate.id" required>
+              <input type="email" id="input-shop-email" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: su***@***.id" required>
             </div>
             <div class="space-y-2">
               <label for="input-shop-phone" class="text-xs font-bold text-slate-600 block">Telepon Toko</label>
-              <input type="text" id="input-shop-phone" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622">
+              <input type="text" id="input-shop-phone" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622">
             </div>
             <div class="space-y-2">
               <label for="input-shop-whatsapp" class="text-xs font-bold text-slate-600 block">WhatsApp Toko (WA-Link) <span class="text-rose-500">*</span></label>
-              <input type="text" id="input-shop-whatsapp" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622" required>
+              <input type="text" id="input-shop-whatsapp" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622" required>
             </div>
             <div class="space-y-2">
               <label for="input-shop-instagram" class="text-xs font-bold text-slate-600 block">Instagram Toko</label>
               <div class="relative">
                 <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
-                <input type="text" id="input-shop-instagram" class="w-full pl-8 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.premium">
+                <input type="text" id="input-shop-instagram" class="w-full pl-8 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.premium">
               </div>
             </div>
             <div class="space-y-2">
               <label for="input-shop-tiktok" class="text-xs font-bold text-slate-600 block">TikTok Toko</label>
               <div class="relative">
                 <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
-                <input type="text" id="input-shop-tiktok" class="w-full pl-8 pr-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.official">
+                <input type="text" id="input-shop-tiktok" class="w-full pl-8 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.official">
               </div>
             </div>
             <div class="space-y-2 sm:col-span-2">
               <label for="input-shop-description" class="text-xs font-bold text-slate-600 block">Deskripsi Singkat Toko</label>
-              <textarea id="input-shop-description" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-24 resize-none" placeholder="Tuliskan slogan / penjelasan singkat mengenai kelebihan toko Anda..."></textarea>
+              <textarea id="input-shop-description" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-16 resize-none" placeholder="Tuliskan slogan / penjelasan singkat mengenai kelebihan toko Anda..."></textarea>
             </div>
             <div class="space-y-2 sm:col-span-2">
               <label for="input-shop-address" class="text-xs font-bold text-slate-600 block">Alamat Toko Lengkap</label>
-              <textarea id="input-shop-address" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-20 resize-none" placeholder="Contoh: Jl. Raya Darmo No. 12-14, Surabaya, Jawa Timur"></textarea>
+              <textarea id="input-shop-address" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-16 resize-none" placeholder="Contoh: Jl. Raya Darmo No. 12-14, Surabaya, Jawa Timur"></textarea>
             </div>
           </div>
         </div>
 
         <!-- RIGHT SIDE: Color theme & Bank & maintenance (Colspan 4) -->
-        <div class="lg:col-span-4 space-y-8">
+        <div class="xl:col-span-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-5">
           
           <!-- BENTO BLOCK 2: Color brand dynamic theme selector -->
-          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-brand-orange/10 text-brand-orange rounded-xl">
                 <i class="ti ti-palette text-lg"></i>
@@ -173,13 +173,13 @@
             </div>
 
             <!-- List of dynamic themes -->
-            <div class="space-y-3" id="theme-selector-container">
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-2.5" id="theme-selector-container">
               <!-- Dynamically constructed theme buttons -->
             </div>
           </div>
 
           <!-- BENTO BLOCK 3: Informasi Rekening Bank -->
-          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
                 <i class="ti ti-credit-card text-lg"></i>
@@ -190,24 +190,24 @@
               </div>
             </div>
 
-            <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
               <div class="space-y-2">
                 <label for="input-bank-name" class="text-xs font-bold text-slate-600 block">Nama Bank</label>
-                <input type="text" id="input-bank-name" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bank Central Asia (BCA)">
+                <input type="text" id="input-bank-name" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bank Central Asia (BCA)">
               </div>
               <div class="space-y-2">
                 <label for="input-bank-account" class="text-xs font-bold text-slate-600 block">Nomor Rekening</label>
-                <input type="text" id="input-bank-account" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 8291048590">
+                <input type="text" id="input-bank-account" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 8291048590">
               </div>
               <div class="space-y-2">
                 <label for="input-bank-holder" class="text-xs font-bold text-slate-600 block">Nama Pemilik Rekening</label>
-                <input type="text" id="input-bank-holder" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: PT Bizmate Solusi Retail">
+                <input type="text" id="input-bank-holder" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: PT Bizmate Solusi Retail">
               </div>
             </div>
           </div>
 
           <!-- BENTO BLOCK 4: Metode Checkout & Ongkir Flat -->
-          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4 lg:col-span-2 xl:col-span-1">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-indigo-50 text-brand-blueRoyal rounded-xl">
                 <i class="ti ti-shopping-cart-discount text-lg"></i>
@@ -218,15 +218,30 @@
               </div>
             </div>
 
-            <div class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-2">
                 <label for="input-shipping-rate" class="text-xs font-bold text-slate-600 block">Biaya Pengiriman Flat (Rp) <span class="text-rose-500">*</span></label>
-                <input type="number" id="input-shipping-rate" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 50000" required>
+                <input type="number" id="input-shipping-rate" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 50000" required>
               </div>
 
-              <div class="h-px bg-slate-100"></div>
+              <div class="space-y-3 p-4 rounded-2xl bg-brand-blueLight/50 border border-brand-blueRoyal/10">
+                <div class="flex items-center justify-between gap-4">
+                  <div>
+                    <span class="text-xs font-black text-slate-700 uppercase tracking-tight block">Aktifkan Pajak Produk</span>
+                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Jika aktif, harga produk bisa otomatis naik sesuai persentase pajak.</span>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan pajak produk">
+                    <input type="checkbox" id="check-enable-tax" class="sr-only peer" onchange="toggleTaxField()">
+                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </div>
+                <div id="tax-rate-wrapper" class="hidden space-y-1.5">
+                  <label for="input-tax-rate" class="text-xs font-bold text-slate-600 block">Persentase Pajak (%)</label>
+                  <input type="number" id="input-tax-rate" min="0" max="100" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 11">
+                </div>
+              </div>
 
-              <div class="space-y-3.5">
+              <div class="space-y-3.5 sm:col-span-2">
                 <span class="text-xs font-black text-slate-700 uppercase tracking-tight block">Metode Pembayaran Aktif</span>
                 
                 <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
@@ -282,7 +297,7 @@
           </div>
 
           <!-- BENTO BLOCK 5: Pengelolaan Data (Database Maintenance) -->
-          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-6 space-y-6">
+          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4 lg:col-span-2 xl:col-span-1">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl">
                 <i class="ti ti-database text-lg"></i>
@@ -293,7 +308,7 @@
               </div>
             </div>
 
-            <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <!-- Backup Button -->
               <button onclick="backupDatabase()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2" aria-label="Backup Database">
                 <i class="ti ti-download"></i>
@@ -357,6 +372,9 @@
 
       // Checkout & Ongkir
       document.getElementById('input-shipping-rate').value = config.shippingFlatRate || 0;
+      document.getElementById('check-enable-tax').checked = !!config.taxEnabled;
+      document.getElementById('input-tax-rate').value = config.taxRate || 0;
+      toggleTaxField();
       document.getElementById('check-enable-cod').checked = config.enableCod !== false;
       document.getElementById('check-enable-qris').checked = config.enableQris !== false;
       document.getElementById('check-enable-bank').checked = config.enableBankTransfer !== false;
@@ -406,6 +424,12 @@
       renderThemeSelector();
     }
 
+    function toggleTaxField() {
+      const wrapper = document.getElementById('tax-rate-wrapper');
+      const checked = document.getElementById('check-enable-tax').checked;
+      if (wrapper) wrapper.classList.toggle('hidden', !checked);
+    }
+
     function saveAllSettings() {
       const nameInput = document.getElementById('input-shop-name').value.trim();
       const emailInput = document.getElementById('input-shop-email').value.trim();
@@ -431,6 +455,8 @@
         bankHolder: document.getElementById('input-bank-holder').value.trim(),
 
         shippingFlatRate: Number(document.getElementById('input-shipping-rate').value) || 0,
+        taxEnabled: document.getElementById('check-enable-tax').checked,
+        taxRate: Number(document.getElementById('input-tax-rate').value) || 0,
         enableCod: document.getElementById('check-enable-cod').checked,
         enableQris: document.getElementById('check-enable-qris').checked,
         enableBankTransfer: document.getElementById('check-enable-bank').checked,

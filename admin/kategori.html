@@ -201,6 +201,11 @@
               </div>
 
               <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">URL Gambar Kategori</label>
+                <input id="category-image" type="url" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition" placeholder="https://images.unsplash.com/..."><p class="text-[10px] text-slate-400 font-medium mt-1">Opsional, dipakai sebagai thumbnail visual kategori.</p>
+              </div>
+
+              <div>
                 <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Kategori Induk (Parent)</label>
                 <select id="category-parent" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition">
                   <option value="" selected>Tidak Ada (Jadikan Kategori Utama)</option>
@@ -243,6 +248,7 @@
       const nameInput = document.getElementById('category-name');
       const slugInput = document.getElementById('category-slug');
       const parentInput = document.getElementById('category-parent');
+      const imageInput = document.getElementById('category-image');
       const iconInput = document.getElementById('category-icon');
       const iconSelector = document.getElementById('icon-selector');
 
@@ -303,9 +309,7 @@
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <span class="text-slate-400 cursor-move"><i class="ti ti-grip-vertical text-lg"></i></span>
-                  <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blueRoyal text-xl">
-                    <i class="ti ${c.icon}"></i>
-                  </div>
+                  ${c.image ? `<img src="${c.image}" alt="${c.name}" class="w-10 h-10 rounded-xl object-cover border border-slate-200 bg-slate-50">` : `<div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blueRoyal text-xl"><i class="ti ${c.icon}"></i></div>`}
                   <div>
                     <h4 class="text-sm font-bold text-slate-800">${c.name}</h4>
                     <p class="text-[10px] text-slate-500 font-medium">Slug: ${c.slug}</p>
@@ -352,6 +356,7 @@
         const name = nameInput.value.trim();
         const slug = slugInput.value.trim();
         const parent = parentInput.value;
+        const image = imageInput.value.trim();
         const icon = iconInput.value;
 
         if (parent) {
@@ -367,7 +372,7 @@
           }
         } else {
           // Add as parent category
-          BizmateDB.saveCategory({ name, slug, icon });
+          BizmateDB.saveCategory({ name, slug, icon, image });
         }
 
         showToast(`Kategori '${name}' berhasil disimpan!`);

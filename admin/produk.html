@@ -80,7 +80,7 @@
       </div>
     </header>
 
-    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-6">
+    <main class="flex-grow p-4 sm:p-6 xl:p-8 w-full max-w-full 2xl:max-w-[1600px] mx-auto space-y-6 overflow-hidden">
       
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -88,18 +88,18 @@
           <h3 class="font-outfit font-black text-2xl text-slate-800">Katalog Produk</h3>
           <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Kelola Stok, Harga, dan Variasi Produk Furniture Anda</p>
         </div>
-        <div class="flex items-center gap-2.5">
-          <button class="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition">
+        <div class="flex items-center gap-2.5 w-full sm:w-auto">
+          <button class="flex-1 sm:flex-none justify-center flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition">
             <i class="ti ti-file-import"></i> Import
           </button>
-          <a href="tambah-produk.html" class="flex items-center gap-2 px-5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">
+          <a href="tambah-produk.html" class="flex-1 sm:flex-none justify-center flex items-center gap-2 px-5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">
             <i class="ti ti-plus"></i> Tambah Baru
           </a>
         </div>
       </div>
       
       <!-- Metrics Overview -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-soft">
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Semua Produk</p>
           <p id="count-all" class="text-2xl font-black text-slate-800">342</p>
@@ -122,38 +122,38 @@
       <div class="bg-white rounded-3xl border border-slate-200 shadow-card flex flex-col">
         
         <!-- Filters Bar -->
-        <div class="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-50/50 rounded-t-3xl">
-          <div class="flex items-center gap-3 w-full sm:w-auto">
-            <div class="relative w-full sm:w-64">
+        <div class="p-4 sm:p-6 border-b border-slate-100 flex flex-col xl:flex-row gap-4 justify-between items-stretch xl:items-center bg-slate-50/50 rounded-t-3xl">
+          <div class="flex items-center gap-3 w-full xl:w-auto">
+            <div class="relative w-full xl:w-64">
               <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
               <input id="search-input" type="text" placeholder="Cari Nama Produk, SKU..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
             </div>
           </div>
-          <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
-            <div class="flex gap-2 overflow-x-auto custom-scrollbar">
-              <select id="filter-category" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full xl:w-auto justify-between xl:justify-start">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full sm:w-auto">
+              <select id="filter-category" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
                 <option>Semua Kategori</option>
                 <option>Kursi & Sofa</option>
                 <option>Meja & Rak</option>
                 <option>Lampu & Dekorasi</option>
                 <option>Mebel Outdoor</option>
               </select>
-              <select id="filter-status" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
+              <select id="filter-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
                 <option>Status: Semua</option>
                 <option>Status: Aktif</option>
                 <option>Status: Draft</option>
               </select>
             </div>
             
-            <div class="h-6 w-px bg-slate-200 hidden sm:block"></div>
+            <div class="h-6 w-px bg-slate-200 hidden xl:block"></div>
             
             <!-- View Switcher -->
-            <div class="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shrink-0">
-              <button id="btn-view-list" onclick="setViewMode('list')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-brand-blueRoyal shadow-sm border border-slate-200/50" aria-label="Tampilan Daftar">
+            <div class="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shrink-0 w-full sm:w-auto">
+              <button id="btn-view-list" onclick="setViewMode('list')" class="flex-1 sm:flex-none justify-center px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-brand-blueRoyal shadow-sm border border-slate-200/50" aria-label="Tampilan Daftar">
                 <i class="ti ti-list text-sm"></i>
                 <span class="hidden sm:inline">Daftar</span>
               </button>
-              <button id="btn-view-grid" onclick="setViewMode('grid')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-500 hover:text-slate-800" aria-label="Tampilan Kartu">
+              <button id="btn-view-grid" onclick="setViewMode('grid')" class="flex-1 sm:flex-none justify-center px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-500 hover:text-slate-800" aria-label="Tampilan Kartu">
                 <i class="ti ti-layout-grid text-sm"></i>
                 <span class="hidden sm:inline">Kartu</span>
               </button>
@@ -162,17 +162,17 @@
         </div>
 
         <!-- Table List View Container -->
-        <div id="products-table-container" class="overflow-x-auto flex-grow">
-          <table class="w-full text-left border-collapse min-w-[1000px]">
+        <div id="products-table-container" class="overflow-x-auto flex-grow custom-scrollbar">
+          <table class="w-full text-left border-collapse min-w-[900px] xl:min-w-0 table-fixed">
             <thead>
               <tr class="bg-white">
-                <th class="px-6 py-4 w-12 border-b border-slate-100"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal"></th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Info Produk</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Kategori</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Harga & Stok</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Performa</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-center">Tampilkan</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-right">Aksi</th>
+                <th class="px-3 xl:px-4 py-4 w-10 border-b border-slate-100"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal"></th>
+                <th class="px-3 xl:px-4 py-4 w-[32%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Info Produk</th>
+                <th class="px-3 xl:px-4 py-4 w-[13%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Kategori</th>
+                <th class="px-3 xl:px-4 py-4 w-[18%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Harga & Stok</th>
+                <th class="px-3 xl:px-4 py-4 w-[15%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">Performa</th>
+                <th class="px-3 xl:px-4 py-4 w-[10%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-center">Tampil</th>
+                <th class="px-3 xl:px-4 py-4 w-[8%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 text-right">Aksi</th>
               </tr>
             </thead>
             <tbody id="products-table-body" class="text-sm text-slate-700 divide-y divide-slate-100">
@@ -277,7 +277,7 @@
         </div>
 
         <!-- Pagination -->
-        <div class="p-6 border-t border-slate-100 flex items-center justify-between">
+        <div class="p-4 sm:p-6 border-t border-slate-100 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
           <p id="table-pagination-info" class="text-xs font-bold text-slate-400">Menampilkan 1 - 10 dari 342 Produk</p>
           <div class="flex items-center gap-2">
             <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition"><i class="ti ti-chevron-left"></i></button>
@@ -303,6 +303,8 @@
       const filterCategory = document.getElementById('filter-category');
       const filterStatus = document.getElementById('filter-status');
       const paginationInfo = document.getElementById('table-pagination-info');
+      const PAGE_SIZE = 10;
+      let currentPage = 1;
 
       // Helper function to calculate sold quantity dynamically with seed offset
       function getProductSoldQty(sku) {
@@ -390,7 +392,7 @@
           return matchQuery && matchCat && matchStatus;
         });
 
-        // 3. Render HTML
+        // 3. Render HTML with pagination to keep table compact
         tbody.innerHTML = '';
         gridContainer.innerHTML = '';
 
@@ -414,7 +416,13 @@
           return;
         }
 
-        filtered.forEach(p => {
+        const totalFiltered = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
+        if (currentPage > totalPages) currentPage = totalPages;
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const pageProducts = filtered.slice(startIndex, startIndex + PAGE_SIZE);
+
+        pageProducts.forEach(p => {
           const opacityClass = p.active ? '' : 'opacity-60 grayscale';
           const titleClass = p.active ? 'text-slate-800 hover:text-brand-blueRoyal font-outfit' : 'text-slate-400 font-outfit';
 
@@ -464,9 +472,9 @@
           }
 
           const hargaStokCell = `
-            <td class="px-6 py-4">
+            <td class="px-3 xl:px-4 py-4">
               <div class="flex flex-col">
-                <span class="font-black text-slate-800 text-[13px] whitespace-nowrap">${priceDisplay}</span>
+                <span class="font-black text-slate-800 text-[12px] xl:text-[13px] leading-snug break-words">${priceDisplay}</span>
                 <span class="text-[11px] ${stockTextClass} mt-0.5 uppercase tracking-wider">${stockText}</span>
               </div>
             </td>
@@ -474,13 +482,13 @@
 
           // Performa cell
           const performaCell = `
-            <td class="px-6 py-4">
+            <td class="px-3 xl:px-4 py-4">
               <div class="flex flex-col">
                 <div class="flex items-center gap-1 text-slate-700 font-extrabold text-[13px]">
                   <i class="ti ti-trending-up text-emerald-500"></i>
-                  <span>Penjualan ${parentSoldQty}</span>
+                  <span>${parentSoldQty}</span>
                 </div>
-                <span class="text-[10px] text-slate-400 font-bold mt-0.5 uppercase tracking-wide">Omset: Rp ${parentRevenue.toLocaleString('id-ID')}</span>
+                <span class="text-[10px] text-slate-400 font-bold mt-0.5 uppercase tracking-wide leading-snug">Rp ${parentRevenue.toLocaleString('id-ID')}</span>
               </div>
             </td>
           `;
@@ -500,8 +508,8 @@
                   <i class="ti ti-layers-difference text-[10px]"></i>
                   <span>${p.variantList.length} Varian</span>
                 </span>
-                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/40 uppercase tracking-wide truncate max-w-[120px]" title="${p.variations.map(v => v.name).join(', ')}">
-                  ${p.variations.map(v => v.name).join(', ')}
+                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/40 uppercase tracking-wide truncate max-w-[120px]" title="${(p.variations || []).map(v => v.name).join(', ')}">
+                  ${(p.variations || []).map(v => v.name).join(', ')}
                 </span>
               </div>
             `;
@@ -512,8 +520,8 @@
                   <i class="ti ti-layers-difference text-[10px]"></i>
                   <span>${p.variantList.length} Varian</span>
                 </span>
-                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 self-start px-2 py-0.5 rounded-lg border border-slate-200/40 truncate max-w-full uppercase tracking-wide" title="${p.variations.map(v => v.name).join(', ')}">
-                  ${p.variations.map(v => v.name).join(', ')}
+                <span class="text-[9px] text-slate-400 font-bold bg-slate-100 self-start px-2 py-0.5 rounded-lg border border-slate-200/40 truncate max-w-full uppercase tracking-wide" title="${(p.variations || []).map(v => v.name).join(', ')}">
+                  ${(p.variations || []).map(v => v.name).join(', ')}
                 </span>
               </div>
             `;
@@ -639,30 +647,30 @@
           // 1. List View Render
           tbody.innerHTML += `
             <tr class="table-row-hover transition ${p.active ? '' : 'bg-slate-50/30'}">
-              <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
-              <td class="px-6 py-4">
-                <div class="flex items-center gap-4 ${opacityClass}">
+              <td class="px-3 xl:px-4 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
+              <td class="px-3 xl:px-4 py-4">
+                <div class="flex items-center gap-3 ${opacityClass}">
                   ${expandButton ? expandButton : '<div class="w-7 h-7 shrink-0"></div>'}
-                  <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50" src="${p.image}">
-                  <div>
-                    <p class="font-bold cursor-pointer transition ${titleClass} truncate max-w-[280px]" onclick="editProduct('${p.sku}')" title="${p.name}">${p.name}</p>
+                  <img class="w-12 h-12 xl:w-14 xl:h-14 rounded-xl border border-slate-200 object-cover bg-slate-50 shrink-0" src="${p.image}">
+                  <div class="min-w-0">
+                    <p class="font-bold cursor-pointer transition ${titleClass} truncate max-w-[220px] xl:max-w-[280px]" onclick="editProduct('${p.sku}')" title="${p.name}">${p.name}</p>
                     <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU Induk: ${p.sku}</p>
                     ${variantIndicator}
                   </div>
                 </div>
               </td>
-              <td class="px-6 py-4">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 max-w-[120px] truncate" title="${p.category}">${p.category}</span>
+              <td class="px-3 xl:px-4 py-4">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 max-w-[105px] truncate" title="${p.category}">${p.category}</span>
               </td>
               ${hargaStokCell}
               ${performaCell}
-              <td class="px-6 py-4 text-center">
+              <td class="px-3 xl:px-4 py-4 text-center">
                 <label class="relative inline-flex items-center cursor-pointer" title="Tampilkan/Sembunyikan">
                   <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleActive('${p.sku}')" aria-label="Aktifkan produk ${p.name}">
                   <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
                 </label>
               </td>
-              <td class="px-6 py-4 text-right">
+              <td class="px-3 xl:px-4 py-4 text-right whitespace-nowrap">
                 <button onclick="editProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="Edit" aria-label="Edit produk ${p.name}"><i class="ti ti-edit"></i></button>
                 <button onclick="deleteProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition" title="Delete" aria-label="Hapus produk ${p.name}"><i class="ti ti-trash"></i></button>
               </td>
@@ -752,14 +760,33 @@
           `;
         });
 
-        const totalProductBase = 339; // Seeded offset
-        paginationInfo.textContent = `Menampilkan 1 - ${filtered.length} dari ${filtered.length + totalProductBase} Produk`;
+        const showingStart = totalFiltered === 0 ? 0 : startIndex + 1;
+        const showingEnd = Math.min(startIndex + PAGE_SIZE, totalFiltered);
+        paginationInfo.textContent = `Menampilkan ${showingStart} - ${showingEnd} dari ${totalFiltered} Produk`;
+        renderPagination(totalPages);
+      }
+
+      function renderPagination(totalPages) {
+        const paginationWrap = paginationInfo.nextElementSibling;
+        if (!paginationWrap) return;
+        paginationWrap.innerHTML = `
+          <button onclick="changeProductPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition disabled:opacity-40 disabled:cursor-not-allowed"><i class="ti ti-chevron-left"></i></button>
+          ${Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map(page => `
+            <button onclick="changeProductPage(${page})" class="w-8 h-8 rounded-lg ${page === currentPage ? 'bg-brand-blueRoyal text-white shadow' : 'border border-slate-200 text-slate-600 hover:bg-slate-50'} flex items-center justify-center font-bold text-xs transition">${page}</button>
+          `).join('')}
+          <button onclick="changeProductPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition disabled:opacity-40 disabled:cursor-not-allowed"><i class="ti ti-chevron-right"></i></button>
+        `;
       }
 
       // Event Listeners for Search & Filters
-      searchInput.addEventListener('input', renderTable);
-      filterCategory.addEventListener('change', renderTable);
-      filterStatus.addEventListener('change', renderTable);
+      searchInput.addEventListener('input', () => { currentPage = 1; renderTable(); });
+      filterCategory.addEventListener('change', () => { currentPage = 1; renderTable(); });
+      filterStatus.addEventListener('change', () => { currentPage = 1; renderTable(); });
+
+      window.changeProductPage = function(page) {
+        currentPage = Math.max(1, page);
+        renderTable();
+      };
 
       // Global functions for inline actions
       window.toggleActive = function(sku) {

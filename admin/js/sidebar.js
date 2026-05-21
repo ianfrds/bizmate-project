@@ -22,6 +22,21 @@ document.addEventListener("DOMContentLoaded", () => {
       color: #0c4cb4 !important;
       background-color: rgba(12, 76, 180, 0.05) !important;
     }
+    #sidebar .nav-item > i,
+    #sidebar button i:first-child,
+    #sidebar button .flex > i:first-child {
+      color: #0c4cb4 !important;
+    }
+    #sidebar .submenu-item::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 8px;
+      border-radius: 999px;
+      background: #0c4cb4;
+      opacity: 0.75;
+    }
     #sidebar .nav-item.active {
       background: linear-gradient(90deg, rgba(12, 76, 180, 0.08) 0%, transparent 100%) !important;
       color: #0c4cb4 !important;
@@ -176,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <img src="https://ui-avatars.com/api/?name=Admin+Utama&background=0D8ABC&color=fff" alt="Avatar" class="w-full h-full rounded-full border-2 border-white object-cover">
         </div>
         <div class="flex-grow overflow-hidden">
-          <p class="text-sm font-bold text-slate-800 truncate">Admin Utama</p>
+          <p class="text-sm font-bold text-slate-800 truncate">Superadmin</p>
           <p class="text-[11px] text-slate-400 font-medium truncate">superadmin@bizmate.id</p>
         </div>
         <i class="ti ti-selector text-slate-400"></i>

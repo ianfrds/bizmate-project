@@ -5,21 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bizmate - Enterprise Management Console</title>
-  
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <!-- Tabler Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  
+
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+
   <!-- Shared LocalStorage Database -->
   <script src="js/database.js"></script>
   <script src="js/theme.js"></script>
@@ -60,29 +62,37 @@
 <body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
 
   <!-- ==================== SIDEBAR ==================== -->
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5"></aside>
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
+  </aside>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
   <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
 
     <!-- Topbar -->
-    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+    <header
+      class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
       <div class="flex items-center gap-4 flex-grow">
-        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+        <button onclick="toggleSidebar()"
+          class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
           <i class="ti ti-menu-2 text-xl"></i>
         </button>
         <div class="flex items-center gap-2 font-outfit hidden sm:flex">
-          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span
+            class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
           <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
         </div>
       </div>
 
       <div class="flex items-center gap-4 shrink-0">
-        <button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi">
+        <button id="js-notification-btn"
+          class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative"
+          aria-label="Notifikasi">
           <i class="ti ti-bell text-xl"></i>
         </button>
         <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
-        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+        <a href="../index.html"
+          class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Live Storefront
           <i class="ti ti-external-link text-sm"></i>
@@ -92,328 +102,504 @@
 
     <!-- Page Content -->
     <main class="flex-grow p-4 sm:p-8 w-full max-w-[1600px] mx-auto space-y-8">
-      
+
       <!-- Page Header & Actions -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div>
           <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Overview Dashboard</h1>
           <p class="text-sm text-slate-500 font-medium mt-1">Pantau performa bisnis dan aktivitas operasional toko Anda hari ini.</p>
         </div>
-        
-        <div class="flex items-center gap-3 w-full sm:w-auto">
+
+        <div class="flex items-center gap-3 w-full lg:w-auto">
+          <a href="tambah-pesanan.html" class="flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">
+            <i class="ti ti-plus"></i>
+            Buat Pesanan
+          </a>
           <div class="relative w-full sm:w-auto">
-            <select class="w-full sm:w-auto appearance-none bg-white border border-slate-200 text-slate-700 text-sm font-bold rounded-xl px-4 py-2.5 pr-10 focus:outline-none focus:ring-2 focus:ring-brand-blueRoyal/20 focus:border-brand-blueRoyal transition cursor-pointer">
+            <select
+              class="w-full sm:w-auto appearance-none bg-white border border-slate-200 text-slate-700 text-sm font-bold rounded-xl px-4 py-2.5 pr-10 focus:outline-none focus:ring-2 focus:ring-brand-blueRoyal/20 focus:border-brand-blueRoyal transition cursor-pointer">
               <option>Hari Ini</option>
               <option>7 Hari Terakhir</option>
               <option selected>30 Hari Terakhir</option>
               <option>Tahun Ini</option>
             </select>
-            <i class="ti ti-calendar absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+            <i
+              class="ti ti-calendar absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
           </div>
-          <button class="hidden sm:flex items-center justify-center w-10 h-10 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition shadow-sm" title="Export Report">
+          <button
+            class="hidden sm:flex items-center justify-center w-10 h-10 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition shadow-sm"
+            title="Export Report">
             <i class="ti ti-download"></i>
           </button>
         </div>
       </div>
 
-      <!-- Analytics Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <!-- Card 1: Revenue -->
-        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
-          <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              <i class="ti ti-wallet"></i>
-            </div>
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
-              <i class="ti ti-trending-up text-sm"></i> +12.5%
-            </span>
-          </div>
-          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Revenue</p>
-          <h3 id="stat-revenue" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">Rp 45.2M</h3>
-        </div>
-
-        <!-- Card 2: Orders -->
-        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
-          <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              <i class="ti ti-shopping-cart"></i>
-            </div>
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
-              <i class="ti ti-trending-up text-sm"></i> +5.2%
-            </span>
-          </div>
-          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Orders</p>
-          <h3 id="stat-orders" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">1,204</h3>
-        </div>
-
-        <!-- Card 3: Products -->
-        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
-          <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              <i class="ti ti-box"></i>
-            </div>
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-[11px] font-extrabold">
-              <i class="ti ti-minus text-sm"></i> 0.0%
-            </span>
-          </div>
-          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Active Products</p>
-          <h3 id="stat-products" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">342</h3>
-        </div>
-
-        <!-- Card 4: Customers -->
-        <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
-          <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              <i class="ti ti-users"></i>
-            </div>
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
-              <i class="ti ti-trending-up text-sm"></i> +18.4%
-            </span>
-          </div>
-          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Customers</p>
-          <h3 id="stat-customers" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">8,591</h3>
-        </div>
-
+      <!-- Centered Premium Toggle Bar -->
+      <div class="flex justify-center w-full py-2">
+        <nav aria-label="Pilihan Dashboard" class="flex bg-slate-100/80 backdrop-blur-md p-1 rounded-2xl border border-slate-200/50 shadow-soft shrink-0 w-full sm:w-auto">
+          <button id="js-toggle-pesanan" onclick="switchDashboardTab('pesanan')"
+            class="flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-black rounded-xl transition-all duration-300 bg-white text-slate-800 shadow-soft w-1/2 sm:w-auto min-w-[160px] md:min-w-[180px]"
+            aria-label="Tampilkan Status Pesanan">
+            <i class="ti ti-receipt text-lg"></i>
+            Status Pesanan
+          </button>
+          <button id="js-toggle-stat" onclick="switchDashboardTab('stat')"
+            class="flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-extrabold text-slate-500 hover:text-slate-800 rounded-xl transition-all duration-300 w-1/2 sm:w-auto min-w-[160px] md:min-w-[180px]"
+            aria-label="Tampilkan Statistik Bisnis">
+            <i class="ti ti-chart-bar text-lg"></i>
+            Statistik Bisnis
+          </button>
+        </nav>
       </div>
 
-      <!-- Section: Status Operasional Pesanan -->
-      <div class="space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 class="font-outfit font-black text-lg text-slate-800 tracking-tight flex items-center gap-2">
-            <i class="ti ti-device-analytics text-brand-blueRoyal text-xl"></i>
-            Status Operasional Pesanan
-          </h2>
-          <a href="pesanan.html" class="text-xs font-bold text-brand-blueRoyal hover:underline flex items-center gap-1">
-            Kelola Pesanan <i class="ti ti-arrow-right"></i>
-          </a>
-        </div>
+      <!-- ==================== TAB 1: STATISTIK BISNIS ==================== -->
+      <div id="js-content-stat" class="space-y-8 hidden">
         
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          
-          <!-- Card 1: Total Pesanan Baru -->
-          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
-            <div class="flex justify-between items-start mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-                <i class="ti ti-receipt"></i>
-              </div>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold uppercase tracking-wider">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Baru
-              </span>
+        <!-- KPI TOKO (Hari Ini) - Statistik -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-outfit font-black text-lg text-slate-800 tracking-tight flex items-center gap-2">
+                <i class="ti ti-crown-off text-brand-blueRoyal text-xl"></i>
+                KPI TOKO
+              </h2>
+              <p class="text-xs text-slate-500 font-medium">Ringkasan performa operasional dan finansial toko hari ini.</p>
             </div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Pesanan Baru</p>
-            <h3 id="stat-orders-new" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">12</h3>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-extrabold uppercase tracking-wider">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-blueRoyal animate-pulse"></span> Hari Ini
+            </span>
           </div>
 
-          <!-- Card 2: Pesanan di Proses -->
-          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+          <!-- KPI Container for Business Stats -->
+          <div id="js-kpi-container-stat" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <!-- JS will render dynamic cards here (Omzet, Laba, Visitor) -->
+          </div>
+        </section>
+
+        <!-- Analytics Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Card 1: Revenue -->
+          <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
             <div class="flex justify-between items-start mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              <div class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-wallet"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +12.5%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Revenue</p>
+            <h3 id="stat-revenue" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">Rp 45.2M</h3>
+          </div>
+
+          <!-- Card 2: Orders -->
+          <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-shopping-cart"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +5.2%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Orders</p>
+            <h3 id="stat-orders" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">1,204</h3>
+          </div>
+
+          <!-- Card 3: Products -->
+          <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
                 <i class="ti ti-box"></i>
               </div>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-bold uppercase tracking-wider">
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span> Di Proses
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-[11px] font-extrabold">
+                <i class="ti ti-minus text-sm"></i> 0.0%
               </span>
             </div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Pesanan di Proses</p>
-            <h3 id="stat-orders-process" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">8</h3>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Active Products</p>
+            <h3 id="stat-products" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">342</h3>
           </div>
 
-          <!-- Card 3: Pesanan dikirim -->
-          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+          <!-- Card 4: Customers -->
+          <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
             <div class="flex justify-between items-start mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-                <i class="ti ti-truck-delivery"></i>
+              <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-users"></i>
               </div>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Dikirim
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +18.4%
               </span>
             </div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Pesanan dikirim</p>
-            <h3 id="stat-orders-shipped" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">22</h3>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Customers</p>
+            <h3 id="stat-customers" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">8,591</h3>
           </div>
 
         </div>
+
+        <!-- Main Charts Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Dynamic Analytics Chart (2 Cols) -->
+          <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                  <h3 class="font-outfit font-black text-lg text-slate-800">Grafik Penjualan</h3>
+                  <p class="text-xs text-slate-500 font-medium">Tren performa omzet dan pengunjung toko</p>
+                </div>
+
+                <!-- Timeframe Pill Switcher - Stat -->
+                <nav aria-label="Filter Rentang Waktu Grafik Statistik" class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 shrink-0">
+                  <button id="js-timeframe-harian-stat" onclick="switchTimeframe('harian')"
+                    class="px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-200"
+                    aria-label="Tampilkan Grafik Harian">
+                    Harian
+                  </button>
+                  <button id="js-timeframe-mingguan-stat" onclick="switchTimeframe('mingguan')"
+                    class="px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-200"
+                    aria-label="Tampilkan Grafik Mingguan">
+                    Mingguan
+                  </button>
+                  <button id="js-timeframe-bulanan-stat" onclick="switchTimeframe('bulanan')"
+                    class="px-3 py-1.5 text-xs font-black bg-white text-brand-blueRoyal shadow-sm rounded-lg transition-all duration-200"
+                    aria-label="Tampilkan Grafik Bulanan">
+                    Bulanan
+                  </button>
+                </nav>
+              </div>
+              <div class="w-full h-80">
+                <canvas id="revenueChartStat"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Selling Products -->
+          <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="font-outfit font-black text-lg text-slate-800">Top Products</h3>
+                <p class="text-xs text-slate-500 font-medium">Berdasarkan volume penjualan</p>
+              </div>
+              <a href="produk.html" class="text-xs font-bold text-brand-blueRoyal hover:underline">Lihat Semua</a>
+            </div>
+
+            <div id="top-products-list" class="space-y-5 flex-grow">
+              <!-- Rendered by JS -->
+            </div>
+
+            <!-- Quick Action -->
+            <div class="mt-6 pt-6 border-t border-slate-100">
+              <a href="produk.html"
+                class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">
+                <i class="ti ti-box text-sm"></i> Kelola Semua Produk
+              </a>
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
-      <!-- Main Charts Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Revenue Analytics Chart (2 Cols) -->
-        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-soft p-6">
-          <div class="flex justify-between items-center mb-6">
+      <!-- ==================== TAB 2: STATUS PESANAN ==================== -->
+      <div id="js-content-pesanan" class="space-y-8">
+        <!-- Section: Status Operasional Pesanan -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
             <div>
-              <h3 class="font-outfit font-black text-lg text-slate-800">Revenue Analytics</h3>
-              <p class="text-xs text-slate-500 font-medium">Tren pendapatan penjualan per bulan</p>
+              <h2 class="font-outfit font-black text-lg text-slate-800 tracking-tight flex items-center gap-2">
+                <i class="ti ti-device-analytics text-brand-blueRoyal text-xl"></i>
+                Status Operasional Pesanan
+              </h2>
+              <p class="text-xs text-slate-500 font-medium">Ringkasan status transaksi dan penanganan pesanan secara real-time.</p>
             </div>
-            <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg hover:bg-slate-50 transition">
-              <i class="ti ti-dots-vertical"></i>
-            </button>
-          </div>
-          <div class="w-full h-80">
-            <canvas id="revenueChart"></canvas>
-          </div>
-        </div>
-
-        <!-- Top Selling Products / Quick Actions -->
-        <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col">
-          <div class="flex justify-between items-center mb-6">
-            <div>
-              <h3 class="font-outfit font-black text-lg text-slate-800">Top Products</h3>
-              <p class="text-xs text-slate-500 font-medium">Berdasarkan volume penjualan</p>
-            </div>
-            <a href="produk.html" class="text-xs font-bold text-brand-blueRoyal hover:underline">Lihat Semua</a>
-          </div>
-          
-          <div id="top-products-list" class="space-y-5 flex-grow">
-            <!-- Item 1 -->
-            <div class="flex items-center gap-4 group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=150&q=80" alt="Product" class="w-14 h-14 rounded-xl object-cover border border-slate-100 group-hover:border-brand-blueRoyal/50 transition">
-              <div class="flex-grow">
-                <h4 class="text-sm font-bold text-slate-800 group-hover:text-brand-blueRoyal transition">Kursi Santai Telur</h4>
-                <p class="text-xs text-slate-500 font-medium">Mebel Outdoor</p>
-              </div>
-              <div class="text-right">
-                <p class="text-sm font-black text-slate-800">452</p>
-                <p class="text-[10px] font-bold text-emerald-500 uppercase">Sales</p>
-              </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="flex items-center gap-4 group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=150&q=80" alt="Product" class="w-14 h-14 rounded-xl object-cover border border-slate-100 group-hover:border-brand-blueRoyal/50 transition">
-              <div class="flex-grow">
-                <h4 class="text-sm font-bold text-slate-800 group-hover:text-brand-blueRoyal transition">Sofa Premium Velvet</h4>
-                <p class="text-xs text-slate-500 font-medium">Kursi & Sofa</p>
-              </div>
-              <div class="text-right">
-                <p class="text-sm font-black text-slate-800">315</p>
-                <p class="text-[10px] font-bold text-emerald-500 uppercase">Sales</p>
-              </div>
-            </div>
-            
-            <!-- Item 3 -->
-            <div class="flex items-center gap-4 group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=150&q=80" alt="Product" class="w-14 h-14 rounded-xl object-cover border border-slate-100 group-hover:border-brand-blueRoyal/50 transition">
-              <div class="flex-grow">
-                <h4 class="text-sm font-bold text-slate-800 group-hover:text-brand-blueRoyal transition">Meja Kopi Jati</h4>
-                <p class="text-xs text-slate-500 font-medium">Meja & Rak</p>
-              </div>
-              <div class="text-right">
-                <p class="text-sm font-black text-slate-800">289</p>
-                <p class="text-[10px] font-bold text-emerald-500 uppercase">Sales</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quick Action -->
-          <div class="mt-6 pt-6 border-t border-slate-100">
-            <a href="produk.html" class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">
-              <i class="ti ti-box text-sm"></i> Kelola Semua Produk
+            <a href="pesanan.html" class="text-xs font-bold text-brand-blueRoyal hover:underline flex items-center gap-1">
+              Kelola Pesanan <i class="ti ti-arrow-right"></i>
             </a>
           </div>
-        </div>
 
-      </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-      <!-- Recent Orders Table -->
-      <div class="bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
-        <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h3 class="font-outfit font-black text-lg text-slate-800">Recent Orders</h3>
-            <p class="text-xs text-slate-500 font-medium">Transaksi pesanan terbaru yang masuk ke sistem.</p>
+            <!-- Card 1: Belum Bayar -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-wallet"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold uppercase tracking-wider">
+                  Belum Bayar
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Belum Bayar</p>
+              <h3 id="stat-orders-pending" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 2: Diproses -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-box"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-bold uppercase tracking-wider">
+                  Diproses
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Diproses</p>
+              <h3 id="stat-orders-processing" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 3: Dikirim -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-truck-delivery"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-bold uppercase tracking-wider">
+                  Dikirim
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Dikirim</p>
+              <h3 id="stat-orders-shipped" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 4: Selesai -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-checkbox"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">
+                  Selesai
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Selesai</p>
+              <h3 id="stat-orders-delivered" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 5: Batal -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-square-x"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 border border-rose-100 text-rose-600 text-[10px] font-bold uppercase tracking-wider">
+                  Batal
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Batal</p>
+              <h3 id="stat-orders-canceled" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 6: Perlu Tindakan -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-bolt text-amber-500"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold uppercase tracking-wider font-extrabold text-amber-600">
+                  ⚡ Perlu Tindakan
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Perlu Tindakan</p>
+              <h3 id="stat-orders-action" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 7: Retur -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-arrow-back-up"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider">
+                  Retur
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Retur</p>
+              <h3 id="stat-orders-return" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
+            <!-- Card 8: Total Pesanan -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group cursor-pointer" onclick="window.location.href='pesanan.html'">
+              <div class="flex justify-between items-start mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                  <i class="ti ti-receipt"></i>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-50 border border-purple-100 text-purple-600 text-[10px] font-bold uppercase tracking-wider">
+                  Total Pesanan
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Total Pesanan</p>
+              <h3 id="stat-orders-total" class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">0</h3>
+            </div>
+
           </div>
-          <div class="flex items-center gap-2">
-            <a href="pesanan.html" class="px-4 py-2 border border-slate-200 hover:border-slate-300 text-slate-600 font-bold text-xs rounded-lg transition">View All Orders</a>
+        </section>
+
+        <!-- Charts & Order Breakdown Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Dynamic Order Status Chart (2 Cols) -->
+          <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                  <h3 class="font-outfit font-black text-lg text-slate-800">Grafik Status Pesanan</h3>
+                  <p class="text-xs text-slate-500 font-medium">Tren performa pesanan masuk dan pengajuan refund</p>
+                </div>
+
+                <!-- Timeframe Pill Switcher - Pesanan -->
+                <nav aria-label="Filter Rentang Waktu Grafik Pesanan" class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 shrink-0">
+                  <button id="js-timeframe-harian-pesanan" onclick="switchTimeframe('harian')"
+                    class="px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-200"
+                    aria-label="Tampilkan Grafik Harian">
+                    Harian
+                  </button>
+                  <button id="js-timeframe-mingguan-pesanan" onclick="switchTimeframe('mingguan')"
+                    class="px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-200"
+                    aria-label="Tampilkan Grafik Mingguan">
+                    Mingguan
+                  </button>
+                  <button id="js-timeframe-bulanan-pesanan" onclick="switchTimeframe('bulanan')"
+                    class="px-3 py-1.5 text-xs font-black bg-white text-brand-blueRoyal shadow-sm rounded-lg transition-all duration-200"
+                    aria-label="Tampilkan Grafik Bulanan">
+                    Bulanan
+                  </button>
+                </nav>
+              </div>
+              <div class="w-full h-80">
+                <canvas id="revenueChartPesanan"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Status Breakdown Card (1 Col) -->
+          <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="font-outfit font-black text-lg text-slate-800">Breakdown Status</h3>
+                <p class="text-xs text-slate-500 font-medium">Distribusi status pesanan saat ini</p>
+              </div>
+              <a href="pesanan.html" class="text-xs font-bold text-brand-blueRoyal hover:underline">Kelola Semua</a>
+            </div>
+
+            <!-- List of Status Counts -->
+            <div class="space-y-4 flex-grow" id="js-breakdown-list">
+              <!-- Belum Bayar -->
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-amber-50/50 border border-amber-100/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-sm font-bold">
+                    <i class="ti ti-wallet"></i>
+                  </span>
+                  <span class="text-xs font-bold text-slate-700">Belum Bayar</span>
+                </div>
+                <span class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center" id="js-breakdown-pending">0</span>
+              </div>
+
+              <!-- Diproses -->
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-indigo-50/50 border border-indigo-100/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-sm font-bold">
+                    <i class="ti ti-box"></i>
+                  </span>
+                  <span class="text-xs font-bold text-slate-700">Diproses</span>
+                </div>
+                <span class="px-2.5 py-1 bg-indigo-100 text-indigo-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center" id="js-breakdown-processing">0</span>
+              </div>
+
+              <!-- Dikirim -->
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-blue-50/50 border border-blue-100/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-sm font-bold">
+                    <i class="ti ti-truck-delivery"></i>
+                  </span>
+                  <span class="text-xs font-bold text-slate-700">Dikirim</span>
+                </div>
+                <span class="px-2.5 py-1 bg-blue-100 text-blue-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center" id="js-breakdown-shipped">0</span>
+              </div>
+
+              <!-- Selesai -->
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-emerald-50/50 border border-emerald-100/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm font-bold">
+                    <i class="ti ti-checkbox"></i>
+                  </span>
+                  <span class="text-xs font-bold text-slate-700">Selesai</span>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center" id="js-breakdown-delivered">0</span>
+              </div>
+
+              <!-- Batal -->
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-rose-50/50 border border-rose-100/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center text-sm font-bold">
+                    <i class="ti ti-square-x"></i>
+                  </span>
+                  <span class="text-xs font-bold text-slate-700">Batal</span>
+                </div>
+                <span class="px-2.5 py-1 bg-rose-100 text-rose-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center" id="js-breakdown-canceled">0</span>
+              </div>
+
+              <!-- Retur & Refund -->
+              <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/50 border border-slate-200/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-slate-500/10 text-slate-600 flex items-center justify-center text-sm font-bold">
+                    <i class="ti ti-refresh"></i>
+                  </span>
+                  <span class="text-xs font-bold text-slate-700">Retur & Refund</span>
+                </div>
+                <span class="px-2.5 py-1 bg-slate-200 text-slate-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center" id="js-breakdown-return">0</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Recent Orders Table inside Tab 2 -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+          <div
+            class="p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h3 class="font-outfit font-black text-lg text-slate-800">Recent Orders</h3>
+              <p class="text-xs text-slate-500 font-medium">Transaksi pesanan terbaru yang masuk ke sistem.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="pesanan.html"
+                class="px-4 py-2 border border-slate-200 hover:border-slate-300 text-slate-600 font-bold text-xs rounded-lg transition">View
+                All Orders</a>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[800px]">
+              <thead>
+                <tr class="bg-slate-50/50">
+                  <th
+                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">
+                    Order ID</th>
+                  <th
+                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">
+                    Customer</th>
+                  <th
+                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">
+                    Date</th>
+                  <th
+                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">
+                    Total Amount</th>
+                  <th
+                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">
+                    Status</th>
+                  <th
+                    class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 text-right">
+                    Action</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders-list" class="text-sm font-medium text-slate-700 divide-y divide-slate-100">
+                <!-- JS will render dynamic rows here -->
+              </tbody>
+            </table>
           </div>
         </div>
-        
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse min-w-[800px]">
-            <thead>
-              <tr class="bg-slate-50/50">
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Order ID</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Customer</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Date</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Total Amount</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Status</th>
-                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody id="recent-orders-list" class="text-sm font-medium text-slate-700 divide-y divide-slate-100">
-              
-              <tr class="table-row-hover transition">
-                <td class="px-6 py-4 font-bold text-slate-800">#ORD-9021</td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs">AS</div>
-                    <div>
-                      <p class="font-bold text-slate-800">Ahmad Subagyo</p>
-                      <p class="text-[11px] text-slate-500 font-normal">ahmad@email.com</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-slate-500">19 Mei 2026, 14:30</td>
-                <td class="px-6 py-4 font-bold">Rp 1.899.000</td>
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold uppercase tracking-wider">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Paid
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                  <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="View Detail"><i class="ti ti-eye"></i></button>
-                </td>
-              </tr>
-              
-              <tr class="table-row-hover transition">
-                <td class="px-6 py-4 font-bold text-slate-800">#ORD-9020</td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs">DM</div>
-                    <div>
-                      <p class="font-bold text-slate-800">Diana Maharani</p>
-                      <p class="text-[11px] text-slate-500 font-normal">diana@email.com</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-slate-500">19 Mei 2026, 11:15</td>
-                <td class="px-6 py-4 font-bold">Rp 4.500.000</td>
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold uppercase tracking-wider">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pending
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                  <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="View Detail"><i class="ti ti-eye"></i></button>
-                </td>
-              </tr>
-              
-              <tr class="table-row-hover transition">
-                <td class="px-6 py-4 font-bold text-slate-800">#ORD-9019</td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs">BK</div>
-                    <div>
-                      <p class="font-bold text-slate-800">Budi Kurniawan</p>
-                      <p class="text-[11px] text-slate-500 font-normal">budi.k@email.com</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-slate-500">18 Mei 2026, 09:45</td>
-                <td class="px-6 py-4 font-bold">Rp 850.000</td>
-                <td class="px-6 py-4">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Refunded
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                  <button class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="View Detail"><i class="ti ti-eye"></i></button>
-                </td>
-              </tr>
 
-            </tbody>
-          </table>
-        </div>
       </div>
 
     </main>
@@ -421,10 +607,582 @@
   </div>
 
   <script>
+    // Global State Management
+    let currentTab = 'pesanan'; // 'stat' or 'pesanan'
+    let currentTimeframe = 'bulanan'; // 'harian', 'mingguan', 'bulanan'
+    let statChartInstance = null;
+    let pesananChartInstance = null;
+
+    // Helper: Determine single status badge style matching order status rules
+    function getOrderStatusBadge(o) {
+      if (o.returnStatus && o.returnStatus !== '') {
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-100 text-rose-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Retur & Refund</span>`;
+      }
+      if (o.paymentStatus === 'Pending') {
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Belum Bayar</span>`;
+      }
+      if (o.paymentStatus === 'Paid' && o.shippingStatus === 'Unfulfilled') {
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span> Diproses</span>`;
+      }
+      if (o.shippingStatus === 'Shipped') {
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Dikirim</span>`;
+      }
+      if (o.shippingStatus === 'Delivered') {
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Selesai</span>`;
+      }
+      if (o.paymentStatus === 'Failed') {
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Batal</span>`;
+      }
+      return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> ${o.paymentStatus}</span>`;
+    }
+
+    // Switch Dashboard Tab (Statistik Bisnis vs Status Pesanan)
+    window.switchDashboardTab = function (tabName) {
+      if (currentTab === tabName) return;
+      currentTab = tabName;
+
+      // Toggle Header Pill UI styling
+      const statBtn = document.getElementById('js-toggle-stat');
+      const pesananBtn = document.getElementById('js-toggle-pesanan');
+
+      if (tabName === 'stat') {
+        statBtn.className = "flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-black rounded-xl transition-all duration-300 bg-white text-slate-800 shadow-soft w-1/2 sm:w-auto min-w-[160px] md:min-w-[180px]";
+        pesananBtn.className = "flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-extrabold text-slate-500 hover:text-slate-800 rounded-xl transition-all duration-300 w-1/2 sm:w-auto min-w-[160px] md:min-w-[180px]";
+        
+        document.getElementById('js-content-stat').classList.remove('hidden');
+        document.getElementById('js-content-pesanan').classList.add('hidden');
+      } else {
+        statBtn.className = "flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-extrabold text-slate-500 hover:text-slate-800 rounded-xl transition-all duration-300 w-1/2 sm:w-auto min-w-[160px] md:min-w-[180px]";
+        pesananBtn.className = "flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-black rounded-xl transition-all duration-300 bg-white text-slate-800 shadow-soft w-1/2 sm:w-auto min-w-[160px] md:min-w-[180px]";
+        
+        document.getElementById('js-content-stat').classList.add('hidden');
+        document.getElementById('js-content-pesanan').classList.remove('hidden');
+      }
+
+      renderKPICards();
+      renderBreakdownStats();
+      updateChart();
+    };
+
+    // Switch Timeframe (Harian vs Mingguan vs Bulanan)
+    window.switchTimeframe = function (timeframe) {
+      if (currentTimeframe === timeframe) return;
+      currentTimeframe = timeframe;
+
+      // Toggle Timeframe UI styling across both tabs to stay synchronized
+      ['stat', 'pesanan'].forEach(tab => {
+        ['harian', 'mingguan', 'bulanan'].forEach(tf => {
+          const btn = document.getElementById(`js-timeframe-${tf}-${tab}`);
+          if (btn) {
+            if (tf === timeframe) {
+              btn.className = "px-3 py-1.5 text-xs font-black bg-white text-brand-blueRoyal shadow-sm rounded-lg transition-all duration-200";
+            } else {
+              btn.className = "px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-200";
+            }
+          }
+        });
+      });
+
+      updateChart();
+    };
+
+    // Render KPI Cards (Hari Ini)
+    function renderKPICards() {
+      const orders = BizmateDB.getOrders();
+      const todayDateString = '21 Mei 2026';
+      const todayOrders = orders.filter(o => o.date && o.date.includes(todayDateString));
+
+      // Calculate live stats
+      const realPaidToday = todayOrders.filter(o => o.paymentStatus === 'Paid').reduce((sum, o) => sum + o.amount, 0);
+      const realOrdersCount = todayOrders.length;
+      const realCompletedToday = todayOrders.filter(o => o.shippingStatus === 'Delivered').length;
+      const realRefundToday = todayOrders.filter(o => o.paymentStatus === 'Refunded' || o.returnStatus === 'Refunded').length;
+
+      // Bases + dynamic values
+      const omzetTodayVal = 2850000 + realPaidToday;
+      const labaTodayVal = Math.round(omzetTodayVal * 0.3); // 30% standard margin
+      const visitorTodayVal = 1420 + (realOrdersCount * 25) + Math.floor(Math.random() * 15);
+
+      const orderMasukTodayVal = 14 + realOrdersCount;
+      const orderSelesaiTodayVal = 9 + realCompletedToday;
+      const refundTodayVal = 1 + realRefundToday;
+
+      const statKpiContainer = document.getElementById('js-kpi-container-stat');
+      if (statKpiContainer) {
+        statKpiContainer.innerHTML = `
+          <!-- Card 1: Omzet -->
+          <div class="bg-white rounded-3xl py-6 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-wallet"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +14.2%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Omzet Hari Ini</p>
+            <h3 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">Rp ${omzetTodayVal.toLocaleString('id-ID')}</h3>
+          </div>
+
+          <!-- Card 2: Laba -->
+          <div class="bg-white rounded-3xl py-6 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-chart-arrows text-2xl"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +8.5%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Laba Hari Ini</p>
+            <h3 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">Rp ${labaTodayVal.toLocaleString('id-ID')}</h3>
+          </div>
+
+          <!-- Card 3: Visitor -->
+          <div class="bg-white rounded-3xl py-6 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-users"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +18.4%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Visitor Hari Ini</p>
+            <h3 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">${visitorTodayVal.toLocaleString('id-ID')}</h3>
+          </div>
+        `;
+      }
+
+      const pesananKpiContainer = document.getElementById('js-kpi-container-pesanan');
+      if (pesananKpiContainer) {
+        pesananKpiContainer.innerHTML = `
+          <!-- Card 1: Order Masuk -->
+          <div class="bg-white rounded-3xl py-6 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-shopping-cart"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +5.2%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Order Masuk</p>
+            <h3 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">${orderMasukTodayVal.toLocaleString('id-ID')}</h3>
+          </div>
+
+          <!-- Card 2: Order Selesai -->
+          <div class="bg-white rounded-3xl py-6 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-checkbox text-2xl"></i>
+              </div>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-extrabold">
+                <i class="ti ti-trending-up text-sm"></i> +12.3%
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Order Selesai</p>
+            <h3 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">${orderSelesaiTodayVal.toLocaleString('id-ID')}</h3>
+          </div>
+
+          <!-- Card 3: Refund -->
+          <div class="bg-white rounded-3xl py-6 px-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                <i class="ti ti-refresh text-2xl"></i>
+              </div>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 text-rose-600 text-[10px] font-bold uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> Refund
+              </span>
+            </div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest font-outfit mb-1">Refund Hari Ini</p>
+            <h3 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800">${refundTodayVal.toLocaleString('id-ID')}</h3>
+          </div>
+        `;
+      }
+    }
+
+    // Render Live Order Status Breakdown Counts
+    function renderBreakdownStats() {
+      const orders = BizmateDB.getOrders();
+      let pendingCount = 0;
+      let processingCount = 0;
+      let shippedCount = 0;
+      let deliveredCount = 0;
+      let canceledCount = 0;
+      let returnCount = 0;
+
+      orders.forEach(o => {
+        if (o.returnStatus && o.returnStatus !== '') {
+          returnCount++;
+        } else if (o.paymentStatus === 'Pending') {
+          pendingCount++;
+        } else if (o.paymentStatus === 'Paid' && o.shippingStatus === 'Unfulfilled') {
+          processingCount++;
+        } else if (o.shippingStatus === 'Shipped') {
+          shippedCount++;
+        } else if (o.shippingStatus === 'Delivered') {
+          deliveredCount++;
+        } else if (o.paymentStatus === 'Failed') {
+          canceledCount++;
+        }
+      });
+
+      const pendingEl = document.getElementById('js-breakdown-pending');
+      const processingEl = document.getElementById('js-breakdown-processing');
+      const shippedEl = document.getElementById('js-breakdown-shipped');
+      const deliveredEl = document.getElementById('js-breakdown-delivered');
+      const canceledEl = document.getElementById('js-breakdown-canceled');
+      const returnEl = document.getElementById('js-breakdown-return');
+
+      if (pendingEl) pendingEl.textContent = pendingCount;
+      if (processingEl) processingEl.textContent = processingCount;
+      if (shippedEl) shippedEl.textContent = shippedCount;
+      if (deliveredEl) deliveredEl.textContent = deliveredCount;
+      if (canceledEl) canceledEl.textContent = canceledCount;
+      if (returnEl) returnEl.textContent = returnCount;
+    }
+
+    // Shared Chart Configuration Factory
+    function getChartOptions() {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              boxWidth: 10,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              font: { family: "'Plus Jakarta Sans', sans-serif", size: 11, weight: 'bold' },
+              color: '#64748b'
+            }
+          },
+          tooltip: {
+            backgroundColor: '#0f172a',
+            titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13, weight: 'bold' },
+            bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12, weight: 'bold' },
+            padding: 12,
+            cornerRadius: 12,
+            displayColors: true,
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                  if (currentTab === 'stat' && context.datasetIndex === 0) {
+                    label += 'Rp ' + context.parsed.y.toFixed(1) + ' Juta';
+                  } else {
+                    label += context.parsed.y.toLocaleString('id-ID');
+                  }
+                }
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          yLeft: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+            grid: { color: '#f1f5f9', drawBorder: false },
+            ticks: {
+              font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 },
+              color: '#94a3b8',
+              callback: function (value) {
+                if (currentTab === 'stat') {
+                  return 'Rp ' + value + 'M';
+                }
+                return value.toLocaleString('id-ID');
+              }
+            }
+          },
+          yRight: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+            grid: { display: false, drawBorder: false },
+            ticks: {
+              font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 },
+              color: '#94a3b8',
+              callback: function (value) {
+                return value.toLocaleString('id-ID');
+              }
+            }
+          },
+          x: {
+            grid: { display: false, drawBorder: false },
+            ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }, color: '#94a3b8' }
+          }
+        },
+        interaction: { intersect: false, mode: 'index' },
+      };
+    }
+
+    // Update Chart Instances
+    function updateChart() {
+      const orders = BizmateDB.getOrders();
+      const todayDateString = '21 Mei 2026';
+      const todayOrders = orders.filter(o => o.date && o.date.includes(todayDateString));
+      const realPaidToday = todayOrders.filter(o => o.paymentStatus === 'Paid').reduce((sum, o) => sum + o.amount, 0);
+      const realPaidTodayMillions = realPaidToday / 1000000;
+      const realOrdersCount = todayOrders.length;
+      const realRefundToday = todayOrders.filter(o => o.paymentStatus === 'Refunded' || o.returnStatus === 'Refunded').length;
+
+      if (currentTab === 'stat') {
+        const chartEl = document.getElementById('revenueChartStat');
+        if (!chartEl) return;
+        if (statChartInstance) {
+          statChartInstance.destroy();
+        }
+        const ctx = chartEl.getContext('2d');
+
+        let primaryGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        primaryGradient.addColorStop(0, 'rgba(12, 76, 180, 0.2)'); // brand-blueRoyal
+        primaryGradient.addColorStop(1, 'rgba(12, 76, 180, 0)');
+
+        let labels = [];
+        let datasets = [];
+
+        if (currentTimeframe === 'harian') {
+          labels = ['15 Mei', '16 Mei', '17 Mei', '18 Mei', '19 Mei', '20 Mei', '21 Mei (Hari Ini)'];
+          datasets = [
+            {
+              label: 'Omzet (Rp Juta)',
+              data: [1.8, 2.2, 1.9, 4.2, 6.3, 3.1, 2.8 + realPaidTodayMillions],
+              borderColor: '#0c4cb4',
+              backgroundColor: primaryGradient,
+              borderWidth: 3,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#0c4cb4',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: true,
+              tension: 0.4,
+              yAxisID: 'yLeft'
+            },
+            {
+              label: 'Visitor',
+              data: [980, 1150, 1020, 1340, 1580, 1220, 1420 + (realOrdersCount * 25)],
+              borderColor: '#6366f1',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#6366f1',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: false,
+              tension: 0.4,
+              yAxisID: 'yRight'
+            }
+          ];
+        } else if (currentTimeframe === 'mingguan') {
+          labels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4 (Berjalan)'];
+          datasets = [
+            {
+              label: 'Omzet (Rp Juta)',
+              data: [12.4, 15.8, 18.9, 22.5 + realPaidTodayMillions],
+              borderColor: '#0c4cb4',
+              backgroundColor: primaryGradient,
+              borderWidth: 3,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#0c4cb4',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: true,
+              tension: 0.4,
+              yAxisID: 'yLeft'
+            },
+            {
+              label: 'Visitor',
+              data: [6800, 8100, 9400, 11200 + (realOrdersCount * 25)],
+              borderColor: '#6366f1',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#6366f1',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: false,
+              tension: 0.4,
+              yAxisID: 'yRight'
+            }
+          ];
+        } else { // bulanan
+          labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun (Berjalan)'];
+          datasets = [
+            {
+              label: 'Omzet (Rp Juta)',
+              data: [25, 32, 28, 45, 60, 85 + realPaidTodayMillions],
+              borderColor: '#0c4cb4',
+              backgroundColor: primaryGradient,
+              borderWidth: 3,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#0c4cb4',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: true,
+              tension: 0.4,
+              yAxisID: 'yLeft'
+            },
+            {
+              label: 'Visitor',
+              data: [12000, 14500, 13200, 19800, 24500, 31000 + (realOrdersCount * 25)],
+              borderColor: '#6366f1',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#6366f1',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: false,
+              tension: 0.4,
+              yAxisID: 'yRight'
+            }
+          ];
+        }
+
+        statChartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: datasets
+          },
+          options: getChartOptions()
+        });
+
+      } else { // pesanan
+        const chartEl = document.getElementById('revenueChartPesanan');
+        if (!chartEl) return;
+        if (pesananChartInstance) {
+          pesananChartInstance.destroy();
+        }
+        const ctx = chartEl.getContext('2d');
+
+        let secondaryGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        secondaryGradient.addColorStop(0, 'rgba(250, 115, 21, 0.2)'); // brand-orange
+        secondaryGradient.addColorStop(1, 'rgba(250, 115, 21, 0)');
+
+        let labels = [];
+        let datasets = [];
+
+        if (currentTimeframe === 'harian') {
+          labels = ['15 Mei', '16 Mei', '17 Mei', '18 Mei', '19 Mei', '20 Mei', '21 Mei (Hari Ini)'];
+          datasets = [
+            {
+              label: 'Order Masuk',
+              data: [12, 15, 11, 22, 29, 16, 14 + realOrdersCount],
+              borderColor: '#fa7315',
+              backgroundColor: secondaryGradient,
+              borderWidth: 3,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#fa7315',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: true,
+              tension: 0.4,
+              yAxisID: 'yLeft'
+            },
+            {
+              label: 'Refund',
+              data: [0, 1, 0, 2, 1, 0, 1 + realRefundToday],
+              borderColor: '#f43f5e',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#f43f5e',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: false,
+              tension: 0.4,
+              yAxisID: 'yRight'
+            }
+          ];
+        } else if (currentTimeframe === 'mingguan') {
+          labels = ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4 (Berjalan)'];
+          datasets = [
+            {
+              label: 'Order Masuk',
+              data: [82, 95, 118, 142 + realOrdersCount],
+              borderColor: '#fa7315',
+              backgroundColor: secondaryGradient,
+              borderWidth: 3,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#fa7315',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: true,
+              tension: 0.4,
+              yAxisID: 'yLeft'
+            },
+            {
+              label: 'Refund',
+              data: [3, 5, 2, 4 + realRefundToday],
+              borderColor: '#f43f5e',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#f43f5e',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: false,
+              tension: 0.4,
+              yAxisID: 'yRight'
+            }
+          ];
+        } else { // bulanan
+          labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun (Berjalan)'];
+          datasets = [
+            {
+              label: 'Order Masuk',
+              data: [152, 210, 180, 294, 385, 412 + realOrdersCount],
+              borderColor: '#fa7315',
+              backgroundColor: secondaryGradient,
+              borderWidth: 3,
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#fa7315',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: true,
+              tension: 0.4,
+              yAxisID: 'yLeft'
+            },
+            {
+              label: 'Refund',
+              data: [6, 8, 5, 11, 9, 12 + realRefundToday],
+              borderColor: '#f43f5e',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointBackgroundColor: '#ffffff',
+              pointBorderColor: '#f43f5e',
+              pointBorderWidth: 2,
+              pointRadius: 4,
+              fill: false,
+              tension: 0.4,
+              yAxisID: 'yRight'
+            }
+          ];
+        }
+
+        pesananChartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: datasets
+          },
+          options: getChartOptions()
+        });
+      }
+    }
 
     // Dynamic Database Rendering
-    document.addEventListener("DOMContentLoaded", function() {
-      // 1. Render Metrics Overview
+    document.addEventListener("DOMContentLoaded", function () {
+      // 1. Render Cumulative Metrics Overview
       const stats = BizmateDB.getStats();
       document.getElementById('stat-revenue').textContent = stats.revenueFormatted;
       document.getElementById('stat-orders').textContent = stats.ordersCount.toLocaleString('id-ID');
@@ -443,26 +1201,19 @@
         if (o.shippingStatus === 'Shipped') shippingCount++;
       });
 
-      document.getElementById('stat-orders-new').textContent = (newCount + 12).toLocaleString('id-ID');
-      document.getElementById('stat-orders-process').textContent = (readyCount + 8).toLocaleString('id-ID');
+      document.getElementById('stat-orders-pending').textContent = (newCount + 12).toLocaleString('id-ID');
+      document.getElementById('stat-orders-processing').textContent = (readyCount + 8).toLocaleString('id-ID');
       document.getElementById('stat-orders-shipped').textContent = (shippingCount + 22).toLocaleString('id-ID');
 
       // 2. Render Recent Orders
       const ordersList = document.getElementById('recent-orders-list');
       const recentOrders = BizmateDB.getOrders().slice(0, 5); // Top 5
-      
+
       if (ordersList) {
         ordersList.innerHTML = '';
         recentOrders.forEach(o => {
           const initials = o.customer.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-          let statusBadge = '';
-          if (o.paymentStatus === 'Paid') {
-            statusBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Paid</span>`;
-          } else if (o.paymentStatus === 'Pending') {
-            statusBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pending</span>`;
-          } else {
-            statusBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Refunded</span>`;
-          }
+          const statusBadge = getOrderStatusBadge(o);
 
           ordersList.innerHTML += `
             <tr class="table-row-hover transition">
@@ -511,70 +1262,13 @@
         });
       }
 
-      // 4. Chart.js Configuration
-      const chartEl = document.getElementById('revenueChart');
-      if (chartEl) {
-        const ctx = chartEl.getContext('2d');
-        
-        // Create Gradient
-        let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(12, 76, 180, 0.2)');   // brand-blueRoyal
-        gradient.addColorStop(1, 'rgba(12, 76, 180, 0)');
-
-        // Dynamic points based on orders total
-        const dynamicRevenueAdd = Math.floor(recentOrders.filter(o => o.paymentStatus === 'Paid').reduce((sum, o) => sum + o.amount, 0) / 1000000);
-        const revenueData = [25, 32, 28, 45, 60, 85 + dynamicRevenueAdd];
-
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-              label: 'Revenue (Rp Juta)',
-              data: revenueData,
-              borderColor: '#0c4cb4', // brand-blueRoyal
-              backgroundColor: gradient,
-              borderWidth: 3,
-              pointBackgroundColor: '#ffffff',
-              pointBorderColor: '#0c4cb4',
-              pointBorderWidth: 2,
-              pointRadius: 5,
-              pointHoverRadius: 7,
-              fill: true,
-              tension: 0.4
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                backgroundColor: '#0f172a',
-                titleFont: { family: "'Plus Jakarta Sans', sans-serif", size: 13 },
-                bodyFont: { family: "'Plus Jakarta Sans', sans-serif", size: 12, weight: 'bold' },
-                padding: 12,
-                cornerRadius: 8,
-                displayColors: false
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                grid: { color: '#f1f5f9', drawBorder: false },
-                ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }, color: '#94a3b8' }
-              },
-              x: {
-                grid: { display: false, drawBorder: false },
-                ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }, color: '#94a3b8' }
-              }
-            },
-            interaction: { intersect: false, mode: 'index' },
-          }
-        });
-      }
+      // 4. Initialize Interactive KPI, Breakdown, and Charts
+      renderKPICards();
+      renderBreakdownStats();
+      updateChart();
     });
   </script>
 
 </body>
+
 </html>

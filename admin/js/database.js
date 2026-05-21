@@ -74,14 +74,47 @@ const SEED_PRODUCTS = [
   }
 ];
 
+function buildSeedProducts() {
+  const categories = ['Kursi & Sofa', 'Meja & Rak', 'Lampu & Dekorasi', 'Mebel Outdoor'];
+  const names = ['Sofa Minimalis', 'Kursi Makan', 'Meja Kopi', 'Rak Buku', 'Lampu Meja', 'Kursi Teras', 'Lemari Kabinet', 'Meja Kerja', 'Bangku Ottoman', 'Set Patio'];
+  const images = [
+    'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=150&q=80',
+    'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=150&q=80'
+  ];
+  const products = [...SEED_PRODUCTS];
+  for (let i = products.length + 1; i <= 100; i++) {
+    const category = categories[i % categories.length];
+    const baseName = names[i % names.length];
+    const price = 250000 + (i * 37500);
+    const stock = i % 9 === 0 ? 0 : 5 + (i % 45);
+    products.push({
+      sku: `PRD-${String(i).padStart(3, '0')}`,
+      name: `${baseName} Series ${String(i).padStart(3, '0')}`,
+      category,
+      price,
+      cost: Math.round(price * 0.62),
+      stock,
+      minStock: 5,
+      status: stock > 0 ? 'Tersedia (In Stock)' : 'Habis (Out of Stock)',
+      description: `Produk furniture ${category.toLowerCase()} berkualitas untuk kebutuhan rumah dan toko.`,
+      image: images[i % images.length],
+      active: stock > 0,
+      created: `2026-05-${String((i % 28) + 1).padStart(2, '0')}T09:00:00Z`
+    });
+  }
+  return products;
+}
+
 const SEED_ORDERS = [
   {
     id: 'FE-00014',
     invoice: 'BILL-20260518-IST4NI',
-    customer: 'Totiyono Nugroho',
+    customer: 'T*******o N******o',
     phone: '6285656629097',
     address: 'Jl Bratang 1H No 23, Surabaya, Ngagel Rejo, Wonokromo, Kota Surabaya, Jawa Timur',
-    email: 'totiyono.n@email.com',
+    email: 'to***@***.com',
     date: '18 Mei 2026, 14:47',
     itemsCount: 2,
     items: [
@@ -105,10 +138,10 @@ const SEED_ORDERS = [
     id: 'FE-00013',
     invoice: '01-15-20260511-W2SKMX',
     trackingNumber: '928309203920909302',
-    customer: 'Syah Reza',
+    customer: 'S**h R**a',
     phone: '6285179720622',
     address: ',, Nambak, Bungkal, Kab. Ponorogo, Jawa Timur',
-    email: 'syah.reza@email.com',
+    email: 'sy***@***.com',
     date: '11 Mei 2026, 10:15',
     itemsCount: 1,
     items: [
@@ -136,10 +169,10 @@ const SEED_ORDERS = [
     id: 'FE-00012',
     invoice: '01-17-20260417-MMDTNH',
     trackingNumber: '9840293029',
-    customer: 'Budi Anto',
+    customer: 'B**i A**o',
     phone: '628123456789',
     address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur',
-    email: 'budi.anto@email.com',
+    email: 'bu***@***.com',
     date: '17 April 2026, 11:30',
     itemsCount: 1,
     items: [
@@ -159,16 +192,16 @@ const SEED_ORDERS = [
       { status: 'Pesanan Dibuat', time: '17 April 2026, 11:30', note: 'Pesanan dibuat oleh sistem.' },
       { status: 'Pembayaran Lunas', time: '17 April 2026, 11:35', note: 'Pembayaran lunas via ShopeePay.' },
       { status: 'Pesanan Dikirim', time: '17 April 2026, 16:00', note: 'Pesanan dikirim via SiCepat.' },
-      { status: 'Selesai', time: '19 April 2026, 14:00', note: 'Paket telah diterima oleh Budi Anto.' }
+      { status: 'Selesai', time: '19 April 2026, 14:00', note: 'Paket telah diterima oleh B**i A**o.' }
     ]
   },
   {
     id: 'FE-00011',
     invoice: 'BILL-20260510-AB12CD',
-    customer: 'Citra Kirana',
+    customer: 'C***a K****a',
     phone: '628571234567',
     address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten',
-    email: 'citrak@email.com',
+    email: 'ci***@***.com',
     date: '10 Mei 2026, 15:10',
     itemsCount: 1,
     items: [
@@ -191,10 +224,10 @@ const SEED_ORDERS = [
   {
     id: 'FE-00010',
     invoice: 'BILL-20260509-XY98ZT',
-    customer: 'Sarah Wijaya',
+    customer: 'S***h W****a',
     phone: '628998877665',
     address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta',
-    email: 'sarah.w@email.com',
+    email: 'sa***@***.com',
     date: '09 Mei 2026, 14:40',
     itemsCount: 1,
     items: [
@@ -242,19 +275,22 @@ const SEED_CATEGORIES = [
 ];
 
 const SEED_CUSTOMERS = [
-  { id: 'CUST-001', name: 'Totiyono Nugroho', email: 'totiyono.n@email.com', phone: '6285656629097', address: 'Jl Bratang 1H No 23, Surabaya, Jawa Timur', joinedDate: '2026-01-15', status: 'Aktif' },
-  { id: 'CUST-002', name: 'Syah Reza', email: 'syah.reza@email.com', phone: '6285179720622', address: 'Komp. Bungkal, Ponorogo, Jawa Timur', joinedDate: '2026-02-10', status: 'Aktif' },
-  { id: 'CUST-003', name: 'Budi Anto', email: 'budi.anto@email.com', phone: '628123456789', address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur', joinedDate: '2026-02-18', status: 'Aktif' },
-  { id: 'CUST-004', name: 'Citra Kirana', email: 'citrak@email.com', phone: '628571234567', address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten', joinedDate: '2026-03-01', status: 'Aktif' },
-  { id: 'CUST-005', name: 'Sarah Wijaya', email: 'sarah.w@email.com', phone: '628998877665', address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta', joinedDate: '2026-03-12', status: 'Suspend' }
+  { id: 'CUST-001', name: 'T*******o N******o', email: 'to***@***.com', phone: '6285656629097', address: 'Jl Bratang 1H No 23, Surabaya, Jawa Timur', joinedDate: '2026-01-15', status: 'Aktif' },
+  { id: 'CUST-002', name: 'S**h R**a', email: 'sy***@***.com', phone: '6285179720622', address: 'Komp. Bungkal, Ponorogo, Jawa Timur', joinedDate: '2026-02-10', status: 'Aktif' },
+  { id: 'CUST-003', name: 'B**i A**o', email: 'bu***@***.com', phone: '628123456789', address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur', joinedDate: '2026-02-18', status: 'Aktif' },
+  { id: 'CUST-004', name: 'C***a K****a', email: 'ci***@***.com', phone: '628571234567', address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten', joinedDate: '2026-03-01', status: 'Aktif' },
+  { id: 'CUST-005', name: 'S***h W****a', email: 'sa***@***.com', phone: '628998877665', address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta', joinedDate: '2026-03-12', status: 'Suspend' }
 ];
 
 const SEED_ADMINS = [
-  { username: 'superadmin@bizmate.id', name: 'Admin Utama', role: 'Super Admin', status: 'Aktif', lastActive: 'Sekarang' },
-  { username: 'keuangan@bizmate.id', name: 'Dewi Lestari', role: 'Admin Keuangan', status: 'Aktif', lastActive: '2 menit yang lalu' },
-  { username: 'gudang@bizmate.id', name: 'Joko Susilo', role: 'Admin Gudang', status: 'Aktif', lastActive: '1 jam yang lalu' },
-  { username: 'sales@bizmate.id', name: 'Rian Hidayat', role: 'CS / Sales', status: 'Nonaktif', lastActive: '3 hari yang lalu' }
+  { username: 'su***@***.id', name: 'S********n', role: 'Super Admin', status: 'Aktif', lastActive: 'Sekarang' },
+  { username: 'pe***@***.id', name: 'Admin Penjualan 1', role: 'Admin Penjualan', status: 'Aktif', lastActive: '2 menit yang lalu' },
+  { username: 'pe***2@***.id', name: 'Admin Penjualan 2', role: 'Admin Penjualan', status: 'Aktif', lastActive: '12 menit yang lalu' },
+  { username: 'to***@***.id', name: 'Admin Toko 1', role: 'Admin Toko', status: 'Aktif', lastActive: '8 menit yang lalu' },
+  { username: 'to***2@***.id', name: 'Admin Toko 2', role: 'Admin Toko', status: 'Nonaktif', lastActive: 'Kemarin' }
 ];
+
+const ALLOWED_ADMIN_ROLES = ['Super Admin', 'Admin Penjualan', 'Admin Toko'];
 
 const SEED_CMS_LANDING = {
   announcement: '✨ Promo Kejutan! Gratis Ongkir Seluruh Indonesia Khusus Transaksi Bulan Ini!',
@@ -283,7 +319,7 @@ const SEED_SETTINGS = {
   shopWhatsApp: '6285179720622',
   shopInstagram: 'bizmate.premium',
   shopTikTok: 'bizmate.official',
-  shopEmail: 'support@bizmate.id',
+  shopEmail: 'su***@***.id',
   shopPhone: '6285179720622',
   shopAddress: 'Jl. Raya Darmo No. 12-14, Tegalsari, Kota Surabaya, Jawa Timur 60264',
   shopDescription: 'Toko mebel dan furniture premium berkualitas tinggi langsung dari pengrajin terpercaya.',
@@ -292,6 +328,8 @@ const SEED_SETTINGS = {
   bankHolder: 'PT Bizmate Solusi Retail',
   activeTheme: 'royal-blue',
   shippingFlatRate: 50000,
+  taxEnabled: false,
+  taxRate: 11,
   enableCod: true,
   enableQris: true,
   enableBankTransfer: true
@@ -299,7 +337,7 @@ const SEED_SETTINGS = {
 
 // Initialize database
 function initDatabase() {
-  const DB_VERSION = 'v3';
+  const DB_VERSION = 'v5';
   let dbVer = localStorage.getItem('bizmate_db_version');
   let products = localStorage.getItem('bizmate_products');
   let orders = localStorage.getItem('bizmate_orders');
@@ -311,7 +349,7 @@ function initDatabase() {
   let settings = localStorage.getItem('bizmate_settings');
 
   if (!products || dbVer !== DB_VERSION) {
-    localStorage.setItem('bizmate_products', JSON.stringify(SEED_PRODUCTS));
+    localStorage.setItem('bizmate_products', JSON.stringify(buildSeedProducts()));
     localStorage.setItem('bizmate_db_version', DB_VERSION);
   }
   
@@ -328,9 +366,26 @@ function initDatabase() {
     localStorage.setItem('bizmate_customers', JSON.stringify(SEED_CUSTOMERS));
   }
 
-  if (!admins) {
+  if (!admins || dbVer !== DB_VERSION) {
     localStorage.setItem('bizmate_admins', JSON.stringify(SEED_ADMINS));
+  } else {
+    const parsedAdmins = JSON.parse(admins);
+    const normalizedAdmins = parsedAdmins
+      .map(admin => ({
+        ...admin,
+        role: admin.role === 'S********n' ? 'Super Admin' : admin.role,
+        name: admin.username === 'su***@***.id' ? 'S********n' : admin.name,
+        username: maskEmail(admin.username)
+      }))
+      .filter(admin => ALLOWED_ADMIN_ROLES.includes(admin.role));
+
+    if (normalizedAdmins.length !== parsedAdmins.length || JSON.stringify(normalizedAdmins) !== admins) {
+      localStorage.setItem('bizmate_admins', JSON.stringify(normalizedAdmins.length ? normalizedAdmins : SEED_ADMINS));
+    }
   }
+
+  localStorage.setItem('bizmate_customers', JSON.stringify(maskPeople(JSON.parse(localStorage.getItem('bizmate_customers') || '[]'))));
+  localStorage.setItem('bizmate_orders', JSON.stringify(maskOrders(JSON.parse(localStorage.getItem('bizmate_orders') || '[]'))));
 
   if (!cmsLanding) {
     localStorage.setItem('bizmate_cms_landing', JSON.stringify(SEED_CMS_LANDING));
@@ -586,6 +641,7 @@ const BizmateDB = {
     categories.push({
       count: 0,
       subcategories: [],
+      image: '',
       ...category
     });
     localStorage.setItem('bizmate_categories', JSON.stringify(categories));
@@ -837,6 +893,25 @@ const BizmateDB = {
     return notifications;
   }
 };
+
+function maskName(name) {
+  if (!name) return 'Pelanggan';
+  return name.split(' ').map(part => part.length <= 2 ? `${part[0] || ''}*` : `${part[0]}${'*'.repeat(Math.max(2, part.length - 2))}${part[part.length - 1]}`).join(' ');
+}
+
+function maskEmail(email) {
+  if (!email || !email.includes('@')) return email || '';
+  const [user, domain] = email.split('@');
+  return `${user.slice(0, 2)}***@${domain.replace(/^[^.]*/, '***')}`;
+}
+
+function maskPeople(rows) {
+  return rows.map(row => ({ ...row, name: maskName(row.name), email: maskEmail(row.email) }));
+}
+
+function maskOrders(rows) {
+  return rows.map(row => ({ ...row, customer: maskName(row.customer), email: maskEmail(row.email), statusHistory: (row.statusHistory || []).map(h => ({ ...h, note: h.note ? h.note.replace(/oleh [A-Za-z ]+/g, 'oleh pelanggan').replace(/diterima oleh [A-Za-z ]+/g, 'diterima oleh pelanggan') : h.note })) }));
+}
 
 // Auto run initialization on load
 initDatabase();

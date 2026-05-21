@@ -319,8 +319,28 @@
           </div>
 
           <!-- Form Action Buttons -->
+          <div class="pt-6 border-t border-slate-100">
+            <div class="p-5 rounded-2xl bg-brand-blueLight/40 border border-brand-blueRoyal/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest font-outfit">Pajak Produk</h4>
+                <p class="text-[11px] text-slate-500 font-medium mt-1">Centang jika harga produk ini otomatis dinaikkan berdasarkan pajak toko.</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <label class="flex items-center gap-2 text-xs font-bold text-slate-600 cursor-pointer">
+                  <input type="checkbox" id="product-tax-enabled" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  Terapkan Pajak
+                </label>
+                <div class="relative w-24">
+                  <input id="product-tax-rate" type="number" min="0" max="100" class="w-full pr-7 pl-3 py-2 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="11">
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-bold">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="flex items-center justify-end gap-3 pt-8 border-t border-slate-100">
             <a href="produk.html" class="px-5 py-3 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition">Batal & Kembali</a>
+            <button type="submit" id="save-and-new-btn" data-create-new="true" class="px-6 py-3 bg-white hover:bg-brand-blueLight border border-brand-blueRoyal/20 text-brand-blueRoyal font-bold rounded-xl text-xs transition font-outfit uppercase tracking-wider">Simpan & Buat Baru</button>
             <button type="submit" class="px-6 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">Simpan Produk Baru</button>
           </div>
 
@@ -826,6 +846,11 @@
       const statusInput = document.getElementById('product-stock-status');
       const summaryInput = document.getElementById('product-summary');
       const descInput = document.getElementById('product-description');
+      const taxEnabledInput = document.getElementById('product-tax-enabled');
+      const taxRateInput = document.getElementById('product-tax-rate');
+      const settings = BizmateDB.getSettings();
+      if (taxEnabledInput) taxEnabledInput.checked = !!settings.taxEnabled;
+      if (taxRateInput) taxRateInput.value = settings.taxRate || 0;
       
       const toggleVariants = document.getElementById('toggle-variants');
       const toggleVariantImages = document.getElementById('toggle-variant-images');
@@ -834,7 +859,14 @@
       const btnAddVariation = document.getElementById('btn-add-variation');
       
       const submitBtn = form.querySelector('button[type="submit"]');
+      let saveAndCreateNew = false;
       const titleEl = document.getElementById('page-title'); // Page title
+
+      document.querySelectorAll('button[type="submit"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          saveAndCreateNew = this.dataset.createNew === 'true';
+        });
+      });
 
       // Detect edit mode via SKU param in URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -861,6 +893,8 @@
           statusInput.value = existingProduct.status || 'Tersedia (In Stock)';
           summaryInput.value = existingProduct.summary || '';
           descInput.value = existingProduct.description || '';
+          if (taxEnabledInput) taxEnabledInput.checked = !!existingProduct.taxEnabled;
+          if (taxRateInput) taxRateInput.value = existingProduct.taxRate || settings.taxRate || 0;
           
           if (existingProduct.images && Array.isArray(existingProduct.images)) {
             uploadedPhotos = [...existingProduct.images];
@@ -982,6 +1016,9 @@
         let variationsVal = [];
         let finalPrice = parseFloat(priceInput.value);
         let finalStock = parseInt(stockInput.value);
+        const taxEnabled = taxEnabledInput ? taxEnabledInput.checked : false;
+        const taxRate = taxRateInput ? (parseFloat(taxRateInput.value) || 0) : 0;
+        const originalPrice = finalPrice;
 
         if (toggleVariants && toggleVariants.checked) {
           if (variations.length === 0 || variations.some(v => v.options.length === 0)) {
@@ -1031,6 +1068,11 @@
           finalStock = totalStock;
         }
 
+        if (taxEnabled && taxRate > 0) {
+          finalPrice = Math.round(finalPrice + (finalPrice * taxRate / 100));
+          variantListVal = variantListVal.map(v => ({ ...v, originalPrice: v.price, price: Math.round(v.price + (v.price * taxRate / 100)) }));
+        }
+
         // 3. Unique SKU validation (creating new product only)
         const currentSku = skuInput.value.trim();
         if (!isEditMode) {
@@ -1058,6 +1100,9 @@
           name: nameInput.value.trim(),
           category: categoryInput.value,
           price: finalPrice,
+          originalPrice,
+          taxEnabled,
+          taxRate,
           cost: parseFloat(costInput.value) || 0,
           stock: finalStock,
           minStock: parseInt(minStockInput.value) || 5,
@@ -1088,7 +1133,7 @@
 
         // Redirect with sleek delay for toast readability
         setTimeout(() => {
-          window.location.href = 'produk.html';
+          window.location.href = saveAndCreateNew && !isEditMode ? 'tambah-produk.html' : 'produk.html';
         }, 1200);
       });
     });

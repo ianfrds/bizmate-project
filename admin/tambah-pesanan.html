@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizmate - Buat Pesanan Baru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="js/database.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/notifications.js" defer></script>
+  <script src="js/sidebar.js" defer></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'], outfit: ['"Outfit"', 'sans-serif'] }, colors: { brand: { blueRoyal: '#0c4cb4', orange: '#fa7315', blueLight: '#eef2ff', sidebar: '#0B1120' } }, boxShadow: { soft: '0 2px 10px rgba(0,0,0,.02)', card: '0 4px 20px rgba(0,0,0,.04)' } } } };
+  </script>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="min-h-screen flex overflow-x-hidden bg-slate-50 selection:bg-brand-blueRoyal selection:text-white">
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+  <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
+    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+      <div class="flex items-center gap-4 flex-grow">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition"><i class="ti ti-menu-2 text-xl"></i></button>
+        <div class="flex items-center gap-2 font-outfit hidden sm:flex"><span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span><span class="font-black text-slate-800 tracking-tight">Bizmate Console</span></div>
+      </div>
+      <div class="flex items-center gap-4 shrink-0"><button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi"><i class="ti ti-bell text-xl"></i></button></div>
+    </header>
+
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1200px] mx-auto space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Buat Pesanan Baru</h1>
+          <p class="text-xs text-slate-500 font-medium mt-1">Pilih pelanggan lama atau buat pelanggan offline baru, lalu pilih produk pesanan.</p>
+        </div>
+        <a href="pesanan.html" class="px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition"><i class="ti ti-arrow-left"></i> Kembali</a>
+      </div>
+
+      <form id="order-form" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <section class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-card p-6 space-y-6">
+          <div>
+            <h2 class="font-outfit font-black text-lg text-slate-800">Data Pelanggan</h2>
+            <p class="text-xs text-slate-400 font-semibold">Nomor telepon tidak wajib untuk transaksi offline.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1.5">Pilih Pelanggan</label>
+              <select id="customer-select" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-blueRoyal">
+                <option value="new">+ Buat Pelanggan Baru</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1.5">Nama Pelanggan *</label>
+              <input id="customer-name" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-blueRoyal" placeholder="Nama pelanggan">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1.5">No. Telepon / WhatsApp</label>
+              <input id="customer-phone" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-blueRoyal" placeholder="Opsional untuk order offline">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1.5">Metode Pembayaran</label>
+              <select id="payment-method" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-blueRoyal">
+                <option>Cash / Offline</option><option>Transfer Bank</option><option>QRIS</option><option>Virtual Account BCA</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-100 pt-6 space-y-4">
+            <div class="flex items-center justify-between gap-3">
+              <div><h2 class="font-outfit font-black text-lg text-slate-800">Produk Pesanan</h2><p class="text-xs text-slate-400 font-semibold">Tambahkan satu atau beberapa produk.</p></div>
+              <button type="button" onclick="addItemRow()" class="px-4 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white rounded-xl text-xs font-bold"><i class="ti ti-plus"></i> Tambah Produk</button>
+            </div>
+            <div id="items-container" class="space-y-3"></div>
+          </div>
+        </section>
+
+        <aside class="bg-white rounded-3xl border border-slate-200 shadow-card p-6 h-fit space-y-5">
+          <h2 class="font-outfit font-black text-lg text-slate-800">Ringkasan</h2>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between text-slate-500"><span>Subtotal</span><strong id="subtotal-text" class="text-slate-800">Rp 0</strong></div>
+            <div><label class="block text-xs font-bold text-slate-600 mb-1.5">Ongkir</label><input id="shipping-cost" type="number" value="0" min="0" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm" oninput="updateTotal()"></div>
+            <div class="border-t border-slate-100 pt-3 flex justify-between"><span class="font-black text-slate-800">Total</span><strong id="total-text" class="text-brand-blueRoyal text-xl">Rp 0</strong></div>
+          </div>
+          <button type="submit" class="w-full px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-xs uppercase tracking-wider font-outfit shadow-lg shadow-emerald-600/20">Simpan Pesanan</button>
+        </aside>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    let products = [];
+    function rupiah(n) { return `Rp ${(n || 0).toLocaleString('id-ID')}`; }
+    function productOptions() { return products.map(p => `<option value="${p.sku}">${p.name} - ${rupiah(p.price)}</option>`).join(''); }
+    function addItemRow() {
+      const wrap = document.createElement('div');
+      wrap.className = 'grid grid-cols-12 gap-3 items-center bg-slate-50 border border-slate-100 rounded-2xl p-3';
+      wrap.innerHTML = `<select class="item-product col-span-12 md:col-span-7 px-3 py-2 rounded-xl border border-slate-200 text-sm" onchange="updateTotal()">${productOptions()}</select><input type="number" min="1" value="1" class="item-qty col-span-5 md:col-span-2 px-3 py-2 rounded-xl border border-slate-200 text-sm" oninput="updateTotal()"><strong class="item-total col-span-5 md:col-span-2 text-sm text-slate-700">Rp 0</strong><button type="button" onclick="this.parentElement.remove(); updateTotal();" class="col-span-2 md:col-span-1 text-rose-500"><i class="ti ti-trash"></i></button>`;
+      document.getElementById('items-container').appendChild(wrap);
+      updateTotal();
+    }
+    function updateTotal() {
+      let subtotal = 0;
+      document.querySelectorAll('#items-container > div').forEach(row => {
+        const product = products.find(p => p.sku === row.querySelector('.item-product').value);
+        const qty = parseInt(row.querySelector('.item-qty').value) || 1;
+        const line = product ? product.price * qty : 0;
+        row.querySelector('.item-total').textContent = rupiah(line);
+        subtotal += line;
+      });
+      const shipping = parseInt(document.getElementById('shipping-cost').value) || 0;
+      document.getElementById('subtotal-text').textContent = rupiah(subtotal);
+      document.getElementById('total-text').textContent = rupiah(subtotal + shipping);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      products = BizmateDB.getProducts();
+      const customers = BizmateDB.getCustomers();
+      const select = document.getElementById('customer-select');
+      customers.forEach(c => select.innerHTML += `<option value="${c.id}">${c.name} - ${c.phone || 'Tanpa telepon'}</option>`);
+      select.addEventListener('change', function() {
+        const c = customers.find(item => item.id === this.value);
+        document.getElementById('customer-name').value = c ? c.name : '';
+        document.getElementById('customer-phone').value = c ? (c.phone || '') : '';
+      });
+      addItemRow();
+      document.getElementById('order-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('customer-name').value.trim();
+        const phone = document.getElementById('customer-phone').value.trim();
+        let customerId = select.value;
+        if (customerId === 'new') {
+          const saved = BizmateDB.saveCustomer({ name, phone, email: `${Date.now()}@offline.bizmate`, address: 'Transaksi Offline' });
+          customerId = saved[saved.length - 1].id;
+        }
+        const items = Array.from(document.querySelectorAll('#items-container > div')).map(row => {
+          const product = products.find(p => p.sku === row.querySelector('.item-product').value);
+          const qty = parseInt(row.querySelector('.item-qty').value) || 1;
+          return { sku: product.sku, name: product.name, price: product.price, cost: product.cost || 0, qty, image: product.image };
+        });
+        const amount = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        const shippingCost = parseInt(document.getElementById('shipping-cost').value) || 0;
+        const orders = BizmateDB.saveOrder({ customer: name, phone, customerId, address: 'Transaksi Offline', email: '', items, itemsCount: items.length, amount, shippingCost, paymentStatus: 'Paid', paymentMethod: document.getElementById('payment-method').value, shippingStatus: 'Unfulfilled', courier: 'Ambil di toko / offline' });
+        window.location.href = `detail-pesanan.html?id=${orders[0].id}`;
+      });
+    });
+  </script>
+</body>
+</html>

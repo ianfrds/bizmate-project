@@ -291,6 +291,16 @@
                   <h5 class="text-xs font-black text-slate-700 uppercase tracking-wider font-outfit">Daftar Variasi</h5>
                   <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full" id="variant-matrix-count">0 Variasi Terbuat</span>
                 </div>
+                <div class="bg-amber-50/70 border border-amber-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <p class="text-xs font-bold text-slate-700">Apakah produk berbeda berat tiap variasi?</p>
+                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Jika aktif, kolom berat per variasi akan muncul dan digunakan untuk data ongkir tiap varian.</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer select-none self-start sm:self-center" aria-label="Aktifkan berat berbeda tiap variasi">
+                    <input type="checkbox" id="toggle-variant-weight" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  </label>
+                </div>
                 <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-soft">
                   <table class="w-full border-collapse text-left">
                     <thead>
@@ -298,6 +308,7 @@
                         <th class="px-6 py-3 font-semibold">Variasi</th>
                         <th class="px-6 py-3 font-semibold">SKU Varian</th>
                         <th class="px-6 py-3 font-semibold w-40">Harga Jual *</th>
+                        <th id="variant-weight-header" class="hidden px-6 py-3 font-semibold w-36">Berat (Gram) *</th>
                         <th class="px-6 py-3 font-semibold w-32">Stok *</th>
                       </tr>
                     </thead>
@@ -735,13 +746,18 @@
       const countEl = document.getElementById('variant-matrix-count');
       const toggleVariants = document.getElementById('toggle-variants');
       const toggleVariantImages = document.getElementById('toggle-variant-images');
+      const toggleVariantWeight = document.getElementById('toggle-variant-weight');
+      const variantWeightHeader = document.getElementById('variant-weight-header');
+      const useVariantWeight = toggleVariantWeight ? toggleVariantWeight.checked : false;
+      const emptyColspan = useVariantWeight ? 5 : 4;
+      if (variantWeightHeader) variantWeightHeader.classList.toggle('hidden', !useVariantWeight);
       
       if (!tbody) return;
       
       if (!toggleVariants || !toggleVariants.checked || variations.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="4" class="px-6 py-8 text-center text-slate-400 font-medium">Belum ada variasi. Lengkapi opsi variasi di atas terlebih dahulu.</td>
+            <td colspan="${emptyColspan}" class="px-6 py-8 text-center text-slate-400 font-medium">Belum ada variasi. Lengkapi opsi variasi di atas terlebih dahulu.</td>
           </tr>
         `;
         if (countEl) countEl.textContent = '0 Variasi Terbuat';
@@ -756,10 +772,12 @@
         const skuVal = row.querySelector('.variant-sku-input').value;
         const priceVal = row.querySelector('.variant-price-input').value;
         const stockVal = row.querySelector('.variant-stock-input').value;
+        const weightVal = row.querySelector('.variant-weight-input') ? row.querySelector('.variant-weight-input').value : '';
         existingInputs[combId] = {
           sku: skuVal,
           price: priceVal,
-          stock: stockVal
+          stock: stockVal,
+          weight: weightVal
         };
       });
       
@@ -769,7 +787,7 @@
       if (combinations.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="4" class="px-6 py-8 text-center text-slate-400 font-medium">Belum ada variasi. Lengkapi opsi variasi di atas terlebih dahulu.</td>
+            <td colspan="${emptyColspan}" class="px-6 py-8 text-center text-slate-400 font-medium">Belum ada variasi. Lengkapi opsi variasi di atas terlebih dahulu.</td>
           </tr>
         `;
         return;
@@ -779,6 +797,8 @@
       const showImageUpload = toggleVariantImages ? toggleVariantImages.checked : false;
       const mainSku = document.getElementById('product-sku').value.trim();
       const mainPrice = document.getElementById('product-price').value;
+      const mainWeightInput = document.querySelector('input[placeholder="1000"]');
+      const mainWeight = mainWeightInput ? mainWeightInput.value : '';
       
       combinations.forEach(comb => {
         // Look up saved values
@@ -790,6 +810,7 @@
         const displaySku = saved ? saved.sku : defaultSku;
         const displayPrice = saved ? saved.price : (mainPrice || '');
         const displayStock = saved ? saved.stock : '0';
+        const displayWeight = saved && typeof saved.weight !== 'undefined' ? saved.weight : (mainWeight || '');
         
         const tr = document.createElement('tr');
         tr.className = "variant-combination-row border-b border-slate-100 hover:bg-slate-50/50 transition";
@@ -824,6 +845,14 @@
               <input type="number" class="variant-price-input w-full pl-8 pr-2 py-1.5 rounded-lg border border-slate-200 text-xs focus:border-brand-blueRoyal focus:outline-none bg-white" value="${displayPrice}" placeholder="Harga Jual" required>
             </div>
           </td>
+          ${useVariantWeight ? `
+            <td class="px-6 py-4">
+              <div class="relative">
+                <input type="number" class="variant-weight-input w-full pr-9 pl-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:border-brand-blueRoyal focus:outline-none bg-white" value="${displayWeight}" placeholder="1000" required>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400">gr</span>
+              </div>
+            </td>
+          ` : ''}
           <td class="px-6 py-4">
             <input type="number" class="variant-stock-input w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:border-brand-blueRoyal focus:outline-none bg-white" value="${displayStock}" placeholder="0" required>
           </td>
@@ -854,6 +883,7 @@
       
       const toggleVariants = document.getElementById('toggle-variants');
       const toggleVariantImages = document.getElementById('toggle-variant-images');
+      const toggleVariantWeight = document.getElementById('toggle-variant-weight');
       const variantsSectionContainer = document.getElementById('variants-section-container');
       const variantsPlaceholderCard = document.getElementById('variants-placeholder-card');
       const btnAddVariation = document.getElementById('btn-add-variation');
@@ -909,6 +939,7 @@
             if (variantsPlaceholderCard) variantsPlaceholderCard.classList.add('hidden');
             
             if (toggleVariantImages) toggleVariantImages.checked = !!existingProduct.useVariantImages;
+            if (toggleVariantWeight) toggleVariantWeight.checked = !!existingProduct.useVariantWeights;
             variations = existingProduct.variations || [];
             
             renderVariationCards();
@@ -980,6 +1011,13 @@
         });
       }
 
+      // Variations Weight Option Toggle
+      if (toggleVariantWeight) {
+        toggleVariantWeight.addEventListener('change', function() {
+          updateVariantMatrix();
+        });
+      }
+
       // Add Variation Button click
       if (btnAddVariation) {
         btnAddVariation.addEventListener('click', function() {
@@ -1019,6 +1057,7 @@
         const taxEnabled = taxEnabledInput ? taxEnabledInput.checked : false;
         const taxRate = taxRateInput ? (parseFloat(taxRateInput.value) || 0) : 0;
         const originalPrice = finalPrice;
+        const useVariantWeights = document.getElementById('toggle-variant-weight') ? document.getElementById('toggle-variant-weight').checked : false;
 
         if (toggleVariants && toggleVariants.checked) {
           if (variations.length === 0 || variations.some(v => v.options.length === 0)) {
@@ -1047,6 +1086,8 @@
             const skuVal = row.querySelector('.variant-sku-input').value.trim();
             const priceVal = parseFloat(row.querySelector('.variant-price-input').value) || 0;
             const stockVal = parseInt(row.querySelector('.variant-stock-input').value) || 0;
+            const weightInput = row.querySelector('.variant-weight-input');
+            const variantWeightVal = weightInput ? (parseFloat(weightInput.value) || 0) : 0;
             const imgVal = row.getAttribute('data-comb-image') || '';
             
             totalStock += stockVal;
@@ -1060,6 +1101,7 @@
               sku: skuVal,
               price: priceVal,
               stock: stockVal,
+              weight: useVariantWeights ? variantWeightVal : 0,
               image: imgVal
             });
           });
@@ -1113,6 +1155,7 @@
           images: uploadedPhotos,
           hasVariants: hasVariantsVal,
           useVariantImages: toggleVariantImages ? toggleVariantImages.checked : false,
+          useVariantWeights,
           variations: variationsVal,
           variantList: variantListVal,
           weight: weightVal,

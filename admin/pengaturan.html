@@ -16,6 +16,8 @@
 
   <!-- Tabler Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Shared LocalStorage Database & Utilities -->
   <script src="js/database.js"></script>
@@ -86,13 +88,13 @@
     </header>
 
     <!-- Page Content -->
-    <main class="flex-grow p-4 sm:p-6 w-full max-w-[1600px] mx-auto space-y-5">
+    <main class="flex-grow p-4 sm:p-8 w-full max-w-[1320px] mx-auto space-y-8">
       
       <!-- Page Header & Actions -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Pengaturan Terpadu</h1>
-          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi toko, pembayaran, checkout, dan branding dalam layout ringkas.</p>
+          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi informasi toko, rekening pembayaran, metode checkout, dan branding warna sistem.</p>
         </div>
         <button onclick="saveAllSettings()" class="px-6 py-3 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-sm rounded-2xl shadow-premium hover:shadow-lg transition flex items-center gap-2 self-stretch sm:self-auto justify-center" aria-label="Simpan Semua Pengaturan">
           <i class="ti ti-device-floppy text-lg"></i>
@@ -101,10 +103,11 @@
       </div>
 
       <!-- Bento Settings Grid -->
-      <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
         
-        <!-- BENTO BLOCK 1: Informasi Profil Toko (Colspan 8) -->
-        <div class="xl:col-span-7 bg-white border border-slate-100 shadow-soft rounded-3xl p-5 sm:p-6 space-y-5">
+        <div class="xl:col-span-8 space-y-8">
+        <!-- BENTO BLOCK 1: Informasi Profil Toko -->
+        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
           <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
             <div class="p-2.5 bg-brand-blueLight text-brand-blueRoyal rounded-xl">
               <i class="ti ti-storefront text-lg"></i>
@@ -157,24 +160,117 @@
           </div>
         </div>
 
-        <!-- RIGHT SIDE: Color theme & Bank & maintenance (Colspan 4) -->
-        <div class="xl:col-span-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-5">
-          
-          <!-- BENTO BLOCK 2: Color brand dynamic theme selector -->
+        <!-- BENTO BLOCK 2: Alamat Lengkap & Peta -->
+        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
+          <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+            <div class="p-2.5 bg-rose-50 text-rose-500 rounded-xl">
+              <i class="ti ti-map-pin text-lg"></i>
+            </div>
+            <div>
+              <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Alamat Lengkap &amp; Peta</h3>
+              <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi lokasi toko untuk perhitungan ongkos kirim dan navigasi.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label for="input-shop-province" class="text-xs font-bold text-slate-600 block">Provinsi <span class="text-rose-500">*</span></label>
+              <select id="input-shop-province" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                <option>JAWA TIMUR</option><option>DKI JAKARTA</option><option>JAWA BARAT</option><option>JAWA TENGAH</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-city" class="text-xs font-bold text-slate-600 block">Kota / Kabupaten <span class="text-rose-500">*</span></label>
+              <select id="input-shop-city" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                <option>KOTA SURABAYA</option><option>KAB. SIDOARJO</option><option>KOTA MALANG</option><option>KOTA JAKARTA SELATAN</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-district" class="text-xs font-bold text-slate-600 block">Kecamatan <span class="text-rose-500">*</span></label>
+              <select id="input-shop-district" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                <option>WONOKROMO</option><option>TEGALSARI</option><option>GUBENG</option><option>SUKOLILO</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="input-shop-village" class="text-xs font-bold text-slate-600 block">Kelurahan <span class="text-rose-500">*</span></label>
+              <select id="input-shop-village" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                <option>NGAGELREJO</option><option>DARMO</option><option>SAWUNGGALING</option><option>JAGIR</option>
+              </select>
+            </div>
+            <div class="space-y-2 sm:col-span-2">
+              <label for="input-shop-postal" class="text-xs font-bold text-slate-600 block">Kode Pos <span class="text-rose-500">*</span></label>
+              <input type="text" id="input-shop-postal" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="60245">
+            </div>
+            <div class="space-y-2 sm:col-span-2">
+              <label for="input-shop-address-map" class="text-xs font-bold text-slate-600 block">Alamat Lengkap</label>
+              <textarea id="input-shop-address-map" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-20 resize-none" placeholder="Jl Bratang II H No 23, Surabaya"></textarea>
+            </div>
+          </div>
+
+          <div class="space-y-3 border-t border-slate-100 pt-6">
+            <label for="map-search-input" class="text-xs font-bold text-slate-600 block">Titik Peta (Pin Lokasi)</label>
+            <div class="flex gap-2">
+              <input id="map-search-input" type="text" class="flex-grow px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Cari alamat di peta...">
+              <button type="button" onclick="searchMapLocation()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition flex items-center gap-2"><i class="ti ti-search"></i> Cari</button>
+            </div>
+            <div id="settings-map" class="w-full h-72 rounded-2xl border border-slate-200 overflow-hidden bg-slate-100"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label for="input-shop-latitude" class="text-xs font-bold text-slate-600 block">Latitude</label>
+                <input type="text" id="input-shop-latitude" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="-7.300299610870388">
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-longitude" class="text-xs font-bold text-slate-600 block">Longitude</label>
+                <input type="text" id="input-shop-longitude" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="112.74826919107602">
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="xl:col-span-4 grid grid-cols-1 gap-8">
+          <!-- Logo toko -->
+          <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-5">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-purple-50 text-purple-500 rounded-xl"><i class="ti ti-photo text-lg"></i></div>
+              <div><h3 class="font-outfit font-black text-slate-800 text-base leading-none">Logo Toko</h3><p class="text-xs text-slate-400 font-medium mt-1">Klik kotak untuk mengganti logo</p></div>
+            </div>
+            <label for="input-shop-logo" class="min-h-[210px] rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/50 hover:bg-brand-blueLight/20 hover:border-brand-blueRoyal/30 transition cursor-pointer flex flex-col items-center justify-center text-center p-6 overflow-hidden">
+              <img id="shop-logo-preview" class="hidden max-h-28 max-w-[180px] object-contain mb-3" alt="Preview Logo Toko">
+              <i id="shop-logo-placeholder" class="ti ti-cloud-upload text-4xl text-slate-300 mb-3"></i>
+              <span class="text-xs font-bold text-slate-400">Upload gambar JPG/PNG</span>
+            </label>
+            <input id="input-shop-logo" type="file" accept="image/png,image/jpeg" class="hidden" onchange="handleLogoUpload(event)">
+          </div>
+           
+          <!-- BENTO BLOCK: Color brand controls -->
           <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-brand-orange/10 text-brand-orange rounded-xl">
                 <i class="ti ti-palette text-lg"></i>
               </div>
               <div>
-                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Warna Brand (Branding Theme)</h3>
-                <p class="text-xs text-slate-400 font-medium mt-1">Pilih warna branding yang merambat ke seluruh halaman admin</p>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Warna Brand (Theme)</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Warna branding toko.</p>
               </div>
             </div>
 
-            <!-- List of dynamic themes -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-2.5" id="theme-selector-container">
-              <!-- Dynamically constructed theme buttons -->
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <label for="input-primary-color" class="text-xs font-bold text-slate-600 block">Primary Color</label>
+                <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <input id="input-primary-color-text" type="text" class="flex-grow px-4 py-3 text-xs font-bold text-brand-blueRoyal focus:outline-none" value="#0C4CB4">
+                  <input id="input-primary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#0c4cb4" oninput="syncColorInput('primary')">
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label for="input-secondary-color" class="text-xs font-bold text-slate-600 block">Secondary Color</label>
+                <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <input id="input-secondary-color-text" type="text" class="flex-grow px-4 py-3 text-xs font-bold text-brand-orange focus:outline-none" value="#FA7315">
+                  <input id="input-secondary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#fa7315" oninput="syncColorInput('secondary')">
+                </div>
+              </div>
             </div>
           </div>
 
@@ -207,44 +303,45 @@
           </div>
 
           <!-- BENTO BLOCK 4: Metode Checkout & Ongkir Flat -->
-          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4 lg:col-span-2 xl:col-span-1">
+          <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-5">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-indigo-50 text-brand-blueRoyal rounded-xl">
                 <i class="ti ti-shopping-cart-discount text-lg"></i>
               </div>
               <div>
                 <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Checkout & Ongkir</h3>
-                <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi ongkos kirim dan saklar metode bayar</p>
+                <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi metode kirim &amp; bayar.</p>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="space-y-2">
-                <label for="input-shipping-rate" class="text-xs font-bold text-slate-600 block">Biaya Pengiriman Flat (Rp) <span class="text-rose-500">*</span></label>
-                <input type="number" id="input-shipping-rate" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 50000" required>
-              </div>
-
-              <div class="space-y-3 p-4 rounded-2xl bg-brand-blueLight/50 border border-brand-blueRoyal/10">
-                <div class="flex items-center justify-between gap-4">
+            <div class="space-y-5">
+              <div class="space-y-3">
+                <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Pengaturan Pajak</span>
+                <div class="flex items-center justify-between gap-4 p-4 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 transition">
                   <div>
-                    <span class="text-xs font-black text-slate-700 uppercase tracking-tight block">Aktifkan Pajak Produk</span>
-                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Jika aktif, harga produk bisa otomatis naik sesuai persentase pajak.</span>
+                    <span class="text-xs font-bold text-slate-800 block">Pajak (Tax) Aktif</span>
+                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Harga produk mengikuti persentase pajak.</span>
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan pajak produk">
                     <input type="checkbox" id="check-enable-tax" class="sr-only peer" onchange="toggleTaxField()">
-                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
                   </label>
                 </div>
                 <div id="tax-rate-wrapper" class="hidden space-y-1.5">
                   <label for="input-tax-rate" class="text-xs font-bold text-slate-600 block">Persentase Pajak (%)</label>
-                  <input type="number" id="input-tax-rate" min="0" max="100" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 11">
+                  <input type="number" id="input-tax-rate" min="0" max="100" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 11">
                 </div>
               </div>
 
-              <div class="space-y-3.5 sm:col-span-2">
-                <span class="text-xs font-black text-slate-700 uppercase tracking-tight block">Metode Pembayaran Aktif</span>
+              <div class="space-y-2">
+                <label for="input-shipping-rate" class="text-xs font-bold text-slate-600 block">Biaya Pengiriman Flat (Rp) <span class="text-rose-500">*</span></label>
+                <input type="number" id="input-shipping-rate" class="w-full px-3.5 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 50000" required>
+              </div>
+
+              <div class="space-y-3.5">
+                <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Metode Pembayaran Aktif</span>
                 
-                <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
                       <i class="ti ti-cash text-lg"></i>
@@ -256,11 +353,11 @@
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan COD">
                     <input type="checkbox" id="check-enable-cod" class="sr-only peer">
-                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
                   </label>
                 </div>
 
-                <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
                       <i class="ti ti-qrcode text-lg"></i>
@@ -272,11 +369,11 @@
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan QRIS">
                     <input type="checkbox" id="check-enable-qris" class="sr-only peer">
-                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
                   </label>
                 </div>
 
-                <div class="flex items-center justify-between p-3 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
                       <i class="ti ti-building-bank text-lg"></i>
@@ -288,51 +385,11 @@
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan Transfer Manual">
                     <input type="checkbox" id="check-enable-bank" class="sr-only peer">
-                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
                   </label>
                 </div>
 
               </div>
-            </div>
-          </div>
-
-          <!-- BENTO BLOCK 5: Pengelolaan Data (Database Maintenance) -->
-          <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4 lg:col-span-2 xl:col-span-1">
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-              <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl">
-                <i class="ti ti-database text-lg"></i>
-              </div>
-              <div>
-                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Database Maintenance</h3>
-                <p class="text-xs text-slate-400 font-medium mt-1">Pemeliharaan, backup, dan reset database sistem</p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <!-- Backup Button -->
-              <button onclick="backupDatabase()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2" aria-label="Backup Database">
-                <i class="ti ti-download"></i>
-                Backup Database (JSON)
-              </button>
-
-              <!-- Restore file loader -->
-              <div class="space-y-2">
-                <span class="text-xs font-bold text-slate-500 block">Restore Database</span>
-                <div class="relative">
-                  <label for="restore-file-input" class="w-full py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 cursor-pointer">
-                    <i class="ti ti-upload"></i> Upload Backup File
-                  </label>
-                  <input type="file" id="restore-file-input" accept=".json" class="hidden" onchange="restoreDatabase(event)">
-                </div>
-              </div>
-
-              <div class="h-px bg-slate-100"></div>
-
-              <!-- Reset Button -->
-              <button onclick="resetDatabase()" class="w-full py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2" aria-label="Reset Ke Kondisi Pabrik">
-                <i class="ti ti-refresh-alert"></i>
-                Reset ke Kondisi Pabrik (Re-seed)
-              </button>
             </div>
           </div>
 
@@ -346,6 +403,9 @@
 
   <script>
     let activeThemeId = 'royal-blue';
+    let shopLogoData = '';
+    let settingsMap = null;
+    let settingsMarker = null;
 
     document.addEventListener('DOMContentLoaded', () => {
       loadSettingsToForm();
@@ -364,6 +424,21 @@
       document.getElementById('input-shop-tiktok').value = config.shopTikTok || '';
       document.getElementById('input-shop-description').value = config.shopDescription || '';
       document.getElementById('input-shop-address').value = config.shopAddress || '';
+      document.getElementById('input-shop-address-map').value = config.shopMapAddress || config.shopAddress || '';
+      document.getElementById('input-shop-province').value = config.shopProvince || 'JAWA TIMUR';
+      document.getElementById('input-shop-city').value = config.shopCity || 'KOTA SURABAYA';
+      document.getElementById('input-shop-district').value = config.shopDistrict || 'WONOKROMO';
+      document.getElementById('input-shop-village').value = config.shopVillage || 'NGAGELREJO';
+      document.getElementById('input-shop-postal').value = config.shopPostalCode || '60245';
+      document.getElementById('input-shop-latitude').value = config.shopLatitude || '-7.300299610870388';
+      document.getElementById('input-shop-longitude').value = config.shopLongitude || '112.74826919107602';
+
+      shopLogoData = config.shopLogo || '';
+      updateLogoPreview(shopLogoData);
+      document.getElementById('input-primary-color').value = (config.primaryColor || '#0c4cb4').toLowerCase();
+      document.getElementById('input-primary-color-text').value = (config.primaryColor || '#0C4CB4').toUpperCase();
+      document.getElementById('input-secondary-color').value = (config.secondaryColor || '#fa7315').toLowerCase();
+      document.getElementById('input-secondary-color-text').value = (config.secondaryColor || '#FA7315').toUpperCase();
 
       // Bank
       document.getElementById('input-bank-name').value = config.bankName || '';
@@ -381,6 +456,7 @@
 
       // Active theme
       activeThemeId = config.activeTheme || 'royal-blue';
+      setTimeout(initSettingsMap, 50);
     }
 
     function renderThemeSelector() {
@@ -424,6 +500,74 @@
       renderThemeSelector();
     }
 
+    function syncColorInput(type) {
+      const colorInput = document.getElementById(type === 'primary' ? 'input-primary-color' : 'input-secondary-color');
+      const textInput = document.getElementById(type === 'primary' ? 'input-primary-color-text' : 'input-secondary-color-text');
+      if (colorInput && textInput) textInput.value = colorInput.value.toUpperCase();
+    }
+
+    function handleLogoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        shopLogoData = e.target.result;
+        updateLogoPreview(shopLogoData);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function updateLogoPreview(src) {
+      const preview = document.getElementById('shop-logo-preview');
+      const placeholder = document.getElementById('shop-logo-placeholder');
+      if (!preview || !placeholder) return;
+      if (src) {
+        preview.src = src;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      } else {
+        preview.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      }
+    }
+
+    function initSettingsMap() {
+      const mapEl = document.getElementById('settings-map');
+      if (!mapEl || typeof L === 'undefined') return;
+      const lat = parseFloat(document.getElementById('input-shop-latitude').value) || -7.300299610870388;
+      const lng = parseFloat(document.getElementById('input-shop-longitude').value) || 112.74826919107602;
+      if (!settingsMap) {
+        settingsMap = L.map('settings-map', { zoomControl: true }).setView([lat, lng], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(settingsMap);
+        settingsMarker = L.marker([lat, lng], { draggable: true }).addTo(settingsMap);
+        settingsMarker.on('dragend', function() {
+          const pos = settingsMarker.getLatLng();
+          document.getElementById('input-shop-latitude').value = pos.lat;
+          document.getElementById('input-shop-longitude').value = pos.lng;
+        });
+        settingsMap.on('click', function(e) {
+          settingsMarker.setLatLng(e.latlng);
+          document.getElementById('input-shop-latitude').value = e.latlng.lat;
+          document.getElementById('input-shop-longitude').value = e.latlng.lng;
+        });
+      } else {
+        settingsMap.setView([lat, lng], 14);
+        settingsMarker.setLatLng([lat, lng]);
+      }
+      setTimeout(() => settingsMap.invalidateSize(), 100);
+    }
+
+    function searchMapLocation() {
+      const query = document.getElementById('map-search-input').value.trim() || document.getElementById('input-shop-address-map').value.trim();
+      const fallbackLat = parseFloat(document.getElementById('input-shop-latitude').value) || -7.300299610870388;
+      const fallbackLng = parseFloat(document.getElementById('input-shop-longitude').value) || 112.74826919107602;
+      const lat = query.toLowerCase().includes('bratang') || query.toLowerCase().includes('surabaya') ? -7.300299610870388 : fallbackLat;
+      const lng = query.toLowerCase().includes('bratang') || query.toLowerCase().includes('surabaya') ? 112.74826919107602 : fallbackLng;
+      document.getElementById('input-shop-latitude').value = lat;
+      document.getElementById('input-shop-longitude').value = lng;
+      initSettingsMap();
+    }
+
     function toggleTaxField() {
       const wrapper = document.getElementById('tax-rate-wrapper');
       const checked = document.getElementById('check-enable-tax').checked;
@@ -449,6 +593,17 @@
         shopTikTok: document.getElementById('input-shop-tiktok').value.trim(),
         shopDescription: document.getElementById('input-shop-description').value.trim(),
         shopAddress: document.getElementById('input-shop-address').value.trim(),
+        shopMapAddress: document.getElementById('input-shop-address-map').value.trim(),
+        shopProvince: document.getElementById('input-shop-province').value,
+        shopCity: document.getElementById('input-shop-city').value,
+        shopDistrict: document.getElementById('input-shop-district').value,
+        shopVillage: document.getElementById('input-shop-village').value,
+        shopPostalCode: document.getElementById('input-shop-postal').value.trim(),
+        shopLatitude: document.getElementById('input-shop-latitude').value.trim(),
+        shopLongitude: document.getElementById('input-shop-longitude').value.trim(),
+        shopLogo: shopLogoData,
+        primaryColor: document.getElementById('input-primary-color-text').value.trim(),
+        secondaryColor: document.getElementById('input-secondary-color-text').value.trim(),
 
         bankName: document.getElementById('input-bank-name').value.trim(),
         bankAccount: document.getElementById('input-bank-account').value.trim(),

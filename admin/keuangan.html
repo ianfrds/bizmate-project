@@ -86,8 +86,8 @@
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Laporan Keuangan &amp; Kas</h1>
-          <p class="text-xs text-slate-500 font-medium">Pantau arus kas, laba-rugi, dan neraca keuangan bisnis Anda</p>
+          <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Analisis Harga Produk &amp; HPP</h1>
+          <p class="text-xs text-slate-500 font-medium">Pantau harga jual, modal HPP, margin, dan profit produk berdasarkan transaksi ecommerce.</p>
         </div>
         <button class="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition duration-200">
           <i class="ti ti-download text-sm"></i> Unduh Laporan (.xlsx)
@@ -112,29 +112,29 @@
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div class="bg-white border border-slate-200 rounded-3xl py-8 px-6 shadow-soft hover:shadow-lg transition">
           <div class="flex justify-between items-center mb-4">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Total Pemasukan</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Total Harga Jual</span>
             <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center"><i class="ti ti-arrow-up-right"></i></span>
           </div>
           <h3 id="finance-income" class="text-3xl font-black text-slate-800">Rp 124.890.000</h3>
-          <p class="text-[11px] text-slate-500 font-medium mt-2"><span class="text-emerald-500 font-bold">+18.2%</span> dibanding bulan lalu</p>
+          <p class="text-[11px] text-slate-500 font-medium mt-2"><span class="text-emerald-500 font-bold">Nilai GMV</span> dari pesanan lunas</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-3xl py-8 px-6 shadow-soft hover:shadow-lg transition">
           <div class="flex justify-between items-center mb-4">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Pengeluaran & COGS</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Total Modal HPP</span>
             <span class="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center"><i class="ti ti-arrow-down-left"></i></span>
           </div>
           <h3 id="finance-expenses" class="text-3xl font-black text-slate-800">Rp 48.300.000</h3>
-          <p class="text-[11px] text-slate-500 font-medium mt-2"><span class="text-rose-500 font-bold">+4.1%</span> peningkatan operasional</p>
+          <p class="text-[11px] text-slate-500 font-medium mt-2"><span class="text-rose-500 font-bold">COGS</span> modal produk terjual</p>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-3xl py-8 px-6 shadow-soft hover:shadow-lg transition">
           <div class="flex justify-between items-center mb-4">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Profit Bersih</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest font-outfit">Estimasi Margin Kotor</span>
             <span class="w-8 h-8 rounded-full bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center"><i class="ti ti-circle-check"></i></span>
           </div>
           <h3 id="finance-profit" class="text-3xl font-black text-brand-blueRoyal">Rp 76.590.000</h3>
-          <p class="text-[11px] text-slate-500 font-medium mt-2"><span id="finance-ratio" class="text-brand-blueRoyal font-bold">61.3%</span> Rasio profitabilitas margin</p>
+          <p class="text-[11px] text-slate-500 font-medium mt-2"><span id="finance-ratio" class="text-brand-blueRoyal font-bold">61.3%</span> Rasio margin terhadap harga jual</p>
         </div>
       </div>
 
@@ -145,8 +145,8 @@
         <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-soft p-6">
           <div class="flex justify-between items-center mb-6">
             <div>
-              <h3 class="font-outfit font-black text-lg text-slate-800">Analisis Pemasukan vs Pengeluaran</h3>
-              <p class="text-xs text-slate-500 font-medium">Laporan kas berjalan tahun ini</p>
+              <h3 class="font-outfit font-black text-lg text-slate-800">Analisis Harga Produk vs Harga HPP</h3>
+              <p class="text-xs text-slate-500 font-medium">Perbandingan harga jual produk dan modal HPP dari data transaksi</p>
             </div>
           </div>
           <div class="w-full h-80">
@@ -157,8 +157,8 @@
         <!-- Profit Distribution Pie Chart -->
         <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col justify-between">
           <div>
-            <h3 class="font-outfit font-black text-lg text-slate-800">Distribusi Pengeluaran</h3>
-            <p class="text-xs text-slate-500 font-medium">Berdasarkan kategori operasional</p>
+            <h3 class="font-outfit font-black text-lg text-slate-800">Komposisi Margin Produk</h3>
+            <p class="text-xs text-slate-500 font-medium">Proporsi HPP dan margin dari harga jual</p>
           </div>
           
           <div class="w-full h-56 flex items-center justify-center">
@@ -167,16 +167,16 @@
 
           <div class="space-y-2 mt-4">
             <div class="flex items-center justify-between text-xs font-semibold">
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#0c4cb4]"></span> Pembelian Stok Mebel</span>
-              <span class="text-slate-700">Rp 32.0M</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#0c4cb4]"></span> Modal HPP Produk</span>
+              <span id="legend-cogs" class="text-slate-700">Rp 0</span>
             </div>
             <div class="flex items-center justify-between text-xs font-semibold">
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ea580c]"></span> Biaya Pengiriman & Logistik</span>
-              <span class="text-slate-700">Rp 10.5M</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ea580c]"></span> Margin Kotor Produk</span>
+              <span id="legend-margin" class="text-slate-700">Rp 0</span>
             </div>
             <div class="flex items-center justify-between text-xs font-semibold">
-              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ef4444]"></span> Marketing & Iklan</span>
-              <span class="text-slate-700">Rp 5.8M</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ef4444]"></span> Diskon / Refund</span>
+              <span id="legend-adjustment" class="text-slate-700">Rp 0</span>
             </div>
           </div>
         </div>
@@ -187,8 +187,8 @@
       <div class="bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
         <div class="p-6 border-b border-slate-200 flex justify-between items-center">
           <div>
-            <h3 class="font-outfit font-black text-lg text-slate-800">Riwayat Pembayaran & Invoice</h3>
-            <p class="text-xs text-slate-500 font-medium">Daftar rekonsiliasi pembayaran tagihan transaksi terbaru.</p>
+            <h3 class="font-outfit font-black text-lg text-slate-800">Riwayat Invoice & Margin Produk</h3>
+            <p class="text-xs text-slate-500 font-medium">Daftar tagihan transaksi beserta estimasi HPP dan margin produk.</p>
           </div>
         </div>
         
@@ -202,6 +202,8 @@
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Tanggal</th>
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">Status Pembayaran</th>
                 <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 text-right">Nilai Tagihan</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 text-right">HPP</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200 text-right">Margin</th>
               </tr>
             </thead>
             <tbody id="transactions-table-body" class="text-sm font-medium text-slate-700 divide-y divide-slate-100">
@@ -256,36 +258,45 @@
       const orders = BizmateDB.getOrders();
       const products = BizmateDB.getProducts();
 
-      // 1. Calculate Real-Time COGS & Revenue
+      // 1. Calculate Real-Time Product Price, HPP, Margin & Adjustments
       let dynamicPaidRevenue = 0;
       let dynamicPaidCOGS = 0;
+      let dynamicAdjustment = 0;
 
       orders.filter(o => o.paymentStatus === 'Paid').forEach(o => {
-        dynamicPaidRevenue += (o.amount || 0);
+        const shippingCost = o.shippingCost || 0;
+        const discount = o.discount || 0;
+        dynamicPaidRevenue += Math.max(0, (o.amount || 0) - shippingCost);
+        dynamicAdjustment += discount;
         
         // Calculate items cost
         if (o.items) {
           o.items.forEach(item => {
             const p = products.find(prod => prod.sku === item.sku);
-            const costPerUnit = p ? p.cost : (item.price * 0.45); // fallback HPP 45%
+            const costPerUnit = item.cost || (p ? p.cost : (item.price * 0.62)); // fallback HPP 62%
             dynamicPaidCOGS += costPerUnit * (item.qty || 1);
           });
         }
       });
 
       const baseRevenue = 124890000;
-      const baseCOGS = 48300000;
+      const baseCOGS = 77300000;
+      const baseAdjustment = 2400000;
 
       const totalRevenue = baseRevenue + dynamicPaidRevenue;
       const totalCOGS = baseCOGS + dynamicPaidCOGS;
-      const netProfit = totalRevenue - totalCOGS;
-      const marginRatio = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0;
+      const totalAdjustment = baseAdjustment + dynamicAdjustment;
+      const grossMargin = totalRevenue - totalCOGS - totalAdjustment;
+      const marginRatio = totalRevenue > 0 ? (grossMargin / totalRevenue) * 100 : 0;
 
       // Update Metrik
       document.getElementById('finance-income').textContent = `Rp ${totalRevenue.toLocaleString('id-ID')}`;
       document.getElementById('finance-expenses').textContent = `Rp ${totalCOGS.toLocaleString('id-ID')}`;
-      document.getElementById('finance-profit').textContent = `Rp ${netProfit.toLocaleString('id-ID')}`;
+      document.getElementById('finance-profit').textContent = `Rp ${grossMargin.toLocaleString('id-ID')}`;
       document.getElementById('finance-ratio').textContent = `${marginRatio.toFixed(1)}%`;
+      document.getElementById('legend-cogs').textContent = `Rp ${totalCOGS.toLocaleString('id-ID')}`;
+      document.getElementById('legend-margin').textContent = `Rp ${grossMargin.toLocaleString('id-ID')}`;
+      document.getElementById('legend-adjustment').textContent = `Rp ${totalAdjustment.toLocaleString('id-ID')}`;
 
       // 2. Render Invoices Table
       tbody.innerHTML = '';
@@ -305,6 +316,14 @@
         const paymentMethod = o.paymentMethod || 'Manual Transfer BCA';
         const displayCustomer = o.customer || o.customerName || 'Unknown Customer';
         const displayAmount = o.amount || o.total || 0;
+        const displayShipping = o.shippingCost || 0;
+        const invoiceProductValue = Math.max(0, displayAmount - displayShipping);
+        const invoiceHpp = (o.items || []).reduce((sum, item) => {
+          const p = products.find(prod => prod.sku === item.sku);
+          const costPerUnit = item.cost || (p ? p.cost : Math.round((item.price || 0) * 0.62));
+          return sum + (costPerUnit * (item.qty || 1));
+        }, 0);
+        const invoiceMargin = invoiceProductValue - invoiceHpp - (o.discount || 0);
 
         tbody.innerHTML += `
           <tr class="table-row-hover transition">
@@ -314,13 +333,16 @@
             <td class="px-6 py-4 text-slate-500">${o.date}</td>
             <td class="px-6 py-4">${statusBadge}</td>
             <td class="px-6 py-4 text-right font-bold text-slate-800">Rp ${displayAmount.toLocaleString('id-ID')}</td>
+            <td class="px-6 py-4 text-right font-bold text-slate-500">Rp ${invoiceHpp.toLocaleString('id-ID')}</td>
+            <td class="px-6 py-4 text-right font-black ${invoiceMargin < 0 ? 'text-rose-600' : 'text-emerald-600'}">Rp ${invoiceMargin.toLocaleString('id-ID')}</td>
           </tr>
         `;
       });
 
-      // 3. Cashflow Line Chart Setup
-      const juneIncomeJuta = (124000000 + dynamicPaidRevenue) / 1000000;
-      const juneCostJuta = (48000000 + dynamicPaidCOGS) / 1000000;
+      // 3. Product Price vs HPP Line Chart Setup
+      const juneRevenueJuta = totalRevenue / 1000000;
+      const juneHppJuta = totalCOGS / 1000000;
+      const juneMarginJuta = Math.max(0, grossMargin) / 1000000;
 
       const cashflowCtx = document.getElementById('cashflowChart').getContext('2d');
       new Chart(cashflowCtx, {
@@ -329,17 +351,17 @@
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
           datasets: [
             {
-              label: 'Pemasukan (Rp Juta)',
-              data: [50, 75, 62, 85, 95, juneIncomeJuta],
+              label: 'Harga Jual Produk (Rp Juta)',
+              data: [50, 75, 62, 85, 95, juneRevenueJuta],
               borderColor: '#0c4cb4',
               backgroundColor: 'transparent',
               borderWidth: 3,
               tension: 0.4
             },
             {
-              label: 'Pengeluaran (Rp Juta)',
-              data: [25, 40, 35, 48, 50, juneCostJuta],
-              borderColor: '#ef4444',
+              label: 'Harga HPP Produk (Rp Juta)',
+              data: [31, 46, 38, 53, 59, juneHppJuta],
+              borderColor: '#fa7315',
               backgroundColor: 'transparent',
               borderWidth: 2,
               borderDash: [5, 5],
@@ -358,14 +380,14 @@
         }
       });
 
-      // 4. Distribution Pie Chart Setup
+      // 4. Product Margin Composition Doughnut Setup
       const distCtx = document.getElementById('distributionChart').getContext('2d');
       new Chart(distCtx, {
         type: 'doughnut',
         data: {
-          labels: ['Stok', 'Logistik', 'Iklan'],
+          labels: ['HPP Produk', 'Margin Kotor', 'Diskon / Refund'],
           datasets: [{
-            data: [32, 10.5, 5.8],
+            data: [totalCOGS, Math.max(0, grossMargin), totalAdjustment],
             backgroundColor: ['#0c4cb4', '#fa7315', '#ef4444'],
             borderWidth: 0
           }]

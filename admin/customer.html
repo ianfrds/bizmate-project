@@ -184,6 +184,7 @@
                 <th class="py-6 px-6">Alamat</th>
                 <th class="py-6 px-6">Tgl Gabung</th>
                 <th class="py-6 px-6">Status</th>
+                <th class="py-6 px-6 text-right">Aksi</th>
               </tr>
             </thead>
             <tbody id="customers-table-body" class="divide-y divide-slate-100 text-slate-700 text-sm font-medium">
@@ -508,6 +509,16 @@
                 <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${statusClass}">
                   ${c.status}
                 </span>
+              </td>
+              <td class="py-6 px-6 text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <button onclick="toggleStatus('${c.id}', '${c.name}')" class="w-7 h-7 rounded-lg ${c.status === 'Aktif' ? 'bg-rose-50 hover:bg-rose-100 text-rose-600' : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-600'} flex items-center justify-center text-sm transition" title="${c.status === 'Aktif' ? 'Suspend Pelanggan' : 'Aktifkan Pelanggan'}" aria-label="${c.status === 'Aktif' ? 'Suspend Pelanggan' : 'Aktifkan Pelanggan'}">
+                    <i class="ti ${c.status === 'Aktif' ? 'ti-user-off' : 'ti-user-check'}"></i>
+                  </button>
+                  <button onclick="deleteCustomer('${c.id}', '${c.name}')" class="w-7 h-7 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-500 flex items-center justify-center text-sm transition" title="Hapus Pelanggan" aria-label="Hapus Pelanggan">
+                    <i class="ti ti-trash"></i>
+                  </button>
+                </div>
               </td>
             </tr>
           `;

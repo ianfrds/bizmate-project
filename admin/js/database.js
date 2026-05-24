@@ -319,7 +319,7 @@ const SEED_SETTINGS = {
   shopWhatsApp: '6285179720622',
   shopInstagram: 'bizmate.premium',
   shopTikTok: 'bizmate.official',
-  shopEmail: 'su***@***.id',
+  shopEmail: 'support@bizmate.id',
   shopPhone: '6285179720622',
   shopAddress: 'Jl. Raya Darmo No. 12-14, Tegalsari, Kota Surabaya, Jawa Timur 60264',
   shopDescription: 'Toko mebel dan furniture premium berkualitas tinggi langsung dari pengrajin terpercaya.',

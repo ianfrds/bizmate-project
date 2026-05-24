@@ -191,22 +191,36 @@
             
             <form id="category-form" class="space-y-4">
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Nama Kategori *</label>
+                <label for="category-name" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Nama Kategori *</label>
                 <input id="category-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition" placeholder="Contoh: Meja Makan" required>
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Slug URL *</label>
+                <label for="category-slug" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Slug URL *</label>
                 <input id="category-slug" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition" placeholder="meja-makan" required>
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">URL Gambar Kategori</label>
-                <input id="category-image" type="url" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition" placeholder="https://images.unsplash.com/..."><p class="text-[10px] text-slate-400 font-medium mt-1">Opsional, dipakai sebagai thumbnail visual kategori.</p>
+                <label for="category-image-file" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Gambar Kategori</label>
+                <div class="flex items-center gap-4">
+                  <!-- Preview -->
+                  <div id="js-category-image-preview" class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 overflow-hidden shrink-0">
+                    <i class="ti ti-photo text-2xl"></i>
+                  </div>
+                  <!-- Upload area -->
+                  <div class="relative flex-grow">
+                    <input type="file" id="category-image-file" accept="image/*" class="hidden">
+                    <input type="hidden" id="category-image-base64" value="">
+                    <button type="button" onclick="document.getElementById('category-image-file').click()" class="px-4 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold rounded-xl text-xs transition font-outfit uppercase tracking-wider flex items-center gap-2">
+                      <i class="ti ti-upload"></i> Unggah Gambar
+                    </button>
+                    <p class="text-[10px] text-slate-400 font-medium mt-1.5">Mendukung format PNG, JPG, JPEG, atau WebP.</p>
+                  </div>
+                </div>
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Kategori Induk (Parent)</label>
+                <label for="category-parent" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Kategori Induk (Parent)</label>
                 <select id="category-parent" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:bg-white bg-slate-50 transition">
                   <option value="" selected>Tidak Ada (Jadikan Kategori Utama)</option>
                   <option value="Kursi & Sofa">Kursi & Sofa</option>
@@ -216,7 +230,7 @@
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Pilih Icon Tabler</label>
+                <label for="category-icon" class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 font-outfit">Pilih Icon Tabler</label>
                 <input type="hidden" id="category-icon" value="ti-sofa">
                 <div class="grid grid-cols-5 gap-2 border border-slate-200 rounded-xl p-3 bg-slate-50" id="icon-selector">
                   <button type="button" data-icon="ti-sofa" class="w-10 h-10 rounded-lg bg-white text-brand-blueRoyal border-2 border-brand-blueRoyal flex items-center justify-center text-lg transition"><i class="ti ti-sofa"></i></button>
@@ -248,7 +262,9 @@
       const nameInput = document.getElementById('category-name');
       const slugInput = document.getElementById('category-slug');
       const parentInput = document.getElementById('category-parent');
-      const imageInput = document.getElementById('category-image');
+      const imageFileInput = document.getElementById('category-image-file');
+      const imageBase64Input = document.getElementById('category-image-base64');
+      const imagePreview = document.getElementById('js-category-image-preview');
       const iconInput = document.getElementById('category-icon');
       const iconSelector = document.getElementById('icon-selector');
 
@@ -262,6 +278,20 @@
           btn.className = "w-10 h-10 rounded-lg bg-white text-brand-blueRoyal border-2 border-brand-blueRoyal flex items-center justify-center text-lg transition";
           iconInput.value = btn.getAttribute('data-icon');
         });
+      });
+
+      // 1b. Image File Uploader & Base64 Reader
+      imageFileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const base64Str = e.target.result;
+            imageBase64Input.value = base64Str;
+            imagePreview.innerHTML = `<img src="${base64Str}" class="w-full h-full object-cover">`;
+          };
+          reader.readAsDataURL(file);
+        }
       });
 
       // 2. Auto slug generator
@@ -356,7 +386,7 @@
         const name = nameInput.value.trim();
         const slug = slugInput.value.trim();
         const parent = parentInput.value;
-        const image = imageInput.value.trim();
+        const image = imageBase64Input.value.trim();
         const icon = iconInput.value;
 
         if (parent) {
@@ -377,6 +407,10 @@
 
         showToast(`Kategori '${name}' berhasil disimpan!`);
         categoryForm.reset();
+        
+        // Reset image uploader
+        imageBase64Input.value = '';
+        imagePreview.innerHTML = `<i class="ti ti-photo text-2xl"></i>`;
         
         // Reset icon selector active
         iconBtns.forEach((b, i) => {

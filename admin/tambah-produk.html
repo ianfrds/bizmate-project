@@ -5,13 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bizmate - Tambah Produk Baru</title>
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  
+
   <!-- Shared LocalStorage Database -->
   <script src="js/database.js"></script>
   <script src="js/theme.js"></script>
@@ -50,29 +52,37 @@
 <body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
 
   <!-- ==================== SIDEBAR ==================== -->
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5"></aside>
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar text-slate-400 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none border-r border-white/5">
+  </aside>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
   <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
 
     <!-- Topbar -->
-    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+    <header
+      class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
       <div class="flex items-center gap-4 flex-grow">
-        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+        <button onclick="toggleSidebar()"
+          class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
           <i class="ti ti-menu-2 text-xl"></i>
         </button>
         <div class="flex items-center gap-2 font-outfit hidden sm:flex">
-          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span
+            class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
           <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
         </div>
       </div>
 
       <div class="flex items-center gap-4 shrink-0">
-        <button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi">
+        <button id="js-notification-btn"
+          class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative"
+          aria-label="Notifikasi">
           <i class="ti ti-bell text-xl"></i>
         </button>
         <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
-        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+        <a href="../index.html"
+          class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Live Storefront
           <i class="ti ti-external-link text-sm"></i>
@@ -81,66 +91,82 @@
     </header>
 
     <main class="flex-grow p-4 sm:p-8 w-full max-w-[1200px] mx-auto">
-      
+
       <!-- Page Header -->
       <div class="flex flex-col gap-1 mb-6">
         <h2 id="page-title" class="font-outfit font-black text-2xl text-slate-800">Buat Produk Baru</h2>
-        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Tambahkan produk mebel baru ke dalam katalog toko Anda</p>
+        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Tambahkan produk mebel baru ke dalam
+          katalog toko Anda</p>
       </div>
 
       <!-- Page Navigation / Back Button -->
       <div class="flex items-center justify-between gap-4 mb-6">
-        <a href="produk.html" class="flex items-center gap-2 px-3.5 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition duration-200 shadow-soft bg-white">
+        <a href="produk.html"
+          class="flex items-center gap-2 px-3.5 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition duration-200 shadow-soft bg-white">
           <i class="ti ti-arrow-left text-sm"></i>
           <span>Kembali ke Katalog</span>
         </a>
       </div>
 
       <div class="bg-white rounded-3xl border border-slate-200 shadow-card p-6 sm:p-10">
-        
+
         <div class="border-b border-slate-100 pb-6 mb-8">
           <h3 class="font-outfit font-black text-xl text-slate-800">Formulir Informasi Produk</h3>
-          <p class="text-xs text-slate-500 font-medium mt-1">Lengkapi data produk dengan detail untuk performa penjualan maksimal.</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Lengkapi data produk dengan detail untuk performa penjualan
+            maksimal.</p>
         </div>
 
         <form id="product-form" class="space-y-8">
 
           <!-- Section 1: Foto & Media Produk (Atas Sendiri) -->
           <div class="space-y-4">
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">1. Foto & Media Produk *</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 animate-fade-in" id="photo-preview-container">
+            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">1. Foto & Media Produk *
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 animate-fade-in"
+              id="photo-preview-container">
               <!-- Upload Trigger Box -->
-              <div id="btn-upload-trigger" onclick="document.getElementById('multi-photo-input').click()" class="border-2 border-dashed border-slate-200 hover:border-brand-blueRoyal/50 rounded-2xl aspect-square flex flex-col items-center justify-center bg-slate-50 cursor-pointer hover:bg-brand-blueLight/10 transition group">
-                <i class="ti ti-camera-plus text-2xl text-slate-400 group-hover:text-brand-blueRoyal transition mb-1"></i>
-                <span class="text-[10px] font-bold text-slate-400 group-hover:text-brand-blueRoyal transition">Tambah Foto</span>
+              <div id="btn-upload-trigger" onclick="document.getElementById('multi-photo-input').click()"
+                class="border-2 border-dashed border-slate-200 hover:border-brand-blueRoyal/50 rounded-2xl aspect-square flex flex-col items-center justify-center bg-slate-50 cursor-pointer hover:bg-brand-blueLight/10 transition group">
+                <i
+                  class="ti ti-camera-plus text-2xl text-slate-400 group-hover:text-brand-blueRoyal transition mb-1"></i>
+                <span class="text-[10px] font-bold text-slate-400 group-hover:text-brand-blueRoyal transition">Tambah
+                  Foto</span>
               </div>
             </div>
             <input type="file" id="multi-photo-input" class="hidden" accept="image/*" multiple>
-            <p class="text-[11px] text-slate-400 font-medium">Unggah beberapa foto produk sekaligus. Foto pertama akan otomatis menjadi foto utama (cover).</p>
+            <p class="text-[11px] text-slate-400 font-medium">Unggah beberapa foto produk sekaligus. Foto pertama akan
+              otomatis menjadi foto utama (cover).</p>
           </div>
-          
+
           <!-- Section 2: Informasi Dasar -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
             <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">2. Informasi Dasar</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Nama Produk *</label>
-                <input id="product-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="Masukkan nama produk" required>
+                <input id="product-name" type="text"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="Masukkan nama produk" required>
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Kode SKU *</label>
-                <input id="product-sku" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="Contoh: CHR-PLT-01" required>
+                <input id="product-sku" type="text"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="Contoh: CHR-PLT-01" required>
               </div>
             </div>
           </div>
 
           <!-- Section 3: Taksonomi & Merek -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">3. Taksonomi & Merek</h4>
+            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">3. Taksonomi & Merek
+            </h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Kategori Utama *</label>
-                <select id="product-category" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" required>
+                <select id="product-category"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  required>
                   <option selected disabled value="">Pilih Kategori</option>
                   <option value="Kursi & Sofa">Kursi & Sofa</option>
                   <option value="Meja & Rak">Meja & Rak</option>
@@ -150,7 +176,8 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Sub-Kategori</label>
-                <select class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
+                <select
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
                   <option selected disabled>Pilih Sub-Kategori</option>
                   <option>Sofa Velvet Premium</option>
                   <option>Kursi Santai</option>
@@ -158,27 +185,34 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Merek (Brand)</label>
-                <input type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="Masukkan merek">
+                <input type="text"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="Masukkan merek">
               </div>
             </div>
           </div>
 
           <!-- Section 4: Harga & Finansial -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">4. Harga & Finansial</h4>
+            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">4. Harga & Finansial
+            </h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Harga Jual *</label>
                 <div class="relative">
                   <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">Rp</span>
-                  <input id="product-price" type="number" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="0" required>
+                  <input id="product-price" type="number"
+                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                    placeholder="0" required>
                 </div>
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Modal Awal (HPP)</label>
                 <div class="relative">
                   <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">Rp</span>
-                  <input id="product-cost" type="number" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="0">
+                  <input id="product-cost" type="number"
+                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                    placeholder="0">
                 </div>
               </div>
             </div>
@@ -186,19 +220,25 @@
 
           <!-- Section 5: Kontrol Inventaris -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">5. Kontrol Inventaris</h4>
+            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">5. Kontrol Inventaris
+            </h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Jumlah Stok Awal *</label>
-                <input id="product-stock" type="number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="0" required>
+                <input id="product-stock" type="number"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="0" required>
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Batas Minimum Stok (Alert)</label>
-                <input id="product-min-stock" type="number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="5">
+                <input id="product-min-stock" type="number"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="5">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Status Stok Gudang</label>
-                <select id="product-stock-status" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
+                <select id="product-stock-status"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
                   <option value="Tersedia (In Stock)">Tersedia (In Stock)</option>
                   <option value="Pre-Order">Pre-Order</option>
                   <option value="Habis (Out of Stock)">Habis (Out of Stock)</option>
@@ -210,39 +250,53 @@
           <!-- Section 6: Deskripsi & Penjelasan -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
             <div class="flex items-center justify-between">
-              <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">6. Deskripsi & Penjelasan</h4>
+              <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">6. Deskripsi &
+                Penjelasan</h4>
             </div>
             <div class="space-y-4">
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Ringkasan Pendek</label>
-                <input id="product-summary" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="Masukkan ringkasan singkat untuk etalase">
+                <input id="product-summary" type="text"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="Masukkan ringkasan singkat untuk etalase">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Deskripsi Lengkap *</label>
-                <textarea id="product-description" rows="4" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="Masukkan spesifikasi, material, instruksi perawatan produk..." required></textarea>
+                <textarea id="product-description" rows="4"
+                  class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="Masukkan spesifikasi, material, instruksi perawatan produk..." required></textarea>
               </div>
             </div>
           </div>
 
           <!-- Section 7: Pengiriman & Dimensi Fisik -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">7. Pengiriman & Dimensi Fisik</h4>
+            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">7. Pengiriman & Dimensi
+              Fisik</h4>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Berat Produk (Gram) *</label>
-                <input type="number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="1000">
+                <input type="number"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="1000">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Panjang (Cm)</label>
-                <input type="number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="0">
+                <input type="number"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="0">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Lebar (Cm)</label>
-                <input type="number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="0">
+                <input type="number"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="0">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Tinggi (Cm)</label>
-                <input type="number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="0">
+                <input type="number"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                  placeholder="0">
               </div>
             </div>
           </div>
@@ -250,27 +304,32 @@
           <!-- Section 8: Opsi & Varian Produk -->
           <div class="space-y-4 pt-6 border-t border-slate-100">
             <div class="flex items-center justify-between">
-              <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit flex items-center gap-2">
+              <h4
+                class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit flex items-center gap-2">
                 <i class="ti ti-adjustments-horizontal text-sm text-brand-blueRoyal"></i>
                 <span>8. Opsi & Varian Produk</span>
               </h4>
               <label class="flex items-center gap-2.5 text-xs font-bold text-slate-600 cursor-pointer group">
-                <input type="checkbox" id="toggle-variants" class="rounded border-slate-300 text-brand-blueRoyal w-4.5 h-4.5 focus:ring-brand-blueRoyal transition-all duration-200 group-hover:scale-105">
+                <input type="checkbox" id="toggle-variants"
+                  class="rounded border-slate-300 text-brand-blueRoyal w-4.5 h-4.5 focus:ring-brand-blueRoyal transition-all duration-200 group-hover:scale-105">
                 <span class="group-hover:text-slate-800 transition duration-200">Aktifkan Varian Produk</span>
               </label>
             </div>
-            
+
             <div id="variants-section-container" class="hidden space-y-6">
-              
+
               <!-- Toggle: Gunakan Gambar pada Variasi -->
               <div class="bg-blue-50/50 border border-blue-100 rounded-2xl p-4 flex items-center justify-between">
                 <div>
                   <p class="text-xs font-bold text-slate-700">Apakah variasi pertama menggunakan gambar?</p>
-                  <p class="text-[11px] text-slate-500 font-medium mt-0.5">Jika diaktifkan, Anda wajib mengunggah gambar untuk setiap opsi pada Variasi Pertama (misal: warna).</p>
+                  <p class="text-[11px] text-slate-500 font-medium mt-0.5">Jika diaktifkan, Anda wajib mengunggah gambar
+                    untuk setiap opsi pada Variasi Pertama (misal: warna).</p>
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer select-none">
                   <input type="checkbox" id="toggle-variant-images" class="sr-only peer">
-                  <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                  <div
+                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blueRoyal">
+                  </div>
                 </label>
               </div>
 
@@ -280,7 +339,8 @@
               </div>
 
               <!-- Add Variation Button -->
-              <button type="button" id="btn-add-variation" class="w-full py-3 bg-white border border-slate-200 hover:bg-slate-50 text-brand-blueRoyal font-bold text-xs rounded-2xl transition flex items-center justify-center gap-1.5 shadow-soft border-dashed">
+              <button type="button" id="btn-add-variation"
+                class="w-full py-3 bg-white border border-slate-200 hover:bg-slate-50 text-brand-blueRoyal font-bold text-xs rounded-2xl transition flex items-center justify-center gap-1.5 shadow-soft border-dashed">
                 <i class="ti ti-circle-plus text-sm"></i>
                 <span>Tambah Variasi Baru</span>
               </button>
@@ -289,22 +349,29 @@
               <div class="space-y-4 pt-6 border-t border-slate-100">
                 <div class="flex items-center justify-between">
                   <h5 class="text-xs font-black text-slate-700 uppercase tracking-wider font-outfit">Daftar Variasi</h5>
-                  <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full" id="variant-matrix-count">0 Variasi Terbuat</span>
+                  <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full"
+                    id="variant-matrix-count">0 Variasi Terbuat</span>
                 </div>
-                <div class="bg-amber-50/70 border border-amber-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div
+                  class="bg-amber-50/70 border border-amber-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <p class="text-xs font-bold text-slate-700">Apakah produk berbeda berat tiap variasi?</p>
-                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Jika aktif, kolom berat per variasi akan muncul dan digunakan untuk data ongkir tiap varian.</p>
+                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Jika aktif, kolom berat per variasi akan
+                      muncul dan digunakan untuk data ongkir tiap varian.</p>
                   </div>
-                  <label class="relative inline-flex items-center cursor-pointer select-none self-start sm:self-center" aria-label="Aktifkan berat berbeda tiap variasi">
+                  <label class="relative inline-flex items-center cursor-pointer select-none self-start sm:self-center"
+                    aria-label="Aktifkan berat berbeda tiap variasi">
                     <input type="checkbox" id="toggle-variant-weight" class="sr-only peer">
-                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div
+                      class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blueRoyal">
+                    </div>
                   </label>
                 </div>
                 <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-soft">
                   <table class="w-full border-collapse text-left">
                     <thead>
-                      <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      <tr
+                        class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                         <th class="px-6 py-3 font-semibold">Variasi</th>
                         <th class="px-6 py-3 font-semibold">SKU Varian</th>
                         <th class="px-6 py-3 font-semibold w-40">Harga Jual *</th>
@@ -314,7 +381,8 @@
                     </thead>
                     <tbody id="variant-matrix-tbody" class="divide-y divide-slate-100 text-slate-600 text-xs">
                       <tr>
-                        <td colspan="4" class="px-6 py-8 text-center text-slate-400 font-medium">Belum ada variasi. Lengkapi opsi variasi di atas terlebih dahulu.</td>
+                        <td colspan="4" class="px-6 py-8 text-center text-slate-400 font-medium">Belum ada variasi.
+                          Lengkapi opsi variasi di atas terlebih dahulu.</td>
                       </tr>
                     </tbody>
                   </table>
@@ -325,24 +393,30 @@
 
             <!-- Inactive Placeholder Card -->
             <div id="variants-placeholder-card" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center">
-              <p class="text-xs text-slate-500 font-medium">Aktifkan varian jika produk ini memiliki pilihan warna, ukuran, atau jenis material.</p>
+              <p class="text-xs text-slate-500 font-medium">Aktifkan varian jika produk ini memiliki pilihan warna,
+                ukuran, atau jenis material.</p>
             </div>
           </div>
 
           <!-- Form Action Buttons -->
           <div class="pt-6 border-t border-slate-100">
-            <div class="p-5 rounded-2xl bg-brand-blueLight/40 border border-brand-blueRoyal/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div
+              class="p-5 rounded-2xl bg-brand-blueLight/40 border border-brand-blueRoyal/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest font-outfit">Pajak Produk</h4>
-                <p class="text-[11px] text-slate-500 font-medium mt-1">Centang jika harga produk ini otomatis dinaikkan berdasarkan pajak toko.</p>
+                <p class="text-[11px] text-slate-500 font-medium mt-1">Centang jika harga produk ini otomatis dinaikkan
+                  berdasarkan pajak toko.</p>
               </div>
               <div class="flex items-center gap-3">
                 <label class="flex items-center gap-2 text-xs font-bold text-slate-600 cursor-pointer">
-                  <input type="checkbox" id="product-tax-enabled" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  <input type="checkbox" id="product-tax-enabled"
+                    class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
                   Terapkan Pajak
                 </label>
                 <div class="relative w-24">
-                  <input id="product-tax-rate" type="number" min="0" max="100" class="w-full pr-7 pl-3 py-2 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none" placeholder="11">
+                  <input id="product-tax-rate" type="number" min="0" max="100"
+                    class="w-full pr-7 pl-3 py-2 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
+                    placeholder="11">
                   <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-bold">%</span>
                 </div>
               </div>
@@ -350,9 +424,15 @@
           </div>
 
           <div class="flex items-center justify-end gap-3 pt-8 border-t border-slate-100">
-            <a href="produk.html" class="px-5 py-3 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition">Batal & Kembali</a>
-            <button type="submit" id="save-and-new-btn" data-create-new="true" class="px-6 py-3 bg-white hover:bg-brand-blueLight border border-brand-blueRoyal/20 text-brand-blueRoyal font-bold rounded-xl text-xs transition font-outfit uppercase tracking-wider">Simpan & Buat Baru</button>
-            <button type="submit" class="px-6 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">Simpan Produk Baru</button>
+            <a href="produk.html"
+              class="px-5 py-3 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition">Batal
+              & Kembali</a>
+            <button type="submit" id="save-and-new-btn" data-create-new="true"
+              class="px-6 py-3 bg-white hover:bg-brand-blueLight border border-brand-blueRoyal/20 text-brand-blueRoyal font-bold rounded-xl text-xs transition font-outfit uppercase tracking-wider">Simpan
+              & Buat Baru</button>
+            <button type="submit"
+              class="px-6 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/20 font-outfit uppercase tracking-wider">Simpan
+              Produk Baru</button>
           </div>
 
         </form>
@@ -374,12 +454,12 @@
     function showToast(message, type = 'success') {
       const toastContainer = document.createElement('div');
       toastContainer.className = `fixed top-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 transform translate-y-2 opacity-0 font-sans`;
-      
+
       let iconHtml = '<i class="ti ti-circle-check text-emerald-400 text-xl"></i>';
       if (type === 'error') {
         iconHtml = '<i class="ti ti-circle-x text-rose-400 text-xl"></i>';
       }
-      
+
       toastContainer.innerHTML = `
         ${iconHtml}
         <div>
@@ -387,14 +467,14 @@
           <p class="text-[11px] text-slate-400 font-medium mt-0.5">${message}</p>
         </div>
       `;
-      
+
       document.body.appendChild(toastContainer);
-      
+
       // Trigger animation
       setTimeout(() => {
         toastContainer.classList.remove('translate-y-2', 'opacity-0');
       }, 100);
-      
+
       // Auto remove
       setTimeout(() => {
         toastContainer.classList.add('translate-y-2', 'opacity-0');
@@ -408,12 +488,12 @@
     function renderPhotos() {
       const container = document.getElementById('photo-preview-container');
       if (!container) return;
-      
+
       // Clear container entirely
       container.innerHTML = '';
-      
+
       const totalSlots = Math.max(4, uploadedPhotos.length + 1);
-      
+
       for (let i = 0; i < totalSlots; i++) {
         if (i < uploadedPhotos.length) {
           const img = uploadedPhotos[i];
@@ -445,92 +525,92 @@
       }
     }
 
-    window.removePhoto = function(index) {
+    window.removePhoto = function (index) {
       uploadedPhotos.splice(index, 1);
       renderPhotos();
     };
 
     // Variation Actions (Attached to window for inline HTML events)
-    window.removeVariation = function(index) {
+    window.removeVariation = function (index) {
       variations.splice(index, 1);
       renderVariationCards();
       updateVariantMatrix();
     };
 
-    window.onVariationNameInput = function(vIndex, value) {
+    window.onVariationNameInput = function (vIndex, value) {
       variations[vIndex].name = value;
       updateVariantMatrix();
     };
 
-    window.handleNewOptionKeydown = function(event, vIndex) {
+    window.handleNewOptionKeydown = function (event, vIndex) {
       if (event.key === 'Enter') {
         event.preventDefault();
         window.addOption(vIndex);
       }
     };
 
-    window.addOption = function(vIndex) {
+    window.addOption = function (vIndex) {
       const nameInput = document.getElementById(`new-opt-name-${vIndex}`);
       const descInput = document.getElementById(`new-opt-desc-${vIndex}`);
-      
+
       if (!nameInput) return;
-      
+
       const nameVal = nameInput.value.trim();
       const descVal = descInput ? descInput.value.trim() : '';
-      
+
       if (!nameVal) {
         showToast('Nama opsi variasi tidak boleh kosong', 'error');
         nameInput.focus();
         return;
       }
-      
+
       const isDuplicate = variations[vIndex].options.some(opt => opt.name.toLowerCase() === nameVal.toLowerCase());
       if (isDuplicate) {
         showToast('Nama opsi ini sudah ada dalam variasi', 'error');
         nameInput.focus();
         return;
       }
-      
+
       variations[vIndex].options.push({
         id: 'opt_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
         name: nameVal,
         description: descVal,
         image: ''
       });
-      
+
       nameInput.value = '';
       if (descInput) descInput.value = '';
-      
+
       renderVariationCards();
       updateVariantMatrix();
-      
+
       // Keep typing fluidly by returning focus to option name
       const newFocusInput = document.getElementById(`new-opt-name-${vIndex}`);
       if (newFocusInput) newFocusInput.focus();
     };
 
-    window.removeOption = function(vIndex, oIndex) {
+    window.removeOption = function (vIndex, oIndex) {
       variations[vIndex].options.splice(oIndex, 1);
       renderVariationCards();
       updateVariantMatrix();
     };
 
-    window.updateOptionName = function(vIndex, oIndex, value) {
+    window.updateOptionName = function (vIndex, oIndex, value) {
       variations[vIndex].options[oIndex].name = value;
       updateVariantMatrix();
     };
 
-    window.updateOptionDescription = function(vIndex, oIndex, value) {
+    window.updateOptionDescription = function (vIndex, oIndex, value) {
       variations[vIndex].options[oIndex].description = value;
       updateVariantMatrix();
     };
 
-    window.uploadOptionImage = function(event, vIndex, oIndex) {
+    window.uploadOptionImage = function (event, vIndex, oIndex) {
       const file = event.target.files[0];
       if (!file) return;
-      
+
       const reader = new FileReader();
-      reader.onload = function(evt) {
+      reader.onload = function (evt) {
         variations[vIndex].options[oIndex].image = evt.target.result;
         renderVariationCards();
         updateVariantMatrix();
@@ -538,7 +618,7 @@
       reader.readAsDataURL(file);
     };
 
-    window.removeOptionImage = function(vIndex, oIndex) {
+    window.removeOptionImage = function (vIndex, oIndex) {
       variations[vIndex].options[oIndex].image = '';
       renderVariationCards();
       updateVariantMatrix();
@@ -547,26 +627,26 @@
     function renderVariationCards() {
       const container = document.getElementById('variation-cards-list');
       container.innerHTML = '';
-      
+
       const toggleVariantImages = document.getElementById('toggle-variant-images');
       const showImageUpload = toggleVariantImages ? toggleVariantImages.checked : false;
       const btnAddVariation = document.getElementById('btn-add-variation');
-      
+
       if (variations.length >= 2) {
         if (btnAddVariation) btnAddVariation.classList.add('hidden');
       } else {
         if (btnAddVariation) btnAddVariation.classList.remove('hidden');
       }
-      
+
       variations.forEach((v, vIndex) => {
         const card = document.createElement('div');
         card.className = "bg-slate-50/40 border border-slate-200/80 rounded-3xl p-6 shadow-soft space-y-5 relative animate-fade-in hover:shadow-md transition-all duration-300 border-l-4 border-l-brand-blueRoyal";
-        
+
         let optionsHtml = '';
         v.options.forEach((opt, oIndex) => {
           const isFirstVariation = vIndex === 0;
           const displayImageUploader = isFirstVariation && showImageUpload;
-          
+
           optionsHtml += `
             <div class="flex items-center gap-2 bg-white border border-slate-200/80 rounded-2xl p-2 shadow-soft hover:border-slate-300 transition duration-200">
               <!-- Drag Handle -->
@@ -610,7 +690,7 @@
             </div>
           `;
         });
-        
+
         card.innerHTML = `
           <!-- Header Card area (No Emojis) -->
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -689,7 +769,7 @@
             </div>
           </div>
         `;
-        
+
         container.appendChild(card);
       });
     }
@@ -702,11 +782,11 @@
 
     function getCombinations() {
       if (variations.length === 0) return [];
-      
+
       const v1 = variations[0];
       const v1Opts = v1.options || [];
       if (v1Opts.length === 0) return [];
-      
+
       if (variations.length === 1) {
         return v1Opts.map(opt => ({
           key: opt.id,
@@ -715,7 +795,7 @@
           image: opt.image
         }));
       }
-      
+
       const v2 = variations[1];
       const v2Opts = v2.options || [];
       if (v2Opts.length === 0) {
@@ -726,7 +806,7 @@
           image: opt.image
         }));
       }
-      
+
       const comb = [];
       v1Opts.forEach(o1 => {
         v2Opts.forEach(o2 => {
@@ -751,9 +831,9 @@
       const useVariantWeight = toggleVariantWeight ? toggleVariantWeight.checked : false;
       const emptyColspan = useVariantWeight ? 5 : 4;
       if (variantWeightHeader) variantWeightHeader.classList.toggle('hidden', !useVariantWeight);
-      
+
       if (!tbody) return;
-      
+
       if (!toggleVariants || !toggleVariants.checked || variations.length === 0) {
         tbody.innerHTML = `
           <tr>
@@ -763,7 +843,7 @@
         if (countEl) countEl.textContent = '0 Variasi Terbuat';
         return;
       }
-      
+
       // Scan DOM inputs to retain typed values
       const existingInputs = {};
       const rows = tbody.querySelectorAll('.variant-combination-row');
@@ -780,10 +860,10 @@
           weight: weightVal
         };
       });
-      
+
       const combinations = getCombinations();
       if (countEl) countEl.textContent = `${combinations.length} Variasi Terbuat`;
-      
+
       if (combinations.length === 0) {
         tbody.innerHTML = `
           <tr>
@@ -792,32 +872,32 @@
         `;
         return;
       }
-      
+
       tbody.innerHTML = '';
       const showImageUpload = toggleVariantImages ? toggleVariantImages.checked : false;
       const mainSku = document.getElementById('product-sku').value.trim();
       const mainPrice = document.getElementById('product-price').value;
       const mainWeightInput = document.querySelector('input[placeholder="1000"]');
       const mainWeight = mainWeightInput ? mainWeightInput.value : '';
-      
+
       combinations.forEach(comb => {
         // Look up saved values
         const saved = existingInputs[comb.key] || (existingProduct && existingProduct.variantList && existingProduct.variantList.find(item => item.id === comb.key));
-        
+
         // Generate default SKU
         const defaultSku = generateDefaultSku(mainSku, comb.values);
-        
+
         const displaySku = saved ? saved.sku : defaultSku;
         const displayPrice = saved ? saved.price : (mainPrice || '');
         const displayStock = saved ? saved.stock : '0';
         const displayWeight = saved && typeof saved.weight !== 'undefined' ? saved.weight : (mainWeight || '');
-        
+
         const tr = document.createElement('tr');
         tr.className = "variant-combination-row border-b border-slate-100 hover:bg-slate-50/50 transition";
         tr.setAttribute('data-comb-name', comb.name);
         tr.setAttribute('data-comb-id', comb.key);
         tr.setAttribute('data-comb-image', comb.image || '');
-        
+
         tr.innerHTML = `
           <td class="px-6 py-4 font-bold text-slate-800">
             <div class="flex items-center gap-2.5">
@@ -857,13 +937,13 @@
             <input type="number" class="variant-stock-input w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:border-brand-blueRoyal focus:outline-none bg-white" value="${displayStock}" placeholder="0" required>
           </td>
         `;
-        
+
         tbody.appendChild(tr);
       });
     }
 
     // Main DomReady block
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById('product-form');
       const nameInput = document.getElementById('product-name');
       const skuInput = document.getElementById('product-sku');
@@ -880,20 +960,20 @@
       const settings = BizmateDB.getSettings();
       if (taxEnabledInput) taxEnabledInput.checked = !!settings.taxEnabled;
       if (taxRateInput) taxRateInput.value = settings.taxRate || 0;
-      
+
       const toggleVariants = document.getElementById('toggle-variants');
       const toggleVariantImages = document.getElementById('toggle-variant-images');
       const toggleVariantWeight = document.getElementById('toggle-variant-weight');
       const variantsSectionContainer = document.getElementById('variants-section-container');
       const variantsPlaceholderCard = document.getElementById('variants-placeholder-card');
       const btnAddVariation = document.getElementById('btn-add-variation');
-      
+
       const submitBtn = form.querySelector('button[type="submit"]');
       let saveAndCreateNew = false;
       const titleEl = document.getElementById('page-title'); // Page title
 
       document.querySelectorAll('button[type="submit"]').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
           saveAndCreateNew = this.dataset.createNew === 'true';
         });
       });
@@ -909,12 +989,12 @@
           isEditMode = true;
           if (titleEl) titleEl.textContent = 'Ubah Detail Produk';
           if (submitBtn) submitBtn.textContent = 'Perbarui Detail Produk';
-          
+
           nameInput.value = existingProduct.name || '';
           skuInput.value = existingProduct.sku || '';
           skuInput.disabled = true; // Disable SKU editing
           skuInput.classList.add('bg-slate-50', 'text-slate-400', 'cursor-not-allowed');
-          
+
           categoryInput.value = existingProduct.category || '';
           priceInput.value = existingProduct.price || '';
           costInput.value = existingProduct.cost || '';
@@ -925,23 +1005,23 @@
           descInput.value = existingProduct.description || '';
           if (taxEnabledInput) taxEnabledInput.checked = !!existingProduct.taxEnabled;
           if (taxRateInput) taxRateInput.value = existingProduct.taxRate || settings.taxRate || 0;
-          
+
           if (existingProduct.images && Array.isArray(existingProduct.images)) {
             uploadedPhotos = [...existingProduct.images];
           } else if (existingProduct.image) {
             uploadedPhotos = [existingProduct.image];
           }
           renderPhotos();
-          
+
           if (existingProduct.hasVariants) {
             if (toggleVariants) toggleVariants.checked = true;
             if (variantsSectionContainer) variantsSectionContainer.classList.remove('hidden');
             if (variantsPlaceholderCard) variantsPlaceholderCard.classList.add('hidden');
-            
+
             if (toggleVariantImages) toggleVariantImages.checked = !!existingProduct.useVariantImages;
             if (toggleVariantWeight) toggleVariantWeight.checked = !!existingProduct.useVariantWeights;
             variations = existingProduct.variations || [];
-            
+
             renderVariationCards();
             updateVariantMatrix();
           }
@@ -953,12 +1033,12 @@
       // Handle Multiple Photo Selection
       const multiPhotoInput = document.getElementById('multi-photo-input');
       if (multiPhotoInput) {
-        multiPhotoInput.addEventListener('change', function(e) {
+        multiPhotoInput.addEventListener('change', function (e) {
           const files = Array.from(e.target.files);
           let filesProcessed = 0;
           files.forEach(file => {
             const reader = new FileReader();
-            reader.onload = function(evt) {
+            reader.onload = function (evt) {
               uploadedPhotos.push(evt.target.result);
               filesProcessed++;
               if (filesProcessed === files.length) {
@@ -972,18 +1052,18 @@
       }
 
       // Live SKU cascading
-      skuInput.addEventListener('input', function() {
+      skuInput.addEventListener('input', function () {
         updateVariantMatrix();
       });
 
       // Live main price cascading
-      priceInput.addEventListener('input', function() {
+      priceInput.addEventListener('input', function () {
         updateVariantMatrix();
       });
 
       // Variants toggling
       if (toggleVariants) {
-        toggleVariants.addEventListener('change', function() {
+        toggleVariants.addEventListener('change', function () {
           if (this.checked) {
             variantsSectionContainer.classList.remove('hidden');
             variantsPlaceholderCard.classList.add('hidden');
@@ -1005,7 +1085,7 @@
 
       // Variations Image Option Toggle
       if (toggleVariantImages) {
-        toggleVariantImages.addEventListener('change', function() {
+        toggleVariantImages.addEventListener('change', function () {
           renderVariationCards();
           updateVariantMatrix();
         });
@@ -1013,14 +1093,14 @@
 
       // Variations Weight Option Toggle
       if (toggleVariantWeight) {
-        toggleVariantWeight.addEventListener('change', function() {
+        toggleVariantWeight.addEventListener('change', function () {
           updateVariantMatrix();
         });
       }
 
       // Add Variation Button click
       if (btnAddVariation) {
-        btnAddVariation.addEventListener('click', function() {
+        btnAddVariation.addEventListener('click', function () {
           if (variations.length >= 2) {
             showToast('Maksimal hanya diperbolehkan 2 variasi produk', 'error');
             return;
@@ -1034,10 +1114,10 @@
           renderVariationCards();
           updateVariantMatrix();
         });
-       }
+      }
 
       // Handle Submit Event
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         // 1. Image validation
@@ -1075,11 +1155,11 @@
 
           hasVariantsVal = true;
           variationsVal = variations;
-          
+
           const rows = document.querySelectorAll('.variant-combination-row');
           let totalStock = 0;
           let firstPrice = 0;
-          
+
           rows.forEach((row, rIdx) => {
             const combName = row.getAttribute('data-comb-name');
             const combId = row.getAttribute('data-comb-id');
@@ -1089,12 +1169,12 @@
             const weightInput = row.querySelector('.variant-weight-input');
             const variantWeightVal = weightInput ? (parseFloat(weightInput.value) || 0) : 0;
             const imgVal = row.getAttribute('data-comb-image') || '';
-            
+
             totalStock += stockVal;
             if (rIdx === 0) {
               firstPrice = priceVal;
             }
-            
+
             variantListVal.push({
               id: combId,
               name: combName,
@@ -1131,7 +1211,7 @@
         const weightInput = form.querySelector('input[placeholder="1000"]');
         const lengthInput = form.querySelector('input[placeholder="0"]');
         const widthInputs = form.querySelectorAll('input[placeholder="0"]');
-        
+
         const weightVal = weightInput ? parseFloat(weightInput.value) || 0 : 0;
         const lengthVal = lengthInput ? parseFloat(lengthInput.value) || 0 : 0;
         const widthVal = widthInputs && widthInputs[1] ? parseFloat(widthInputs[1].value) || 0 : 0;
@@ -1168,8 +1248,17 @@
         // Save to BizmateDB utility
         BizmateDB.saveProduct(productData);
 
-        const successMsg = isEditMode 
-          ? `Produk '${productData.name}' berhasil diperbarui!` 
+        // Onboarding Step 2: Detect progress of custom products
+        const products = BizmateDB.getProducts() || [];
+        const customProducts = products.filter(p => 
+          !['CHR-RED-001', 'SFA-VLV-002', 'TBL-JTI-003'].includes(p.sku) && !p.sku.startsWith('PRD-')
+        );
+        if (customProducts.length >= 3) {
+          localStorage.setItem('bizmate_onboarding_products_completed', 'true');
+        }
+
+        const successMsg = isEditMode
+          ? `Produk '${productData.name}' berhasil diperbarui!`
           : `Produk '${productData.name}' berhasil ditambahkan ke katalog!`;
 
         showToast(successMsg, 'success');
@@ -1182,4 +1271,5 @@
     });
   </script>
 </body>
+
 </html>

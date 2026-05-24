@@ -12,7 +12,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- Tabler Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
@@ -57,29 +59,38 @@
 <body class="min-h-screen flex overflow-x-hidden bg-slate-50 selection:bg-brand-blueRoyal selection:text-white">
 
   <!-- ==================== SIDEBAR ==================== -->
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100">
+  </aside>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
   <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
 
     <!-- Topbar -->
-    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+    <header
+      class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
       <div class="flex items-center gap-4 flex-grow">
-        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition" aria-label="Buka Sidebar">
+        <button onclick="toggleSidebar()"
+          class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition"
+          aria-label="Buka Sidebar">
           <i class="ti ti-menu-2 text-xl"></i>
         </button>
         <div class="flex items-center gap-2 font-outfit hidden sm:flex">
-          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Konfigurasi</span>
+          <span
+            class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Konfigurasi</span>
           <span class="font-black text-slate-800 tracking-tight">Pengaturan Terpadu</span>
         </div>
       </div>
 
       <div class="flex items-center gap-4 shrink-0">
-        <button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi">
+        <button id="js-notification-btn"
+          class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative"
+          aria-label="Notifikasi">
           <i class="ti ti-bell text-xl"></i>
         </button>
         <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
-        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+        <a href="../index.html"
+          class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Live Storefront
           <i class="ti ti-external-link text-sm"></i>
@@ -89,14 +100,17 @@
 
     <!-- Page Content -->
     <main class="flex-grow p-4 sm:p-8 w-full max-w-[1320px] mx-auto space-y-8">
-      
+
       <!-- Page Header & Actions -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Pengaturan Terpadu</h1>
-          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi informasi toko, rekening pembayaran, metode checkout, dan branding warna sistem.</p>
+          <p class="text-sm text-slate-500 font-medium mt-1">Konfigurasi informasi toko, rekening pembayaran, metode
+            checkout, dan branding warna sistem.</p>
         </div>
-        <button onclick="saveAllSettings()" class="px-6 py-3 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-sm rounded-2xl shadow-premium hover:shadow-lg transition flex items-center gap-2 self-stretch sm:self-auto justify-center" aria-label="Simpan Semua Pengaturan">
+        <button onclick="saveAllSettings()"
+          class="px-6 py-3 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-sm rounded-2xl shadow-premium hover:shadow-lg transition flex items-center gap-2 self-stretch sm:self-auto justify-center"
+          aria-label="Simpan Semua Pengaturan">
           <i class="ti ti-device-floppy text-lg"></i>
           Simpan Semua
         </button>
@@ -104,128 +118,187 @@
 
       <!-- Bento Settings Grid -->
       <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-        
+
         <div class="xl:col-span-8 space-y-8">
-        <!-- BENTO BLOCK 1: Informasi Profil Toko -->
-        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
-          <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-            <div class="p-2.5 bg-brand-blueLight text-brand-blueRoyal rounded-xl">
-              <i class="ti ti-storefront text-lg"></i>
-            </div>
-            <div>
-              <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Profil & Informasi Toko</h3>
-              <p class="text-xs text-slate-400 font-medium mt-1">Informasi utama toko yang ditampilkan di landing page & invoice</p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="space-y-2">
-              <label for="input-shop-name" class="text-xs font-bold text-slate-600 block">Nama Toko <span class="text-rose-500">*</span></label>
-              <input type="text" id="input-shop-name" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bizmate Premium Store" required>
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-email" class="text-xs font-bold text-slate-600 block">Email Kontak Toko <span class="text-rose-500">*</span></label>
-              <input type="email" id="input-shop-email" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: su***@***.id" required>
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-phone" class="text-xs font-bold text-slate-600 block">Telepon Toko</label>
-              <input type="text" id="input-shop-phone" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622">
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-whatsapp" class="text-xs font-bold text-slate-600 block">WhatsApp Toko (WA-Link) <span class="text-rose-500">*</span></label>
-              <input type="text" id="input-shop-whatsapp" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 6285179720622" required>
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-instagram" class="text-xs font-bold text-slate-600 block">Instagram Toko</label>
-              <div class="relative">
-                <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
-                <input type="text" id="input-shop-instagram" class="w-full pl-8 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.premium">
+          <!-- BENTO BLOCK 1: Informasi Profil Toko -->
+          <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-brand-blueLight text-brand-blueRoyal rounded-xl">
+                <i class="ti ti-storefront text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Profil & Informasi Toko</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Informasi utama toko yang ditampilkan di landing page
+                  & invoice</p>
               </div>
             </div>
-            <div class="space-y-2">
-              <label for="input-shop-tiktok" class="text-xs font-bold text-slate-600 block">TikTok Toko</label>
-              <div class="relative">
-                <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
-                <input type="text" id="input-shop-tiktok" class="w-full pl-8 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="bizmate.official">
-              </div>
-            </div>
-            <div class="space-y-2 sm:col-span-2">
-              <label for="input-shop-description" class="text-xs font-bold text-slate-600 block">Deskripsi Singkat Toko</label>
-              <textarea id="input-shop-description" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-16 resize-none" placeholder="Tuliskan slogan / penjelasan singkat mengenai kelebihan toko Anda..."></textarea>
-            </div>
-            <div class="space-y-2 sm:col-span-2">
-              <label for="input-shop-address" class="text-xs font-bold text-slate-600 block">Alamat Toko Lengkap</label>
-              <textarea id="input-shop-address" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-16 resize-none" placeholder="Contoh: Jl. Raya Darmo No. 12-14, Surabaya, Jawa Timur"></textarea>
-            </div>
-          </div>
-        </div>
 
-        <!-- BENTO BLOCK 2: Alamat Lengkap & Peta -->
-        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
-          <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
-            <div class="p-2.5 bg-rose-50 text-rose-500 rounded-xl">
-              <i class="ti ti-map-pin text-lg"></i>
-            </div>
-            <div>
-              <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Alamat Lengkap &amp; Peta</h3>
-              <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi lokasi toko untuk perhitungan ongkos kirim dan navigasi.</p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="space-y-2">
-              <label for="input-shop-province" class="text-xs font-bold text-slate-600 block">Provinsi <span class="text-rose-500">*</span></label>
-              <select id="input-shop-province" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
-                <option>JAWA TIMUR</option><option>DKI JAKARTA</option><option>JAWA BARAT</option><option>JAWA TENGAH</option>
-              </select>
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-city" class="text-xs font-bold text-slate-600 block">Kota / Kabupaten <span class="text-rose-500">*</span></label>
-              <select id="input-shop-city" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
-                <option>KOTA SURABAYA</option><option>KAB. SIDOARJO</option><option>KOTA MALANG</option><option>KOTA JAKARTA SELATAN</option>
-              </select>
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-district" class="text-xs font-bold text-slate-600 block">Kecamatan <span class="text-rose-500">*</span></label>
-              <select id="input-shop-district" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
-                <option>WONOKROMO</option><option>TEGALSARI</option><option>GUBENG</option><option>SUKOLILO</option>
-              </select>
-            </div>
-            <div class="space-y-2">
-              <label for="input-shop-village" class="text-xs font-bold text-slate-600 block">Kelurahan <span class="text-rose-500">*</span></label>
-              <select id="input-shop-village" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
-                <option>NGAGELREJO</option><option>DARMO</option><option>SAWUNGGALING</option><option>JAGIR</option>
-              </select>
-            </div>
-            <div class="space-y-2 sm:col-span-2">
-              <label for="input-shop-postal" class="text-xs font-bold text-slate-600 block">Kode Pos <span class="text-rose-500">*</span></label>
-              <input type="text" id="input-shop-postal" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="60245">
-            </div>
-            <div class="space-y-2 sm:col-span-2">
-              <label for="input-shop-address-map" class="text-xs font-bold text-slate-600 block">Alamat Lengkap</label>
-              <textarea id="input-shop-address-map" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-20 resize-none" placeholder="Jl Bratang II H No 23, Surabaya"></textarea>
-            </div>
-          </div>
-
-          <div class="space-y-3 border-t border-slate-100 pt-6">
-            <label for="map-search-input" class="text-xs font-bold text-slate-600 block">Titik Peta (Pin Lokasi)</label>
-            <div class="flex gap-2">
-              <input id="map-search-input" type="text" class="flex-grow px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Cari alamat di peta...">
-              <button type="button" onclick="searchMapLocation()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition flex items-center gap-2"><i class="ti ti-search"></i> Cari</button>
-            </div>
-            <div id="settings-map" class="w-full h-72 rounded-2xl border border-slate-200 overflow-hidden bg-slate-100"></div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-2">
-                <label for="input-shop-latitude" class="text-xs font-bold text-slate-600 block">Latitude</label>
-                <input type="text" id="input-shop-latitude" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="-7.300299610870388">
+                <label for="input-shop-name" class="text-xs font-bold text-slate-600 block">Nama Toko <span
+                    class="text-rose-500">*</span></label>
+                <input type="text" id="input-shop-name"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: Bizmate Premium Store" required>
               </div>
               <div class="space-y-2">
-                <label for="input-shop-longitude" class="text-xs font-bold text-slate-600 block">Longitude</label>
-                <input type="text" id="input-shop-longitude" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="112.74826919107602">
+                <label for="input-shop-email" class="text-xs font-bold text-slate-600 block">Email Kontak Toko <span
+                    class="text-rose-500">*</span></label>
+                <input type="email" id="input-shop-email"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: su***@***.id" required>
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-phone" class="text-xs font-bold text-slate-600 block">Telepon Toko</label>
+                <input type="text" id="input-shop-phone"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: 6285179720622">
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-whatsapp" class="text-xs font-bold text-slate-600 block">WhatsApp Toko (WA-Link)
+                  <span class="text-rose-500">*</span></label>
+                <input type="text" id="input-shop-whatsapp"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: 6285179720622" required>
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-instagram" class="text-xs font-bold text-slate-600 block">Instagram Toko</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
+                  <input type="text" id="input-shop-instagram"
+                    class="w-full pl-8 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                    placeholder="bizmate.premium">
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-tiktok" class="text-xs font-bold text-slate-600 block">TikTok Toko</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-3.5 text-slate-400 text-sm font-semibold">@</span>
+                  <input type="text" id="input-shop-tiktok"
+                    class="w-full pl-8 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                    placeholder="bizmate.official">
+                </div>
+              </div>
+              <div class="space-y-2 sm:col-span-2">
+                <label for="input-shop-description" class="text-xs font-bold text-slate-600 block">Deskripsi Singkat
+                  Toko</label>
+                <textarea id="input-shop-description"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-16 resize-none"
+                  placeholder="Tuliskan slogan / penjelasan singkat mengenai kelebihan toko Anda..."></textarea>
+              </div>
+              <div class="space-y-2 sm:col-span-2">
+                <label for="input-shop-address" class="text-xs font-bold text-slate-600 block">Alamat Toko
+                  Lengkap</label>
+                <textarea id="input-shop-address"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-16 resize-none"
+                  placeholder="Contoh: Jl. Raya Darmo No. 12-14, Surabaya, Jawa Timur"></textarea>
               </div>
             </div>
           </div>
-        </div>
+
+          <!-- BENTO BLOCK 2: Alamat Lengkap & Peta -->
+          <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-rose-50 text-rose-500 rounded-xl">
+                <i class="ti ti-map-pin text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Alamat Lengkap &amp; Peta</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi lokasi toko untuk perhitungan ongkos
+                  kirim dan navigasi.</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label for="input-shop-province" class="text-xs font-bold text-slate-600 block">Provinsi <span
+                    class="text-rose-500">*</span></label>
+                <select id="input-shop-province"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                  <option>JAWA TIMUR</option>
+                  <option>DKI JAKARTA</option>
+                  <option>JAWA BARAT</option>
+                  <option>JAWA TENGAH</option>
+                </select>
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-city" class="text-xs font-bold text-slate-600 block">Kota / Kabupaten <span
+                    class="text-rose-500">*</span></label>
+                <select id="input-shop-city"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                  <option>KOTA SURABAYA</option>
+                  <option>KAB. SIDOARJO</option>
+                  <option>KOTA MALANG</option>
+                  <option>KOTA JAKARTA SELATAN</option>
+                </select>
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-district" class="text-xs font-bold text-slate-600 block">Kecamatan <span
+                    class="text-rose-500">*</span></label>
+                <select id="input-shop-district"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                  <option>WONOKROMO</option>
+                  <option>TEGALSARI</option>
+                  <option>GUBENG</option>
+                  <option>SUKOLILO</option>
+                </select>
+              </div>
+              <div class="space-y-2">
+                <label for="input-shop-village" class="text-xs font-bold text-slate-600 block">Kelurahan <span
+                    class="text-rose-500">*</span></label>
+                <select id="input-shop-village"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition">
+                  <option>NGAGELREJO</option>
+                  <option>DARMO</option>
+                  <option>SAWUNGGALING</option>
+                  <option>JAGIR</option>
+                </select>
+              </div>
+              <div class="space-y-2 sm:col-span-2">
+                <label for="input-shop-postal" class="text-xs font-bold text-slate-600 block">Kode Pos <span
+                    class="text-rose-500">*</span></label>
+                <input type="text" id="input-shop-postal"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="60245">
+              </div>
+              <div class="space-y-2 sm:col-span-2">
+                <label for="input-shop-address-map" class="text-xs font-bold text-slate-600 block">Alamat
+                  Lengkap</label>
+                <textarea id="input-shop-address-map"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition h-20 resize-none"
+                  placeholder="Jl Bratang II H No 23, Surabaya"></textarea>
+              </div>
+            </div>
+
+            <div class="space-y-3 border-t border-slate-100 pt-6">
+              <label for="map-search-input" class="text-xs font-bold text-slate-600 block">Titik Peta (Pin
+                Lokasi)</label>
+              <div class="flex gap-2">
+                <input id="map-search-input" type="text"
+                  class="flex-grow px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Cari alamat di peta...">
+                <button type="button" onclick="searchMapLocation()"
+                  class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition flex items-center gap-2"><i
+                    class="ti ti-search"></i> Cari</button>
+              </div>
+              <div id="settings-map"
+                class="w-full h-72 rounded-2xl border border-slate-200 overflow-hidden bg-slate-100"></div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label for="input-shop-latitude" class="text-xs font-bold text-slate-600 block">Latitude</label>
+                  <input type="text" id="input-shop-latitude"
+                    class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                    placeholder="-7.300299610870388">
+                </div>
+                <div class="space-y-2">
+                  <label for="input-shop-longitude" class="text-xs font-bold text-slate-600 block">Longitude</label>
+                  <input type="text" id="input-shop-longitude"
+                    class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                    placeholder="112.74826919107602">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- RIGHT SIDE -->
@@ -234,16 +307,22 @@
           <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-5">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
               <div class="p-2.5 bg-purple-50 text-purple-500 rounded-xl"><i class="ti ti-photo text-lg"></i></div>
-              <div><h3 class="font-outfit font-black text-slate-800 text-base leading-none">Logo Toko</h3><p class="text-xs text-slate-400 font-medium mt-1">Klik kotak untuk mengganti logo</p></div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Logo Toko</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Klik kotak untuk mengganti logo</p>
+              </div>
             </div>
-            <label for="input-shop-logo" class="min-h-[210px] rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/50 hover:bg-brand-blueLight/20 hover:border-brand-blueRoyal/30 transition cursor-pointer flex flex-col items-center justify-center text-center p-6 overflow-hidden">
-              <img id="shop-logo-preview" class="hidden max-h-28 max-w-[180px] object-contain mb-3" alt="Preview Logo Toko">
+            <label for="input-shop-logo"
+              class="min-h-[210px] rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/50 hover:bg-brand-blueLight/20 hover:border-brand-blueRoyal/30 transition cursor-pointer flex flex-col items-center justify-center text-center p-6 overflow-hidden">
+              <img id="shop-logo-preview" class="hidden max-h-28 max-w-[180px] object-contain mb-3"
+                alt="Preview Logo Toko">
               <i id="shop-logo-placeholder" class="ti ti-cloud-upload text-4xl text-slate-300 mb-3"></i>
               <span class="text-xs font-bold text-slate-400">Upload gambar JPG/PNG</span>
             </label>
-            <input id="input-shop-logo" type="file" accept="image/png,image/jpeg" class="hidden" onchange="handleLogoUpload(event)">
+            <input id="input-shop-logo" type="file" accept="image/png,image/jpeg" class="hidden"
+              onchange="handleLogoUpload(event)">
           </div>
-           
+
           <!-- BENTO BLOCK: Color brand controls -->
           <div class="bg-white border border-slate-100 shadow-soft rounded-3xl p-5 space-y-4">
             <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
@@ -260,15 +339,21 @@
               <div class="space-y-2">
                 <label for="input-primary-color" class="text-xs font-bold text-slate-600 block">Primary Color</label>
                 <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
-                  <input id="input-primary-color-text" type="text" class="flex-grow px-4 py-3 text-xs font-bold text-brand-blueRoyal focus:outline-none" value="#0C4CB4">
-                  <input id="input-primary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#0c4cb4" oninput="syncColorInput('primary')">
+                  <input id="input-primary-color-text" type="text"
+                    class="flex-grow px-4 py-3 text-xs font-bold text-brand-blueRoyal focus:outline-none"
+                    value="#0C4CB4">
+                  <input id="input-primary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#0c4cb4"
+                    oninput="syncColorInput('primary')">
                 </div>
               </div>
               <div class="space-y-2">
-                <label for="input-secondary-color" class="text-xs font-bold text-slate-600 block">Secondary Color</label>
+                <label for="input-secondary-color" class="text-xs font-bold text-slate-600 block">Secondary
+                  Color</label>
                 <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
-                  <input id="input-secondary-color-text" type="text" class="flex-grow px-4 py-3 text-xs font-bold text-brand-orange focus:outline-none" value="#FA7315">
-                  <input id="input-secondary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#fa7315" oninput="syncColorInput('secondary')">
+                  <input id="input-secondary-color-text" type="text"
+                    class="flex-grow px-4 py-3 text-xs font-bold text-brand-orange focus:outline-none" value="#FA7315">
+                  <input id="input-secondary-color" type="color" class="w-14 h-12 border-0 cursor-pointer"
+                    value="#fa7315" oninput="syncColorInput('secondary')">
                 </div>
               </div>
             </div>
@@ -282,22 +367,30 @@
               </div>
               <div>
                 <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Rekening Pembayaran</h3>
-                <p class="text-xs text-slate-400 font-medium mt-1">Rekening bank resmi untuk menerima transfer bank customer</p>
+                <p class="text-xs text-slate-400 font-medium mt-1">Rekening bank resmi untuk menerima transfer bank
+                  customer</p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
               <div class="space-y-2">
                 <label for="input-bank-name" class="text-xs font-bold text-slate-600 block">Nama Bank</label>
-                <input type="text" id="input-bank-name" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: Bank Central Asia (BCA)">
+                <input type="text" id="input-bank-name"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: Bank Central Asia (BCA)">
               </div>
               <div class="space-y-2">
                 <label for="input-bank-account" class="text-xs font-bold text-slate-600 block">Nomor Rekening</label>
-                <input type="text" id="input-bank-account" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 8291048590">
+                <input type="text" id="input-bank-account"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: 8291048590">
               </div>
               <div class="space-y-2">
-                <label for="input-bank-holder" class="text-xs font-bold text-slate-600 block">Nama Pemilik Rekening</label>
-                <input type="text" id="input-bank-holder" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: PT Bizmate Solusi Retail">
+                <label for="input-bank-holder" class="text-xs font-bold text-slate-600 block">Nama Pemilik
+                  Rekening</label>
+                <input type="text" id="input-bank-holder"
+                  class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: PT Bizmate Solusi Retail">
               </div>
             </div>
           </div>
@@ -316,32 +409,45 @@
 
             <div class="space-y-5">
               <div class="space-y-3">
-                <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Pengaturan Pajak</span>
-                <div class="flex items-center justify-between gap-4 p-4 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 transition">
+                <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Pengaturan
+                  Pajak</span>
+                <div
+                  class="flex items-center justify-between gap-4 p-4 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 transition">
                   <div>
                     <span class="text-xs font-bold text-slate-800 block">Pajak (Tax) Aktif</span>
-                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Harga produk mengikuti persentase pajak.</span>
+                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Harga produk mengikuti
+                      persentase pajak.</span>
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan pajak produk">
                     <input type="checkbox" id="check-enable-tax" class="sr-only peer" onchange="toggleTaxField()">
-                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div
+                      class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal">
+                    </div>
                   </label>
                 </div>
                 <div id="tax-rate-wrapper" class="hidden space-y-1.5">
-                  <label for="input-tax-rate" class="text-xs font-bold text-slate-600 block">Persentase Pajak (%)</label>
-                  <input type="number" id="input-tax-rate" min="0" max="100" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 11">
+                  <label for="input-tax-rate" class="text-xs font-bold text-slate-600 block">Persentase Pajak
+                    (%)</label>
+                  <input type="number" id="input-tax-rate" min="0" max="100"
+                    class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                    placeholder="Contoh: 11">
                 </div>
               </div>
 
               <div class="space-y-2">
-                <label for="input-shipping-rate" class="text-xs font-bold text-slate-600 block">Biaya Pengiriman Flat (Rp) <span class="text-rose-500">*</span></label>
-                <input type="number" id="input-shipping-rate" class="w-full px-3.5 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition" placeholder="Contoh: 50000" required>
+                <label for="input-shipping-rate" class="text-xs font-bold text-slate-600 block">Biaya Pengiriman Flat
+                  (Rp) <span class="text-rose-500">*</span></label>
+                <input type="number" id="input-shipping-rate"
+                  class="w-full px-3.5 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-blueRoyal focus:outline-none transition"
+                  placeholder="Contoh: 50000" required>
               </div>
 
               <div class="space-y-3.5">
-                <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Metode Pembayaran Aktif</span>
-                
-                <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Metode Pembayaran
+                  Aktif</span>
+
+                <div
+                  class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
                       <i class="ti ti-cash text-lg"></i>
@@ -353,11 +459,14 @@
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan COD">
                     <input type="checkbox" id="check-enable-cod" class="sr-only peer">
-                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div
+                      class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal">
+                    </div>
                   </label>
                 </div>
 
-                <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                <div
+                  class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
                       <i class="ti ti-qrcode text-lg"></i>
@@ -369,23 +478,29 @@
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan QRIS">
                     <input type="checkbox" id="check-enable-qris" class="sr-only peer">
-                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div
+                      class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal">
+                    </div>
                   </label>
                 </div>
 
-                <div class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
+                <div
+                  class="flex items-center justify-between p-4 rounded-2xl border border-slate-100 hover:bg-slate-50 transition cursor-pointer">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center">
                       <i class="ti ti-building-bank text-lg"></i>
                     </div>
                     <div>
                       <span class="text-xs font-bold text-slate-800 block">Transfer Manual</span>
-                      <span class="text-[10px] text-slate-400 font-semibold block">Verifikasi manual ke rekening bank</span>
+                      <span class="text-[10px] text-slate-400 font-semibold block">Verifikasi manual ke rekening
+                        bank</span>
                     </div>
                   </div>
                   <label class="relative inline-flex items-center cursor-pointer" aria-label="Aktifkan Transfer Manual">
                     <input type="checkbox" id="check-enable-bank" class="sr-only peer">
-                    <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    <div
+                      class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal">
+                    </div>
                   </label>
                 </div>
 
@@ -467,7 +582,7 @@
         const theme = themes[key];
         const isActive = key === activeThemeId;
         const borderClass = isActive ? 'border-brand-blueRoyal ring-2 ring-brand-blueRoyal/20 shadow-md' : 'border-slate-100 hover:border-slate-300';
-        
+
         return `
           <button onclick="selectTheme('${key}')" class="w-full flex items-center justify-between p-3.5 rounded-2xl border text-left transition ${borderClass}" aria-label="Pilih Tema ${theme.name}">
             <div class="flex items-center gap-3">
@@ -510,7 +625,7 @@
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         shopLogoData = e.target.result;
         updateLogoPreview(shopLogoData);
       };
@@ -540,12 +655,12 @@
         settingsMap = L.map('settings-map', { zoomControl: true }).setView([lat, lng], 14);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(settingsMap);
         settingsMarker = L.marker([lat, lng], { draggable: true }).addTo(settingsMap);
-        settingsMarker.on('dragend', function() {
+        settingsMarker.on('dragend', function () {
           const pos = settingsMarker.getLatLng();
           document.getElementById('input-shop-latitude').value = pos.lat;
           document.getElementById('input-shop-longitude').value = pos.lng;
         });
-        settingsMap.on('click', function(e) {
+        settingsMap.on('click', function (e) {
           settingsMarker.setLatLng(e.latlng);
           document.getElementById('input-shop-latitude').value = e.latlng.lat;
           document.getElementById('input-shop-longitude').value = e.latlng.lng;
@@ -620,6 +735,15 @@
       };
 
       BizmateDB.saveSettings(updated);
+      
+      // Onboarding Step 1 Hooks
+      if (updated.shopName && updated.shopName !== 'Bizmate Premium Store') {
+        localStorage.setItem('bizmate_onboarding_shop_completed', 'true');
+      }
+      if (updated.bankAccount && updated.bankAccount !== '8291048590') {
+        localStorage.setItem('bizmate_onboarding_payment_completed', 'true');
+      }
+
       alert('Pengaturan terpadu dan tema brand berhasil disimpan secara aman.');
       loadSettingsToForm();
       renderThemeSelector();
@@ -652,7 +776,7 @@
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         try {
           const db = JSON.parse(e.target.result);
           if (db.products) localStorage.setItem('bizmate_products', db.products);
@@ -666,7 +790,7 @@
 
           alert('Database berhasil di-restore secara sukses dari berkas backup!');
           window.location.reload();
-        } catch(err) {
+        } catch (err) {
           alert('Format backup tidak valid atau rusak.');
         }
       };

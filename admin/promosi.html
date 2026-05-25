@@ -431,7 +431,9 @@
             }
           }
 
-          if (finalCategory === 'flash_sale') {
+          if (finalCategory === 'bundling' || finalCategory === 'bogo') {
+            typeBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-50 text-emerald-600 rounded-full inline-flex items-center gap-1"><i class="ti ti-gift text-xs"></i> Bundling & Gift</span>`;
+          } else if (finalCategory === 'flash_sale') {
             typeBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-orange-50 text-brand-orange rounded-full inline-flex items-center gap-1 animate-pulse"><i class="ti ti-bolt text-xs"></i> Flash Sale</span>`;
           } else if (finalCategory === 'promo_toko') {
             typeBadge = `<span class="px-2.5 py-1 text-[11px] font-bold bg-brand-blueLight text-brand-blueRoyal rounded-full inline-flex items-center gap-1"><i class="ti ti-building-store text-xs"></i> Promo Toko</span>`;
@@ -441,7 +443,9 @@
 
           // Value formatting
           let valueFormatted = "";
-          if (p.type === 'Diskon Persen' || p.type === 'Flash Sale') {
+          if (finalCategory === 'bundling' || finalCategory === 'bogo') {
+            valueFormatted = "Bundling & Gift";
+          } else if (p.type === 'Diskon Persen' || p.type === 'Flash Sale') {
             valueFormatted = `${p.value}%`;
           } else {
             valueFormatted = `Rp ${p.value.toLocaleString('id-ID')}`;
@@ -454,71 +458,125 @@
 
           // Scope formatting
           let scopeBadge = "";
-          if (p.scope === 'specific') {
-            const count = p.appliedProducts ? p.appliedProducts.length : 0;
-            const productNames = (p.appliedProducts || []).map(sku => {
-              const found = allProducts.find(prod => prod.sku === sku);
-              const name = found ? found.name : sku;
-              let discountStr = "";
-              if (p.productDiscounts && p.productDiscounts[sku]) {
-                const disc = p.productDiscounts[sku];
-                let discountText = "";
-                if (disc.type === 'percentage') {
-                  discountText = `Diskon ${disc.value}%`;
-                } else if (disc.type === 'nominal') {
-                  discountText = `Diskon Rp ${disc.value.toLocaleString('id-ID')}`;
-                }
-                
-                let stockText = "";
-                if (disc.promoStock && parseInt(disc.promoStock) > 0) {
-                  stockText = `, Stok Promo: ${disc.promoStock}`;
-                }
-                discountStr = ` (${discountText}${stockText})`;
-              } else {
-                let globalVal = p.value || 0;
-                let discountText = "";
-                if (p.type === 'Diskon Persen' || p.type === 'Flash Sale') {
-                  discountText = `Diskon ${globalVal}%`;
-                } else {
-                  discountText = `Diskon Rp ${globalVal.toLocaleString('id-ID')}`;
-                }
-                discountStr = ` (${discountText})`;
-              }
-              return name + discountStr;
-            }).join(', ');
-            scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-brand-orange bg-orange-50 border border-brand-orange/20 px-2 py-0.5 rounded-lg w-fit cursor-help" title="${productNames}"><i class="ti ti-package text-[11px]"></i> ${count} Produk</span>`;
-          } else {
-            scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-lg w-fit"><i class="ti ti-world text-[11px]"></i> Semua Produk</span>`;
-          }
-
-          // Product thumbnails listing for specific scope
           let productImagesHtml = "";
-          if (p.scope === 'specific' && p.appliedProducts && p.appliedProducts.length > 0) {
-            const count = p.appliedProducts.length;
-            productImagesHtml = `<div class="flex items-center gap-1.5 mt-2">`;
-            const maxToShow = 3;
-            for (let i = 0; i < Math.min(count, maxToShow); i++) {
-              const sku = p.appliedProducts[i];
-              const prod = allProducts.find(item => item.sku === sku);
-              const imgUrl = (prod && prod.image) ? prod.image : 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=80&q=80';
+          
+          if (finalCategory === 'bundling' || finalCategory === 'bogo') {
+            const buySKUs = p.bundlingBuySKUs || (p.bogoBuySKU ? [p.bogoBuySKU] : []);
+            const getSKUs = p.bundlingGiftSKUs || (p.bogoGetSKU ? [p.bogoGetSKU] : []);
+            
+            const buyNames = buySKUs.map(sku => {
+              const prod = allProducts.find(pr => pr.sku === sku);
+              return prod ? prod.name : sku;
+            }).join(', ');
+            
+            const getNames = getSKUs.map(sku => {
+              const prod = allProducts.find(pr => pr.sku === sku);
+              return prod ? prod.name : sku;
+            }).join(', ');
+
+            scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/50 px-2 py-0.5 rounded-lg w-fit cursor-help" title="Beli: ${buyNames} • Bonus: ${getNames}"><i class="ti ti-gift text-[11px]"></i> ${buySKUs.length} Beli → ${getSKUs.length} Bonus</span>`;
+            
+            // Render thumbnail of buy and get products in dynamic list
+            productImagesHtml = `<div class="flex items-center gap-1.5 mt-2 flex-wrap">`;
+            
+            // Render buy products thumbnails
+            buySKUs.slice(0, 2).forEach(sku => {
+              const prod = allProducts.find(pr => pr.sku === sku);
               const name = prod ? prod.name : sku;
-              
-              if (i === 2 && count > 3) {
-                productImagesHtml += `
-                  <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-slate-200/80 shadow-soft shrink-0" title="${name}">
-                    <img class="w-full h-full object-cover" src="${imgUrl}" alt="${name}">
-                    <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center text-[10px] font-black text-white font-outfit">
-                      +${count - 2}
-                    </div>
-                  </div>
-                `;
+              if (prod) {
+                productImagesHtml += `<img class="w-8 h-8 rounded-lg object-cover border border-slate-200/80 shadow-soft shrink-0" src="${prod.image}" alt="${name}" title="Beli: ${name}">`;
               } else {
-                productImagesHtml += `
-                  <img class="w-8 h-8 rounded-lg object-cover border border-slate-200/80 shadow-soft shrink-0" src="${imgUrl}" alt="${name}" title="${name}">
-                `;
+                productImagesHtml += `<div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[10px] font-bold text-slate-400 shrink-0" title="Beli: ${name}">${sku.substring(0,4)}</div>`;
               }
+            });
+            if (buySKUs.length > 2) {
+              productImagesHtml += `<span class="text-[9px] text-slate-400 font-bold bg-slate-100 px-1.5 py-0.5 rounded shadow-soft shrink-0">+${buySKUs.length - 2}</span>`;
             }
+
+            productImagesHtml += `<span class="text-slate-400 font-black font-outfit text-xs mx-0.5">→</span>`;
+            
+            // Render get products thumbnails
+            getSKUs.slice(0, 2).forEach(sku => {
+              const prod = allProducts.find(pr => pr.sku === sku);
+              const name = prod ? prod.name : sku;
+              if (prod) {
+                productImagesHtml += `<img class="w-8 h-8 rounded-lg object-cover border border-emerald-200 bg-emerald-50/50 p-0.5 shadow-soft shrink-0" src="${prod.image}" alt="${name}" title="Bonus: ${name}">`;
+              } else {
+                productImagesHtml += `<div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-[10px] font-bold text-emerald-500 shrink-0" title="Bonus: ${name}">${sku.substring(0,4)}</div>`;
+              }
+            });
+            if (getSKUs.length > 2) {
+              productImagesHtml += `<span class="text-[9px] text-emerald-500 font-bold bg-emerald-50 px-1.5 py-0.5 rounded shadow-soft shrink-0">+${getSKUs.length - 2}</span>`;
+            }
+
             productImagesHtml += `</div>`;
+          } else {
+            // Original scope logic
+            if (p.scope === 'specific') {
+              const count = p.appliedProducts ? p.appliedProducts.length : 0;
+              const productNames = (p.appliedProducts || []).map(sku => {
+                const found = allProducts.find(prod => prod.sku === sku);
+                const name = found ? found.name : sku;
+                let discountStr = "";
+                if (p.productDiscounts && p.productDiscounts[sku]) {
+                  const disc = p.productDiscounts[sku];
+                  let discountText = "";
+                  if (disc.type === 'percentage') {
+                    discountText = `Diskon ${disc.value}%`;
+                  } else if (disc.type === 'nominal') {
+                    discountText = `Diskon Rp ${disc.value.toLocaleString('id-ID')}`;
+                  }
+                  
+                  let stockText = "";
+                  if (disc.promoStock && parseInt(disc.promoStock) > 0) {
+                    stockText = `, Stok Promo: ${disc.promoStock}`;
+                  }
+                  discountStr = ` (${discountText}${stockText})`;
+                } else {
+                  let globalVal = p.value || 0;
+                  let discountText = "";
+                  if (p.type === 'Diskon Persen' || p.type === 'Flash Sale') {
+                    discountText = `Diskon ${globalVal}%`;
+                  } else {
+                    discountText = `Diskon Rp ${globalVal.toLocaleString('id-ID')}`;
+                  }
+                  discountStr = ` (${discountText})`;
+                }
+                return name + discountStr;
+              }).join(', ');
+              scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-brand-orange bg-orange-50 border border-brand-orange/20 px-2 py-0.5 rounded-lg w-fit cursor-help" title="${productNames}"><i class="ti ti-package text-[11px]"></i> ${count} Produk</span>`;
+            } else {
+              scopeBadge = `<span class="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-lg w-fit"><i class="ti ti-world text-[11px]"></i> Semua Produk</span>`;
+            }
+
+            // Product thumbnails listing for specific scope
+            if (p.scope === 'specific' && p.appliedProducts && p.appliedProducts.length > 0) {
+              const count = p.appliedProducts.length;
+              productImagesHtml = `<div class="flex items-center gap-1.5 mt-2">`;
+              const maxToShow = 3;
+              for (let i = 0; i < Math.min(count, maxToShow); i++) {
+                const sku = p.appliedProducts[i];
+                const prod = allProducts.find(item => item.sku === sku);
+                const imgUrl = (prod && prod.image) ? prod.image : 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=80&q=80';
+                const name = prod ? prod.name : sku;
+                
+                if (i === 2 && count > 3) {
+                  productImagesHtml += `
+                    <div class="relative w-8 h-8 rounded-lg overflow-hidden border border-slate-200/80 shadow-soft shrink-0" title="${name}">
+                      <img class="w-full h-full object-cover" src="${imgUrl}" alt="${name}">
+                      <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center text-[10px] font-black text-white font-outfit">
+                        +${count - 2}
+                      </div>
+                    </div>
+                  `;
+                } else {
+                  productImagesHtml += `
+                    <img class="w-8 h-8 rounded-lg object-cover border border-slate-200/80 shadow-soft shrink-0" src="${imgUrl}" alt="${name}" title="${name}">
+                  `;
+                }
+              }
+              productImagesHtml += `</div>`;
+            }
           }
 
           // Flash Sale scheduler formatting

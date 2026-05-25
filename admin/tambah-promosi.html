@@ -124,42 +124,90 @@
             <!-- Kategori Promosi Selector -->
             <div class="space-y-3">
               <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit">Kategori Promosi *</label>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 max-w-6xl w-full">
                 
                 <!-- Promo Toko Card -->
-                <div id="cat-promo-toko" onclick="handleCategoryChange('promo_toko')" class="relative flex flex-col py-8 px-6 min-h-[200px] justify-between border-2 border-slate-200/80 rounded-3xl cursor-pointer focus:outline-none transition bg-white hover:bg-slate-50/50 shadow-soft">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                      <input type="radio" id="promo-cat-toko" name="promo-category" value="promo_toko" class="h-4 w-4 text-brand-blueRoyal border-slate-300 focus:ring-brand-blueRoyal pointer-events-none">
-                      <label for="promo-cat-toko" class="text-xs font-bold text-slate-800 uppercase tracking-wider font-outfit cursor-pointer">Promo Toko</label>
+                <div id="cat-promo-toko" onclick="handleCategoryChange('promo_toko')" class="group relative flex flex-col p-5 sm:p-6 border-2 border-slate-200/80 rounded-[2.25rem] cursor-pointer focus:outline-none transition-all duration-300 ease-out bg-white hover:bg-slate-50/50 hover:-translate-y-1 hover:shadow-md justify-between min-h-[190px] sm:min-h-[210px]">
+                  <div class="flex items-center justify-between w-full">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-blueRoyal/10 to-brand-blueRoyal/20 text-brand-blueRoyal flex items-center justify-center text-xl border border-brand-blueRoyal/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                      <i class="ti ti-building-store"></i>
                     </div>
-                    <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[9px] font-black uppercase tracking-wider rounded-lg">Direct</span>
+                    <div class="flex items-center gap-2.5">
+                      <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[8px] font-black uppercase tracking-wider rounded-lg">Direct</span>
+                      <!-- Elegant Custom Radio Indicator -->
+                      <div class="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-300 transition-all duration-300" id="radio-indicator-promo_toko">
+                        <div class="w-2.5 h-2.5 rounded-full bg-brand-blueRoyal scale-0 transition-transform duration-300" id="radio-dot-promo_toko"></div>
+                      </div>
+                      <input type="radio" id="promo-cat-toko" name="promo-category" value="promo_toko" class="sr-only">
+                    </div>
                   </div>
-                  <span class="text-[11px] text-slate-400 mt-3 font-medium leading-relaxed">Diskon langsung pada produk pilihan di toko tanpa menggunakan kode kupon saat checkout.</span>
+                  <div class="mt-4 flex-grow flex flex-col justify-end">
+                    <span id="label-promo_toko" class="text-xs font-black text-slate-800 uppercase tracking-wider font-outfit cursor-pointer transition-colors duration-200">Promo Toko</span>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 font-medium leading-relaxed">Diskon langsung pada produk pilihan di toko tanpa perlu kode kupon saat checkout.</p>
+                  </div>
                 </div>
 
                 <!-- Voucher Card -->
-                <div id="cat-voucher" onclick="handleCategoryChange('voucher')" class="relative flex flex-col py-8 px-6 min-h-[200px] justify-between border-2 border-indigo-600 ring-1 ring-indigo-500/20 rounded-3xl cursor-pointer focus:outline-none transition bg-white shadow-soft">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                      <input type="radio" id="promo-cat-voucher" name="promo-category" value="voucher" checked class="h-4 w-4 text-indigo-600 border-slate-300 focus:ring-indigo-500 pointer-events-none">
-                      <label for="promo-cat-voucher" class="text-xs font-bold text-slate-800 uppercase tracking-wider font-outfit cursor-pointer">Voucher Belanja</label>
+                <div id="cat-voucher" onclick="handleCategoryChange('voucher')" class="group relative flex flex-col p-5 sm:p-6 border-2 border-indigo-600 rounded-[2.25rem] cursor-pointer focus:outline-none transition-all duration-300 ease-out bg-gradient-to-br from-indigo-50/40 via-white to-white shadow-[0_12px_30px_-10px_rgba(79,70,229,0.18)] -translate-y-1 scale-[1.01] justify-between min-h-[190px] sm:min-h-[210px]">
+                  <div class="flex items-center justify-between w-full">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500/10 to-indigo-500/20 text-indigo-600 flex items-center justify-center text-xl border border-indigo-500/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                      <i class="ti ti-ticket"></i>
                     </div>
-                    <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase tracking-wider rounded-lg">Coupon Code</span>
+                    <div class="flex items-center gap-2.5">
+                      <span class="px-2.5 py-1 bg-indigo-100/60 text-indigo-700 text-[8px] font-black uppercase tracking-wider rounded-lg">Coupon</span>
+                      <!-- Elegant Custom Radio Indicator -->
+                      <div class="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-indigo-600 transition-all duration-300" id="radio-indicator-voucher">
+                        <div class="w-2.5 h-2.5 rounded-full bg-indigo-600 scale-100 transition-transform duration-300" id="radio-dot-voucher"></div>
+                      </div>
+                      <input type="radio" id="promo-cat-voucher" name="promo-category" value="voucher" checked class="sr-only">
+                    </div>
                   </div>
-                  <span class="text-[11px] text-slate-400 mt-3 font-medium leading-relaxed">Pelanggan harus memasukkan kode kupon yang valid saat pembayaran/checkout.</span>
+                  <div class="mt-4 flex-grow flex flex-col justify-end">
+                    <span id="label-voucher" class="text-xs font-black text-indigo-600 uppercase tracking-wider font-outfit cursor-pointer transition-colors duration-200">Voucher Belanja</span>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 font-medium leading-relaxed">Kupon belanja eksklusif yang wajib dimasukkan pelanggan secara manual saat checkout.</p>
+                  </div>
                 </div>
 
                 <!-- Flash Sale Card -->
-                <div id="cat-flash-sale" onclick="handleCategoryChange('flash_sale')" class="relative flex flex-col py-8 px-6 min-h-[200px] justify-between border-2 border-slate-200/80 rounded-3xl cursor-pointer focus:outline-none transition bg-white hover:bg-slate-50/50 shadow-soft">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                      <input type="radio" id="promo-cat-flash" name="promo-category" value="flash_sale" class="h-4 w-4 text-brand-orange border-slate-300 focus:ring-brand-orange pointer-events-none">
-                      <label for="promo-cat-flash" class="text-xs font-bold text-slate-800 uppercase tracking-wider font-outfit cursor-pointer">Flash Sale</label>
+                <div id="cat-flash-sale" onclick="handleCategoryChange('flash_sale')" class="group relative flex flex-col p-5 sm:p-6 border-2 border-slate-200/80 rounded-[2.25rem] cursor-pointer focus:outline-none transition-all duration-300 ease-out bg-white hover:bg-slate-50/50 hover:-translate-y-1 hover:shadow-md justify-between min-h-[190px] sm:min-h-[210px]">
+                  <div class="flex items-center justify-between w-full">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-orange/10 to-brand-orange/20 text-brand-orange flex items-center justify-center text-xl border border-brand-orange/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                      <i class="ti ti-bolt"></i>
                     </div>
-                    <span class="px-2.5 py-1 bg-brand-orange/10 text-brand-orange text-[9px] font-black uppercase tracking-wider rounded-lg animate-pulse">Kilat</span>
+                    <div class="flex items-center gap-2.5">
+                      <span class="px-2.5 py-1 bg-brand-orange/10 text-brand-orange text-[8px] font-black uppercase tracking-wider rounded-lg animate-pulse">Kilat</span>
+                      <!-- Elegant Custom Radio Indicator -->
+                      <div class="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-300 transition-all duration-300" id="radio-indicator-flash_sale">
+                        <div class="w-2.5 h-2.5 rounded-full bg-brand-orange scale-0 transition-transform duration-300" id="radio-dot-flash_sale"></div>
+                      </div>
+                      <input type="radio" id="promo-cat-flash" name="promo-category" value="flash_sale" class="sr-only">
+                    </div>
                   </div>
-                  <span class="text-[11px] text-slate-400 mt-3 font-medium leading-relaxed">Diskon kilat berjadwal (terbatas jam & stok) yang terpasang langsung pada produk pilihan.</span>
+                  <div class="mt-4 flex-grow flex flex-col justify-end">
+                    <span id="label-flash_sale" class="text-xs font-black text-slate-800 uppercase tracking-wider font-outfit cursor-pointer transition-colors duration-200">Flash Sale</span>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 font-medium leading-relaxed">Diskon kilat berjadwal dengan pembatasan jam operasional & jumlah stok promo produk.</p>
+                  </div>
+                </div>
+
+                <!-- BOGO Card -->
+                <div id="cat-bogo" onclick="handleCategoryChange('bogo')" class="group relative flex flex-col p-5 sm:p-6 border-2 border-slate-200/80 rounded-[2.25rem] cursor-pointer focus:outline-none transition-all duration-300 ease-out bg-white hover:bg-slate-50/50 hover:-translate-y-1 hover:shadow-md justify-between min-h-[190px] sm:min-h-[210px]">
+                  <div class="flex items-center justify-between w-full">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500/10 to-emerald-500/20 text-emerald-600 flex items-center justify-center text-xl border border-emerald-500/20 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                      <i class="ti ti-gift"></i>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                      <span class="px-2.5 py-1 bg-emerald-100/60 text-emerald-700 text-[8px] font-black uppercase tracking-wider rounded-lg">Gift</span>
+                      <!-- Elegant Custom Radio Indicator -->
+                      <div class="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-300 transition-all duration-300" id="radio-indicator-bogo">
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-600 scale-0 transition-transform duration-300" id="radio-dot-bogo"></div>
+                      </div>
+                      <input type="radio" id="promo-cat-bogo" name="promo-category" value="bogo" class="sr-only">
+                    </div>
+                  </div>
+                  <div class="mt-4 flex-grow flex flex-col justify-end">
+                    <span id="label-bogo" class="text-xs font-black text-slate-800 uppercase tracking-wider font-outfit cursor-pointer transition-colors duration-200">Promo Bundling & Gift</span>
+                    <p class="text-[10px] sm:text-[11px] text-slate-400 mt-1.5 font-medium leading-relaxed">Beli paket produk pilihan dan dapatkan bonus satu atau lebih produk gratis langsung.</p>
+                  </div>
                 </div>
 
               </div>
@@ -179,7 +227,7 @@
             </div>
 
             <!-- Status Aktif Toggle Control -->
-            <div class="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-2xl max-w-md">
+            <div class="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-2xl max-w-md hidden">
               <div class="pr-4">
                 <span class="block text-xs font-bold text-slate-800 uppercase tracking-wider">Status Aktif Kupon</span>
                 <span class="block text-[10px] text-slate-400 font-medium mt-0.5">Kupon yang aktif dapat langsung digunakan oleh pelanggan di kasir storefront.</span>
@@ -198,7 +246,7 @@
               Jenis Kupon & Tipe Promosi
             </h4>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div id="discount-config-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label for="form-type" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Tipe Kupon Promosi *</label>
                 <select id="form-type" onchange="handleTypeChange()" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 font-semibold focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
@@ -213,6 +261,70 @@
               <div>
                 <label for="form-value" id="label-value" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Nilai Potongan (Rp) *</label>
                 <input id="form-value" type="number" required min="1" placeholder="20000" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+              </div>
+            </div>
+
+            <!-- Dynamic BOGO Panel -->
+            <div id="bogo-config-panel" class="hidden bg-emerald-50/40 border border-emerald-500/20 rounded-3xl p-6 mt-4 space-y-4 transition-all duration-300">
+              <div class="flex items-center gap-2.5 text-emerald-600">
+                <i class="ti ti-gift text-lg"></i>
+                <h5 class="text-xs font-black uppercase tracking-widest font-outfit">Konfigurasi Promo Bundling & Gift</h5>
+              </div>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Slot Produk Pembelian -->
+                <div class="space-y-2">
+                  <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit">Produk Pembelian (Yang Dibeli)*</span>
+                  <input type="hidden" id="form-bogo-buy-sku" value="">
+                  
+                  <div id="bogo-buy-container" class="relative">
+                    <!-- Empty State Card -->
+                    <div id="bogo-buy-empty" onclick="openBogoProductModal('buy')" class="flex flex-col items-center justify-center py-6 px-4 border-2 border-dashed border-slate-200 hover:border-emerald-500/60 rounded-2xl bg-white cursor-pointer transition group">
+                      <div class="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-emerald-50 text-slate-400 group-hover:text-emerald-500 flex items-center justify-center text-lg mb-2 transition">
+                        <i class="ti ti-plus"></i>
+                      </div>
+                      <span class="text-xs font-bold text-slate-600 group-hover:text-slate-800 transition">Pilih Produk Pembelian</span>
+                      <span class="text-[10px] text-slate-400 mt-1">Klik untuk memilih satu atau lebih produk utama</span>
+                    </div>
+                    
+                    <!-- Selected Products List Container -->
+                    <div id="bogo-buy-selected" class="hidden space-y-2">
+                      <div id="bogo-buy-selected-list" class="space-y-2 max-h-[220px] overflow-y-auto custom-scrollbar pr-1">
+                        <!-- Dynamically filled in JS -->
+                      </div>
+                      <button type="button" onclick="openBogoProductModal('buy')" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 font-bold rounded-xl text-[10px] transition uppercase tracking-wider font-outfit border border-emerald-500/10 flex items-center justify-center gap-1.5 shadow-soft">
+                        <i class="ti ti-plus text-xs"></i> Kelola Pilihan Produk
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Slot Produk Bonus -->
+                <div class="space-y-2">
+                  <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit">Produk Bonus (Yang Didapat)*</span>
+                  <input type="hidden" id="form-bogo-get-sku" value="">
+                  
+                  <div id="bogo-get-container" class="relative">
+                    <!-- Empty State Card -->
+                    <div id="bogo-get-empty" onclick="openBogoProductModal('get')" class="flex flex-col items-center justify-center py-6 px-4 border-2 border-dashed border-slate-200 hover:border-emerald-500/60 rounded-2xl bg-white cursor-pointer transition group">
+                      <div class="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-emerald-50 text-slate-400 group-hover:text-emerald-500 flex items-center justify-center text-lg mb-2 transition">
+                        <i class="ti ti-plus"></i>
+                      </div>
+                      <span class="text-xs font-bold text-slate-600 group-hover:text-slate-800 transition">Pilih Produk Bonus</span>
+                      <span class="text-[10px] text-slate-400 mt-1">Klik untuk memilih satu atau lebih produk bonus gratis</span>
+                    </div>
+                    
+                    <!-- Selected Products List Container -->
+                    <div id="bogo-get-selected" class="hidden space-y-2">
+                      <div id="bogo-get-selected-list" class="space-y-2 max-h-[220px] overflow-y-auto custom-scrollbar pr-1">
+                        <!-- Dynamically filled in JS -->
+                      </div>
+                      <button type="button" onclick="openBogoProductModal('get')" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 font-bold rounded-xl text-[10px] transition uppercase tracking-wider font-outfit border border-emerald-500/10 flex items-center justify-center gap-1.5 shadow-soft">
+                        <i class="ti ti-plus text-xs"></i> Kelola Pilihan Bonus
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -271,7 +383,7 @@
           </div>
 
           <!-- SECTION 4: TARGET PRODUK (SCOPE) -->
-          <div class="space-y-4 pt-6 border-t border-slate-100">
+          <div id="section-4-scope" class="space-y-4 pt-6 border-t border-slate-100">
             <h4 class="text-xs font-black text-brand-blueRoyal uppercase tracking-widest flex items-center gap-2">
               <span class="w-5 h-5 rounded-lg bg-brand-blueRoyal/5 text-brand-blueRoyal flex items-center justify-center text-xs">4</span>
               Target & Jangkauan Produk
@@ -477,18 +589,51 @@
       const cards = {
         promo_toko: {
           id: 'cat-promo-toko',
-          activeClass: 'border-brand-blueRoyal ring-1 ring-brand-blueRoyal/20',
-          inactiveClass: 'border-slate-200/80 hover:bg-slate-50/50'
+          activeClass: 'border-brand-blueRoyal bg-gradient-to-br from-blue-50/40 via-white to-white shadow-[0_12px_30px_-10px_rgba(12,76,180,0.18)] -translate-y-1 scale-[1.01]',
+          inactiveClass: 'border-slate-200/80 bg-white hover:bg-slate-50/50 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300',
+          titleId: 'label-promo_toko',
+          activeTitleClass: 'text-brand-blueRoyal',
+          inactiveTitleClass: 'text-slate-800',
+          radioIndicatorId: 'radio-indicator-promo_toko',
+          radioDotId: 'radio-dot-promo_toko',
+          activeRadioBorder: 'border-brand-blueRoyal',
+          activeRadioBg: 'bg-brand-blueRoyal'
         },
         voucher: {
           id: 'cat-voucher',
-          activeClass: 'border-indigo-600 ring-1 ring-indigo-500/20',
-          inactiveClass: 'border-slate-200/80 hover:bg-slate-50/50'
+          activeClass: 'border-indigo-600 bg-gradient-to-br from-indigo-50/40 via-white to-white shadow-[0_12px_30px_-10px_rgba(79,70,229,0.18)] -translate-y-1 scale-[1.01]',
+          inactiveClass: 'border-slate-200/80 bg-white hover:bg-slate-50/50 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300',
+          titleId: 'label-voucher',
+          activeTitleClass: 'text-indigo-600',
+          inactiveTitleClass: 'text-indigo-600', // Note: keep fallback color clean
+          radioIndicatorId: 'radio-indicator-voucher',
+          radioDotId: 'radio-dot-voucher',
+          activeRadioBorder: 'border-indigo-600',
+          activeRadioBg: 'bg-indigo-600'
         },
         flash_sale: {
           id: 'cat-flash-sale',
-          activeClass: 'border-brand-orange ring-1 ring-brand-orange/20',
-          inactiveClass: 'border-slate-200/80 hover:bg-slate-50/50'
+          activeClass: 'border-brand-orange bg-gradient-to-br from-orange-50/40 via-white to-white shadow-[0_12px_30px_-10px_rgba(250,115,21,0.18)] -translate-y-1 scale-[1.01]',
+          inactiveClass: 'border-slate-200/80 bg-white hover:bg-slate-50/50 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300',
+          titleId: 'label-flash_sale',
+          activeTitleClass: 'text-brand-orange',
+          inactiveTitleClass: 'text-slate-800',
+          radioIndicatorId: 'radio-indicator-flash_sale',
+          radioDotId: 'radio-dot-flash_sale',
+          activeRadioBorder: 'border-brand-orange',
+          activeRadioBg: 'bg-brand-orange'
+        },
+        bogo: {
+          id: 'cat-bogo',
+          activeClass: 'border-emerald-600 bg-gradient-to-br from-emerald-50/40 via-white to-white shadow-[0_12px_30px_-10px_rgba(16,185,129,0.18)] -translate-y-1 scale-[1.01]',
+          inactiveClass: 'border-slate-200/80 bg-white hover:bg-slate-50/50 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300',
+          titleId: 'label-bogo',
+          activeTitleClass: 'text-emerald-600',
+          inactiveTitleClass: 'text-slate-800',
+          radioIndicatorId: 'radio-indicator-bogo',
+          radioDotId: 'radio-dot-bogo',
+          activeRadioBorder: 'border-emerald-600',
+          activeRadioBg: 'bg-emerald-600'
         }
       };
 
@@ -496,18 +641,52 @@
       const radio = document.querySelector(`input[name="promo-category"][value="${category}"]`);
       if (radio) radio.checked = true;
 
+      // Define all classes to be safely cleaned up before applying active/inactive states
+      const allCardClasses = [
+        'border-brand-blueRoyal', 'border-indigo-600', 'border-brand-orange', 'border-emerald-600',
+        'bg-gradient-to-br', 'from-blue-50/40', 'from-indigo-50/40', 'from-orange-50/40', 'from-emerald-50/40',
+        'via-white', 'to-white',
+        'shadow-[0_12px_30px_-10px_rgba(12,76,180,0.18)]', 'shadow-[0_12px_30px_-10px_rgba(79,70,229,0.18)]',
+        'shadow-[0_12px_30px_-10px_rgba(250,115,21,0.18)]', 'shadow-[0_12px_30px_-10px_rgba(16,185,129,0.18)]',
+        '-translate-y-1', 'scale-[1.01]', 'ring-1', 'ring-brand-blueRoyal/20', 'ring-indigo-500/20', 'ring-brand-orange/20', 'ring-emerald-500/20',
+        'border-slate-200/80', 'bg-white', 'hover:bg-slate-50/50', 'hover:-translate-y-0.5', 'hover:shadow-md', 'hover:border-slate-300'
+      ];
+
       Object.keys(cards).forEach(key => {
-        const cardEl = document.getElementById(cards[key].id);
+        const item = cards[key];
+        const cardEl = document.getElementById(item.id);
         if (!cardEl) return;
         
-        // Remove standard and custom outline highlighting classes
-        cardEl.classList.remove('border-indigo-600', 'border-brand-blueRoyal', 'border-brand-orange', 'ring-1', 'ring-brand-blueRoyal/20', 'ring-indigo-500/20', 'ring-brand-orange/20');
-        cardEl.classList.remove('border-slate-200/80', 'hover:bg-slate-50/50');
+        // Remove all possible dynamic classes to avoid collision
+        allCardClasses.forEach(cls => cardEl.classList.remove(cls));
         
-        if (key === category) {
-          cards[key].activeClass.split(' ').forEach(cls => cardEl.classList.add(cls));
-        } else {
-          cards[key].inactiveClass.split(' ').forEach(cls => cardEl.classList.add(cls));
+        // Apply active/inactive card container classes
+        const classesToApply = (key === category) ? item.activeClass : item.inactiveClass;
+        classesToApply.split(' ').filter(Boolean).forEach(cls => cardEl.classList.add(cls));
+
+        // Update titles
+        const titleEl = document.getElementById(item.titleId);
+        if (titleEl) {
+          const inactiveColor = (item.titleId === 'label-voucher') ? 'text-slate-800' : item.inactiveTitleClass;
+          titleEl.classList.remove(item.activeTitleClass, inactiveColor, 'text-slate-800');
+          titleEl.classList.add((key === category) ? item.activeTitleClass : inactiveColor);
+        }
+
+        // Update custom radio indicator & dot
+        const indicatorEl = document.getElementById(item.radioIndicatorId);
+        const dotEl = document.getElementById(item.radioDotId);
+        if (indicatorEl && dotEl) {
+          // Remove potential styles
+          indicatorEl.classList.remove('border-slate-300', item.activeRadioBorder);
+          dotEl.classList.remove('scale-0', 'scale-100', item.activeRadioBg);
+
+          if (key === category) {
+            indicatorEl.classList.add(item.activeRadioBorder);
+            dotEl.classList.add('scale-100', item.activeRadioBg);
+          } else {
+            indicatorEl.classList.add('border-slate-300');
+            dotEl.classList.add('scale-0');
+          }
         }
       });
 
@@ -518,8 +697,30 @@
       const scopeSpecificCard = document.getElementById("promo-scope-specific");
       const typeSelect = document.getElementById("form-type");
       const scopeGridContainer = scopeGlobalCard ? scopeGlobalCard.parentNode : null;
+      const bogoPanel = document.getElementById("bogo-config-panel");
+      const discountGrid = document.getElementById("discount-config-grid");
+      const scopeSection = document.getElementById("section-4-scope");
+      const valInput = document.getElementById("form-value");
 
-      if (category === 'promo_toko') {
+      if (category === 'bogo') {
+        // BOGO: coupon-like code required
+        if (codeInputWrapper) codeInputWrapper.classList.remove('hidden');
+        if (codeInput) {
+          codeInput.required = true;
+          if (codeInput.value.startsWith('TOKO_') || codeInput.value.startsWith('FLASH_')) {
+            codeInput.value = '';
+          }
+        }
+
+        // Show BOGO panel, hide standard discount options & Section 4 target scope
+        if (bogoPanel) bogoPanel.classList.remove("hidden");
+        if (discountGrid) discountGrid.classList.add("hidden");
+        if (scopeSection) scopeSection.classList.add("hidden");
+        if (valInput) {
+          valInput.required = false;
+          valInput.value = '0';
+        }
+      } else if (category === 'promo_toko') {
         // Direct Discount: Silent autogenerated code, hide field
         if (codeInputWrapper) codeInputWrapper.classList.add('hidden');
         if (codeInput) {
@@ -534,6 +735,15 @@
         if (scopeGridContainer) {
           scopeGridContainer.classList.remove('sm:grid-cols-1');
           scopeGridContainer.classList.add('sm:grid-cols-2');
+        }
+
+        // Show standard configs, hide BOGO panel
+        if (bogoPanel) bogoPanel.classList.add("hidden");
+        if (discountGrid) discountGrid.classList.remove("hidden");
+        if (scopeSection) scopeSection.classList.remove("hidden");
+        if (valInput) {
+          valInput.required = true;
+          if (valInput.value === '0') valInput.value = '';
         }
 
         // Allow all discount types EXCEPT Flash Sale
@@ -568,6 +778,15 @@
           scopeGridContainer.classList.add('sm:grid-cols-1');
         }
 
+        // Show standard configs, hide BOGO panel
+        if (bogoPanel) bogoPanel.classList.add("hidden");
+        if (discountGrid) discountGrid.classList.remove("hidden");
+        if (scopeSection) scopeSection.classList.remove("hidden");
+        if (valInput) {
+          valInput.required = true;
+          if (valInput.value === '0') valInput.value = '';
+        }
+
         // Force & lock 'Flash Sale' type selection
         if (typeSelect) {
           for (let i = 0; i < typeSelect.options.length; i++) {
@@ -598,6 +817,15 @@
           scopeGridContainer.classList.add('sm:grid-cols-2');
         }
 
+        // Show standard configs, hide BOGO panel
+        if (bogoPanel) bogoPanel.classList.add("hidden");
+        if (discountGrid) discountGrid.classList.remove("hidden");
+        if (scopeSection) scopeSection.classList.remove("hidden");
+        if (valInput) {
+          valInput.required = true;
+          if (valInput.value === '0') valInput.value = '';
+        }
+
         // Allow all types EXCEPT Flash Sale
         if (typeSelect) {
           for (let i = 0; i < typeSelect.options.length; i++) {
@@ -624,6 +852,68 @@
       let selectedProductSKUs = [];
       let productDiscounts = {}; // Map of { SKU: { type: 'percentage'|'nominal', value: number } }
       let modalDraftSKUs = [];
+      let currentModalMode = 'multi'; // 'multi', 'bogo_buy', 'bogo_get'
+
+      // Dynamic BOGO Visual Cards Updater
+      // Global BOGO Product removal handler
+      window.removeBogoProduct = function(type, sku) {
+        const inputId = type === 'buy' ? 'form-bogo-buy-sku' : 'form-bogo-get-sku';
+        const input = document.getElementById(inputId);
+        let skus = input.value ? input.value.split(",") : [];
+        skus = skus.filter(s => s !== sku);
+        input.value = skus.join(",");
+        
+        updateBogoCard(type, skus);
+      };
+
+      // Dynamic BOGO Visual Cards Updater
+      window.updateBogoCard = function(type, skus) {
+        const emptyEl = document.getElementById(`bogo-${type}-empty`);
+        const selectedEl = document.getElementById(`bogo-${type}-selected`);
+        const listEl = document.getElementById(`bogo-${type}-selected-list`);
+        
+        if (skus && skus.length > 0) {
+          if (emptyEl) emptyEl.classList.add("hidden");
+          if (selectedEl) selectedEl.classList.remove("hidden");
+          if (listEl) {
+            listEl.innerHTML = "";
+            const products = BizmateDB.getProducts() || [];
+            
+            skus.forEach(sku => {
+              const p = products.find(prod => prod.sku === sku);
+              if (!p) return;
+              
+              const itemDiv = document.createElement("div");
+              itemDiv.className = "flex items-center justify-between p-3 border border-slate-200/80 rounded-2xl bg-white shadow-soft hover:border-emerald-500/20 transition duration-150";
+              
+              const priceText = type === 'buy' 
+                ? `Rp ${p.price.toLocaleString('id-ID')}`
+                : `Bonus Gratis (Senilai Rp ${p.price.toLocaleString('id-ID')})`;
+                
+              itemDiv.innerHTML = `
+                <div class="flex items-center gap-3 min-w-0">
+                  <img src="${p.image || 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=50&q=80'}" alt="${p.name}" class="w-10 h-10 rounded-xl object-cover border border-slate-100 shrink-0">
+                  <div class="min-w-0">
+                    <h4 class="text-xs font-bold text-slate-800 truncate">${p.name}</h4>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                      <span class="text-[9px] font-mono font-black text-slate-400 uppercase tracking-wider">SKU: ${p.sku}</span>
+                      <span class="w-1 h-1 rounded-full bg-slate-200"></span>
+                      <span class="text-[10px] font-bold text-emerald-600">${priceText}</span>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" onclick="removeBogoProduct('${type}', '${p.sku}')" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition shrink-0" title="Hapus Produk">
+                  <i class="ti ti-trash text-sm"></i>
+                </button>
+              `;
+              listEl.appendChild(itemDiv);
+            });
+          }
+        } else {
+          if (emptyEl) emptyEl.classList.remove("hidden");
+          if (selectedEl) selectedEl.classList.add("hidden");
+        }
+      };
 
       window.handleTypeChange = function() {
         const type = document.getElementById("form-type").value;
@@ -720,17 +1010,22 @@
           return;
         }
 
+        const buySKU = document.getElementById("form-bogo-buy-sku").value;
+        const getSKU = document.getElementById("form-bogo-get-sku").value;
+
         products.forEach(p => {
           const tr = document.createElement("tr");
-          tr.className = "hover:bg-slate-50 transition duration-100 cursor-pointer product-row";
+          tr.className = "hover:bg-slate-50 transition duration-105 cursor-pointer product-row";
           tr.dataset.sku = p.sku.toLowerCase();
           tr.dataset.name = p.name.toLowerCase();
+
           tr.onclick = function(e) {
-            // Prevent double triggers if clicking check directly
             if (e.target.type === 'checkbox') return;
             const chk = document.getElementById(`chk-prod-${p.sku}`);
-            chk.checked = !chk.checked;
-            handleProductCheckChange(p.sku, p.name, chk.checked);
+            if (chk) {
+              chk.checked = !chk.checked;
+              handleProductCheckChange(p.sku, p.name, chk.checked);
+            }
           };
 
           tr.innerHTML = `
@@ -757,8 +1052,26 @@
 
       // --- MODAL DRAFT STATE LOGIC ---
       window.openProductSelectModal = function() {
+        currentModalMode = 'multi';
         modalDraftSKUs = [...selectedProductSKUs];
         
+        // Reset modal header & footer visuals for multi-select
+        const modalTitle = document.querySelector("#product-select-modal h3");
+        const modalSub = document.querySelector("#product-select-modal p");
+        const chipsRow = document.getElementById("selected-chips-container");
+        const counterBadge = document.getElementById("selected-count-badge");
+        const selectAllHeader = document.querySelector("#product-select-modal th input[type='checkbox']");
+        const saveBtn = document.querySelector("#product-select-modal button[onclick='saveModalSelection()']");
+
+        if (modalTitle) modalTitle.innerText = "Pilih Produk Target";
+        if (modalSub) modalSub.innerText = "Pilih produk furniture yang akan dikenakan promosi";
+        if (chipsRow) chipsRow.classList.remove("hidden");
+        if (counterBadge) counterBadge.classList.remove("hidden");
+        if (selectAllHeader) selectAllHeader.parentNode.classList.remove("invisible");
+        if (saveBtn) saveBtn.classList.remove("hidden");
+
+        renderProductSelectorList();
+
         // Sync checkboxes in modal with draft SKUs
         const products = BizmateDB.getProducts();
         products.forEach(p => {
@@ -769,6 +1082,63 @@
         });
 
         updateModalChips();
+
+        const modal = document.getElementById("product-select-modal");
+        const card = document.getElementById("modal-card");
+        
+        modal.classList.remove("hidden", "pointer-events-none");
+        setTimeout(() => {
+          modal.classList.add("opacity-100");
+          card.classList.remove("scale-95", "opacity-0", "translate-y-4");
+          card.classList.add("scale-100", "opacity-100", "translate-y-0");
+        }, 10);
+      };
+
+      window.openBogoProductModal = function(type) {
+        currentModalMode = type === 'buy' ? 'bogo_buy' : 'bogo_get';
+        
+        // Read current SKUs from hidden input
+        const inputId = type === 'buy' ? 'form-bogo-buy-sku' : 'form-bogo-get-sku';
+        const currentSKUs = document.getElementById(inputId).value;
+        modalDraftSKUs = currentSKUs ? currentSKUs.split(",") : [];
+
+        // Set titles/headers in modal dynamically
+        const modalTitle = document.querySelector("#product-select-modal h3");
+        const modalSub = document.querySelector("#product-select-modal p");
+        const chipsRow = document.getElementById("selected-chips-container");
+        const counterBadge = document.getElementById("selected-count-badge");
+        const selectAllHeader = document.querySelector("#product-select-modal th input[type='checkbox']");
+        const saveBtn = document.querySelector("#product-select-modal button[onclick='saveModalSelection()']");
+
+        if (type === 'buy') {
+          if (modalTitle) modalTitle.innerText = "Pilih Produk Pembelian";
+          if (modalSub) modalSub.innerText = "Pilih satu atau lebih produk utama yang harus dibeli oleh pelanggan";
+        } else {
+          if (modalTitle) modalTitle.innerText = "Pilih Produk Bonus";
+          if (modalSub) modalSub.innerText = "Pilih satu atau lebih produk bonus gratis yang didapat oleh pelanggan";
+        }
+        
+        if (chipsRow) chipsRow.classList.remove("hidden");
+        if (counterBadge) counterBadge.classList.remove("hidden");
+        if (selectAllHeader) selectAllHeader.parentNode.classList.remove("invisible");
+        if (saveBtn) saveBtn.classList.remove("hidden");
+
+        renderProductSelectorList();
+
+        // Sync checkboxes in modal with draft SKUs
+        const products = BizmateDB.getProducts();
+        products.forEach(p => {
+          const chk = document.getElementById(`chk-prod-${p.sku}`);
+          if (chk) {
+            chk.checked = modalDraftSKUs.includes(p.sku);
+          }
+        });
+
+        updateModalChips();
+
+        // Reset search input
+        document.getElementById("product-search").value = "";
+        filterProductSelector();
 
         const modal = document.getElementById("product-select-modal");
         const card = document.getElementById("modal-card");
@@ -873,8 +1243,16 @@
       };
 
       window.saveModalSelection = function() {
-        selectedProductSKUs = [...modalDraftSKUs];
-        renderSelectedProductsTable();
+        if (currentModalMode === 'multi') {
+          selectedProductSKUs = [...modalDraftSKUs];
+          renderSelectedProductsTable();
+        } else if (currentModalMode === 'bogo_buy') {
+          document.getElementById("form-bogo-buy-sku").value = modalDraftSKUs.join(",");
+          updateBogoCard('buy', modalDraftSKUs);
+        } else if (currentModalMode === 'bogo_get') {
+          document.getElementById("form-bogo-get-sku").value = modalDraftSKUs.join(",");
+          updateBogoCard('get', modalDraftSKUs);
+        }
         closeProductSelectModal();
       };
 
@@ -1094,6 +1472,10 @@
         renderSelectedProductsTable();
       };
 
+      // Initialize BOGO empty cards
+      updateBogoCard('buy', []);
+      updateBogoCard('get', []);
+
       // Render the product selection list inside the modal
       renderProductSelectorList();
 
@@ -1163,6 +1545,20 @@
         // Trigger handleCategoryChange
         handleCategoryChange(category);
 
+        if (category === 'bogo') {
+          const buySKUString = promo.bundlingBuySKUs ? promo.bundlingBuySKUs.join(",") : (promo.bogoBuySKU || "");
+          const getSKUString = promo.bundlingGiftSKUs ? promo.bundlingGiftSKUs.join(",") : (promo.bogoGetSKU || "");
+          
+          document.getElementById("form-bogo-buy-sku").value = buySKUString;
+          document.getElementById("form-bogo-get-sku").value = getSKUString;
+
+          const buySKUs = buySKUString ? buySKUString.split(",") : [];
+          const getSKUs = getSKUString ? getSKUString.split(",") : [];
+
+          updateBogoCard('buy', buySKUs);
+          updateBogoCard('get', getSKUs);
+        }
+
         // Handle scope
         const scope = promo.scope || "all";
         const scopeRadio = document.querySelector(`input[name="promo-scope"][value="${scope}"]`);
@@ -1174,7 +1570,7 @@
         // Restore individual discounts or fallback
         productDiscounts = promo.productDiscounts || {};
 
-        if (scope === 'specific' && promo.appliedProducts) {
+        if (category !== 'bogo' && scope === 'specific' && promo.appliedProducts) {
           selectedProductSKUs = [...promo.appliedProducts];
           
           // Pre-populate productDiscounts fallback for older campaigns
@@ -1218,24 +1614,36 @@
         const id = document.getElementById("promo-id").value;
         const name = document.getElementById("form-name").value.trim();
         const code = document.getElementById("form-code").value.trim().toUpperCase();
-        const type = document.getElementById("form-type").value;
-        const value = parseInt(document.getElementById("form-value").value);
-        const minPurchase = parseInt(document.getElementById("form-min").value);
-        const maxUsage = parseInt(document.getElementById("form-max").value);
-        const startDate = document.getElementById("form-start-date").value;
-        const expiry = document.getElementById("form-expiry").value;
-        const active = document.getElementById("form-active").value === "true";
-        const scope = document.querySelector('input[name="promo-scope"]:checked').value;
         const category = document.querySelector('input[name="promo-category"]:checked').value;
+        
+        let type = document.getElementById("form-type").value;
+        let value = parseInt(document.getElementById("form-value").value) || 0;
+        let scope = document.querySelector('input[name="promo-scope"]:checked').value;
+
+        if (category === 'bogo') {
+          const buySKU = document.getElementById("form-bogo-buy-sku").value;
+          const getSKU = document.getElementById("form-bogo-get-sku").value;
+          if (!buySKU) {
+            alert('Silakan pilih produk pembelian terlebih dahulu.');
+            return;
+          }
+          if (!getSKU) {
+            alert('Silakan pilih produk bonus terlebih dahulu.');
+            return;
+          }
+          type = 'Promo Bundling & Gift';
+          value = 0;
+          scope = 'specific';
+        }
 
         // Diskon Persen validation
-        if ((type === 'Diskon Persen' || type === 'Flash Sale') && value > 100) {
+        if (category !== 'bogo' && (type === 'Diskon Persen' || type === 'Flash Sale') && value > 100) {
           alert('Diskon persentase tidak boleh melebihi 100%');
           return;
         }
 
         // Specific scope validation
-        if (scope === 'specific' && selectedProductSKUs.length === 0) {
+        if (category !== 'bogo' && scope === 'specific' && selectedProductSKUs.length === 0) {
           alert('Silakan pilih minimal 1 produk target spesifik yang dipromosikan.');
           return;
         }
@@ -1246,15 +1654,30 @@
           category,
           type,
           value,
-          minPurchase,
-          maxUsage,
-          startDate,
-          expiry,
-          active,
+          minPurchase: parseInt(document.getElementById("form-min").value) || 0,
+          maxUsage: parseInt(document.getElementById("form-max").value) || 100,
+          startDate: document.getElementById("form-start-date").value,
+          expiry: document.getElementById("form-expiry").value,
+          active: document.getElementById("form-active").value === "true",
           scope,
           appliedProducts: scope === 'specific' ? selectedProductSKUs : [],
           productDiscounts: scope === 'specific' ? productDiscounts : {}
         };
+
+        if (category === 'bogo') {
+          const buySKUs = document.getElementById("form-bogo-buy-sku").value.split(",");
+          const getSKUs = document.getElementById("form-bogo-get-sku").value.split(",");
+          
+          promoData.category = 'bundling';
+          promoData.type = 'Promo Bundling & Gift';
+          promoData.bundlingBuySKUs = buySKUs;
+          promoData.bundlingGiftSKUs = getSKUs;
+          promoData.appliedProducts = [...buySKUs, ...getSKUs];
+          
+          // Legacy fallback
+          promoData.bogoBuySKU = buySKUs[0] || "";
+          promoData.bogoGetSKU = getSKUs[0] || "";
+        }
 
         if (type === 'Flash Sale') {
           promoData.isFlashSale = true;

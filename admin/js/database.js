@@ -311,7 +311,8 @@ const SEED_PROMOS = [
   { id: 'PRM-001', code: 'GRATISONGKIR', name: 'Gratis Ongkir Seluruh Jawa', type: 'Gratis Ongkir', value: 20000, minPurchase: 150000, active: true, usageCount: 42, maxUsage: 100, startDate: '2026-05-01', expiry: '2026-06-30', scope: 'all', appliedProducts: [] },
   { id: 'PRM-002', code: 'BIZMATE10', name: 'Diskon Spesial 10% Velvet', type: 'Diskon Persen', value: 10, minPurchase: 500000, active: true, usageCount: 15, maxUsage: 50, startDate: '2026-05-10', expiry: '2026-06-15', scope: 'specific', appliedProducts: ['SFA-VLV-002', 'CHR-RED-001', 'TBL-JTI-003', 'CHR-OUT-004', 'SFA-MIN-005'] },
   { id: 'PRM-003', code: 'MEBELHEMAT', name: 'Potongan Harga Khusus Kursi Telur', type: 'Potongan Harga', value: 100000, minPurchase: 2000000, active: false, usageCount: 8, maxUsage: 10, startDate: '2026-05-01', expiry: '2026-05-18', scope: 'specific', appliedProducts: ['CHR-RED-001'] },
-  { id: 'PRM-004', code: 'FLASHSALE50', name: 'Flash Sale Kilat Kursi & Sofa', type: 'Flash Sale', value: 50, minPurchase: 0, active: true, usageCount: 5, maxUsage: 30, startDate: '2026-05-20', expiry: '2026-06-25', scope: 'specific', appliedProducts: ['SFA-VLV-002'], isFlashSale: true, startTime: '15:00', endTime: '18:00', tagline: 'Diskon Kilat Sofa Velvet 50%!' }
+  { id: 'PRM-004', code: 'FLASHSALE50', name: 'Flash Sale Kilat Kursi & Sofa', type: 'Flash Sale', value: 50, minPurchase: 0, active: true, usageCount: 5, maxUsage: 30, startDate: '2026-05-20', expiry: '2026-06-25', scope: 'specific', appliedProducts: ['SFA-VLV-002'], isFlashSale: true, startTime: '15:00', endTime: '18:00', tagline: 'Diskon Kilat Sofa Velvet 50%!' },
+  { id: 'PRM-005', code: 'BUNDLINGPACK', name: 'Beli Sofa Velvet & Kursi Santai Gratis Meja Kopi Jati', type: 'Promo Bundling & Gift', value: 0, minPurchase: 0, active: true, usageCount: 12, maxUsage: 50, startDate: '2026-05-15', expiry: '2026-06-30', scope: 'specific', appliedProducts: ['SFA-VLV-002', 'CHR-RED-001', 'TBL-JTI-003'], category: 'bundling', bundlingBuySKUs: ['SFA-VLV-002', 'CHR-RED-001'], bundlingGiftSKUs: ['TBL-JTI-003'], bogoBuySKU: 'SFA-VLV-002', bogoGetSKU: 'TBL-JTI-003' }
 ];
 
 const SEED_SETTINGS = {
@@ -391,7 +392,7 @@ function initDatabase() {
     localStorage.setItem('bizmate_cms_landing', JSON.stringify(SEED_CMS_LANDING));
   }
 
-  if (!promos || !promos.includes('startDate') || !promos.includes('CHR-OUT-004')) {
+  if (!promos || !promos.includes('startDate') || !promos.includes('BUNDLINGPACK')) {
     localStorage.setItem('bizmate_promos', JSON.stringify(SEED_PROMOS));
   }
 

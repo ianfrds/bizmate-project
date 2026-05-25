@@ -5,13 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bizmate - Data Pelanggan</title>
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  
+
   <!-- Shared LocalStorage Database & Sidebar Component -->
   <script src="js/database.js"></script>
   <script src="js/theme.js"></script>
@@ -50,29 +52,37 @@
 <body class="min-h-screen flex overflow-x-hidden selection:bg-brand-blueRoyal selection:text-white">
 
   <!-- ==================== SIDEBAR ==================== -->
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100">
+  </aside>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
   <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
 
     <!-- Topbar -->
-    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+    <header
+      class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
       <div class="flex items-center gap-4 flex-grow">
-        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
+        <button onclick="toggleSidebar()"
+          class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition">
           <i class="ti ti-menu-2 text-xl"></i>
         </button>
         <div class="flex items-center gap-2 font-outfit hidden sm:flex">
-          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span
+            class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
           <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
         </div>
       </div>
 
       <div class="flex items-center gap-4 shrink-0">
-        <button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi">
+        <button id="js-notification-btn"
+          class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative"
+          aria-label="Notifikasi">
           <i class="ti ti-bell text-xl"></i>
         </button>
         <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
-        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+        <a href="../index.html"
+          class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Live Storefront
           <i class="ti ti-external-link text-sm"></i>
@@ -82,25 +92,28 @@
 
     <!-- Main Content -->
     <main class="flex-grow p-4 sm:p-8 w-full max-w-[1400px] mx-auto space-y-8">
-      
+
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h3 class="font-outfit font-black text-2xl text-slate-800">Master Data Pelanggan</h3>
-          <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Database Pelanggan Konsolidasi & Riwayat Transaksi</p>
+          <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Database Pelanggan Konsolidasi &
+            Riwayat Transaksi</p>
         </div>
       </div>
-      
+
       <!-- Stats Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
+
         <!-- Total Customers -->
         <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200/80 shadow-soft flex items-center gap-5">
-          <div class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl shadow-sm">
+          <div
+            class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl shadow-sm">
             <i class="ti ti-users-group"></i>
           </div>
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Total Pelanggan</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Total Pelanggan
+            </p>
             <h3 id="stat-total" class="font-outfit font-black text-2xl text-slate-800">8,596</h3>
             <p class="text-[10px] text-emerald-500 font-bold flex items-center gap-0.5 mt-0.5">
               <i class="ti ti-trending-up"></i> +12% bulan ini
@@ -110,11 +123,13 @@
 
         <!-- Active Customers -->
         <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200/80 shadow-soft flex items-center gap-5">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shadow-sm">
+          <div
+            class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shadow-sm">
             <i class="ti ti-user-check"></i>
           </div>
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Pelanggan Aktif</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Pelanggan Aktif
+            </p>
             <h3 id="stat-active" class="font-outfit font-black text-2xl text-slate-800">8,591</h3>
             <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Sedang bertransaksi aktif</p>
           </div>
@@ -122,11 +137,13 @@
 
         <!-- New Customers This Month -->
         <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200/80 shadow-soft flex items-center gap-5">
-          <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-sm">
+          <div
+            class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-sm">
             <i class="ti ti-user-plus"></i>
           </div>
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Pelanggan Baru</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Pelanggan Baru
+            </p>
             <h3 class="font-outfit font-black text-2xl text-slate-800">42</h3>
             <p class="text-[10px] text-amber-500 font-bold flex items-center gap-0.5 mt-0.5">
               <i class="ti ti-star"></i> Pendaftaran baru
@@ -136,11 +153,13 @@
 
         <!-- Avg Spent -->
         <div class="bg-white rounded-3xl py-8 px-6 border border-slate-200/80 shadow-soft flex items-center gap-5">
-          <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl shadow-sm">
+          <div
+            class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl shadow-sm">
             <i class="ti ti-wallet"></i>
           </div>
           <div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Rata-rata Belanja</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Rata-rata
+              Belanja</p>
             <h3 class="font-outfit font-black text-xl text-slate-800">Rp 1.450.000</h3>
             <p class="text-[10px] text-emerald-500 font-bold flex items-center gap-0.5 mt-0.5">
               <i class="ti ti-trending-up"></i> Meningkat 2.4%
@@ -152,23 +171,28 @@
 
       <!-- Main Section: Table -->
       <div class="bg-white rounded-3xl border border-slate-200/80 shadow-card overflow-hidden">
-        
+
         <!-- Header, Filters & Search -->
-        <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/20">
-          
+        <div
+          class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/20">
+
           <!-- Search & Active filters -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-grow max-w-2xl">
             <!-- Search Bar -->
             <div class="relative flex-grow">
               <i class="ti ti-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
-              <input id="search-input" type="text" placeholder="Cari nama, email, telepon, atau alamat pelanggan..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-white transition duration-200 shadow-soft">
+              <input id="search-input" type="text" placeholder="Cari nama, email, telepon, atau alamat pelanggan..."
+                class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-white transition duration-200 shadow-soft">
             </div>
-            
+
             <!-- Filter Tabs inside search row -->
             <div class="flex items-center p-0.5 bg-slate-100 rounded-xl shrink-0">
-              <button onclick="setFilter('Semua')" id="filter-all" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 bg-white text-slate-800 shadow-soft">Semua</button>
-              <button onclick="setFilter('Aktif')" id="filter-aktif" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800">Aktif</button>
-              <button onclick="setFilter('Suspend')" id="filter-suspend" class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800">Suspend</button>
+              <button onclick="setFilter('Semua')" id="filter-all"
+                class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 bg-white text-slate-800 shadow-soft">Semua</button>
+              <button onclick="setFilter('Aktif')" id="filter-aktif"
+                class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800">Aktif</button>
+              <button onclick="setFilter('Suspend')" id="filter-suspend"
+                class="px-4 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-500 hover:text-slate-800">Suspend</button>
             </div>
           </div>
 
@@ -178,7 +202,8 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="border-b border-slate-100 bg-slate-50/50 text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit">
+              <tr
+                class="border-b border-slate-100 bg-slate-50/50 text-[10px] font-bold text-slate-400 uppercase tracking-widest font-outfit">
                 <th class="py-6 px-6">Pelanggan</th>
                 <th class="py-6 px-6">Kontak WhatsApp</th>
                 <th class="py-6 px-6">Alamat</th>
@@ -194,12 +219,16 @@
         </div>
 
         <!-- Pagination Footer -->
-        <div class="p-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-bold bg-slate-50/20">
+        <div
+          class="p-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-bold bg-slate-50/20">
           <p id="showing-text">Menampilkan 5 dari 5 Pelanggan</p>
           <div class="flex items-center gap-2">
-            <button class="p-2 border border-slate-200 hover:bg-slate-50 rounded-lg text-slate-400 cursor-not-allowed"><i class="ti ti-chevron-left"></i></button>
+            <button
+              class="p-2 border border-slate-200 hover:bg-slate-50 rounded-lg text-slate-400 cursor-not-allowed"><i
+                class="ti ti-chevron-left"></i></button>
             <button class="px-3.5 py-2 bg-brand-blueRoyal text-white rounded-lg">1</button>
-            <button class="p-2 border border-slate-200 hover:bg-slate-50 rounded-lg"><i class="ti ti-chevron-right"></i></button>
+            <button class="p-2 border border-slate-200 hover:bg-slate-50 rounded-lg"><i
+                class="ti ti-chevron-right"></i></button>
           </div>
         </div>
 
@@ -209,8 +238,10 @@
   </div>
 
   <!-- ==================== MODAL CUSTOMER ==================== -->
-  <div id="customer-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden transition-all duration-300">
-    <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl w-full max-w-lg mx-4 transform scale-95 opacity-0 transition-all duration-300 overflow-hidden">
+  <div id="customer-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden transition-all duration-300">
+    <div
+      class="bg-white rounded-3xl border border-slate-200 shadow-2xl w-full max-w-lg mx-4 transform scale-95 opacity-0 transition-all duration-300 overflow-hidden">
       <!-- Modal Header -->
       <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
         <h3 id="modal-title" class="font-outfit font-black text-lg text-slate-800">Tambah Pelanggan Baru</h3>
@@ -222,32 +253,44 @@
       <!-- Modal Body Form -->
       <form id="customer-form" class="p-6 space-y-4">
         <input type="hidden" id="customer-id">
-        
+
         <div>
-          <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Nama Lengkap *</label>
-          <input id="form-name" type="text" required placeholder="Contoh: P*******n S****e" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+          <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Nama
+            Lengkap *</label>
+          <input id="form-name" type="text" required placeholder="Contoh: P*******n S****e"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Email *</label>
-            <input id="form-email" type="email" required placeholder="na***@***.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Email
+              *</label>
+            <input id="form-email" type="email" required placeholder="na***@***.com"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
           </div>
           <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">WhatsApp *</label>
-            <input id="form-phone" type="tel" required placeholder="628123456789" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+            <label
+              class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">WhatsApp
+              *</label>
+            <input id="form-phone" type="tel" required placeholder="628123456789"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
           </div>
         </div>
 
         <div>
-          <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Alamat Pengiriman</label>
-          <textarea id="form-address" rows="3" placeholder="Masukkan alamat lengkap rumah/toko pelanggan..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200 resize-none"></textarea>
+          <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Alamat
+            Pengiriman</label>
+          <textarea id="form-address" rows="3" placeholder="Masukkan alamat lengkap rumah/toko pelanggan..."
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200 resize-none"></textarea>
         </div>
 
         <!-- Buttons -->
         <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
-          <button type="button" onclick="closeModal()" class="px-5 py-3 border border-slate-200 hover:bg-slate-50 text-slate-500 font-bold rounded-2xl text-xs transition duration-200 uppercase tracking-wider font-outfit">Batal</button>
-          <button type="submit" class="px-5 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 shadow-lg shadow-brand-blueRoyal/20 uppercase tracking-wider font-outfit">Simpan Pelanggan</button>
+          <button type="button" onclick="closeModal()"
+            class="px-5 py-3 border border-slate-200 hover:bg-slate-50 text-slate-500 font-bold rounded-2xl text-xs transition duration-200 uppercase tracking-wider font-outfit">Batal</button>
+          <button type="submit"
+            class="px-5 py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 shadow-lg shadow-brand-blueRoyal/20 uppercase tracking-wider font-outfit">Simpan
+            Pelanggan</button>
         </div>
       </form>
     </div>
@@ -255,7 +298,7 @@
 
   <!-- JavaScript Logika Bisnis -->
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       let activeFilter = 'Semua';
       let searchQuery = '';
 
@@ -264,7 +307,7 @@
 
       // Hook search inputs
       const searchInput = document.getElementById("search-input");
-      searchInput.addEventListener("input", function() {
+      searchInput.addEventListener("input", function () {
         searchQuery = searchInput.value.toLowerCase().trim();
         renderTable();
       });
@@ -273,18 +316,18 @@
       const modal = document.getElementById("customer-modal");
       const modalContent = modal.querySelector(".transform");
 
-      window.openAddModal = function() {
+      window.openAddModal = function () {
         document.getElementById("customer-form").reset();
         document.getElementById("customer-id").value = "";
         document.getElementById("modal-title").innerText = "Tambah Pelanggan Baru";
-        
+
         modal.classList.remove("hidden");
         setTimeout(() => {
           modalContent.classList.remove("scale-95", "opacity-0");
         }, 50);
       };
 
-      window.openEditModal = function(id) {
+      window.openEditModal = function (id) {
         const customers = BizmateDB.getCustomers();
         const customer = customers.find(c => c.id === id);
         if (!customer) return;
@@ -302,7 +345,7 @@
         }, 50);
       };
 
-      window.closeModal = function() {
+      window.closeModal = function () {
         modalContent.classList.add("scale-95", "opacity-0");
         setTimeout(() => {
           modal.classList.add("hidden");
@@ -310,9 +353,9 @@
       };
 
       // Set filter tab
-      window.setFilter = function(filter) {
+      window.setFilter = function (filter) {
         activeFilter = filter;
-        
+
         // Reset button classes
         ['Semua', 'Aktif', 'Suspend'].forEach(f => {
           const btn = document.getElementById(`filter-${f.toLowerCase()}`);
@@ -328,7 +371,7 @@
 
       // Form Submit Handler
       const form = document.getElementById("customer-form");
-      form.addEventListener("submit", function(e) {
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const id = document.getElementById("customer-id").value;
@@ -353,7 +396,7 @@
       });
 
       // Actions
-      window.deleteCustomer = function(id, name) {
+      window.deleteCustomer = function (id, name) {
         if (confirm(`Apakah Anda yakin ingin menghapus pelanggan '${name}' dari database?`)) {
           BizmateDB.deleteCustomer(id);
           showToast(`Pelanggan '${name}' berhasil dihapus!`);
@@ -362,7 +405,7 @@
         }
       };
 
-      window.toggleStatus = function(id, name) {
+      window.toggleStatus = function (id, name) {
         BizmateDB.toggleCustomerStatus(id);
         const customers = BizmateDB.getCustomers();
         const current = customers.find(c => c.id === id);
@@ -372,7 +415,7 @@
       };
 
       // Copy clipboard utility
-      window.copyText = function(text, type) {
+      window.copyText = function (text, type) {
         navigator.clipboard.writeText(text);
         showToast(`${type} berhasil disalin ke papan klip!`);
       };
@@ -412,7 +455,7 @@
       function updateStats() {
         const customers = BizmateDB.getCustomers();
         document.getElementById("stat-total").innerText = (customers.length + 8586).toLocaleString('id-ID');
-        
+
         const activeCount = customers.filter(c => c.status === 'Aktif').length;
         document.getElementById("stat-active").innerText = (activeCount + 8586).toLocaleString('id-ID');
       }
@@ -421,12 +464,12 @@
       function renderTable() {
         const customers = BizmateDB.getCustomers();
         const tableBody = document.getElementById("customers-table-body");
-        
+
         // Filter logic
         let filtered = customers.filter(c => {
           // Filter Tabs
           if (activeFilter !== 'Semua' && c.status !== activeFilter) return false;
-          
+
           // Search text
           if (searchQuery) {
             const matchesName = c.name.toLowerCase().includes(searchQuery);
@@ -435,7 +478,7 @@
             const matchesAddress = c.address && c.address.toLowerCase().includes(searchQuery);
             return matchesName || matchesEmail || matchesPhone || matchesAddress;
           }
-          
+
           return true;
         });
 
@@ -469,8 +512,8 @@
           const charCodeSum = c.name.charCodeAt(0) + (c.name.charCodeAt(1) || 0);
           const pickedBg = bgColors[charCodeSum % bgColors.length];
 
-          const statusClass = c.status === 'Aktif' 
-            ? 'bg-emerald-50 text-emerald-600 border border-emerald-200/50' 
+          const statusClass = c.status === 'Aktif'
+            ? 'bg-emerald-50 text-emerald-600 border border-emerald-200/50'
             : 'bg-rose-50 text-rose-600 border border-rose-200/50';
 
           const formattedPhone = c.phone.startsWith('0') ? '62' + c.phone.substring(1) : c.phone;
@@ -526,11 +569,12 @@
 
         document.getElementById("showing-text").innerText = `Menampilkan ${filtered.length} dari ${customers.length} Pelanggan`;
       }
-      
+
       // Update stats initially
       updateStats();
     });
   </script>
 
 </body>
+
 </html>

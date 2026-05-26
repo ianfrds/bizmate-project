@@ -299,6 +299,165 @@
               </div>
             </div>
           </div>
+
+          <!-- BENTO BLOCK 3: Jam Operasional & Status Toko -->
+          <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-7 space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-amber-50 text-amber-500 rounded-xl">
+                  <i class="ti ti-clock text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Jam Operasional &amp; Status Toko</h3>
+                  <p class="text-xs text-slate-400 font-medium mt-1">Konfigurasi hari kerja, jam operasional, dan Mode Libur.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- HOLIDAY MODE SUB-CARD -->
+            <div class="p-5 bg-amber-50/40 border border-amber-200/50 rounded-2xl flex items-center justify-between gap-4">
+              <div class="space-y-1">
+                <span class="text-xs font-black text-amber-800 uppercase tracking-wider flex items-center gap-1">
+                  <i class="ti ti-plane-departure"></i> Mode Libur Toko (Holiday Mode)
+                </span>
+                <span class="block text-[11px] text-amber-600 font-medium leading-relaxed">
+                  Aktifkan untuk menutup toko sementara. Seluruh halaman e-commerce akan menampilkan banner libur dan proses checkout dinonaktifkan sepenuhnya.
+                </span>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer shrink-0" aria-label="Aktifkan Mode Libur Toko">
+                <input type="checkbox" id="check-shop-holiday" class="sr-only peer">
+                <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+              </label>
+            </div>
+
+            <!-- OPERATIONAL HOURS INPUT MATRIX -->
+            <div class="space-y-3">
+              <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Jadwal Operasional Mingguan</span>
+              <div class="border border-slate-100 rounded-2xl overflow-hidden divide-y divide-slate-100 bg-slate-50/10">
+                
+                <!-- Headers -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 bg-slate-50/80 text-[10px] font-black text-slate-400 uppercase tracking-wider">
+                  <div class="col-span-4">Hari</div>
+                  <div class="col-span-3 text-center">Status</div>
+                  <div class="col-span-5 text-center">Jam Buka - Tutup</div>
+                </div>
+
+                <!-- Days Loop -->
+                <!-- Senin -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-white font-medium text-xs text-slate-700" id="row-hours-Senin">
+                  <div class="col-span-4 font-bold">Senin</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Senin">
+                      <input type="checkbox" id="hour-active-Senin" class="sr-only peer" checked onchange="toggleDayHours('Senin')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center" id="picker-wrapper-Senin">
+                    <input type="time" id="hour-open-Senin" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Senin">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Senin" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="17:00" aria-label="Jam tutup Senin">
+                  </div>
+                </div>
+
+                <!-- Selasa -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-white font-medium text-xs text-slate-700" id="row-hours-Selasa">
+                  <div class="col-span-4 font-bold">Selasa</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Selasa">
+                      <input type="checkbox" id="hour-active-Selasa" class="sr-only peer" checked onchange="toggleDayHours('Selasa')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center" id="picker-wrapper-Selasa">
+                    <input type="time" id="hour-open-Selasa" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Selasa">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Selasa" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="17:00" aria-label="Jam tutup Selasa">
+                  </div>
+                </div>
+
+                <!-- Rabu -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-white font-medium text-xs text-slate-700" id="row-hours-Rabu">
+                  <div class="col-span-4 font-bold">Rabu</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Rabu">
+                      <input type="checkbox" id="hour-active-Rabu" class="sr-only peer" checked onchange="toggleDayHours('Rabu')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center" id="picker-wrapper-Rabu">
+                    <input type="time" id="hour-open-Rabu" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Rabu">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Rabu" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="17:00" aria-label="Jam tutup Rabu">
+                  </div>
+                </div>
+
+                <!-- Kamis -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-white font-medium text-xs text-slate-700" id="row-hours-Kamis">
+                  <div class="col-span-4 font-bold">Kamis</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Kamis">
+                      <input type="checkbox" id="hour-active-Kamis" class="sr-only peer" checked onchange="toggleDayHours('Kamis')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center" id="picker-wrapper-Kamis">
+                    <input type="time" id="hour-open-Kamis" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Kamis">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Kamis" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="17:00" aria-label="Jam tutup Kamis">
+                  </div>
+                </div>
+
+                <!-- Jumat -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-white font-medium text-xs text-slate-700" id="row-hours-Jumat">
+                  <div class="col-span-4 font-bold">Jumat</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Jumat">
+                      <input type="checkbox" id="hour-active-Jumat" class="sr-only peer" checked onchange="toggleDayHours('Jumat')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center" id="picker-wrapper-Jumat">
+                    <input type="time" id="hour-open-Jumat" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Jumat">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Jumat" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="17:00" aria-label="Jam tutup Jumat">
+                  </div>
+                </div>
+
+                <!-- Sabtu -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-white font-medium text-xs text-slate-700" id="row-hours-Sabtu">
+                  <div class="col-span-4 font-bold">Sabtu</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Sabtu">
+                      <input type="checkbox" id="hour-active-Sabtu" class="sr-only peer" checked onchange="toggleDayHours('Sabtu')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center" id="picker-wrapper-Sabtu">
+                    <input type="time" id="hour-open-Sabtu" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Sabtu">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Sabtu" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="15:00" aria-label="Jam tutup Sabtu">
+                  </div>
+                </div>
+
+                <!-- Minggu -->
+                <div class="grid grid-cols-12 gap-2 p-3.5 items-center bg-slate-50/50 font-medium text-xs text-slate-700" id="row-hours-Minggu">
+                  <div class="col-span-4 font-bold text-slate-450">Minggu</div>
+                  <div class="col-span-3 flex justify-center">
+                    <label class="relative inline-flex items-center cursor-pointer" aria-label="Status Minggu">
+                      <input type="checkbox" id="hour-active-Minggu" class="sr-only peer" onchange="toggleDayHours('Minggu')">
+                      <div class="w-8 h-4 bg-slate-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                    </label>
+                  </div>
+                  <div class="col-span-5 flex items-center gap-1.5 justify-center opacity-40 pointer-events-none" id="picker-wrapper-Minggu">
+                    <input type="time" id="hour-open-Minggu" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="09:00" aria-label="Jam buka Minggu">
+                    <span class="text-slate-400 font-bold">-</span>
+                    <input type="time" id="hour-close-Minggu" class="px-2 py-1 border border-slate-200 rounded-lg text-[11px] focus:outline-none focus:border-brand-blueRoyal" value="12:00" aria-label="Jam tutup Minggu">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- RIGHT SIDE -->
@@ -321,6 +480,26 @@
             </label>
             <input id="input-shop-logo" type="file" accept="image/png,image/jpeg" class="hidden"
               onchange="handleLogoUpload(event)">
+          </div>
+
+          <!-- Favicon toko -->
+          <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-5">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+              <div class="p-2.5 bg-indigo-50 text-indigo-650 rounded-xl"><i class="ti ti-brand-chrome text-lg"></i></div>
+              <div>
+                <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Favicon Toko</h3>
+                <p class="text-xs text-slate-400 font-medium mt-1">Klik kotak untuk mengganti favicon (.ico/.png)</p>
+              </div>
+            </div>
+            <label for="input-shop-favicon"
+              class="min-h-[160px] rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/50 hover:bg-brand-blueLight/20 hover:border-brand-blueRoyal/30 transition cursor-pointer flex flex-col items-center justify-center text-center p-4 overflow-hidden">
+              <img id="shop-favicon-preview" class="hidden w-12 h-12 object-contain mb-2 rounded-lg border border-slate-100 p-1 bg-white"
+                alt="Preview Favicon Toko">
+              <i id="shop-favicon-placeholder" class="ti ti-world-upload text-3xl text-slate-300 mb-2"></i>
+              <span class="text-xs font-bold text-slate-400">Upload gambar ICO/PNG</span>
+            </label>
+            <input id="input-shop-favicon" type="file" accept="image/x-icon,image/png" class="hidden"
+              onchange="handleFaviconUpload(event)">
           </div>
 
           <!-- BENTO BLOCK: Color brand controls -->
@@ -519,12 +698,23 @@
   <script>
     let activeThemeId = 'royal-blue';
     let shopLogoData = '';
+    let shopFaviconData = '';
     let settingsMap = null;
     let settingsMarker = null;
 
     document.addEventListener('DOMContentLoaded', () => {
       loadSettingsToForm();
       renderThemeSelector();
+      
+      // Auto-trigger Holiday warning toast
+      const checkHoliday = document.getElementById('check-shop-holiday');
+      if (checkHoliday) {
+        checkHoliday.addEventListener('change', function() {
+          if (this.checked) {
+            alert('PERINGATAN DARI SISTEM:\nMode Libur Toko (Holiday Mode) telah diaktifkan! E-commerce Anda akan ditutup sementara untuk checkout pembeli.');
+          }
+        });
+      }
     });
 
     function loadSettingsToForm() {
@@ -555,6 +745,10 @@
 
       shopLogoData = config.shopLogo || '';
       updateLogoPreview(shopLogoData);
+      
+      shopFaviconData = config.shopFavicon || '';
+      updateFaviconPreview(shopFaviconData);
+
       document.getElementById('input-primary-color').value = (config.primaryColor || '#0c4cb4').toLowerCase();
       document.getElementById('input-primary-color-text').value = (config.primaryColor || '#0C4CB4').toUpperCase();
       document.getElementById('input-secondary-color').value = (config.secondaryColor || '#fa7315').toLowerCase();
@@ -573,6 +767,34 @@
       document.getElementById('check-enable-cod').checked = config.enableCod !== false;
       document.getElementById('check-enable-qris').checked = config.enableQris !== false;
       document.getElementById('check-enable-bank').checked = config.enableBankTransfer !== false;
+
+      // Holiday Mode
+      document.getElementById('check-shop-holiday').checked = !!config.shopHoliday;
+
+      // Operational Hours
+      const hours = config.operationalHours || {
+        'Senin': { active: true, open: '09:00', close: '17:00' },
+        'Selasa': { active: true, open: '09:00', close: '17:00' },
+        'Rabu': { active: true, open: '09:00', close: '17:00' },
+        'Kamis': { active: true, open: '09:00', close: '17:00' },
+        'Jumat': { active: true, open: '09:00', close: '17:00' },
+        'Sabtu': { active: true, open: '09:00', close: '15:00' },
+        'Minggu': { active: false, open: '09:00', close: '12:00' }
+      };
+
+      Object.keys(hours).forEach(day => {
+        const hObj = hours[day];
+        const activeChk = document.getElementById(`hour-active-${day}`);
+        const openInput = document.getElementById(`hour-open-${day}`);
+        const closeInput = document.getElementById(`hour-close-${day}`);
+        
+        if (activeChk) activeChk.checked = !!hObj.active;
+        if (openInput) openInput.value = hObj.open || '09:00';
+        if (closeInput) closeInput.value = hObj.close || '17:00';
+        
+        // Visual sync
+        toggleDayHours(day);
+      });
 
       // Active theme
       activeThemeId = config.activeTheme || 'royal-blue';
@@ -623,7 +845,12 @@
     function syncColorInput(type) {
       const colorInput = document.getElementById(type === 'primary' ? 'input-primary-color' : 'input-secondary-color');
       const textInput = document.getElementById(type === 'primary' ? 'input-primary-color-text' : 'input-secondary-color-text');
-      if (colorInput && textInput) textInput.value = colorInput.value.toUpperCase();
+      if (colorInput && textInput) {
+        textInput.value = colorInput.value.toUpperCase();
+      }
+      
+      // Auto select custom theme when colors are edited
+      selectTheme('custom');
     }
 
     function handleLogoUpload(event) {
@@ -636,6 +863,49 @@
       };
       reader.readAsDataURL(file);
     }
+
+    function handleFaviconUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        shopFaviconData = e.target.result;
+        updateFaviconPreview(shopFaviconData);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function updateFaviconPreview(src) {
+      const preview = document.getElementById('shop-favicon-preview');
+      const placeholder = document.getElementById('shop-favicon-placeholder');
+      if (!preview || !placeholder) return;
+      if (src) {
+        preview.src = src;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      } else {
+        preview.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      }
+    }
+
+    window.toggleDayHours = function(day) {
+      const activeChk = document.getElementById(`hour-active-${day}`);
+      const wrapper = document.getElementById(`picker-wrapper-${day}`);
+      const row = document.getElementById(`row-hours-${day}`);
+      if (activeChk && wrapper && row) {
+        const isActive = activeChk.checked;
+        if (isActive) {
+          wrapper.classList.remove('opacity-40', 'pointer-events-none');
+          row.classList.remove('bg-slate-50/50');
+          row.classList.add('bg-white');
+        } else {
+          wrapper.classList.add('opacity-40', 'pointer-events-none');
+          row.classList.remove('bg-white');
+          row.classList.add('bg-slate-50/50');
+        }
+      }
+    };
 
     function updateLogoPreview(src) {
       const preview = document.getElementById('shop-logo-preview');
@@ -704,6 +974,19 @@
         return;
       }
 
+      const operationalHours = {};
+      ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'].forEach(day => {
+        const activeChk = document.getElementById(`hour-active-${day}`);
+        const openInput = document.getElementById(`hour-open-${day}`);
+        const closeInput = document.getElementById(`hour-close-${day}`);
+        
+        operationalHours[day] = {
+          active: activeChk ? activeChk.checked : true,
+          open: openInput ? openInput.value : '09:00',
+          close: closeInput ? closeInput.value : '17:00'
+        };
+      });
+
       const updated = {
         shopName: nameInput,
         shopEmail: emailInput,
@@ -722,6 +1005,7 @@
         shopLatitude: document.getElementById('input-shop-latitude').value.trim(),
         shopLongitude: document.getElementById('input-shop-longitude').value.trim(),
         shopLogo: shopLogoData,
+        shopFavicon: shopFaviconData,
         primaryColor: document.getElementById('input-primary-color-text').value.trim(),
         secondaryColor: document.getElementById('input-secondary-color-text').value.trim(),
 
@@ -735,6 +1019,9 @@
         enableCod: document.getElementById('check-enable-cod').checked,
         enableQris: document.getElementById('check-enable-qris').checked,
         enableBankTransfer: document.getElementById('check-enable-bank').checked,
+
+        shopHoliday: document.getElementById('check-shop-holiday').checked,
+        operationalHours: operationalHours,
 
         activeTheme: activeThemeId
       };

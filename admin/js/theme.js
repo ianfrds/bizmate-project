@@ -12,33 +12,26 @@
       accent: '#fa7315',
       light: '#eef2ff'
     },
-    'emerald-mint': {
-      name: 'Emerald Mint',
+    'emerald': {
+      name: 'Emerald',
       primary: '#059669',
       primaryRgb: '5, 150, 105',
       accent: '#10b981',
       light: '#ecfdf5'
     },
-    'indigo-lavender': {
-      name: 'Indigo Lavender',
-      primary: '#6366f1',
-      primaryRgb: '99, 102, 241',
-      accent: '#8b5cf6',
-      light: '#e0e7ff'
+    'sunset-orange': {
+      name: 'Sunset Orange',
+      primary: '#ea580c',
+      primaryRgb: '234, 88, 12',
+      accent: '#f97316',
+      light: '#fff7ed'
     },
-    'stealth-gold': {
-      name: 'Stealth Gold',
-      primary: '#d97706',
-      primaryRgb: '217, 119, 6',
-      accent: '#f59e0b',
-      light: '#fef3c7'
-    },
-    'rose-quartz': {
-      name: 'Rose Quartz',
-      primary: '#db2777',
-      primaryRgb: '219, 39, 119',
-      accent: '#ec4899',
-      light: '#fdf2f8'
+    'velvet-purple': {
+      name: 'Velvet Purple',
+      primary: '#7c3aed',
+      primaryRgb: '124, 58, 237',
+      accent: '#c084fc',
+      light: '#faf5ff'
     }
   };
 
@@ -48,7 +41,7 @@
       const settingsRaw = localStorage.getItem('bizmate_settings');
       if (settingsRaw) {
         const s = JSON.parse(settingsRaw);
-        if (s && s.activeTheme && THEMES[s.activeTheme]) {
+        if (s && s.activeTheme && (THEMES[s.activeTheme] || s.activeTheme === 'custom')) {
           return s.activeTheme;
         }
       }
@@ -59,7 +52,37 @@
   }
 
   function applyTheme(themeId) {
-    const theme = THEMES[themeId] || THEMES['royal-blue'];
+    let theme;
+    if (themeId === 'custom') {
+      try {
+        const settingsRaw = localStorage.getItem('bizmate_settings');
+        const s = settingsRaw ? JSON.parse(settingsRaw) : {};
+        const p = s.primaryColor || '#0c4cb4';
+        const a = s.secondaryColor || '#fa7315';
+        
+        const hexToRgb = (hex) => {
+          const cleaned = hex.replace('#', '');
+          const r = parseInt(cleaned.substring(0, 2), 16);
+          const g = parseInt(cleaned.substring(2, 4), 16);
+          const b = parseInt(cleaned.substring(4, 6), 16);
+          return isNaN(r) || isNaN(g) || isNaN(b) ? '12, 76, 180' : `${r}, ${g}, ${b}`;
+        };
+        
+        const rgbStr = hexToRgb(p);
+        theme = {
+          name: 'Custom Brand',
+          primary: p,
+          primaryRgb: rgbStr,
+          accent: a,
+          light: `rgba(${rgbStr}, 0.05)`
+        };
+      } catch (err) {
+        theme = THEMES['royal-blue'];
+      }
+    } else {
+      theme = THEMES[themeId] || THEMES['royal-blue'];
+    }
+
     let styleEl = document.getElementById('bizmate-theme-styles');
     if (!styleEl) {
       styleEl = document.createElement('style');

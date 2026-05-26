@@ -261,6 +261,7 @@
               <div>
                 <label for="form-value" id="label-value" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-outfit">Nilai Potongan (Rp) *</label>
                 <input id="form-value" type="number" required min="1" placeholder="20000" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:border-brand-blueRoyal focus:ring-2 focus:ring-brand-blueRoyal/10 bg-slate-50/50 focus:bg-white transition duration-200">
+                <span id="value-helper-note" class="text-[10px] text-slate-400 font-semibold mt-1 block"></span>
               </div>
             </div>
 
@@ -920,6 +921,7 @@
         const valInput = document.getElementById("form-value");
         const valLabel = document.getElementById("label-value");
         const fsPanel = document.getElementById("flash-sale-panel");
+        const helperNote = document.getElementById("value-helper-note");
 
         if (type === 'Flash Sale') {
           fsPanel.classList.remove("hidden");
@@ -930,6 +932,7 @@
           valLabel.innerText = "Nilai Diskon Flash Sale (%) *";
           valInput.placeholder = "50";
           valInput.max = "100";
+          if (helperNote) helperNote.innerText = "Ketik persentase potongan harga kilat berjadwal (0-100%).";
         } else {
           fsPanel.classList.add("hidden");
           document.getElementById("form-start-time").required = false;
@@ -940,13 +943,16 @@
           if (type === 'Gratis Ongkir') {
             valLabel.innerText = "Subsidi Ongkir Maksimal (Rp) *";
             valInput.placeholder = "20000";
+            if (helperNote) helperNote.innerHTML = "Masukkan nominal subsidi maks. Ketik <strong>0</strong> atau kosongkan untuk gratis ongkir 100% tanpa batas.";
           } else if (type === 'Diskon Persen') {
             valLabel.innerText = "Nilai Diskon (%) *";
             valInput.placeholder = "10";
             valInput.max = "100";
+            if (helperNote) helperNote.innerText = "Ketik nilai persentase diskon langsung (0-100%).";
           } else {
             valLabel.innerText = "Nilai Potongan Harga (Rp) *";
             valInput.placeholder = "100000";
+            if (helperNote) helperNote.innerText = "Ketik nilai nominal rupiah potongan harga tetap.";
           }
         }
 
@@ -1302,10 +1308,17 @@
           defaultType = 'percentage';
         }
 
-        // Clean up unselected overrides
-        Object.keys(productDiscounts).forEach(sku => {
-          if (!selectedProductSKUs.includes(sku)) {
-            delete productDiscounts[sku];
+        // Clean up unselected overrides (allow variant overrides whose parents are still selected!)
+        Object.keys(productDiscounts).forEach(keySku => {
+          // Check if parent or sibling product is in selected list
+          const parentProduct = products.find(prod => {
+            if (prod.sku === keySku) return true;
+            if (prod.hasVariants && prod.variantList && prod.variantList.some(v => v.sku === keySku)) return true;
+            return false;
+          });
+          
+          if (!parentProduct || !selectedProductSKUs.includes(parentProduct.sku)) {
+            delete productDiscounts[keySku];
           }
         });
 
@@ -1313,7 +1326,7 @@
           const p = products.find(prod => prod.sku === sku);
           if (!p) return;
 
-          // Default fallback
+          // Default fallback for Parent
           if (!productDiscounts[sku]) {
             productDiscounts[sku] = {
               type: defaultType,
@@ -1326,18 +1339,29 @@
 
           const discount = productDiscounts[sku];
           const tr = document.createElement("tr");
-          tr.className = "hover:bg-slate-50 transition duration-150";
+          tr.className = "hover:bg-slate-50 transition duration-150 font-semibold";
+          
+          // Parent price range or single price display
+          let parentPriceDisplay = `Rp ${p.price.toLocaleString('id-ID')}`;
+          if (p.hasVariants && p.variantList && p.variantList.length > 0) {
+            const prices = p.variantList.map(v => v.price);
+            parentPriceDisplay = `Rp ${Math.min(...prices).toLocaleString('id-ID')} - Rp ${Math.max(...prices).toLocaleString('id-ID')}`;
+          }
+
           tr.innerHTML = `
             <td class="px-4 py-3.5">
               <div class="flex items-center gap-3">
                 <img src="${p.image || 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=50&q=80'}" alt="${p.name}" class="w-9 h-9 rounded-xl object-cover bg-slate-50 border border-slate-100 shrink-0">
                 <div class="flex flex-col overflow-hidden max-w-[200px]">
-                  <span class="font-bold text-slate-800 truncate">${p.name}</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-bold text-slate-800 truncate">${p.name}</span>
+                    ${p.hasVariants ? '<span class="px-1.5 py-0.5 bg-brand-blueLight text-brand-blueRoyal text-[8px] font-black uppercase rounded">Grup Varian</span>' : ''}
+                  </div>
                   <span class="text-[10px] text-slate-400 font-mono tracking-wider font-semibold">${p.sku}</span>
                 </div>
               </div>
             </td>
-            <td class="px-4 py-3.5 text-right font-semibold text-slate-700">Rp ${p.price.toLocaleString('id-ID')}</td>
+            <td class="px-4 py-3.5 text-right font-semibold text-slate-700">${parentPriceDisplay}</td>
             <td class="px-4 py-3.5">
               <label for="discount-type-select-${sku}" class="sr-only">Tipe Diskon ${p.name}</label>
               <select id="discount-type-select-${sku}" onchange="updateProductDiscountType('${sku}', this.value)" class="w-full px-2.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
@@ -1354,7 +1378,7 @@
               <input id="promo-stock-input-${sku}" type="number" min="0" placeholder="Tak terbatas" value="${discount.promoStock !== undefined ? discount.promoStock : ''}" oninput="updateProductPromoStock('${sku}', this.value)" class="w-full px-2.5 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 font-bold focus:outline-none focus:border-brand-blueRoyal bg-slate-50/30">
             </td>
             <td class="px-4 py-3.5 text-right font-black text-brand-blueRoyal" id="final-price-${sku}">
-              Rp 0
+              ${p.hasVariants ? 'Varian Terikat' : 'Rp 0'}
             </td>
             <td class="px-4 py-3.5 text-center">
               <button type="button" onclick="removeProductFromTable('${sku}')" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition duration-150">
@@ -1364,7 +1388,71 @@
           `;
           
           tbody.appendChild(tr);
-          recalculateFinalPrice(sku, p.price);
+          if (!p.hasVariants) {
+            recalculateFinalPrice(sku, p.price);
+          }
+
+          // If product has variants, render them indented as child rows!
+          if (p.hasVariants && p.variantList && p.variantList.length > 0) {
+            p.variantList.forEach(variant => {
+              // Default fallback for individual variant discount
+              if (!productDiscounts[variant.sku]) {
+                productDiscounts[variant.sku] = {
+                  type: discount.type,
+                  value: discount.value,
+                  promoStock: discount.promoStock || ''
+                };
+              } else if (productDiscounts[variant.sku].promoStock === undefined) {
+                productDiscounts[variant.sku].promoStock = '';
+              }
+
+              const vDiscount = productDiscounts[variant.sku];
+              const vTr = document.createElement("tr");
+              vTr.className = "bg-slate-50/40 hover:bg-slate-50 transition duration-150 variant-matrix-row font-medium text-slate-500";
+              vTr.innerHTML = `
+                <td class="px-4 py-2.5 pl-10 border-l-2 border-l-slate-200">
+                  <div class="flex items-center gap-2">
+                    <div class="w-3.5 h-3.5 border-l-2 border-b-2 border-slate-200 rounded-bl-md -mt-2.5 shrink-0 ml-1"></div>
+                    ${variant.image ? `
+                      <img src="${variant.image}" class="w-7 h-7 rounded-lg object-cover bg-white border border-slate-100 shrink-0">
+                    ` : `
+                      <div class="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 shrink-0">
+                        <i class="ti ti-box text-xs"></i>
+                      </div>
+                    `}
+                    <div class="flex flex-col overflow-hidden max-w-[180px]">
+                      <span class="font-bold text-slate-700 text-xs truncate">${variant.name}</span>
+                      <span class="text-[9px] text-slate-400 font-mono tracking-wider">${variant.sku}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-2.5 text-right font-semibold text-slate-600 text-xs">Rp ${variant.price.toLocaleString('id-ID')}</td>
+                <td class="px-4 py-2.5">
+                  <label for="discount-type-select-${variant.sku}" class="sr-only">Tipe Diskon ${variant.name}</label>
+                  <select id="discount-type-select-${variant.sku}" onchange="updateProductDiscountType('${variant.sku}', this.value)" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 text-[11px] font-semibold focus:outline-none focus:border-brand-blueRoyal bg-white shadow-soft">
+                    <option value="percentage" ${vDiscount.type === 'percentage' ? 'selected' : ''}>% Persen</option>
+                    <option value="nominal" ${vDiscount.type === 'nominal' ? 'selected' : ''}>Rp Rupiah</option>
+                  </select>
+                </td>
+                <td class="px-4 py-2.5">
+                  <label for="discount-value-input-${variant.sku}" class="sr-only">Nilai Diskon ${variant.name}</label>
+                  <input id="discount-value-input-${variant.sku}" type="number" min="0" value="${vDiscount.value}" oninput="updateProductDiscountValue('${variant.sku}', this.value)" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 text-[11px] text-slate-800 font-bold focus:outline-none focus:border-brand-blueRoyal bg-white shadow-soft">
+                </td>
+                <td class="px-4 py-2.5">
+                  <label for="promo-stock-input-${variant.sku}" class="sr-only">Stok Promo ${variant.name}</label>
+                  <input id="promo-stock-input-${variant.sku}" type="number" min="0" placeholder="Tak terbatas" value="${vDiscount.promoStock !== undefined ? vDiscount.promoStock : ''}" oninput="updateProductPromoStock('${variant.sku}', this.value)" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 text-[11px] text-slate-800 font-bold focus:outline-none focus:border-brand-blueRoyal bg-white shadow-soft">
+                </td>
+                <td class="px-4 py-2.5 text-right font-black text-brand-blueRoyal text-xs" id="final-price-${variant.sku}">
+                  Rp 0
+                </td>
+                <td class="px-4 py-2.5 text-center">
+                  <i class="ti ti-lock text-slate-300 text-sm" title="Terikat dengan Produk Utama"></i>
+                </td>
+              `;
+              tbody.appendChild(vTr);
+              recalculateFinalPrice(variant.sku, variant.price);
+            });
+          }
         });
       }
 
@@ -1397,10 +1485,24 @@
             const input = document.getElementById(`discount-value-input-${sku}`);
             if (input) input.value = 100;
           }
+
+          // CASCADE TO VARIANTS IF PARENT SKU IS UPDATED
           const products = BizmateDB.getProducts();
           const p = products.find(prod => prod.sku === sku);
-          if (p) {
-            recalculateFinalPrice(sku, p.price);
+          if (p && p.hasVariants && p.variantList) {
+            p.variantList.forEach(v => {
+              if (!productDiscounts[v.sku]) productDiscounts[v.sku] = {};
+              productDiscounts[v.sku].type = type;
+              const subSelect = document.getElementById(`discount-type-select-${v.sku}`);
+              if (subSelect) subSelect.value = type;
+              recalculateFinalPrice(v.sku, v.price);
+            });
+          }
+
+          const baseProd = products.find(prod => prod.sku === sku || (prod.variantList && prod.variantList.some(v => v.sku === sku)));
+          if (baseProd) {
+            const vObj = baseProd.sku === sku ? baseProd : baseProd.variantList.find(v => v.sku === sku);
+            recalculateFinalPrice(sku, vObj.price);
           }
         }
       };
@@ -1414,10 +1516,29 @@
             if (input) input.value = 100;
           }
           productDiscounts[sku].value = parsed;
+
+          // CASCADE TO VARIANTS IF PARENT SKU IS UPDATED
           const products = BizmateDB.getProducts();
           const p = products.find(prod => prod.sku === sku);
-          if (p) {
-            recalculateFinalPrice(sku, p.price);
+          if (p && p.hasVariants && p.variantList) {
+            p.variantList.forEach(v => {
+              let vParsed = parsed;
+              if (productDiscounts[v.sku]) {
+                if (productDiscounts[v.sku].type === 'percentage' && vParsed > 100) {
+                  vParsed = 100;
+                }
+                productDiscounts[v.sku].value = vParsed;
+                const subInput = document.getElementById(`discount-value-input-${v.sku}`);
+                if (subInput) subInput.value = vParsed;
+                recalculateFinalPrice(v.sku, v.price);
+              }
+            });
+          }
+
+          const baseProd = products.find(prod => prod.sku === sku || (prod.variantList && prod.variantList.some(v => v.sku === sku)));
+          if (baseProd) {
+            const vObj = baseProd.sku === sku ? baseProd : baseProd.variantList.find(v => v.sku === sku);
+            recalculateFinalPrice(sku, vObj.price);
           }
         }
       };
@@ -1434,12 +1555,35 @@
           } else {
             productDiscounts[sku].promoStock = parsed;
           }
+
+          // CASCADE TO VARIANTS IF PARENT SKU IS UPDATED
+          const products = BizmateDB.getProducts();
+          const p = products.find(prod => prod.sku === sku);
+          if (p && p.hasVariants && p.variantList) {
+            p.variantList.forEach(v => {
+              if (productDiscounts[v.sku]) {
+                productDiscounts[v.sku].promoStock = isNaN(parsed) || parsed <= 0 ? '' : parsed;
+                const subInput = document.getElementById(`promo-stock-input-${v.sku}`);
+                if (subInput) subInput.value = isNaN(parsed) || parsed <= 0 ? '' : parsed;
+              }
+            });
+          }
         }
       };
 
       window.removeProductFromTable = function(sku) {
         selectedProductSKUs = selectedProductSKUs.filter(s => s !== sku);
         delete productDiscounts[sku];
+        
+        // Also remove its variants from productDiscounts overrides
+        const products = BizmateDB.getProducts();
+        const p = products.find(prod => prod.sku === sku);
+        if (p && p.hasVariants && p.variantList) {
+          p.variantList.forEach(v => {
+            delete productDiscounts[v.sku];
+          });
+        }
+        
         renderSelectedProductsTable();
       };
 
@@ -1467,6 +1611,20 @@
           productDiscounts[sku].type = bulkType;
           productDiscounts[sku].value = bulkValue;
           productDiscounts[sku].promoStock = bulkPromoStock;
+
+          // Cascade bulk discount to variants as well!
+          const products = BizmateDB.getProducts();
+          const p = products.find(prod => prod.sku === sku);
+          if (p && p.hasVariants && p.variantList) {
+            p.variantList.forEach(v => {
+              if (!productDiscounts[v.sku]) {
+                productDiscounts[v.sku] = {};
+              }
+              productDiscounts[v.sku].type = bulkType;
+              productDiscounts[v.sku].value = bulkValue;
+              productDiscounts[v.sku].promoStock = bulkPromoStock;
+            });
+          }
         });
 
         renderSelectedProductsTable();

@@ -618,11 +618,13 @@
         cart = JSON.parse(localStorage.getItem('bizmate_cart')) || [];
         updateCartBadge();
         renderCartItems();
+        checkHolidayMode();
       });
 
       renderCatalog();
       updateCartBadge();
       renderCartItems();
+      checkHolidayMode();
     });
 
     function formatIDR(val) {
@@ -993,7 +995,44 @@
       }
     }
 
+    function checkHolidayMode() {
+      try {
+        const settings = JSON.parse(localStorage.getItem('bizmate_settings')) || {};
+        if (settings.shopHoliday) {
+          let banner = document.getElementById('holiday-banner');
+          if (!banner) {
+            banner = document.createElement('div');
+            banner.id = 'holiday-banner';
+            banner.className = 'bg-gradient-to-r from-amber-500 via-orange-600 to-amber-500 text-white px-4 py-3 text-center text-xs font-bold font-outfit shadow-md flex items-center justify-center gap-2 relative z-50 animate-pulse';
+            banner.innerHTML = `
+              <i class="ti ti-plane-departure text-base"></i>
+              <span>PEMBERITAHUAN: Toko kami sedang dalam <strong>Mode Libur</strong> sementara waktu. Proses checkout dinonaktifkan sementara.</span>
+            `;
+            document.body.insertBefore(banner, document.body.firstChild);
+          }
+          
+          const checkoutBtns = document.querySelectorAll('button[onclick="checkout()"], button[onclick="handleCheckoutImmediate()"]');
+          checkoutBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.className = btn.className.replace('bg-brand-blueRoyal', 'bg-slate-350 cursor-not-allowed opacity-60');
+            btn.className = btn.className.replace('hover:bg-brand-blueDark', '');
+            btn.title = "Checkout dinonaktifkan sementara (Toko sedang Libur)";
+          });
+        } else {
+          const banner = document.getElementById('holiday-banner');
+          if (banner) banner.remove();
+        }
+      } catch (e) {
+        console.error("Failed to load holiday check:", e);
+      }
+    }
+
     function checkout() {
+      const settings = JSON.parse(localStorage.getItem('bizmate_settings')) || {};
+      if (settings.shopHoliday) {
+        alert("PEMBERITAHUAN:\nProses checkout gagal karena toko kami sedang tutup sementara waktu (Mode Libur).");
+        return;
+      }
       if (cart.length === 0) return;
       showToast("Pesanan Diterima!", "Terima kasih telah berbelanja pakaian di Bizmate.");
       clearCart();

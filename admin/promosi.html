@@ -312,6 +312,35 @@
         }
       };
 
+      // Duplication handler
+      window.duplicatePromo = function(id, code) {
+        const promos = BizmateDB.getPromos();
+        const src = promos.find(p => p.id === id);
+        if (!src) {
+          showToast('Kupon promo tidak ditemukan!', 'error');
+          return;
+        }
+
+        // Generate clean duplicate code
+        let cloneCode = `${src.code}_COPY`;
+        let counter = 1;
+        while (promos.some(p => p.code.toLowerCase() === cloneCode.toLowerCase())) {
+          cloneCode = `${src.code}_COPY${counter}`;
+          counter++;
+        }
+
+        const clone = JSON.parse(JSON.stringify(src));
+        clone.id = `PRM-${Math.floor(100 + Math.random() * 900)}`;
+        clone.code = cloneCode;
+        clone.name = `${src.name} - Salinan`;
+        clone.active = false; // defaults to inactive (draft)
+        clone.usageCount = 0;
+
+        BizmateDB.savePromo(clone);
+        showToast(`Kupon <strong>${src.code}</strong> berhasil diduplikasi menjadi <strong>${cloneCode}</strong>!`, 'success');
+        renderPromotions();
+      };
+
       // Render function
       function renderPromotions() {
         const promos = BizmateDB.getPromos();
@@ -632,10 +661,19 @@
               </div>
             </td>
             <td class="px-8 py-8">
-              ${statusBadge}
+              <div class="flex items-center gap-3">
+                <label class="relative inline-flex items-center cursor-pointer" title="Aktifkan/Nonaktifkan">
+                  <input type="checkbox" ${p.active ? 'checked' : ''} class="sr-only peer" onchange="toggleStatus('${p.id}')" aria-label="Aktifkan promo ${p.code}">
+                  <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blueRoyal"></div>
+                </label>
+                <div class="shrink-0">${statusBadge}</div>
+              </div>
             </td>
-            <td class="px-8 py-8 text-center">
+            <td class="px-8 py-8 text-center whitespace-nowrap">
               <div class="flex items-center justify-center gap-1.5">
+                <button onclick="duplicatePromo('${p.id}', '${p.code}')" class="p-2 text-slate-400 hover:text-brand-orange hover:bg-brand-orange/5 rounded-xl transition duration-200" title="Duplikat Promo">
+                  <i class="ti ti-copy text-base"></i>
+                </button>
                 <button onclick="openEditModal('${p.id}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal hover:bg-brand-blueRoyal/5 rounded-xl transition duration-200" title="Ubah Promo">
                   <i class="ti ti-edit text-base"></i>
                 </button>

@@ -111,10 +111,10 @@ const SEED_ORDERS = [
   {
     id: 'FE-00014',
     invoice: 'BILL-20260518-IST4NI',
-    customer: 'T*******o N******o',
+    customer: 'Tantowi Namaseto',
     phone: '6285656629097',
     address: 'Jl Bratang 1H No 23, Surabaya, Ngagel Rejo, Wonokromo, Kota Surabaya, Jawa Timur',
-    email: 'to***@***.com',
+    email: 'tantowi.nama@gmail.com',
     date: '18 Mei 2026, 14:47',
     itemsCount: 2,
     items: [
@@ -138,10 +138,10 @@ const SEED_ORDERS = [
     id: 'FE-00013',
     invoice: '01-15-20260511-W2SKMX',
     trackingNumber: '928309203920909302',
-    customer: 'S**h R**a',
+    customer: 'Syah Reza',
     phone: '6285179720622',
-    address: ',, Nambak, Bungkal, Kab. Ponorogo, Jawa Timur',
-    email: 'sy***@***.com',
+    address: 'Komp. Bungkal, Ponorogo, Jawa Timur',
+    email: 'syah.reza@gmail.com',
     date: '11 Mei 2026, 10:15',
     itemsCount: 1,
     items: [
@@ -169,10 +169,10 @@ const SEED_ORDERS = [
     id: 'FE-00012',
     invoice: '01-17-20260417-MMDTNH',
     trackingNumber: '9840293029',
-    customer: 'B**i A**o',
+    customer: 'Budi Arto',
     phone: '628123456789',
     address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur',
-    email: 'bu***@***.com',
+    email: 'budi.arto@gmail.com',
     date: '17 April 2026, 11:30',
     itemsCount: 1,
     items: [
@@ -192,16 +192,16 @@ const SEED_ORDERS = [
       { status: 'Pesanan Dibuat', time: '17 April 2026, 11:30', note: 'Pesanan dibuat oleh sistem.' },
       { status: 'Pembayaran Lunas', time: '17 April 2026, 11:35', note: 'Pembayaran lunas via ShopeePay.' },
       { status: 'Pesanan Dikirim', time: '17 April 2026, 16:00', note: 'Pesanan dikirim via SiCepat.' },
-      { status: 'Selesai', time: '19 April 2026, 14:00', note: 'Paket telah diterima oleh B**i A**o.' }
+      { status: 'Selesai', time: '19 April 2026, 14:00', note: 'Paket telah diterima oleh Budi Arto.' }
     ]
   },
   {
     id: 'FE-00011',
     invoice: 'BILL-20260510-AB12CD',
-    customer: 'C***a K****a',
+    customer: 'Chandra Kartika',
     phone: '628571234567',
     address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten',
-    email: 'ci***@***.com',
+    email: 'chandra.kartika@gmail.com',
     date: '10 Mei 2026, 15:10',
     itemsCount: 1,
     items: [
@@ -224,10 +224,10 @@ const SEED_ORDERS = [
   {
     id: 'FE-00010',
     invoice: 'BILL-20260509-XY98ZT',
-    customer: 'S***h W****a',
+    customer: 'Soleh Wahyuda',
     phone: '628998877665',
     address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta',
-    email: 'sa***@***.com',
+    email: 'soleh.wahyuda@gmail.com',
     date: '09 Mei 2026, 14:40',
     itemsCount: 1,
     items: [
@@ -275,19 +275,19 @@ const SEED_CATEGORIES = [
 ];
 
 const SEED_CUSTOMERS = [
-  { id: 'CUST-001', name: 'T*******o N******o', email: 'to***@***.com', phone: '6285656629097', address: 'Jl Bratang 1H No 23, Surabaya, Jawa Timur', joinedDate: '2026-01-15', status: 'Aktif' },
-  { id: 'CUST-002', name: 'S**h R**a', email: 'sy***@***.com', phone: '6285179720622', address: 'Komp. Bungkal, Ponorogo, Jawa Timur', joinedDate: '2026-02-10', status: 'Aktif' },
-  { id: 'CUST-003', name: 'B**i A**o', email: 'bu***@***.com', phone: '628123456789', address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur', joinedDate: '2026-02-18', status: 'Aktif' },
-  { id: 'CUST-004', name: 'C***a K****a', email: 'ci***@***.com', phone: '628571234567', address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten', joinedDate: '2026-03-01', status: 'Aktif' },
-  { id: 'CUST-005', name: 'S***h W****a', email: 'sa***@***.com', phone: '628998877665', address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta', joinedDate: '2026-03-12', status: 'Suspend' }
+  { id: 'CUST-001', name: 'Tantowi Namaseto', email: 'tantowi.nama@gmail.com', phone: '6285656629097', address: 'Jl Bratang 1H No 23, Surabaya, Jawa Timur', joinedDate: '2026-01-15', status: 'Aktif' },
+  { id: 'CUST-002', name: 'Syah Reza', email: 'syah.reza@gmail.com', phone: '6285179720622', address: 'Komp. Bungkal, Ponorogo, Jawa Timur', joinedDate: '2026-02-10', status: 'Aktif' },
+  { id: 'CUST-003', name: 'Budi Arto', email: 'budi.arto@gmail.com', phone: '628123456789', address: 'Jl. Raya Darmo No. 12, Surabaya, Jawa Timur', joinedDate: '2026-02-18', status: 'Aktif' },
+  { id: 'CUST-004', name: 'Chandra Kartika', email: 'chandra.kartika@gmail.com', phone: '628571234567', address: 'Komp. BSD Sektor 1.2, Tangerang Selatan, Banten', joinedDate: '2026-03-01', status: 'Aktif' },
+  { id: 'CUST-005', name: 'Soleh Wahyuda', email: 'soleh.wahyuda@gmail.com', phone: '628998877665', address: 'Jl. Kemang Raya No. 45, Jakarta Selatan, DKI Jakarta', joinedDate: '2026-03-12', status: 'Suspend' }
 ];
 
 const SEED_ADMINS = [
-  { username: 'su***@***.id', name: 'S********n', role: 'Super Admin', status: 'Aktif', lastActive: 'Sekarang' },
-  { username: 'pe***@***.id', name: 'Admin Penjualan 1', role: 'Admin Penjualan', status: 'Aktif', lastActive: '2 menit yang lalu' },
-  { username: 'pe***2@***.id', name: 'Admin Penjualan 2', role: 'Admin Penjualan', status: 'Aktif', lastActive: '12 menit yang lalu' },
-  { username: 'to***@***.id', name: 'Admin Toko 1', role: 'Admin Toko', status: 'Aktif', lastActive: '8 menit yang lalu' },
-  { username: 'to***2@***.id', name: 'Admin Toko 2', role: 'Admin Toko', status: 'Nonaktif', lastActive: 'Kemarin' }
+  { username: 'superadmin@bizmate.id', name: 'Superadmin', role: 'Super Admin', status: 'Aktif', lastActive: 'Sekarang' },
+  { username: 'penjualan1@bizmate.id', name: 'Admin Penjualan 1', role: 'Admin Penjualan', status: 'Aktif', lastActive: '2 menit yang lalu' },
+  { username: 'penjualan2@bizmate.id', name: 'Admin Penjualan 2', role: 'Admin Penjualan', status: 'Aktif', lastActive: '12 menit yang lalu' },
+  { username: 'toko1@bizmate.id', name: 'Admin Toko 1', role: 'Admin Toko', status: 'Aktif', lastActive: '8 menit yang lalu' },
+  { username: 'toko2@bizmate.id', name: 'Admin Toko 2', role: 'Admin Toko', status: 'Nonaktif', lastActive: 'Kemarin' }
 ];
 
 const ALLOWED_ADMIN_ROLES = ['Super Admin', 'Admin Penjualan', 'Admin Toko'];
@@ -333,12 +333,23 @@ const SEED_SETTINGS = {
   taxRate: 11,
   enableCod: true,
   enableQris: true,
-  enableBankTransfer: true
+  enableBankTransfer: true,
+  shopHoliday: false,
+  shopFavicon: '',
+  operationalHours: {
+    'Senin': { active: true, open: '09:00', close: '17:00' },
+    'Selasa': { active: true, open: '09:00', close: '17:00' },
+    'Rabu': { active: true, open: '09:00', close: '17:00' },
+    'Kamis': { active: true, open: '09:00', close: '17:00' },
+    'Jumat': { active: true, open: '09:00', close: '17:00' },
+    'Sabtu': { active: true, open: '09:00', close: '15:00' },
+    'Minggu': { active: false, open: '09:00', close: '12:00' }
+  }
 };
 
 // Initialize database
 function initDatabase() {
-  const DB_VERSION = 'v5';
+  const DB_VERSION = 'v7';
   let dbVer = localStorage.getItem('bizmate_db_version');
   let products = localStorage.getItem('bizmate_products');
   let orders = localStorage.getItem('bizmate_orders');
@@ -353,17 +364,17 @@ function initDatabase() {
     localStorage.setItem('bizmate_products', JSON.stringify(buildSeedProducts()));
     localStorage.setItem('bizmate_db_version', DB_VERSION);
   }
-  
-  if (!orders || !orders.includes('FE-00014') || !orders.includes('returnStatus')) {
+
+  if (!orders || dbVer !== DB_VERSION || !orders.includes('FE-00014') || !orders.includes('returnStatus')) {
     // Force refresh if it is empty or does not have the new orders or returnStatus
     localStorage.setItem('bizmate_orders', JSON.stringify(SEED_ORDERS));
   }
-  
+
   if (!categories) {
     localStorage.setItem('bizmate_categories', JSON.stringify(SEED_CATEGORIES));
   }
 
-  if (!customers) {
+  if (!customers || dbVer !== DB_VERSION) {
     localStorage.setItem('bizmate_customers', JSON.stringify(SEED_CUSTOMERS));
   }
 
@@ -374,9 +385,9 @@ function initDatabase() {
     const normalizedAdmins = parsedAdmins
       .map(admin => ({
         ...admin,
-        role: admin.role === 'S********n' ? 'Super Admin' : admin.role,
-        name: admin.username === 'su***@***.id' ? 'S********n' : admin.name,
-        username: maskEmail(admin.username)
+        role: admin.role === 'Superadmin' ? 'Super Admin' : admin.role,
+        name: admin.username === 'superadmin@bizmate.id' ? 'Superadmin' : admin.name,
+        username: admin.username
       }))
       .filter(admin => ALLOWED_ADMIN_ROLES.includes(admin.role));
 
@@ -385,8 +396,7 @@ function initDatabase() {
     }
   }
 
-  localStorage.setItem('bizmate_customers', JSON.stringify(maskPeople(JSON.parse(localStorage.getItem('bizmate_customers') || '[]'))));
-  localStorage.setItem('bizmate_orders', JSON.stringify(maskOrders(JSON.parse(localStorage.getItem('bizmate_orders') || '[]'))));
+
 
   if (!cmsLanding) {
     localStorage.setItem('bizmate_cms_landing', JSON.stringify(SEED_CMS_LANDING));
@@ -408,7 +418,7 @@ const BizmateDB = {
     initDatabase();
     return JSON.parse(localStorage.getItem('bizmate_products'));
   },
-  
+
   saveProduct(product) {
     const products = this.getProducts();
     // Check if sku exists, overwrite or append
@@ -453,7 +463,7 @@ const BizmateDB = {
     const orders = this.getOrders();
     const newOrder = {
       id: `FE-${Math.floor(10000 + Math.random() * 90000)}`,
-      invoice: `BILL-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.random().toString(36).substring(2,8).toUpperCase()}`,
+      invoice: `BILL-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
       date: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' WIB',
       shippingCost: order.shippingCost || 15000,
       customerNote: order.customerNote || '',
@@ -539,26 +549,26 @@ const BizmateDB = {
       if (refundAmount > 0) {
         orders[idx].refundAmount = refundAmount;
       }
-      
+
       if (returnStatus === 'Refunded') {
         orders[idx].paymentStatus = 'Refunded';
         orders[idx].shippingStatus = 'Returned';
       }
-      
+
       if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
-      
+
       let statusLabel = 'Retur Diperbarui';
       if (returnStatus === 'Requested') statusLabel = 'Pengajuan Retur';
       else if (returnStatus === 'Approved') statusLabel = 'Retur Disetujui';
       else if (returnStatus === 'Refunded') statusLabel = 'Returned & Refunded';
       else if (returnStatus === 'Rejected') statusLabel = 'Retur Ditolak';
-      
+
       orders[idx].statusHistory.push({
         status: statusLabel,
         time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
         note: note || `Status retur diperbarui menjadi ${returnStatus}.`
       });
-      
+
       localStorage.setItem('bizmate_orders', JSON.stringify(orders));
     }
     return orders;
@@ -587,14 +597,14 @@ const BizmateDB = {
       orders[idx].trackingNumber = tracking;
       orders[idx].shippingStatus = 'Shipped';
       if (courier) orders[idx].courier = courier;
-      
+
       if (!orders[idx].statusHistory) orders[idx].statusHistory = [];
       orders[idx].statusHistory.push({
         status: 'Pesanan Dikirim',
         time: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
         note: `Resi pengiriman otomatis dibuat: ${tracking} (${orders[idx].courier})`
       });
-      
+
       localStorage.setItem('bizmate_orders', JSON.stringify(orders));
       return tracking;
     }
@@ -753,22 +763,22 @@ const BizmateDB = {
     const products = this.getProducts();
     const orders = this.getOrders();
     const customers = this.getCustomers();
-    
+
     // Revenue from PAID orders
     const paidOrders = orders.filter(o => o.paymentStatus === 'Paid');
     const ordersAmount = paidOrders.reduce((sum, o) => sum + o.amount, 0);
-    
+
     // Static base + dynamic addition to keep enterprise feel
     const baseRevenue = 45200000000; // Rp 45.2M base
     const displayRevenue = baseRevenue + ordersAmount;
- 
+
     const baseOrders = 1204;
     const displayOrdersCount = baseOrders + orders.length;
- 
+
     const activeProducts = products.filter(p => p.active).length;
     const outOfStockProducts = products.filter(p => p.stock === 0).length;
     const draftProducts = products.filter(p => !p.active && p.stock > 0).length;
- 
+
     return {
       revenueRaw: displayRevenue,
       revenueFormatted: `Rp ${(displayRevenue / 1000000000).toFixed(1)}M`,
@@ -826,7 +836,7 @@ const BizmateDB = {
     initDatabase();
     try {
       return JSON.parse(localStorage.getItem('bizmate_settings')) || SEED_SETTINGS;
-    } catch(e) {
+    } catch (e) {
       return SEED_SETTINGS;
     }
   },

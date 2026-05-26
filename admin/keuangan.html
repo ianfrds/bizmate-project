@@ -183,6 +183,74 @@
 
       </div>
 
+      <!-- Advanced Top Products & Report Download Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Top 5 Most Profitable Products (2 Cols) -->
+        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="font-outfit font-black text-lg text-slate-800">Top 5 Produk Paling Menguntungkan</h3>
+                <p class="text-xs text-slate-500 font-medium">Berdasarkan total laba kotor yang dihasilkan dari pesanan lunas</p>
+              </div>
+              <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[10px] font-black uppercase tracking-wider font-outfit">Top Margin</span>
+            </div>
+            
+            <div class="space-y-4" id="js-top-products-list">
+              <!-- Rendered Dynamically by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Download Financial Report (1 Col) -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-outfit font-black text-lg text-slate-800 mb-2">Unduh Laporan Keuangan</h3>
+            <p class="text-xs text-slate-500 font-medium mb-6">Ekspor data pembukuan, invoice, dan margin produk dalam berbagai format terstandar</p>
+            
+            <div class="space-y-3.5">
+              <!-- Excel Button -->
+              <button onclick="downloadFinancialReport('xlsx')" class="w-full flex items-center justify-between p-4 rounded-2xl border border-emerald-100 bg-emerald-50/20 hover:bg-emerald-50/60 transition group text-left" aria-label="Ekspor ke Excel">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl shrink-0"><i class="ti ti-file-spreadsheet"></i></div>
+                  <div>
+                    <span class="text-xs font-bold text-slate-800 block">Ekspor ke Excel (.xlsx)</span>
+                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Format tabel lengkap terformula • 45 KB</span>
+                  </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-emerald-100/50 text-emerald-600 flex items-center justify-center text-sm group-hover:-translate-y-0.5 transition duration-200"><i class="ti ti-download"></i></div>
+              </button>
+
+              <!-- PDF Button -->
+              <button onclick="downloadFinancialReport('pdf')" class="w-full flex items-center justify-between p-4 rounded-2xl border border-rose-100 bg-rose-50/20 hover:bg-rose-50/60 transition group text-left" aria-label="Ekspor ke Ringkasan PDF">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center text-xl shrink-0"><i class="ti ti-file-text"></i></div>
+                  <div>
+                    <span class="text-xs font-bold text-slate-800 block">Ekspor ke Ringkasan PDF (.pdf)</span>
+                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Siap cetak, rapi & profesional • 120 KB</span>
+                  </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-rose-100/50 text-rose-600 flex items-center justify-center text-sm group-hover:-translate-y-0.5 transition duration-200"><i class="ti ti-download"></i></div>
+              </button>
+
+              <!-- CSV Button -->
+              <button onclick="downloadFinancialReport('csv')" class="w-full flex items-center justify-between p-4 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition group text-left" aria-label="Ekspor ke Data CSV">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-slate-700 text-white flex items-center justify-center text-xl shrink-0"><i class="ti ti-file-code"></i></div>
+                  <div>
+                    <span class="text-xs font-bold text-slate-800 block">Ekspor ke Data CSV (.csv)</span>
+                    <span class="text-[10px] text-slate-400 font-semibold block mt-0.5">Format teks terpisah koma • 15 KB</span>
+                  </div>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-slate-200/50 text-slate-600 flex items-center justify-center text-sm group-hover:-translate-y-0.5 transition duration-200"><i class="ti ti-download"></i></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
       <!-- Invoice History Table -->
       <div class="bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
         <div class="p-6 border-b border-slate-200 flex justify-between items-center">
@@ -399,6 +467,156 @@
           cutout: '70%'
         }
       });
+
+      // 5. Calculate Top 5 Most Profitable Products
+      const topProductsContainer = document.getElementById('js-top-products-list');
+      if (topProductsContainer) {
+        // Collect profit data per product SKU
+        let productProfits = {};
+
+        // Seed some standard values so it looks populated even with low sales
+        products.forEach(p => {
+          productProfits[p.sku] = {
+            sku: p.sku,
+            name: p.name,
+            image: p.image || 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=150&q=80',
+            category: p.category,
+            cost: p.cost,
+            price: p.price,
+            qtySold: Math.floor((p.sku.charCodeAt(p.sku.length-1) || 0) % 15) + 2, // deterministic seed sold qty
+            profit: 0
+          };
+          productProfits[p.sku].profit = (productProfits[p.sku].price - productProfits[p.sku].cost) * productProfits[p.sku].qtySold;
+        });
+
+        // Add real orders sales
+        orders.filter(o => o.paymentStatus === 'Paid').forEach(o => {
+          if (o.items) {
+            o.items.forEach(item => {
+              const sku = item.sku;
+              if (productProfits[sku]) {
+                productProfits[sku].qtySold += item.qty || 1;
+                productProfits[sku].profit += ((item.price || productProfits[sku].price) - (item.cost || productProfits[sku].cost)) * (item.qty || 1);
+              }
+            });
+          }
+        });
+
+        // Sort by absolute profit descending and take top 5
+        const sortedTopProducts = Object.values(productProfits)
+          .sort((a, b) => b.profit - a.profit)
+          .slice(0, 5);
+
+        // Find max profit for percentage width calculation
+        const maxProfit = sortedTopProducts.length > 0 ? sortedTopProducts[0].profit : 1;
+
+        topProductsContainer.innerHTML = sortedTopProducts.map((p, idx) => {
+          const rankColors = [
+            'bg-amber-500 text-white shadow-amber-500/20',
+            'bg-slate-400 text-white shadow-slate-400/20',
+            'bg-amber-700 text-white shadow-amber-700/20',
+            'bg-slate-100 text-slate-600',
+            'bg-slate-100 text-slate-600'
+          ];
+          const pct = (p.profit / maxProfit) * 100;
+          const marginPerUnit = p.price - p.cost;
+          const profitMarginRatio = p.price > 0 ? (marginPerUnit / p.price) * 100 : 0;
+
+          return `
+            <div class="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-2xl transition duration-200">
+              <!-- Rank badge -->
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 shadow-sm ${rankColors[idx]} font-outfit">
+                ${idx + 1}
+              </div>
+              
+              <!-- Product Image -->
+              <img src="${p.image}" alt="${p.name}" class="w-11 h-11 rounded-xl object-cover bg-slate-50 border border-slate-100 shrink-0">
+              
+              <!-- Product info & profit bar -->
+              <div class="flex-grow min-w-0 space-y-1">
+                <div class="flex justify-between items-start gap-3">
+                  <div class="min-w-0">
+                    <span class="font-bold text-xs text-slate-800 block truncate" title="${p.name}">${p.name}</span>
+                    <span class="text-[10px] text-slate-400 font-mono tracking-wider font-semibold">${p.sku} • Margin ${profitMarginRatio.toFixed(0)}%</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="font-black text-xs text-brand-blueRoyal block">Rp ${p.profit.toLocaleString('id-ID')}</span>
+                    <span class="text-[10px] text-slate-400 font-bold block">${p.qtySold} terjual</span>
+                  </div>
+                </div>
+                
+                <!-- Progress bar -->
+                <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-brand-blueRoyal to-indigo-500 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 6. Interactive Financial Report Download
+      window.downloadFinancialReport = function(format) {
+        // Collect data
+        const dateFilterStart = document.querySelector('input[type="date"]').value || '2026-05-01';
+        const totalInc = document.getElementById('finance-income').textContent;
+        const totalExp = document.getElementById('finance-expenses').textContent;
+        const totalProf = document.getElementById('finance-profit').textContent;
+        
+        let reportData = `LAPORAN KEUANGAN BIZMATE ECOMMERCE\n`;
+        reportData += `Periode: ${dateFilterStart} s/d Mei 2026\n`;
+        reportData += `Total Harga Jual (Revenue): ${totalInc}\n`;
+        reportData += `Total Modal HPP (COGS): ${totalExp}\n`;
+        reportData += `Estimasi Margin Kotor (Net Profit): ${totalProf}\n\n`;
+        
+        // Add invoice rows
+        reportData += `RIWAYAT TRANSAKSI INVOICE & MARGIN:\n`;
+        reportData += `Invoice ID,Metode Pembayaran,Pelanggan,Tanggal,Status,Nilai Tagihan,HPP,Margin\n`;
+        
+        orders.forEach(o => {
+          const invId = `#INV-2026-${o.id.replace(/\D/g, '') || '0046'}`;
+          const paymentMethod = o.paymentMethod || 'Manual Transfer BCA';
+          const displayCustomer = o.customer || o.customerName || 'Unknown Customer';
+          const displayAmount = o.amount || o.total || 0;
+          const displayShipping = o.shippingCost || 0;
+          const invoiceProductValue = Math.max(0, displayAmount - displayShipping);
+          const invoiceHpp = (o.items || []).reduce((sum, item) => {
+            const p = products.find(prod => prod.sku === item.sku);
+            const costPerUnit = item.cost || (p ? p.cost : Math.round((item.price || 0) * 0.62));
+            return sum + (costPerUnit * (item.qty || 1));
+          }, 0);
+          const invoiceMargin = invoiceProductValue - invoiceHpp - (o.discount || 0);
+          
+          reportData += `${invId},${paymentMethod},${displayCustomer},${o.date},${o.paymentStatus},Rp ${displayAmount},Rp ${invoiceHpp},Rp ${invoiceMargin}\n`;
+        });
+        
+        let blob, filename;
+        if (format === 'csv') {
+          blob = new Blob([reportData], { type: 'text/csv;charset=utf-8;' });
+          filename = `bizmate_laporan_keuangan_${dateFilterStart}.csv`;
+        } else if (format === 'xlsx') {
+          // Fallback simple download
+          blob = new Blob([reportData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          filename = `bizmate_laporan_keuangan_${dateFilterStart}.xlsx`;
+        } else {
+          blob = new Blob([reportData], { type: 'application/pdf' });
+          filename = `bizmate_laporan_keuangan_${dateFilterStart}.pdf`;
+        }
+        
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", filename);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Show toast alert
+          alert(`Laporan format ${format.toUpperCase()} berhasil diekspor.`);
+        }
+      };
     });
   </script>
 

@@ -100,7 +100,7 @@
             Produk Furniture Anda</p>
         </div>
         <div class="flex items-center gap-2.5 w-full sm:w-auto">
-          <button
+          <button onclick="openImportPortal()"
             class="flex-1 sm:flex-none justify-center flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition">
             <i class="ti ti-file-import"></i> Import
           </button>
@@ -135,9 +135,17 @@
       <!-- Advanced Data Table -->
       <div class="bg-white rounded-3xl border border-slate-200 shadow-card flex flex-col">
 
+        <!-- Status Tabs -->
+        <div class="flex border-b border-slate-200 px-6 pt-3 bg-white rounded-t-3xl overflow-x-auto">
+          <button id="tab-all" onclick="setStatusTab('Semua')" class="px-4 py-3 text-xs font-black uppercase tracking-wider border-b-2 border-brand-blueRoyal text-brand-blueRoyal transition-all duration-200 shrink-0">Semua</button>
+          <button id="tab-active" onclick="setStatusTab('Aktif')" class="px-4 py-3 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition-all duration-200 shrink-0">Aktif</button>
+          <button id="tab-draft" onclick="setStatusTab('Draft')" class="px-4 py-3 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition-all duration-200 shrink-0">Draft</button>
+          <button id="tab-archived" onclick="setStatusTab('Arsip')" class="px-4 py-3 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition-all duration-200 shrink-0">Arsip</button>
+        </div>
+
         <!-- Filters Bar -->
         <div
-          class="p-4 sm:p-6 border-b border-slate-100 flex flex-col xl:flex-row gap-4 justify-between items-stretch xl:items-center bg-slate-50/50 rounded-t-3xl">
+          class="p-4 sm:p-6 border-b border-slate-100 flex flex-col xl:flex-row gap-4 justify-between items-stretch xl:items-center bg-slate-50/50">
           <div class="flex items-center gap-3 w-full xl:w-auto">
             <div class="relative w-full xl:w-64">
               <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
@@ -156,11 +164,13 @@
                 <option>Lampu & Dekorasi</option>
                 <option>Mebel Outdoor</option>
               </select>
-              <select id="filter-status"
+              <select id="filter-sort"
                 class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none">
-                <option>Status: Semua</option>
-                <option>Status: Aktif</option>
-                <option>Status: Draft</option>
+                <option value="latest">Urutan: Terbaru</option>
+                <option value="name">Urutan: Nama (A-Z)</option>
+                <option value="price-high">Urutan: Harga Tertinggi</option>
+                <option value="price-low">Urutan: Harga Terendah</option>
+                <option value="stock-low">Urutan: Stok Terendah</option>
               </select>
             </div>
 
@@ -190,8 +200,6 @@
           <table class="w-full text-left border-collapse min-w-[900px] xl:min-w-0 table-fixed">
             <thead>
               <tr class="bg-white">
-                <th class="px-3 xl:px-4 py-4 w-10 border-b border-slate-100"><input type="checkbox"
-                    class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal"></th>
                 <th
                   class="px-3 xl:px-4 py-4 w-[32%] text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100">
                   Info Produk</th>
@@ -215,7 +223,6 @@
             <tbody id="products-table-body" class="text-sm text-slate-700 divide-y divide-slate-100">
 
               <tr class="table-row-hover transition">
-                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-4">
                     <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50"
@@ -253,7 +260,6 @@
               </tr>
 
               <tr class="table-row-hover transition">
-                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-4">
                     <img class="w-14 h-14 rounded-xl border border-slate-200 object-cover bg-slate-50"
@@ -293,7 +299,6 @@
               </tr>
 
               <tr class="table-row-hover transition bg-slate-50/50">
-                <td class="px-6 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-4">
                     <img
@@ -368,16 +373,73 @@
 
   <script>
 
+    // Premium Toast function
+    function showToast(message, type = 'success') {
+      const toastContainer = document.createElement('div');
+      toastContainer.className = `fixed top-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 transform translate-y-2 opacity-0 font-sans`;
+
+      let iconHtml = '<i class="ti ti-circle-check text-emerald-400 text-xl"></i>';
+      if (type === 'error') {
+        iconHtml = '<i class="ti ti-circle-x text-rose-400 text-xl"></i>';
+      }
+
+      toastContainer.innerHTML = `
+        ${iconHtml}
+        <div>
+          <p class="text-xs font-black text-white font-outfit uppercase tracking-wider">${type === 'success' ? 'Berhasil' : 'Pemberitahuan'}</p>
+          <p class="text-[11px] text-slate-400 font-medium mt-0.5">${message}</p>
+        </div>
+      `;
+
+      document.body.appendChild(toastContainer);
+
+      // Trigger animation
+      setTimeout(() => {
+        toastContainer.classList.remove('translate-y-2', 'opacity-0');
+      }, 100);
+
+      // Auto remove
+      setTimeout(() => {
+        toastContainer.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => {
+          toastContainer.remove();
+        }, 300);
+      }, 3000);
+    }
+
     // Dynamic Products Catalog
     document.addEventListener("DOMContentLoaded", function () {
       const tbody = document.getElementById('products-table-body');
       const gridContainer = document.getElementById('products-grid-container');
       const searchInput = document.getElementById('search-input');
       const filterCategory = document.getElementById('filter-category');
-      const filterStatus = document.getElementById('filter-status');
+      const filterSort = document.getElementById('filter-sort');
       const paginationInfo = document.getElementById('table-pagination-info');
       const PAGE_SIZE = 10;
       let currentPage = 1;
+      let activeStatusTab = 'Semua';
+      let importedProductsTemp = []; // Holds parsed products before committing
+
+      // Dynamic Rating summary based on SKU seed
+      function getProductRating(sku) {
+        let seedValue = 0;
+        for (let i = 0; i < sku.length; i++) {
+          seedValue += sku.charCodeAt(i);
+        }
+        const rating = ((seedValue % 10) / 10) * 1.3 + 3.7; // range 3.7 to 5.0
+        const reviewsCount = (seedValue % 42) + 4;
+        return {
+          stars: rating.toFixed(1),
+          reviews: reviewsCount,
+          breakdown: {
+            5: Math.round((seedValue % 25) + 60),
+            4: Math.round((seedValue % 15) + 15),
+            3: Math.round(seedValue % 8),
+            2: Math.round(seedValue % 4),
+            1: Math.round(seedValue % 2)
+          }
+        };
+      }
 
       // Helper function to calculate sold quantity dynamically with seed offset
       function getProductSoldQty(sku) {
@@ -435,34 +497,76 @@
       // Set initial view mode
       window.setViewMode(currentViewMode);
 
+      window.setStatusTab = function (tabName) {
+        activeStatusTab = tabName;
+        const tabs = ['Semua', 'Aktif', 'Draft', 'Arsip'];
+        const ids = ['tab-all', 'tab-active', 'tab-draft', 'tab-archived'];
+        tabs.forEach((tab, index) => {
+          const el = document.getElementById(ids[index]);
+          if (!el) return;
+          if (tab === tabName) {
+            el.className = "px-4 py-3 text-xs font-black uppercase tracking-wider border-b-2 border-brand-blueRoyal text-brand-blueRoyal transition-all duration-200 shrink-0";
+          } else {
+            el.className = "px-4 py-3 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-400 hover:text-slate-700 transition-all duration-200 shrink-0";
+          }
+        });
+        currentPage = 1;
+        renderTable();
+      };
+
       // Main Render Function
       function renderTable() {
         const products = BizmateDB.getProducts();
         const stats = BizmateDB.getStats();
 
+        // Count for custom statuses
+        const activeCount = products.filter(p => p.active && !p.archived).length;
+        const draftCount = products.filter(p => !p.active && !p.archived).length;
+        const outCount = products.filter(p => p.stock === 0 && !p.archived).length;
+
         // 1. Update Metrics
-        document.getElementById('count-all').textContent = stats.productsCount;
-        document.getElementById('count-active').textContent = stats.activeProductsCount;
-        document.getElementById('count-draft').textContent = stats.draftProductsCount;
-        document.getElementById('count-out').textContent = stats.outOfStockProductsCount;
+        document.getElementById('count-all').textContent = products.length;
+        document.getElementById('count-active').textContent = activeCount;
+        document.getElementById('count-draft').textContent = draftCount;
+        document.getElementById('count-out').textContent = outCount;
 
         // 2. Filter Products
         const query = searchInput.value.toLowerCase().trim();
         const cat = filterCategory.value;
-        const status = filterStatus.value;
 
         let filtered = products.filter(p => {
           const matchQuery = p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query);
           const matchCat = cat === 'Semua Kategori' || p.category === cat;
 
           let matchStatus = true;
-          if (status === 'Status: Aktif') {
-            matchStatus = p.active;
-          } else if (status === 'Status: Draft') {
-            matchStatus = !p.active;
+          if (activeStatusTab === 'Aktif') {
+            matchStatus = p.active && !p.archived;
+          } else if (activeStatusTab === 'Draft') {
+            matchStatus = !p.active && !p.archived;
+          } else if (activeStatusTab === 'Arsip') {
+            matchStatus = !!p.archived;
+          } else {
+            matchStatus = !p.archived; // Standard view hides archived unless Arsip tab selected
           }
 
           return matchQuery && matchCat && matchStatus;
+        });
+
+        // Apply Sorting
+        const sortVal = filterSort.value;
+        filtered.sort((a, b) => {
+          if (sortVal === 'name') {
+            return a.name.localeCompare(b.name);
+          } else if (sortVal === 'price-high') {
+            return b.price - a.price;
+          } else if (sortVal === 'price-low') {
+            return a.price - b.price;
+          } else if (sortVal === 'stock-low') {
+            return a.stock - b.stock;
+          } else {
+            // 'latest'
+            return new Date(b.created || 0) - new Date(a.created || 0);
+          }
         });
 
         // 3. Render HTML with pagination to keep table compact
@@ -472,7 +576,7 @@
         if (filtered.length === 0) {
           tbody.innerHTML = `
             <tr>
-              <td colspan="7" class="px-6 py-12 text-center text-slate-400 font-medium">
+              <td colspan="6" class="px-6 py-12 text-center text-slate-400 font-medium">
                 <i class="ti ti-box-off text-4xl block mb-2 opacity-50"></i>
                 Tidak ada produk ditemukan.
               </td>
@@ -498,6 +602,9 @@
         pageProducts.forEach(p => {
           const opacityClass = p.active ? '' : 'opacity-60 grayscale';
           const titleClass = p.active ? 'text-slate-800 hover:text-brand-blueRoyal font-outfit' : 'text-slate-400 font-outfit';
+
+          // Rating summary generator
+          const rating = getProductRating(p.sku);
 
           // 1. Calculate price, stock, performa dynamically based on variant presence
           let priceDisplay = '';
@@ -576,7 +683,7 @@
 
           if (p.hasVariants && p.variantList && p.variantList.length > 0) {
             variantIndicator = `
-              <div class="flex items-center gap-1.5 mt-1.5">
+              <div class="flex items-center gap-1.5 mt-1.5 flex-wrap">
                 <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-brand-blueLight text-brand-blueRoyal border border-blue-100 rounded-md text-[9px] font-extrabold uppercase tracking-wider">
                   <i class="ti ti-layers-difference text-[10px]"></i>
                   <span>${p.variantList.length} Varian</span>
@@ -628,7 +735,6 @@
 
               return `
                 <tr class="variant-row-${p.sku} hidden bg-slate-50/20 hover:bg-slate-50/50 border-b border-slate-100/80 transition duration-150">
-                  <td class="px-6 py-3"></td>
                   <td class="px-6 py-3 pl-16">
                     <div class="flex items-center gap-3">
                       <div class="w-3.5 h-3.5 border-l-2 border-b-2 border-slate-200 rounded-bl-md -mt-2.5 shrink-0 ml-1"></div>
@@ -717,10 +823,64 @@
             `;
           }
 
+          // Rating summary HTML
+          const ratingStarsHtml = `
+            <div class="flex items-center gap-1.5 mt-1 text-[11px] text-amber-500 font-bold relative group/rating cursor-pointer">
+              <i class="ti ti-star-filled"></i>
+              <span>${rating.stars}</span>
+              <span class="text-slate-400 font-medium">(${rating.reviews} Ulasan)</span>
+              
+              <!-- Popover Breakdown (Standard User Handoff CSS popup) -->
+              <div class="absolute left-0 bottom-full mb-2 z-50 hidden group-hover/rating:block bg-white border border-slate-200 shadow-xl rounded-2xl p-4 w-56 text-left pointer-events-none transition duration-200">
+                <p class="font-outfit font-black text-slate-800 text-xs mb-2.5">Ulasan & Rating Pembeli</p>
+                <div class="space-y-1.5 text-[10px] text-slate-600 font-semibold">
+                  ${[5, 4, 3, 2, 1].map(starsNum => {
+                    const percentage = rating.breakdown[starsNum];
+                    return `
+                      <div class="flex items-center gap-2">
+                        <span class="w-3">${starsNum}★</span>
+                        <div class="flex-grow h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div class="h-full bg-amber-400 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="w-6 text-right text-slate-400">${percentage}%</span>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+
+          const ratingStarsHtmlCard = `
+            <div class="flex items-center gap-1 mt-1.5 text-xs text-amber-500 font-extrabold relative group/rating2 cursor-pointer">
+              <i class="ti ti-star-filled"></i>
+              <span>${rating.stars}</span>
+              <span class="text-slate-400 font-medium">(${rating.reviews} Ulasan)</span>
+              
+              <!-- Popover Breakdown -->
+              <div class="absolute left-0 bottom-full mb-2 z-50 hidden group-hover/rating2:block bg-white border border-slate-200 shadow-xl rounded-2xl p-4 w-56 text-left pointer-events-none transition duration-200">
+                <p class="font-outfit font-black text-slate-800 text-xs mb-2.5">Ulasan & Rating Pembeli</p>
+                <div class="space-y-1.5 text-[10px] text-slate-600 font-semibold">
+                  ${[5, 4, 3, 2, 1].map(starsNum => {
+                    const percentage = rating.breakdown[starsNum];
+                    return `
+                      <div class="flex items-center gap-2">
+                        <span class="w-3">${starsNum}★</span>
+                        <div class="flex-grow h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div class="h-full bg-amber-400 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="w-6 text-right text-slate-400">${percentage}%</span>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+
           // 1. List View Render
           tbody.innerHTML += `
             <tr class="table-row-hover transition ${p.active ? '' : 'bg-slate-50/30'}">
-              <td class="px-3 xl:px-4 py-4"><input type="checkbox" class="rounded border-slate-300 text-brand-blueRoyal"></td>
               <td class="px-3 xl:px-4 py-4">
                 <div class="flex items-center gap-3 ${opacityClass}">
                   ${expandButton ? expandButton : '<div class="w-7 h-7 shrink-0"></div>'}
@@ -728,6 +888,7 @@
                   <div class="min-w-0">
                     <p class="font-bold cursor-pointer transition ${titleClass} truncate max-w-[220px] xl:max-w-[280px]" onclick="editProduct('${p.sku}')" title="${p.name}">${p.name}</p>
                     <p class="text-[11px] text-slate-500 font-mono mt-0.5">SKU Induk: ${p.sku}</p>
+                    ${ratingStarsHtml}
                     ${variantIndicator}
                   </div>
                 </div>
@@ -744,6 +905,7 @@
                 </label>
               </td>
               <td class="px-3 xl:px-4 py-4 text-right whitespace-nowrap">
+                <button onclick="duplicateProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-brand-orange rounded-lg transition" title="Duplikat" aria-label="Duplikat produk ${p.name}"><i class="ti ti-copy"></i></button>
                 <button onclick="editProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-brand-blueRoyal rounded-lg transition" title="Edit" aria-label="Edit produk ${p.name}"><i class="ti ti-edit"></i></button>
                 <button onclick="deleteProduct('${p.sku}')" class="p-2 text-slate-400 hover:text-red-500 rounded-lg transition" title="Delete" aria-label="Hapus produk ${p.name}"><i class="ti ti-trash"></i></button>
               </td>
@@ -787,6 +949,7 @@
                         ${p.name}
                       </h4>
                       <p class="text-[10px] text-slate-400 font-mono mt-1">SKU Induk: ${p.sku}</p>
+                      ${ratingStarsHtmlCard}
                     </div>
                     
                     <!-- Toggle Active Status -->
@@ -820,6 +983,9 @@
               <div class="pt-3 border-t border-slate-100/80 flex items-center justify-between gap-2 shrink-0">
                 ${variantExpandButtonCard ? variantExpandButtonCard : '<div class="h-8"></div>'}
                 <div class="flex items-center gap-1.5 ml-auto">
+                  <button onclick="duplicateProduct('${p.sku}')" class="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 hover:bg-brand-orange/5 hover:text-brand-orange hover:border-brand-orange/20 flex items-center justify-center text-slate-500 transition duration-200 shadow-soft" title="Duplikat" aria-label="Duplikat produk ${p.name}">
+                    <i class="ti ti-copy text-sm"></i>
+                  </button>
                   <button onclick="editProduct('${p.sku}')" class="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 hover:bg-brand-blueRoyal/5 hover:text-brand-blueRoyal hover:border-brand-blueRoyal/20 flex items-center justify-center text-slate-500 transition duration-200 shadow-soft" aria-label="Edit produk ${p.name}">
                     <i class="ti ti-edit text-sm"></i>
                   </button>
@@ -854,7 +1020,7 @@
       // Event Listeners for Search & Filters
       searchInput.addEventListener('input', () => { currentPage = 1; renderTable(); });
       filterCategory.addEventListener('change', () => { currentPage = 1; renderTable(); });
-      filterStatus.addEventListener('change', () => { currentPage = 1; renderTable(); });
+      filterSort.addEventListener('change', () => { currentPage = 1; renderTable(); });
 
       window.changeProductPage = function (page) {
         currentPage = Math.max(1, page);
@@ -864,18 +1030,70 @@
       // Global functions for inline actions
       window.toggleActive = function (sku) {
         BizmateDB.toggleProductStatus(sku);
+        showToast('Status keaktifan produk berhasil diubah!', 'success');
         renderTable();
       };
 
+      // Upgraded deleteProduct to support Archiving
       window.deleteProduct = function (sku) {
-        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-          BizmateDB.deleteProduct(sku);
-          renderTable();
+        const products = BizmateDB.getProducts();
+        const p = products.find(prod => prod.sku === sku);
+        if (!p) return;
+
+        const option = confirm(`Pilih 'OK' untuk mengarsipkan '${p.name}' (Dapat dikembalikan)\natau 'Cancel' untuk menghapus secara permanen.`);
+        if (option) {
+          p.archived = true;
+          p.active = false;
+          BizmateDB.saveProduct(p);
+          showToast(`Produk '${p.name}' berhasil diarsipkan!`, 'success');
+        } else {
+          if (confirm(`Apakah Anda yakin ingin menghapus '${p.name}' secara PERMANEN? Tindakan ini tidak dapat dibatalkan.`)) {
+            BizmateDB.deleteProduct(sku);
+            showToast(`Produk '${p.name}' berhasil dihapus permanen!`, 'success');
+          }
         }
+        renderTable();
       };
 
       window.editProduct = function (sku) {
         window.location.href = `tambah-produk.html?sku=${sku}`;
+      };
+
+      // Duplication handler
+      window.duplicateProduct = function (sku) {
+        const products = BizmateDB.getProducts();
+        const src = products.find(p => p.sku === sku);
+        if (!src) {
+          showToast('Produk sumber tidak ditemukan!', 'error');
+          return;
+        }
+
+        // Generate clean duplicate SKU
+        let cloneSku = `${src.sku}-COPY`;
+        let counter = 1;
+        while (products.some(p => p.sku.toLowerCase() === cloneSku.toLowerCase())) {
+          cloneSku = `${src.sku}-COPY${counter}`;
+          counter++;
+        }
+
+        const clone = JSON.parse(JSON.stringify(src));
+        clone.sku = cloneSku;
+        clone.name = `${src.name} - Salinan`;
+        clone.created = new Date().toISOString();
+        clone.active = false; // defaults to draft (inactive)
+        clone.archived = false;
+
+        // Clean internal variants references if present
+        if (clone.hasVariants && clone.variantList) {
+          clone.variantList.forEach(v => {
+            const suffix = v.sku.replace(src.sku, '');
+            v.sku = `${cloneSku}${suffix}`;
+          });
+        }
+
+        BizmateDB.saveProduct(clone);
+        showToast(`Produk '${src.name}' berhasil diduplikasi!`, 'success');
+        renderTable();
       };
 
       window.toggleVariantDrawer = function (sku, event) {
@@ -918,10 +1136,290 @@
         }
       };
 
+      // ==================== PORTAL IMPOR HANDLERS ====================
+      const DEFAULT_HISTORY = [
+        { filename: 'impor_produk_ret.csv', date: '25 Mei 2026, 11:30', status: 'Selesai (5 Produk)' },
+        { filename: 'katalog_ikea_sofa.csv', date: '20 Mei 2026, 09:15', status: 'Selesai (12 Produk)' }
+      ];
+
+      function initImportHistory() {
+        if (!localStorage.getItem('bizmate_import_history')) {
+          localStorage.setItem('bizmate_import_history', JSON.stringify(DEFAULT_HISTORY));
+        }
+      }
+
+      function loadImportHistory() {
+        initImportHistory();
+        const list = JSON.parse(localStorage.getItem('bizmate_import_history')) || [];
+        const container = document.getElementById('import-history-timeline');
+        if (!container) return;
+
+        container.innerHTML = '';
+        if (list.length === 0) {
+          container.innerHTML = '<p class="text-slate-400 text-center py-6 text-[11px]">Belum ada riwayat impor.</p>';
+          return;
+        }
+
+        list.forEach(item => {
+          const div = document.createElement('div');
+          div.className = "flex items-start gap-2.5 p-2 bg-white rounded-xl border border-slate-200/60 shadow-soft";
+          div.innerHTML = `
+            <div class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0">
+              <i class="ti ti-circle-check text-sm"></i>
+            </div>
+            <div class="min-w-0">
+              <p class="font-extrabold text-[10px] text-slate-700 truncate" title="${item.filename}">${item.filename}</p>
+              <p class="text-[9px] text-slate-400 mt-0.5">${item.date}</p>
+              <p class="text-[9px] text-emerald-600 font-bold mt-0.5">${item.status}</p>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      window.openImportPortal = function () {
+        const modal = document.getElementById('import-portal-modal');
+        const dialog = modal.querySelector('div');
+        loadImportHistory();
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+          dialog.classList.remove('scale-95', 'opacity-0');
+          dialog.classList.add('scale-100', 'opacity-100');
+        }, 50);
+      };
+
+      window.closeImportPortal = function () {
+        const modal = document.getElementById('import-portal-modal');
+        const dialog = modal.querySelector('div');
+        dialog.classList.remove('scale-100', 'opacity-100');
+        dialog.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+
+        // Reset state
+        importedProductsTemp = [];
+        document.getElementById('import-preview-area').classList.add('hidden');
+        document.getElementById('btn-commit-import').disabled = true;
+        document.getElementById('import-csv-file').value = '';
+      };
+
+      window.downloadImportTemplate = function () {
+        const csvContent = "SKU,Nama Produk,Kategori,Harga Jual,Modal Awal (HPP),Stok,Deskripsi\n" +
+                           "CHR-RET-099,Kursi Retro Kayu Jati,Kursi & Sofa,1250000,750000,10,Kursi santai retro yang awet\n" +
+                           "TBL-WRK-098,Meja Kerja Kayu Jati,Meja & Rak,2450000,1400000,5,Meja kerja minimalis";
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", "template_produk.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('Template impor CSV berhasil diunduh!', 'success');
+      };
+
+      // Parse uploaded CSV file
+      function parseCSVText(text) {
+        const lines = text.split('\n');
+        const results = [];
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          
+          const parts = line.split(',');
+          if (parts.length >= 6) {
+            results.push({
+              sku: parts[0].trim(),
+              name: parts[1].trim(),
+              category: parts[2].trim(),
+              price: parseFloat(parts[3]) || 0,
+              cost: parseFloat(parts[4]) || 0,
+              stock: parseInt(parts[5]) || 0,
+              description: parts[6] ? parts[6].trim() : '',
+              image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=150&q=80',
+              active: true
+            });
+          }
+        }
+        return results;
+      }
+
+      function handleCSVFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const text = e.target.result;
+          importedProductsTemp = parseCSVText(text);
+
+          const tbody = document.getElementById('import-preview-tbody');
+          const countEl = document.getElementById('import-preview-count');
+          const previewArea = document.getElementById('import-preview-area');
+          const commitBtn = document.getElementById('btn-commit-import');
+
+          tbody.innerHTML = '';
+          if (importedProductsTemp.length === 0) {
+            showToast('Format file CSV tidak valid atau kosong!', 'error');
+            commitBtn.disabled = true;
+            previewArea.classList.add('hidden');
+            return;
+          }
+
+          importedProductsTemp.forEach(p => {
+            const tr = document.createElement('tr');
+            tr.className = "border-b border-slate-100 hover:bg-slate-50 transition";
+            tr.innerHTML = `
+              <td class="px-4 py-2 font-mono text-[10px] text-slate-800 font-bold">${p.sku}</td>
+              <td class="px-4 py-2 font-bold text-slate-700 truncate max-w-[150px]" title="${p.name}">${p.name}</td>
+              <td class="px-4 py-2">${p.category}</td>
+              <td class="px-4 py-2 text-right font-extrabold text-slate-700">Rp ${p.price.toLocaleString('id-ID')}</td>
+              <td class="px-4 py-2 text-right font-bold text-emerald-600">${p.stock} Unit</td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          countEl.textContent = `${importedProductsTemp.length} Produk Terbaca`;
+          previewArea.classList.remove('hidden');
+          commitBtn.disabled = false;
+          showToast(`${importedProductsTemp.length} produk siap diimpor!`, 'success');
+        };
+        reader.readAsText(file);
+      }
+
+      // Drag zone triggers
+      const dragZone = document.getElementById('import-drag-zone');
+      const fileInput = document.getElementById('import-csv-file');
+
+      if (dragZone && fileInput) {
+        dragZone.onclick = () => fileInput.click();
+        fileInput.onchange = (e) => {
+          const file = e.target.files[0];
+          handleCSVFile(file);
+        };
+
+        dragZone.ondragover = (e) => {
+          e.preventDefault();
+          dragZone.classList.add('border-brand-blueRoyal/50', 'bg-brand-blueLight/10');
+        };
+
+        dragZone.ondragleave = (e) => {
+          e.preventDefault();
+          dragZone.classList.remove('border-brand-blueRoyal/50', 'bg-brand-blueLight/10');
+        };
+
+        dragZone.ondrop = (e) => {
+          e.preventDefault();
+          dragZone.classList.remove('border-brand-blueRoyal/50', 'bg-brand-blueLight/10');
+          const file = e.dataTransfer.files[0];
+          handleCSVFile(file);
+        };
+      }
+
+      window.commitImportedProducts = function () {
+        if (importedProductsTemp.length === 0) return;
+
+        let successCount = 0;
+        importedProductsTemp.forEach(p => {
+          BizmateDB.saveProduct(p);
+          successCount++;
+        });
+
+        // Add to history
+        const filename = fileInput.files[0] ? fileInput.files[0].name : 'impor_manual.csv';
+        const list = JSON.parse(localStorage.getItem('bizmate_import_history')) || [];
+        list.unshift({
+          filename: filename,
+          date: new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+          status: `Selesai (${successCount} Produk)`
+        });
+        localStorage.setItem('bizmate_import_history', JSON.stringify(list));
+
+        showToast(`${successCount} Produk berhasil diimpor ke database!`, 'success');
+        closeImportPortal();
+        renderTable();
+      };
+
       // Initial Render
       renderTable();
     });
   </script>
+
+  <!-- Modal Portal Impor Produk -->
+  <div id="import-portal-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm px-4">
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl w-full max-w-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 p-6 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <i class="ti ti-file-import text-brand-blueRoyal text-xl"></i>
+          <h3 class="font-outfit font-black text-slate-800 text-lg">Portal Impor Produk</h3>
+        </div>
+        <button onclick="closeImportPortal()" class="text-slate-400 hover:text-slate-600 transition">
+          <i class="ti ti-x text-xl"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <!-- Left Pane: Upload Area -->
+        <div class="md:col-span-7 space-y-4">
+          <div class="p-4 bg-blue-50/50 border border-blue-100 rounded-2xl flex items-center justify-between">
+            <div>
+              <p class="text-xs font-bold text-slate-700">Gunakan Template Standar</p>
+              <p class="text-[10px] text-slate-400 font-medium">Download format CSV untuk mengisi data produk baru Anda.</p>
+            </div>
+            <button onclick="downloadImportTemplate()" class="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-brand-blueRoyal text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-soft">
+              <i class="ti ti-download"></i>
+              <span>Unduh CSV</span>
+            </button>
+          </div>
+
+          <!-- Drag and Drop Area -->
+          <div id="import-drag-zone" class="border-2 border-dashed border-slate-200 hover:border-brand-blueRoyal/50 rounded-2xl p-8 flex flex-col items-center justify-center bg-slate-50 cursor-pointer hover:bg-brand-blueLight/10 transition group text-center">
+            <i class="ti ti-cloud-upload text-4xl text-slate-400 group-hover:text-brand-blueRoyal transition mb-2"></i>
+            <p class="text-xs font-bold text-slate-700">Tarik & lepas file CSV Anda di sini</p>
+            <p class="text-[10px] text-slate-400 font-medium mt-1">atau klik untuk memilih file dari komputer</p>
+            <input type="file" id="import-csv-file" class="hidden" accept=".csv">
+          </div>
+        </div>
+
+        <!-- Right Pane: Timeline Riwayat Impor -->
+        <div class="md:col-span-5 bg-slate-50/50 border border-slate-200/80 rounded-2xl p-4 flex flex-col">
+          <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit mb-3">Riwayat Impor</h4>
+          <div id="import-history-timeline" class="space-y-3.5 flex-grow overflow-y-auto max-h-[180px] custom-scrollbar text-xs font-semibold text-slate-600">
+            <!-- Dynamic History List -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview parsed CSV results -->
+      <div id="import-preview-area" class="hidden space-y-3">
+        <div class="flex justify-between items-center">
+          <h4 class="text-xs font-black text-slate-700 uppercase tracking-wider font-outfit">Preview Data Hasil Unggahan</h4>
+          <span id="import-preview-count" class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full">0 Produk Terbaca</span>
+        </div>
+        <div class="max-h-36 overflow-y-auto border border-slate-200 rounded-xl overflow-hidden shadow-soft">
+          <table class="w-full border-collapse text-left text-[11px] text-slate-600">
+            <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider">
+              <tr>
+                <th class="px-4 py-2 font-semibold">SKU</th>
+                <th class="px-4 py-2 font-semibold">Nama</th>
+                <th class="px-4 py-2 font-semibold">Kategori</th>
+                <th class="px-4 py-2 text-right font-semibold">Harga</th>
+                <th class="px-4 py-2 text-right font-semibold">Stok</th>
+              </tr>
+            </thead>
+            <tbody id="import-preview-tbody" class="divide-y divide-slate-100 bg-white">
+              <!-- Dynamically populated from CSV -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+        <button type="button" onclick="closeImportPortal()" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition">Tutup</button>
+        <button type="button" id="btn-commit-import" disabled onclick="commitImportedProducts()" class="px-5 py-2 bg-brand-blueRoyal disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/15">Impor Sekarang</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 

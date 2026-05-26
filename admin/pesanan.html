@@ -5,14 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bizmate - Daftar Pesanan</title>
-  <meta name="description" content="Kelola semua pesanan pelanggan, status pengiriman, dan lacak transaksi di Bizmate Admin Console.">
-  
+  <meta name="description"
+    content="Kelola semua pesanan pelanggan, status pengiriman, dan lacak transaksi di Bizmate Admin Console.">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  
+
   <!-- Shared LocalStorage Database -->
   <script src="js/database.js"></script>
   <script src="js/theme.js"></script>
@@ -49,28 +52,57 @@
 
   <style>
     @keyframes scale-in {
-      0% { transform: scale(0.96); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(0.96);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
-    .animate-scale-in { animation: scale-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-    
-    .table-row-hover:hover { background-color: rgba(248, 250, 252, 0.8); }
+
+    .animate-scale-in {
+      animation: scale-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .table-row-hover:hover {
+      background-color: rgba(248, 250, 252, 0.8);
+    }
 
     /* Print layout */
     @media print {
-      body * { visibility: hidden; }
-      #print-label-modal, #print-label-modal * { visibility: visible; }
+      body * {
+        visibility: hidden;
+      }
+
+      #print-label-modal,
+      #print-label-modal * {
+        visibility: visible;
+      }
+
       #print-label-modal {
-        position: absolute; left: 0; top: 0;
-        width: 100%; height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
         background: white !important;
-        box-shadow: none !important; border: none !important;
+        box-shadow: none !important;
+        border: none !important;
         display: block !important;
       }
-      .no-print { display: none !important; }
+
+      .no-print {
+        display: none !important;
+      }
+
       .shipping-label-card {
-        page-break-after: always; break-after: page;
-        margin: 0 !important; box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
+        margin: 0 !important;
+        box-shadow: none !important;
         border: 2px solid #000 !important;
       }
     }
@@ -80,29 +112,38 @@
 <body class="min-h-screen flex overflow-x-hidden bg-slate-50 selection:bg-brand-blueRoyal selection:text-white">
 
   <!-- ==================== SIDEBAR ==================== -->
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100"></aside>
+  <aside id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white text-slate-600 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl lg:shadow-none border-r border-slate-100">
+  </aside>
 
   <!-- ==================== MAIN LAYOUT ==================== -->
   <div class="flex-grow lg:pl-64 flex flex-col min-h-screen">
 
     <!-- Topbar -->
-    <header class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
+    <header
+      class="h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between px-4 sm:px-8">
       <div class="flex items-center gap-4 flex-grow">
-        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition" aria-label="Buka Sidebar">
+        <button onclick="toggleSidebar()"
+          class="lg:hidden p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition"
+          aria-label="Buka Sidebar">
           <i class="ti ti-menu-2 text-xl"></i>
         </button>
         <div class="flex items-center gap-2 font-outfit hidden sm:flex">
-          <span class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
+          <span
+            class="px-2.5 py-1 bg-brand-blueRoyal/10 text-brand-blueRoyal text-[10px] font-black tracking-widest uppercase rounded-lg">Admin</span>
           <span class="font-black text-slate-800 tracking-tight">Bizmate Console</span>
         </div>
       </div>
 
       <div class="flex items-center gap-4 shrink-0">
-        <button id="js-notification-btn" class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative" aria-label="Notifikasi">
+        <button id="js-notification-btn"
+          class="p-2.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition relative"
+          aria-label="Notifikasi">
           <i class="ti ti-bell text-xl"></i>
         </button>
         <div class="h-6 w-px bg-slate-200 mx-2 hidden sm:block"></div>
-        <a href="../index.html" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
+        <a href="../index.html"
+          class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 rounded-full text-xs font-bold transition">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Live Storefront
           <i class="ti ti-external-link text-sm"></i>
@@ -117,13 +158,18 @@
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 class="font-outfit font-black text-2xl sm:text-3xl text-slate-800 tracking-tight">Manajemen Pesanan</h1>
-          <p class="text-xs text-slate-500 font-medium mt-1">Kelola pesanan pelanggan, status pengiriman, dan lacak transaksi</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Kelola pesanan pelanggan, status pengiriman, dan lacak
+            transaksi</p>
         </div>
         <div class="flex items-center gap-3">
-          <button disabled class="flex items-center gap-2 px-5 py-2.5 bg-slate-100 border border-slate-200 text-slate-400 font-bold rounded-xl text-xs cursor-not-allowed font-outfit uppercase tracking-wider shadow-none" aria-label="Coming Soon">
+          <button disabled
+            class="flex items-center gap-2 px-5 py-2.5 bg-slate-100 border border-slate-200 text-slate-400 font-bold rounded-xl text-xs cursor-not-allowed font-outfit uppercase tracking-wider shadow-none"
+            aria-label="Coming Soon">
             <i class="ti ti-plus text-sm"></i> Coming Soon
           </button>
-          <button class="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition duration-200 shadow-soft" aria-label="Export data pesanan">
+          <button
+            class="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-xl text-xs transition duration-200 shadow-soft"
+            aria-label="Export data pesanan">
             <i class="ti ti-download"></i> Export
           </button>
         </div>
@@ -152,7 +198,8 @@
           </div>
         </div>
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-soft flex items-center gap-4">
-          <div class="w-10 h-10 rounded-xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center shrink-0">
+          <div
+            class="w-10 h-10 rounded-xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center shrink-0">
             <i class="ti ti-truck text-lg"></i>
           </div>
           <div>
@@ -180,21 +227,29 @@
         <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
           <div class="sm:col-span-2 relative">
             <label for="date-input" class="sr-only">Pilih Tanggal</label>
-            <input id="date-input" type="text" placeholder="Tanggal" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blueRoyal/20 focus:border-brand-blueRoyal focus:outline-none transition">
-            <i class="ti ti-calendar absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+            <input id="date-input" type="text" placeholder="Tanggal" onfocus="(this.type='date')"
+              onblur="if(!this.value) this.type='text'"
+              class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blueRoyal/20 focus:border-brand-blueRoyal focus:outline-none transition">
+            <i
+              class="ti ti-calendar absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
           </div>
           <div class="sm:col-span-7 relative">
             <label for="search-input" class="sr-only">Cari nomor pesanan atau nama customer</label>
             <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
-            <input id="search-input" type="text" placeholder="Cari invoice, nama pelanggan, atau nomor resi..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blueRoyal/20 focus:border-brand-blueRoyal focus:outline-none transition">
+            <input id="search-input" type="text" placeholder="Cari invoice, nama pelanggan, atau nomor resi..."
+              class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-brand-blueRoyal/20 focus:border-brand-blueRoyal focus:outline-none transition">
           </div>
           <div class="sm:col-span-3 flex items-center justify-end gap-2">
             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider hidden sm:block">Tampilan:</span>
             <div class="flex items-center bg-slate-100 rounded-xl p-1 gap-1">
-              <button id="view-btn-table" onclick="setView('table')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition" aria-label="Tampilan Tabel">
+              <button id="view-btn-table" onclick="setView('table')"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition"
+                aria-label="Tampilan Tabel">
                 <i class="ti ti-list text-sm"></i> <span class="hidden sm:inline">Tabel</span>
               </button>
-              <button id="view-btn-card" onclick="setView('card')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition" aria-label="Tampilan Kartu">
+              <button id="view-btn-card" onclick="setView('card')"
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition"
+                aria-label="Tampilan Kartu">
                 <i class="ti ti-layout-grid text-sm"></i> <span class="hidden sm:inline">Kartu</span>
               </button>
             </div>
@@ -204,14 +259,25 @@
         <!-- Tabs -->
         <div class="flex items-center justify-between gap-3">
           <div class="flex gap-1.5 overflow-x-auto pb-1 custom-scrollbar flex-grow">
-            <button onclick="setFilterTab('Semua')" id="tab-Semua" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Semua</button>
-            <button onclick="setFilterTab('Belum Bayar')" id="tab-Belum-Bayar" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Belum Bayar</button>
-            <button onclick="setFilterTab('Diproses')" id="tab-Diproses" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Diproses</button>
-            <button onclick="setFilterTab('Dikirim')" id="tab-Dikirim" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Dikirim</button>
-            <button onclick="setFilterTab('Selesai')" id="tab-Selesai" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Selesai</button>
-            <button onclick="setFilterTab('Batal')" id="tab-Batal" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Batal</button>
-            <button onclick="setFilterTab('Perlu Tindakan')" id="tab-Perlu-Tindakan" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">⚡ Perlu Tindakan</button>
-            <button onclick="setFilterTab('Retur & Refund')" id="tab-Retur-&-Refund" class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">↩ Retur</button>
+            <button onclick="setFilterTab('Semua')" id="tab-Semua"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Semua</button>
+            <button onclick="setFilterTab('Belum Bayar')" id="tab-Belum-Bayar"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Belum
+              Bayar</button>
+            <button onclick="setFilterTab('Diproses')" id="tab-Diproses"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Diproses</button>
+            <button onclick="setFilterTab('Dikirim')" id="tab-Dikirim"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Dikirim</button>
+            <button onclick="setFilterTab('Selesai')" id="tab-Selesai"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Selesai</button>
+            <button onclick="setFilterTab('Batal')" id="tab-Batal"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">Batal</button>
+            <button onclick="setFilterTab('Perlu Tindakan')" id="tab-Perlu-Tindakan"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">⚡
+              Perlu Tindakan</button>
+            <button onclick="setFilterTab('Retur & Refund')" id="tab-Retur-&-Refund"
+              class="js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200">↩
+              Retur</button>
           </div>
           <div class="shrink-0 text-xs text-slate-400 font-semibold whitespace-nowrap">
             <span id="orders-shown-count" class="font-black text-slate-700">0</span> pesanan
@@ -220,15 +286,22 @@
 
         <!-- Bulk select bar -->
         <div class="flex items-center gap-3 border-t border-slate-100 pt-3">
-          <label for="select-all-checkbox" class="flex items-center gap-2 text-xs font-bold text-slate-500 cursor-pointer select-none">
-            <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)" class="w-4 h-4 text-brand-blueRoyal border-slate-300 rounded focus:ring-brand-blueRoyal/20 transition cursor-pointer" aria-label="Pilih semua pesanan di halaman ini">
+          <label for="select-all-checkbox"
+            class="flex items-center gap-2 text-xs font-bold text-slate-500 cursor-pointer select-none">
+            <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"
+              class="w-4 h-4 text-brand-blueRoyal border-slate-300 rounded focus:ring-brand-blueRoyal/20 transition cursor-pointer"
+              aria-label="Pilih semua pesanan di halaman ini">
             Pilih Semua
           </label>
           <span class="text-slate-200">|</span>
-          <button onclick="bulkCetakLabel()" class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1" aria-label="Cetak label terpilih">
+          <button onclick="bulkCetakLabel()"
+            class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1"
+            aria-label="Cetak label terpilih">
             <i class="ti ti-printer text-sm"></i> Cetak Label
           </button>
-          <button onclick="openBulkTrackingModal()" class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1" aria-label="Generate resi massal terpilih">
+          <button onclick="openBulkTrackingModal()"
+            class="text-xs font-bold text-slate-500 hover:text-brand-blueRoyal transition flex items-center gap-1"
+            aria-label="Generate resi massal terpilih">
             <i class="ti ti-barcode text-sm"></i> Generate Resi Massal
           </button>
         </div>
@@ -265,7 +338,8 @@
       <div id="view-card-container" class="hidden space-y-4">
         <!-- Cards rendered by JS -->
       </div>
-      <div id="card-empty-state" class="hidden bg-white border border-slate-200 rounded-3xl py-16 px-4 text-center text-slate-400 shadow-soft">
+      <div id="card-empty-state"
+        class="hidden bg-white border border-slate-200 rounded-3xl py-16 px-4 text-center text-slate-400 shadow-soft">
         <i class="ti ti-receipt-off text-5xl block mb-3 text-slate-300"></i>
         <p class="font-medium">Tidak ada pesanan ditemukan pada tab ini.</p>
       </div>
@@ -277,40 +351,57 @@
   <div id="toast-container" class="fixed bottom-6 right-6 z-[60] flex flex-col gap-3 no-print"></div>
 
   <!-- ==================== FLOATING BULK ACTION BAR ==================== -->
-  <div id="bulk-action-bar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 backdrop-blur-md border border-slate-700 text-white px-6 py-3.5 rounded-3xl shadow-2xl flex items-center justify-between gap-6 transition-all duration-300 translate-y-24 opacity-0 pointer-events-none w-[90%] max-w-lg no-print">
+  <div id="bulk-action-bar"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 backdrop-blur-md border border-slate-700 text-white px-6 py-3.5 rounded-3xl shadow-2xl flex items-center justify-between gap-6 transition-all duration-300 translate-y-24 opacity-0 pointer-events-none w-[90%] max-w-lg no-print">
     <div class="flex items-center gap-3">
       <span class="text-[10px] font-bold font-outfit uppercase tracking-widest text-slate-400">Terpilih</span>
-      <span id="bulk-selected-count" class="px-2.5 py-0.5 bg-brand-orange text-white text-xs font-bold rounded-lg">0</span>
+      <span id="bulk-selected-count"
+        class="px-2.5 py-0.5 bg-brand-orange text-white text-xs font-bold rounded-lg">0</span>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="bulkCetakLabel()" class="flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold text-xs rounded-xl transition" aria-label="Cetak label pesanan terpilih">
+      <button onclick="bulkCetakLabel()"
+        class="flex items-center gap-1.5 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold text-xs rounded-xl transition"
+        aria-label="Cetak label pesanan terpilih">
         <i class="ti ti-printer text-sm"></i> Cetak Label
       </button>
-      <button onclick="openBulkTrackingModal()" class="flex items-center gap-1.5 px-4 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-xs rounded-xl transition shadow-md" aria-label="Generate resi massal pesanan terpilih">
+      <button onclick="openBulkTrackingModal()"
+        class="flex items-center gap-1.5 px-4 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/90 text-white font-bold text-xs rounded-xl transition shadow-md"
+        aria-label="Generate resi massal pesanan terpilih">
         <i class="ti ti-barcode text-sm"></i> Generate Resi Massal
       </button>
-      <button onclick="clearBulkSelections()" class="p-2 text-slate-400 hover:text-white transition rounded-lg" aria-label="Batalkan pilihan massal">
+      <button onclick="clearBulkSelections()" class="p-2 text-slate-400 hover:text-white transition rounded-lg"
+        aria-label="Batalkan pilihan massal">
         <i class="ti ti-x text-sm"></i>
       </button>
     </div>
   </div>
 
   <!-- ==================== MODAL CETAK LABEL ==================== -->
-  <div id="print-label-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print" onclick="if(event.target===this) closePrintModal()">
-    <div class="bg-white border border-slate-200 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-in">
+  <div id="print-label-modal"
+    class="fixed inset-0 z-50 overflow-y-auto hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print"
+    onclick="if(event.target===this) closePrintModal()">
+    <div
+      class="bg-white border border-slate-200 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-in">
       <div class="px-6 py-4 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
           <i class="ti ti-printer text-xl text-brand-blueRoyal"></i>
           <span class="font-outfit font-black text-slate-800 text-base">Cetak Label Pengiriman (A6)</span>
         </div>
-        <button onclick="closePrintModal()" class="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition" aria-label="Tutup Modal Cetak Label">
+        <button onclick="closePrintModal()"
+          class="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition"
+          aria-label="Tutup Modal Cetak Label">
           <i class="ti ti-x text-lg"></i>
         </button>
       </div>
-      <div id="print-label-preview-container" class="flex-grow overflow-y-auto p-6 bg-slate-100 space-y-6 custom-scrollbar flex flex-col items-center"></div>
+      <div id="print-label-preview-container"
+        class="flex-grow overflow-y-auto p-6 bg-slate-100 space-y-6 custom-scrollbar flex flex-col items-center"></div>
       <div class="px-6 py-4 bg-slate-50 border-t border-slate-200/80 flex justify-end gap-3 shrink-0">
-        <button onclick="closePrintModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition" aria-label="Tutup pratinjau cetak">Tutup</button>
-        <button onclick="window.print()" class="px-5 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/95 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5" aria-label="Mulai cetak dokumen">
+        <button onclick="closePrintModal()"
+          class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition"
+          aria-label="Tutup pratinjau cetak">Tutup</button>
+        <button onclick="window.print()"
+          class="px-5 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/95 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5"
+          aria-label="Mulai cetak dokumen">
           <i class="ti ti-printer"></i> Cetak Label
         </button>
       </div>
@@ -318,25 +409,35 @@
   </div>
 
   <!-- ==================== MODAL GENERATE RESI MASSAL ==================== -->
-  <div id="bulk-tracking-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print" onclick="if(event.target===this) closeBulkTrackingModal()">
-    <div class="bg-white border border-slate-200 rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-in">
+  <div id="bulk-tracking-modal"
+    class="fixed inset-0 z-50 overflow-y-auto hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print"
+    onclick="if(event.target===this) closeBulkTrackingModal()">
+    <div
+      class="bg-white border border-slate-200 rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-in">
       <div class="px-6 py-4 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-3">
-          <span class="w-10 h-10 rounded-2xl bg-brand-blueRoyal text-white flex items-center justify-center shadow-md"><i class="ti ti-barcode text-xl"></i></span>
+          <span
+            class="w-10 h-10 rounded-2xl bg-brand-blueRoyal text-white flex items-center justify-center shadow-md"><i
+              class="ti ti-barcode text-xl"></i></span>
           <div>
             <h3 class="font-outfit font-black text-slate-800 text-base">Generate Resi Massal</h3>
-            <p class="text-[11px] font-semibold text-slate-400"><span id="bulk-tracking-count">0</span> pesanan dipilih dari checkbox</p>
+            <p class="text-[11px] font-semibold text-slate-400"><span id="bulk-tracking-count">0</span> pesanan dipilih
+              dari checkbox</p>
           </div>
         </div>
-        <button onclick="closeBulkTrackingModal()" class="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition" aria-label="Tutup modal generate resi massal">
+        <button onclick="closeBulkTrackingModal()"
+          class="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition"
+          aria-label="Tutup modal generate resi massal">
           <i class="ti ti-x text-lg"></i>
         </button>
       </div>
       <div class="flex-grow overflow-y-auto p-6 space-y-5 custom-scrollbar">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div class="max-w-sm">
-            <label for="bulk-courier-select" class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Ekspedisi</label>
-            <select id="bulk-courier-select" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs font-bold text-slate-700 bg-slate-50 focus:outline-none focus:border-brand-blueRoyal">
+            <label for="bulk-courier-select"
+              class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Ekspedisi</label>
+            <select id="bulk-courier-select"
+              class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-xs font-bold text-slate-700 bg-slate-50 focus:outline-none focus:border-brand-blueRoyal">
               <option value="JNE Regular">JNE Regular</option>
               <option value="J&T Express">J&T Express</option>
               <option value="SiCepat">SiCepat</option>
@@ -345,14 +446,20 @@
             </select>
           </div>
           <div>
-            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Mode Resi</label>
+            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Mode
+              Resi</label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 px-4 py-3 rounded-2xl border border-brand-blueRoyal/20 bg-brand-blueLight/40 cursor-pointer text-xs font-bold text-slate-700">
-                <input type="radio" name="bulk-tracking-mode" value="auto" class="text-brand-blueRoyal focus:ring-brand-blueRoyal/20" checked onchange="setBulkTrackingMode('auto')">
+              <label
+                class="flex items-center gap-2 px-4 py-3 rounded-2xl border border-brand-blueRoyal/20 bg-brand-blueLight/40 cursor-pointer text-xs font-bold text-slate-700">
+                <input type="radio" name="bulk-tracking-mode" value="auto"
+                  class="text-brand-blueRoyal focus:ring-brand-blueRoyal/20" checked
+                  onchange="setBulkTrackingMode('auto')">
                 Generate Otomatis
               </label>
-              <label class="flex items-center gap-2 px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer text-xs font-bold text-slate-700">
-                <input type="radio" name="bulk-tracking-mode" value="manual" class="text-brand-blueRoyal focus:ring-brand-blueRoyal/20" onchange="setBulkTrackingMode('manual')">
+              <label
+                class="flex items-center gap-2 px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer text-xs font-bold text-slate-700">
+                <input type="radio" name="bulk-tracking-mode" value="manual"
+                  class="text-brand-blueRoyal focus:ring-brand-blueRoyal/20" onchange="setBulkTrackingMode('manual')">
                 Input Manual
               </label>
             </div>
@@ -360,15 +467,20 @@
         </div>
         <div class="rounded-2xl border border-slate-200 overflow-hidden">
           <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Produk / Pesanan Terpilih</span>
-            <span id="bulk-tracking-helper" class="text-[10px] font-bold text-slate-500">Resi akan dibuat otomatis untuk tiap pesanan.</span>
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Produk / Pesanan
+              Terpilih</span>
+            <span id="bulk-tracking-helper" class="text-[10px] font-bold text-slate-500">Resi akan dibuat otomatis untuk
+              tiap pesanan.</span>
           </div>
-          <div id="bulk-tracking-selected-list" class="divide-y divide-slate-100 max-h-[360px] overflow-y-auto custom-scrollbar"></div>
+          <div id="bulk-tracking-selected-list"
+            class="divide-y divide-slate-100 max-h-[360px] overflow-y-auto custom-scrollbar"></div>
         </div>
       </div>
       <div class="px-6 py-4 bg-slate-50 border-t border-slate-200/80 flex justify-end gap-3 shrink-0">
-        <button onclick="closeBulkTrackingModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">Batal</button>
-        <button onclick="saveBulkTrackingNumbers()" class="px-5 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/95 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+        <button onclick="closeBulkTrackingModal()"
+          class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">Batal</button>
+        <button onclick="saveBulkTrackingNumbers()"
+          class="px-5 py-2 bg-brand-blueRoyal hover:bg-brand-blueRoyal/95 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
           <i class="ti ti-device-floppy"></i> Simpan Resi
         </button>
       </div>
@@ -410,7 +522,7 @@
     }
 
     // ===== COPY =====
-    window.copyText = function(text, label) {
+    window.copyText = function (text, label) {
       navigator.clipboard.writeText(text).then(() => {
         showToast(`Berhasil menyalin ${label}: ${text}`, 'success');
       }).catch(() => {
@@ -418,7 +530,7 @@
         ta.value = text;
         document.body.appendChild(ta);
         ta.select();
-        try { document.execCommand('copy'); showToast(`Berhasil menyalin ${label}`, 'success'); } catch(e) { showToast('Gagal menyalin.', 'error'); }
+        try { document.execCommand('copy'); showToast(`Berhasil menyalin ${label}`, 'success'); } catch (e) { showToast('Gagal menyalin.', 'error'); }
         document.body.removeChild(ta);
       });
     };
@@ -428,10 +540,10 @@
       if (!filterVal) return true;
       const parts = dateStr.split(/\s+/);
       if (parts.length < 3) return false;
-      const day = parts[0].padStart(2,'0');
-      const monthsMap = { 'Januari':'01','Februari':'02','Maret':'03','April':'04','Mei':'05','Juni':'06','Juli':'07','Agustus':'08','September':'09','Oktober':'10','November':'11','Desember':'12','Jan':'01','Feb':'02','Mar':'03','Apr':'04','Jun':'06','Jul':'07','Ags':'08','Sep':'09','Okt':'10','Nov':'11','Des':'12' };
+      const day = parts[0].padStart(2, '0');
+      const monthsMap = { 'Januari': '01', 'Februari': '02', 'Maret': '03', 'April': '04', 'Mei': '05', 'Juni': '06', 'Juli': '07', 'Agustus': '08', 'September': '09', 'Oktober': '10', 'November': '11', 'Desember': '12', 'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'Jun': '06', 'Jul': '07', 'Ags': '08', 'Sep': '09', 'Okt': '10', 'Nov': '11', 'Des': '12' };
       const month = monthsMap[parts[1]] || '00';
-      const year = parts[2].replace(',','');
+      const year = parts[2].replace(',', '');
       return `${year}-${month}-${day}` === filterVal;
     }
 
@@ -439,12 +551,12 @@
     function setView(view) {
       currentView = view;
       localStorage.setItem('bizmate_orders_view', view);
-      
+
       const tableBtn = document.getElementById('view-btn-table');
       const cardBtn = document.getElementById('view-btn-card');
       const activeClass = 'bg-white text-brand-blueRoyal shadow-soft';
       const inactiveClass = 'text-slate-500 hover:text-slate-700';
-      
+
       if (view === 'table') {
         tableBtn.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${activeClass}`;
         cardBtn.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${inactiveClass}`;
@@ -460,7 +572,7 @@
     }
 
     // ===== TAB FILTER =====
-    window.setFilterTab = function(tab) {
+    window.setFilterTab = function (tab) {
       currentTab = tab;
       document.querySelectorAll('.js-tab-btn').forEach(btn => {
         btn.className = 'js-tab-btn shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200 border-slate-200 text-slate-500 bg-white hover:bg-slate-50';
@@ -473,14 +585,14 @@
     };
 
     // ===== BULK SELECTION =====
-    window.toggleOrderSelection = function(checkbox) {
+    window.toggleOrderSelection = function (checkbox) {
       const id = checkbox.getAttribute('data-id');
       if (checkbox.checked) { if (!selectedOrders.includes(id)) selectedOrders.push(id); }
       else { selectedOrders = selectedOrders.filter(x => x !== id); }
       updateBulkActionBar();
     };
 
-    window.toggleSelectAll = function(cb) {
+    window.toggleSelectAll = function (cb) {
       selectedOrders = [];
       document.querySelectorAll('.js-order-checkbox').forEach(c => {
         c.checked = cb.checked;
@@ -489,7 +601,7 @@
       updateBulkActionBar();
     };
 
-    window.clearBulkSelections = function() {
+    window.clearBulkSelections = function () {
       selectedOrders = [];
       const sa = document.getElementById('select-all-checkbox');
       if (sa) sa.checked = false;
@@ -501,21 +613,21 @@
       const bar = document.getElementById('bulk-action-bar');
       document.getElementById('bulk-selected-count').textContent = selectedOrders.length;
       if (selectedOrders.length > 0) {
-        bar.classList.remove('translate-y-24','opacity-0','pointer-events-none');
-        bar.classList.add('translate-y-0','opacity-100');
+        bar.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        bar.classList.add('translate-y-0', 'opacity-100');
       } else {
-        bar.classList.remove('translate-y-0','opacity-100');
-        bar.classList.add('translate-y-24','opacity-0','pointer-events-none');
+        bar.classList.remove('translate-y-0', 'opacity-100');
+        bar.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
       }
     }
 
     // ===== BULK ACTIONS =====
-    window.bulkCetakLabel = function() {
+    window.bulkCetakLabel = function () {
       if (selectedOrders.length === 0) { showToast('Pilih pesanan terlebih dahulu.', 'error'); return; }
       openPrintModal(selectedOrders);
     };
 
-    window.bulkKemasMasal = function() {
+    window.bulkKemasMasal = function () {
       if (selectedOrders.length === 0) { showToast('Pilih pesanan terlebih dahulu.', 'error'); return; }
       if (confirm(`Proses & kemas ${selectedOrders.length} pesanan sekaligus?`)) {
         let count = 0;
@@ -533,7 +645,7 @@
       }
     };
 
-    window.openBulkTrackingModal = function() {
+    window.openBulkTrackingModal = function () {
       if (selectedOrders.length === 0) { showToast('Pilih pesanan melalui checkbox terlebih dahulu.', 'error'); return; }
       bulkTrackingMode = 'auto';
       const autoRadio = document.querySelector('input[name="bulk-tracking-mode"][value="auto"]');
@@ -543,12 +655,12 @@
       document.body.classList.add('overflow-hidden');
     };
 
-    window.setBulkTrackingMode = function(mode) {
+    window.setBulkTrackingMode = function (mode) {
       bulkTrackingMode = mode;
       renderBulkTrackingSelectedOrders();
     };
 
-    window.closeBulkTrackingModal = function() {
+    window.closeBulkTrackingModal = function () {
       document.getElementById('bulk-tracking-modal').classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     };
@@ -569,7 +681,7 @@
               <span class="text-xs font-black text-slate-800 font-outfit">${o.id}</span>
               <span class="px-2 py-0.5 rounded-full border ${getShipBadge(o.shippingStatus).cls} text-[10px] font-bold">${getShipBadge(o.shippingStatus).text}</span>
             </div>
-            <p class="text-xs font-bold text-slate-700 truncate">${maskText(o.customer, 3, 2)}</p>
+            <p class="text-xs font-bold text-slate-700 truncate">${o.customer}</p>
             <p class="text-[11px] font-semibold text-slate-400 truncate">${o.items?.map(i => i.name).join(', ') || 'Produk pesanan'} • ${o.itemsCount || o.items?.length || 1} item</p>
           </div>
           </div>
@@ -581,7 +693,7 @@
       `).join('');
     }
 
-    window.saveBulkTrackingNumbers = function() {
+    window.saveBulkTrackingNumbers = function () {
       if (selectedOrders.length === 0) { showToast('Pilih pesanan terlebih dahulu.', 'error'); return; }
       const courier = document.getElementById('bulk-courier-select').value;
       const inputs = Array.from(document.querySelectorAll('.js-bulk-tracking-input'));
@@ -624,13 +736,13 @@
     };
 
     // ===== QUICK ACTIONS =====
-    window.updateCourier = function(id, courier) {
+    window.updateCourier = function (id, courier) {
       BizmateDB.updateOrderCourier(id, courier);
       showToast(`Kurir pesanan ${id} diatur ke ${courier}`, 'success');
       renderOrders();
     };
 
-    window.processPayment = function(id) {
+    window.processPayment = function (id) {
       if (confirm(`Verifikasi pembayaran pesanan ${id}?`)) {
         BizmateDB.updateOrderPayment(id, 'Paid');
         showToast(`Pembayaran ${id} terverifikasi!`, 'success');
@@ -638,7 +750,7 @@
       }
     };
 
-    window.processShipping = function(id) {
+    window.processShipping = function (id) {
       if (confirm(`Proses dan kirim pesanan ${id}?`)) {
         const generated = BizmateDB.generateTrackingNumber(id, null);
         showToast(`Pesanan ${id} dikirim! Resi: ${generated}`, 'success');
@@ -646,7 +758,7 @@
       }
     };
 
-    window.completeOrder = function(id) {
+    window.completeOrder = function (id) {
       if (confirm(`Tandai pesanan ${id} sebagai SELESAI?`)) {
         BizmateDB.updateOrderShipping(id, 'Delivered');
         showToast(`Pesanan ${id} selesai!`, 'success');
@@ -769,7 +881,7 @@
         const actionBtn = getActionButton(o);
 
         // Product thumbnail stack
-        const thumbs = o.items.slice(0, 3).map(item => 
+        const thumbs = o.items.slice(0, 3).map(item =>
           `<img src="${item.image || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=40&q=80'}" alt="${item.name}" class="w-7 h-7 rounded-lg object-cover border-2 border-white -ml-1.5 first:ml-0 shadow-sm" title="${item.name} x${item.qty}">`
         ).join('');
         const extraItems = o.items.length > 3 ? `<span class="w-7 h-7 rounded-lg bg-slate-100 border-2 border-white -ml-1.5 text-[9px] font-black text-slate-500 flex items-center justify-center shadow-sm">+${o.items.length - 3}</span>` : '';
@@ -795,10 +907,10 @@
             <td class="px-4 py-3.5">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center font-black text-xs shrink-0">
-                  ${(o.customer || 'CS').split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase()}
+                  ${(o.customer || 'CS').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                 </div>
                 <div class="min-w-0">
-                  <p class="font-bold text-slate-800 text-xs truncate max-w-[140px]">${maskText(o.customer, 3, 2)}</p>
+                  <p class="font-bold text-slate-800 text-xs truncate max-w-[140px]">${o.customer}</p>
                   <p class="text-[10px] text-slate-400 font-medium">${o.phone ? maskText(o.phone, 3, 3) : '—'}</p>
                 </div>
               </div>
@@ -908,14 +1020,14 @@
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pengiriman ke</p>
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center font-black text-xs shrink-0">
-                    ${(o.customer || 'CS').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase()}
+                    ${(o.customer || 'CS').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <p class="font-bold text-slate-800 text-xs">${maskText(o.customer, 3, 2)}</p>
+                    <p class="font-bold text-slate-800 text-xs">${o.customer}</p>
                     <p class="text-[10px] text-slate-400">${o.phone ? maskText(o.phone, 3, 3) : '—'}</p>
                   </div>
                 </div>
-                <p class="text-[11px] text-slate-500 leading-relaxed pl-[42px]">${o.address ? maskText(o.address, 8, 6) : 'Alamat tidak diisi'}</p>
+                <p class="text-[11px] text-slate-500 leading-relaxed pl-[42px]">${o.address || 'Alamat tidak diisi'}</p>
               </div>
 
               <!-- Courier -->
@@ -962,7 +1074,7 @@
     }
 
     // ===== PRINT LABEL =====
-    window.openPrintModal = function(ids) {
+    window.openPrintModal = function (ids) {
       const container = document.getElementById('print-label-preview-container');
       container.innerHTML = '';
       const orders = BizmateDB.getOrders();
@@ -1033,7 +1145,7 @@
       document.getElementById('print-label-modal').classList.remove('hidden');
     };
 
-    window.closePrintModal = function() {
+    window.closePrintModal = function () {
       document.getElementById('print-label-modal').classList.add('hidden');
     };
 
@@ -1050,4 +1162,5 @@
   </script>
 
 </body>
+
 </html>

@@ -108,15 +108,17 @@
         </a>
       </div>
 
-      <div class="bg-white rounded-3xl border border-slate-200 shadow-card p-6 sm:p-10">
+      <!-- TWO COLUMN BENTO GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT COLUMN: Formulir Informasi Produk (8 Cols) -->
+        <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-200 shadow-card p-6 sm:p-10">
+          <div class="border-b border-slate-100 pb-6 mb-8">
+            <h3 class="font-outfit font-black text-xl text-slate-800">Formulir Informasi Produk</h3>
+            <p class="text-xs text-slate-500 font-medium mt-1">Lengkapi data produk dengan detail untuk performa penjualan maksimal.</p>
+          </div>
 
-        <div class="border-b border-slate-100 pb-6 mb-8">
-          <h3 class="font-outfit font-black text-xl text-slate-800">Formulir Informasi Produk</h3>
-          <p class="text-xs text-slate-500 font-medium mt-1">Lengkapi data produk dengan detail untuk performa penjualan
-            maksimal.</p>
-        </div>
-
-        <form id="product-form" class="space-y-8">
+          <form id="product-form" class="space-y-8">
 
           <!-- Section 1: Foto & Media Produk (Atas Sendiri) -->
           <div class="space-y-4">
@@ -149,7 +151,10 @@
                   placeholder="Masukkan nama produk" required>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Kode SKU *</label>
+                <label class="block text-xs font-bold text-slate-600 mb-1.5 flex justify-between items-center">
+                  <span>Kode SKU *</span>
+                  <button type="button" onclick="generateSkuAutomatically()" class="text-[10px] font-black text-brand-blueRoyal hover:underline flex items-center gap-0.5"><i class="ti ti-wand"></i> Buat SKU Otomatis</button>
+                </label>
                 <input id="product-sku" type="text"
                   class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
                   placeholder="Contoh: CHR-PLT-01" required>
@@ -176,18 +181,27 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1.5">Sub-Kategori</label>
-                <select
+                <select id="product-subcategory"
                   class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
-                  <option selected disabled>Pilih Sub-Kategori</option>
-                  <option>Sofa Velvet Premium</option>
-                  <option>Kursi Santai</option>
+                  <option selected disabled value="">Pilih Sub-Kategori</option>
+                  <option value="Sofa Velvet Premium">Sofa Velvet Premium</option>
+                  <option value="Kursi Santai">Kursi Santai</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Merek (Brand)</label>
-                <input type="text"
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
-                  placeholder="Masukkan merek">
+                <label class="block text-xs font-bold text-slate-600 mb-1.5 flex justify-between items-center">
+                  <span>Merek (Brand)</span>
+                  <button type="button" onclick="openAddBrandModal()" class="text-[10px] font-black text-brand-blueRoyal hover:underline flex items-center gap-0.5"><i class="ti ti-plus"></i> Tambah Baru</button>
+                </label>
+                <select id="product-brand"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none">
+                  <option value="">Pilih Merek</option>
+                  <option value="Olympic">Olympic Furniture</option>
+                  <option value="IKEA">IKEA</option>
+                  <option value="Inoac">Inoac</option>
+                  <option value="Informa">Informa</option>
+                  <option value="Bizmate Craft">Bizmate Craft</option>
+                </select>
               </div>
             </div>
           </div>
@@ -267,37 +281,32 @@
                   placeholder="Masukkan spesifikasi, material, instruksi perawatan produk..." required></textarea>
               </div>
             </div>
-          </div>
 
-          <!-- Section 7: Pengiriman & Dimensi Fisik -->
-          <div class="space-y-4 pt-6 border-t border-slate-100">
-            <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest font-outfit">7. Pengiriman & Dimensi
-              Fisik</h4>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Berat Produk (Gram) *</label>
-                <input type="number"
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
-                  placeholder="1000">
+            <div class="mt-4 space-y-3">
+              <span class="block text-xs font-bold text-slate-600">Ekspedisi Pengiriman Aktif</span>
+              <div class="flex flex-wrap gap-4">
+                <label class="flex items-center gap-2 text-xs font-semibold text-slate-600 cursor-pointer">
+                  <input type="checkbox" id="ship-carrier-jne" value="JNE" checked class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  JNE Regular
+                </label>
+                <label class="flex items-center gap-2 text-xs font-semibold text-slate-600 cursor-pointer">
+                  <input type="checkbox" id="ship-carrier-jnt" value="J&T" checked class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  J&T Express
+                </label>
+                <label class="flex items-center gap-2 text-xs font-semibold text-slate-600 cursor-pointer">
+                  <input type="checkbox" id="ship-carrier-sicepat" value="SiCepat" checked class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  SiCepat
+                </label>
+                <label class="flex items-center gap-2 text-xs font-semibold text-slate-600 cursor-pointer">
+                  <input type="checkbox" id="ship-carrier-gosend" value="GoSend" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  GoSend
+                </label>
+                <label class="flex items-center gap-2 text-xs font-semibold text-slate-600 cursor-pointer">
+                  <input type="checkbox" id="ship-carrier-grab" value="Grab" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal">
+                  GrabExpress
+                </label>
               </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Panjang (Cm)</label>
-                <input type="number"
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
-                  placeholder="0">
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Lebar (Cm)</label>
-                <input type="number"
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
-                  placeholder="0">
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Tinggi (Cm)</label>
-                <input type="number"
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:ring-1 focus:ring-brand-blueRoyal focus:outline-none"
-                  placeholder="0">
-              </div>
+              <p class="text-[10px] text-slate-400 font-medium">Jika tidak ada yang dipilih, maka akan menggunakan default bawaan toko.</p>
             </div>
           </div>
 
@@ -436,8 +445,93 @@
           </div>
 
         </form>
+      </div>
+
+      <!-- RIGHT COLUMN: Sticky Sidebar (4 Cols) -->
+      <div class="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+        
+        <!-- Checklist Kelengkapan Form -->
+        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-4 animate-fade-in">
+          <h3 class="font-outfit font-black text-slate-800 text-sm tracking-tight uppercase flex items-center gap-2">
+            <i class="ti ti-checkbox text-brand-blueRoyal text-lg"></i> Kelengkapan Pengisian
+          </h3>
+          <div class="space-y-2.5 text-xs font-semibold text-slate-600">
+            <div id="check-media" class="flex items-center gap-2 text-slate-400"><i class="ti ti-circle text-base"></i> Foto & Media Produk</div>
+            <div id="check-basic" class="flex items-center gap-2 text-slate-400"><i class="ti ti-circle text-base"></i> Informasi Dasar (Nama & SKU)</div>
+            <div id="check-price" class="flex items-center gap-2 text-slate-400"><i class="ti ti-circle text-base"></i> Harga & Finansial</div>
+            <div id="check-stock" class="flex items-center gap-2 text-slate-400"><i class="ti ti-circle text-base"></i> Kontrol Inventaris (Stok)</div>
+            <div id="check-desc" class="flex items-center gap-2 text-slate-400"><i class="ti ti-circle text-base"></i> Deskripsi & Penjelasan</div>
+          </div>
+        </div>
+        
+        <!-- Live Preview / Ringkasan -->
+        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-4 animate-fade-in">
+          <div class="flex justify-between items-center">
+            <h3 class="font-outfit font-black text-slate-800 text-sm tracking-tight uppercase">Ringkasan Produk</h3>
+            <span class="px-2 py-0.5 bg-brand-blueLight text-brand-blueRoyal rounded text-[9px] font-black uppercase tracking-wider">Live Preview</span>
+          </div>
+          
+          <div class="border border-slate-100 rounded-2xl p-5 bg-slate-50/50 space-y-4 text-xs font-semibold text-slate-600">
+            <!-- 1. Nama Produk -->
+            <div class="flex flex-col gap-1 pb-3 border-b border-slate-100/60">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Nama Produk</span>
+              <span id="prev-name" class="font-outfit font-black text-slate-800 text-sm leading-snug break-words">Nama Produk Baru</span>
+            </div>
+            
+            <!-- 2. SKU -->
+            <div class="flex flex-col gap-1 pb-3 border-b border-slate-100/60">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Kode SKU</span>
+              <span id="prev-sku" class="font-mono text-slate-800 font-bold">INDUK-SKU</span>
+            </div>
+
+            <!-- 3. Kategori - Sub Kategori -->
+            <div class="flex flex-col gap-1 pb-3 border-b border-slate-100/60">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Kategori & Sub-Kategori</span>
+              <span id="prev-category-group" class="text-slate-800 font-bold">Belum Pilih Kategori</span>
+            </div>
+
+            <!-- 4. Stok -->
+            <div class="flex flex-col gap-1 pb-3 border-b border-slate-100/60">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Stok</span>
+              <span id="prev-stock" class="text-slate-800 font-bold flex items-center gap-1.5">
+                <span>0 Unit</span>
+                <span id="prev-stock-status-badge" class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[9px] font-black uppercase tracking-wider">Tersedia</span>
+              </span>
+            </div>
+
+            <!-- 5. Jumlah Varian (Jika ada) -->
+            <div id="prev-variants-row" class="hidden flex-col gap-1 pb-3 border-b border-slate-100/60">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Jumlah Kombinasi Varian</span>
+              <span id="prev-variants-count" class="text-brand-blueRoyal font-black flex items-center gap-1">
+                <i class="ti ti-layers-difference text-xs"></i>
+                <span>0 Varian Aktif</span>
+              </span>
+            </div>
+
+            <!-- 6. Harga -->
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Harga Jual</span>
+              <span id="prev-price" class="font-outfit font-black text-brand-blueRoyal text-sm">Rp 0</span>
+              <span id="prev-margin" class="self-start mt-1 text-[9px] bg-emerald-50 text-emerald-600 border border-emerald-100 font-black px-1.5 py-0.5 rounded-lg">Margin 0%</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tips & Panduan -->
+        <div class="bg-white border border-slate-200 shadow-soft rounded-3xl p-6 space-y-3 animate-fade-in">
+          <h3 class="font-outfit font-black text-slate-800 text-sm tracking-tight uppercase flex items-center gap-2">
+            <i class="ti ti-bulb text-amber-500 text-lg"></i> Tips & Panduan Penjual
+          </h3>
+          <ul class="list-disc pl-4 text-[11px] text-slate-500 font-medium space-y-1.5 leading-relaxed">
+            <li><b>Foto Produk</b>: Gunakan foto berasio 1:1 berpencahayaan natural dengan latar belakang putih.</li>
+            <li><b>Nama Produk</b>: Kombinasikan Jenis + Merek + Model (contoh: Sofa Velvet Olympic Retro).</li>
+            <li><b>Kode SKU</b>: Buat kode unik penanda barang untuk mempermudah operasional gudang.</li>
+            <li><b>Modal HPP</b>: HPP rahasia hanya untuk kalkulasi laba bersih pribadi Anda.</li>
+          </ul>
+        </div>
 
       </div>
+    </div>
 
     </main>
   </div>
@@ -449,6 +543,157 @@
     let variations = []; // Up to 2 variations max
     let isEditMode = false;
     let existingProduct = null;
+    let brandsList = [];
+
+    // Brand Master Data Management
+    const DEFAULT_BRANDS = [
+      { name: 'Olympic Furniture', code: 'OLY' },
+      { name: 'IKEA', code: 'IKE' },
+      { name: 'Inoac', code: 'INC' },
+      { name: 'Informa', code: 'IFM' },
+      { name: 'Bizmate Craft', code: 'BZM' }
+    ];
+
+    function initBrands() {
+      const stored = localStorage.getItem('bizmate_brands');
+      if (stored) {
+        brandsList = JSON.parse(stored);
+      } else {
+        brandsList = DEFAULT_BRANDS;
+        localStorage.setItem('bizmate_brands', JSON.stringify(brandsList));
+      }
+    }
+
+    function loadBrandSelectOptions() {
+      const select = document.getElementById('product-brand');
+      if (!select) return;
+
+      const currentValue = select.value;
+      select.innerHTML = '<option value="">Pilih Merek</option>';
+
+      brandsList.forEach(brand => {
+        const opt = document.createElement('option');
+        opt.value = brand.name;
+        opt.textContent = brand.name;
+        select.appendChild(opt);
+      });
+
+      // Restore value
+      if (currentValue) select.value = currentValue;
+    }
+
+    window.openAddBrandModal = function() {
+      const modal = document.getElementById('add-brand-modal');
+      const dialog = modal.querySelector('div');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      setTimeout(() => {
+        dialog.classList.remove('scale-95', 'opacity-0');
+        dialog.classList.add('scale-100', 'opacity-100');
+      }, 50);
+    };
+
+    window.closeAddBrandModal = function() {
+      const modal = document.getElementById('add-brand-modal');
+      const dialog = modal.querySelector('div');
+      dialog.classList.remove('scale-100', 'opacity-100');
+      dialog.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }, 300);
+      // Reset inputs
+      document.getElementById('new-brand-name').value = '';
+      document.getElementById('new-brand-code').value = '';
+    };
+
+    window.saveNewBrand = function() {
+      const nameVal = document.getElementById('new-brand-name').value.trim();
+      const codeVal = document.getElementById('new-brand-code').value.trim().toUpperCase();
+
+      if (!nameVal || !codeVal) {
+        showToast('Nama dan Kode merek wajib diisi!', 'error');
+        return;
+      }
+
+      if (codeVal.length !== 3) {
+        showToast('Kode merek wajib berisi tepat 3 karakter!', 'error');
+        return;
+      }
+
+      // Check duplicate
+      const duplicateName = brandsList.some(b => b.name.toLowerCase() === nameVal.toLowerCase());
+      const duplicateCode = brandsList.some(b => b.code === codeVal);
+
+      if (duplicateName) {
+        showToast('Merek dengan nama tersebut sudah terdaftar!', 'error');
+        return;
+      }
+      if (duplicateCode) {
+        showToast('Kode merek tersebut sudah digunakan!', 'error');
+        return;
+      }
+
+      brandsList.push({ name: nameVal, code: codeVal });
+      localStorage.setItem('bizmate_brands', JSON.stringify(brandsList));
+
+      loadBrandSelectOptions();
+
+      // Automatically select the newly created brand
+      document.getElementById('product-brand').value = nameVal;
+
+      showToast(`Merek '${nameVal}' berhasil didaftarkan!`, 'success');
+      closeAddBrandModal();
+      triggerLiveUpdate();
+    };
+
+    // Auto SKU Generator
+    window.generateSkuAutomatically = function() {
+      const catSelect = document.getElementById('product-category');
+      const brandSelect = document.getElementById('product-brand');
+
+      if (!catSelect || !brandSelect) return;
+
+      const catVal = catSelect.value;
+      const brandVal = brandSelect.value;
+
+      if (!catVal) {
+        showToast('Pilih Kategori Utama terlebih dahulu!', 'error');
+        catSelect.focus();
+        return;
+      }
+
+      // Map Category
+      let catPrefix = 'PRD';
+      if (catVal === 'Kursi & Sofa') catPrefix = 'SFA';
+      else if (catVal === 'Meja & Rak') catPrefix = 'TBL';
+      else if (catVal === 'Lampu & Dekorasi') catPrefix = 'DEC';
+      else if (catVal === 'Mebel Outdoor') catPrefix = 'OUT';
+
+      // Map Brand
+      let brandPrefix = 'BZM';
+      if (brandVal) {
+        const matchedBrand = brandsList.find(b => b.name.toLowerCase() === brandVal.toLowerCase());
+        if (matchedBrand) {
+          brandPrefix = matchedBrand.code;
+        } else {
+          brandPrefix = brandVal.replace(/[^A-Za-z0-9]/g, '').slice(0, 3).toUpperCase();
+        }
+      }
+
+      // Random 3-digit serial sequence to guarantee instant uniqueness
+      const randNum = Math.floor(100 + Math.random() * 900);
+      const generatedSku = `${catPrefix}-${brandPrefix}-${randNum}`;
+
+      const skuInput = document.getElementById('product-sku');
+      if (skuInput) {
+        skuInput.value = generatedSku;
+        // Trigger synthetic input events so listeners update matrix
+        skuInput.dispatchEvent(new Event('input', { bubbles: true }));
+        showToast(`SKU otomatis berhasil dibuat: ${generatedSku}`, 'success');
+        triggerLiveUpdate();
+      }
+    };
 
     // Premium Toast function
     function showToast(message, type = 'success') {
@@ -523,6 +768,7 @@
           container.appendChild(placeholder);
         }
       }
+      triggerLiveUpdate();
     }
 
     window.removePhoto = function (index) {
@@ -940,7 +1186,160 @@
 
         tbody.appendChild(tr);
       });
+      triggerLiveUpdate();
     }
+
+    // Live Ringkasan & Form Checklist trigger
+    window.triggerLiveUpdate = function() {
+      // 1. Live Preview Card Elements
+      const prevName = document.getElementById('prev-name');
+      const prevSku = document.getElementById('prev-sku');
+      const prevCategoryGroup = document.getElementById('prev-category-group');
+      const prevStock = document.getElementById('prev-stock');
+      const prevStockBadge = document.getElementById('prev-stock-status-badge');
+      const prevVariantsRow = document.getElementById('prev-variants-row');
+      const prevVariantsCount = document.getElementById('prev-variants-count');
+      const prevPrice = document.getElementById('prev-price');
+      const prevMargin = document.getElementById('prev-margin');
+
+      const nameVal = document.getElementById('product-name').value.trim();
+      const skuVal = document.getElementById('product-sku').value.trim();
+      const catVal = document.getElementById('product-category').value;
+      const subcatVal = document.getElementById('product-subcategory').value;
+      
+      const priceVal = parseFloat(document.getElementById('product-price').value) || 0;
+      const costVal = parseFloat(document.getElementById('product-cost').value) || 0;
+      const stockVal = parseInt(document.getElementById('product-stock').value);
+      const minStockVal = parseInt(document.getElementById('product-min-stock').value) || 5;
+      const isVariantsActive = document.getElementById('toggle-variants')?.checked || false;
+
+      // 1. Nama Produk
+      if (prevName) {
+        prevName.textContent = nameVal || "Nama Produk Baru";
+      }
+
+      // 2. SKU
+      if (prevSku) {
+        prevSku.textContent = skuVal || "INDUK-SKU";
+      }
+
+      // 3. Kategori - Sub Kategori
+      if (prevCategoryGroup) {
+        if (catVal && subcatVal) {
+          prevCategoryGroup.textContent = `${catVal} - ${subcatVal}`;
+        } else if (catVal) {
+          prevCategoryGroup.textContent = catVal;
+        } else {
+          prevCategoryGroup.textContent = "Belum Pilih Kategori";
+        }
+      }
+
+      // Calculate total stock (variants sum if active)
+      let displayStock = 0;
+      if (isVariantsActive) {
+        const stockInputs = document.querySelectorAll('.variant-stock-input');
+        if (stockInputs.length > 0) {
+          stockInputs.forEach(inp => {
+            displayStock += parseInt(inp.value) || 0;
+          });
+        } else {
+          displayStock = 0; // Default when not generated yet
+        }
+      } else {
+        displayStock = isNaN(stockVal) ? 0 : stockVal;
+      }
+
+      // 4. Stok
+      if (prevStock) {
+        prevStock.innerHTML = `
+          <span>${displayStock} Unit</span>
+          <span id="prev-stock-status-badge"></span>
+        `;
+        const badge = document.getElementById('prev-stock-status-badge');
+        if (badge) {
+          let label = "Tersedia";
+          let badgeClass = "px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[9px] font-black uppercase tracking-wider shadow-sm";
+          if (displayStock === 0) {
+            label = "Habis";
+            badgeClass = "px-2 py-0.5 bg-rose-100 text-rose-700 rounded text-[9px] font-black uppercase tracking-wider shadow-sm";
+          } else if (displayStock <= minStockVal) {
+            label = "Stok Tipis";
+            badgeClass = "px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-[9px] font-black uppercase tracking-wider shadow-sm";
+          }
+          badge.textContent = label;
+          badge.className = badgeClass;
+        }
+      }
+
+      // 5. Jumlah Varian (Jika ada)
+      if (prevVariantsRow && prevVariantsCount) {
+        if (isVariantsActive) {
+          prevVariantsRow.classList.remove('hidden');
+          prevVariantsRow.classList.add('flex');
+          const combinationsCount = getCombinations().length;
+          prevVariantsCount.innerHTML = `
+            <i class="ti ti-layers-difference text-xs"></i>
+            <span>${combinationsCount} Varian Aktif</span>
+          `;
+        } else {
+          prevVariantsRow.classList.add('hidden');
+          prevVariantsRow.classList.remove('flex');
+        }
+      }
+
+      // Calculate dynamic price range
+      let displayPriceText = "Rp 0";
+      let basePrice = priceVal;
+      
+      if (isVariantsActive) {
+        const priceInputs = Array.from(document.querySelectorAll('.variant-price-input')).map(inp => parseFloat(inp.value) || 0).filter(v => v > 0);
+        if (priceInputs.length > 0) {
+          const minPrice = Math.min(...priceInputs);
+          const maxPrice = Math.max(...priceInputs);
+          basePrice = minPrice; // Used for margin calculation base
+          if (minPrice === maxPrice) {
+            displayPriceText = `Rp ${minPrice.toLocaleString('id-ID')}`;
+          } else {
+            displayPriceText = `Rp ${minPrice.toLocaleString('id-ID')} - Rp ${maxPrice.toLocaleString('id-ID')}`;
+          }
+        } else {
+          displayPriceText = priceVal > 0 ? `Rp ${priceVal.toLocaleString('id-ID')}` : "Rp 0";
+        }
+      } else {
+        displayPriceText = priceVal > 0 ? `Rp ${priceVal.toLocaleString('id-ID')}` : "Rp 0";
+      }
+
+      // 6. Harga
+      if (prevPrice) {
+        prevPrice.textContent = displayPriceText;
+      }
+
+      // 2. Checklist Kelengkapan Form elements
+      const checkMedia = document.getElementById('check-media');
+      const checkBasic = document.getElementById('check-basic');
+      const checkPrice = document.getElementById('check-price');
+      const checkStock = document.getElementById('check-stock');
+      const checkDesc = document.getElementById('check-desc');
+
+      // Helper to update checklist item state
+      function updateCheckState(element, isChecked) {
+        if (!element) return;
+        const text = element.textContent.trim();
+        if (isChecked) {
+          element.className = "flex items-center gap-2 text-emerald-500 transition-colors duration-200 font-semibold";
+          element.innerHTML = `<i class="ti ti-circle-check-filled text-base"></i> ${text}`;
+        } else {
+          element.className = "flex items-center gap-2 text-slate-400 transition-colors duration-200 font-semibold";
+          element.innerHTML = `<i class="ti ti-circle text-base"></i> ${text}`;
+        }
+      }
+
+      updateCheckState(checkMedia, uploadedPhotos.length > 0);
+      updateCheckState(checkBasic, nameVal.length > 0 && skuVal.length > 0);
+      updateCheckState(checkPrice, priceVal > 0);
+      updateCheckState(checkStock, !isNaN(stockVal) && stockVal >= 0);
+      updateCheckState(checkDesc, document.getElementById('product-description').value.trim().length > 0);
+    };
 
     // Main DomReady block
     document.addEventListener("DOMContentLoaded", function () {
@@ -978,6 +1377,10 @@
         });
       });
 
+      // Initialize brand select master list
+      initBrands();
+      loadBrandSelectOptions();
+
       // Detect edit mode via SKU param in URL
       const urlParams = new URLSearchParams(window.location.search);
       const editSku = urlParams.get('sku');
@@ -996,6 +1399,9 @@
           skuInput.classList.add('bg-slate-50', 'text-slate-400', 'cursor-not-allowed');
 
           categoryInput.value = existingProduct.category || '';
+          const subcatSelect = document.getElementById('product-subcategory');
+          if (subcatSelect) subcatSelect.value = existingProduct.subcategory || '';
+          document.getElementById('product-brand').value = existingProduct.brand || '';
           priceInput.value = existingProduct.price || '';
           costInput.value = existingProduct.cost || '';
           stockInput.value = existingProduct.stock || '';
@@ -1012,6 +1418,21 @@
             uploadedPhotos = [existingProduct.image];
           }
           renderPhotos();
+
+          // Active shipping carriers precheck
+          if (existingProduct.shippingCarriers && Array.isArray(existingProduct.shippingCarriers)) {
+            document.getElementById('ship-carrier-jne').checked = existingProduct.shippingCarriers.includes('JNE');
+            document.getElementById('ship-carrier-jnt').checked = existingProduct.shippingCarriers.includes('J&T');
+            document.getElementById('ship-carrier-sicepat').checked = existingProduct.shippingCarriers.includes('SiCepat');
+            document.getElementById('ship-carrier-gosend').checked = existingProduct.shippingCarriers.includes('GoSend');
+            document.getElementById('ship-carrier-grab').checked = existingProduct.shippingCarriers.includes('Grab');
+          } else {
+            document.getElementById('ship-carrier-jne').checked = true;
+            document.getElementById('ship-carrier-jnt').checked = true;
+            document.getElementById('ship-carrier-sicepat').checked = true;
+            document.getElementById('ship-carrier-gosend').checked = false;
+            document.getElementById('ship-carrier-grab').checked = false;
+          }
 
           if (existingProduct.hasVariants) {
             if (toggleVariants) toggleVariants.checked = true;
@@ -1116,6 +1537,29 @@
         });
       }
 
+      // Wire event listeners for live previews & checklists
+      const inputsToObserve = [
+        'product-name', 'product-sku', 'product-category', 'product-subcategory', 'product-brand',
+        'product-price', 'product-cost', 'product-stock', 'product-stock-status',
+        'product-summary', 'product-description'
+      ];
+      inputsToObserve.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', triggerLiveUpdate);
+          el.addEventListener('change', triggerLiveUpdate);
+        }
+      });
+
+      // Delegate input observer to dynamic variant values
+      const tbodyMat = document.getElementById('variant-matrix-tbody');
+      if (tbodyMat) {
+        tbodyMat.addEventListener('input', triggerLiveUpdate);
+      }
+
+      // Trigger initial checklist observer states
+      triggerLiveUpdate();
+
       // Handle Submit Event
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -1217,10 +1661,20 @@
         const widthVal = widthInputs && widthInputs[1] ? parseFloat(widthInputs[1].value) || 0 : 0;
         const heightVal = widthInputs && widthInputs[2] ? parseFloat(widthInputs[2].value) || 0 : 0;
 
+        // Collect checked shipping carriers
+        const shippingCarriers = [];
+        if (document.getElementById('ship-carrier-jne').checked) shippingCarriers.push('JNE');
+        if (document.getElementById('ship-carrier-jnt').checked) shippingCarriers.push('J&T');
+        if (document.getElementById('ship-carrier-sicepat').checked) shippingCarriers.push('SiCepat');
+        if (document.getElementById('ship-carrier-gosend').checked) shippingCarriers.push('GoSend');
+        if (document.getElementById('ship-carrier-grab').checked) shippingCarriers.push('Grab');
+
         const productData = {
           sku: currentSku,
           name: nameInput.value.trim(),
           category: categoryInput.value,
+          subcategory: document.getElementById('product-subcategory').value,
+          brand: document.getElementById('product-brand').value,
           price: finalPrice,
           originalPrice,
           taxEnabled,
@@ -1242,6 +1696,7 @@
           length: lengthVal,
           width: widthVal,
           height: heightVal,
+          shippingCarriers: shippingCarriers,
           active: isEditMode ? existingProduct.active : true
         };
 
@@ -1270,6 +1725,34 @@
       });
     });
   </script>
+
+  <!-- Modal Daftarkan Merek Baru -->
+  <div id="add-brand-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm px-4">
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl w-full max-w-md overflow-hidden transform scale-95 opacity-0 transition-all duration-300 p-6 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-outfit font-black text-slate-800 text-lg">Daftarkan Merek Baru</h3>
+        <button onclick="closeAddBrandModal()" class="text-slate-400 hover:text-slate-600 transition">
+          <i class="ti ti-x text-xl"></i>
+        </button>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1.5" for="new-brand-name">Nama Merek *</label>
+          <input id="new-brand-name" type="text" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:outline-none" placeholder="Masukkan nama merek baru">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1.5" for="new-brand-code">Kode Merek (3 Karakter) *</label>
+          <input id="new-brand-code" type="text" maxlength="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-blueRoyal focus:outline-none uppercase font-mono" placeholder="Contoh: RET">
+          <p class="text-[10px] text-slate-400 mt-1 font-medium">Digunakan sebagai awalan/kependekan pembuatan SKU otomatis.</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+        <button type="button" onclick="closeAddBrandModal()" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs rounded-xl transition">Batal</button>
+        <button type="button" onclick="saveNewBrand()" class="px-5 py-2 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-brand-blueRoyal/15">Simpan Merek</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

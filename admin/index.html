@@ -140,20 +140,28 @@
       <!-- ONBOARDING SECTION -->
       <section id="js-onboarding-container" class="hidden space-y-6">
         <!-- Welcome Card (Light Premium SaaS Theme) -->
-        <div class="bg-white rounded-[2rem] p-6 sm:p-10 text-slate-800 shadow-soft relative overflow-hidden border border-slate-200/80 group">
+        <div
+          class="bg-white rounded-[2rem] p-6 sm:p-10 text-slate-800 shadow-soft relative overflow-hidden border border-slate-200/80 group">
           <!-- Background Patterns & Floats -->
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(12,76,180,0.03),transparent_40%)]"></div>
-          <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-brand-blueRoyal/5 rounded-full blur-3xl group-hover:scale-110 transition duration-1000"></div>
-          
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(12,76,180,0.03),transparent_40%)]">
+          </div>
+          <div
+            class="absolute -right-16 -bottom-16 w-64 h-64 bg-brand-blueRoyal/5 rounded-full blur-3xl group-hover:scale-110 transition duration-1000">
+          </div>
+
           <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div class="space-y-4 max-w-2xl">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-blueLight border border-brand-blueRoyal/10 rounded-full text-xs font-bold text-brand-blueRoyal">
+              <div
+                class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-blueLight border border-brand-blueRoyal/10 rounded-full text-xs font-bold text-brand-blueRoyal">
                 <i class="ti ti-sparkles text-sm animate-pulse"></i>
                 <span>First Time Seller Experience</span>
               </div>
-              <h2 class="font-outfit font-black text-3xl sm:text-4xl text-slate-800 tracking-tight leading-tight">Selamat Datang 👋</h2>
-              <p class="text-sm sm:text-base text-slate-500 font-medium leading-relaxed">Yuk setup tokomu terlebih dahulu agar siap menerima pesanan. Hanya butuh sekitar <span class="text-slate-850 font-bold">5 menit</span> saja!</p>
-              
+              <h2 class="font-outfit font-black text-3xl sm:text-4xl text-slate-800 tracking-tight leading-tight">
+                Selamat Datang 👋</h2>
+              <p class="text-sm sm:text-base text-slate-500 font-medium leading-relaxed">Yuk setup tokomu terlebih
+                dahulu agar siap menerima pesanan. Hanya butuh sekitar <span class="text-slate-850 font-bold">5
+                  menit</span> saja!</p>
+
               <!-- Progress Info -->
               <div class="space-y-2 pt-2">
                 <div class="flex justify-between items-center text-xs font-bold">
@@ -162,13 +170,16 @@
                 </div>
                 <!-- Progress Bar -->
                 <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200/50 p-[2px]">
-                  <div id="js-onboarding-progress-bar" class="h-full bg-gradient-to-r from-brand-blueRoyal to-indigo-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                  <div id="js-onboarding-progress-bar"
+                    class="h-full bg-gradient-to-r from-brand-blueRoyal to-indigo-500 rounded-full transition-all duration-700 ease-out"
+                    style="width: 0%"></div>
                 </div>
               </div>
             </div>
-            
+
             <div class="flex items-center gap-4 self-start lg:self-center">
-              <button onclick="dismissOnboarding()" class="px-5 py-3 bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold rounded-2xl text-xs transition duration-200 border border-slate-200/85 uppercase tracking-wider font-outfit">
+              <button onclick="dismissOnboarding()"
+                class="px-5 py-3 bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold rounded-2xl text-xs transition duration-200 border border-slate-200/85 uppercase tracking-wider font-outfit">
                 Lanjutkan Nanti
               </button>
             </div>
@@ -178,19 +189,24 @@
         <!-- Checklist Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Card 1 -->
-          <div id="js-card-1" class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 flex flex-col justify-between group relative overflow-hidden">
+          <div id="js-card-1"
+            class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 flex flex-col justify-between group relative overflow-hidden">
             <div class="space-y-4">
               <div class="flex justify-between items-start">
-                <div class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl group-hover:scale-110 transition duration-300">
+                <div
+                  class="w-12 h-12 rounded-2xl bg-brand-blueLight text-brand-blueRoyal flex items-center justify-center text-2xl group-hover:scale-110 transition duration-300">
                   <i class="ti ti-storefront"></i>
                 </div>
-                <span id="js-badge-1" class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal">Belum Selesai</span>
+                <span id="js-badge-1"
+                  class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal">Belum
+                  Selesai</span>
               </div>
               <div>
                 <h3 class="font-outfit font-black text-slate-800 text-base">Lengkapi Informasi Toko & Rekening</h3>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Tambahkan nama toko, logo, alamat, dan setup rekening bank penerima pembayaran.</p>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Tambahkan nama toko, logo, alamat, dan setup
+                  rekening bank penerima pembayaran.</p>
               </div>
-              
+
               <!-- Subtasks check list -->
               <div class="space-y-2 pt-2 border-t border-slate-100">
                 <div class="flex items-center gap-2 text-xs font-bold" id="subtask-shop">
@@ -204,54 +220,72 @@
               </div>
             </div>
             <div class="mt-6">
-              <a id="js-cta-1" href="pengaturan.html" class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider">
+              <a id="js-cta-1" href="pengaturan.html"
+                class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider">
                 <span>Lengkapi Sekarang</span> <i class="ti ti-arrow-right"></i>
               </a>
             </div>
           </div>
 
           <!-- Card 2 -->
-          <div id="js-card-2" class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 flex flex-col justify-between group relative overflow-hidden">
+          <div id="js-card-2"
+            class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 flex flex-col justify-between group relative overflow-hidden">
             <div class="space-y-4">
               <div class="flex justify-between items-start">
-                <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl group-hover:scale-110 transition duration-300">
+                <div
+                  class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center text-2xl group-hover:scale-110 transition duration-300">
                   <i class="ti ti-box"></i>
                 </div>
-                <span id="js-badge-2" class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal">0/3 Produk</span>
+                <span id="js-badge-2"
+                  class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal">0/3
+                  Produk</span>
               </div>
               <div>
                 <h3 class="font-outfit font-black text-slate-800 text-base">Tambah Kategori & Produk</h3>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Buat kategori barang dan tambahkan minimal 3 produk pertama Anda ke dalam sistem.</p>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Buat kategori barang dan tambahkan minimal 3
+                  produk pertama Anda ke dalam sistem.</p>
               </div>
-              
+
               <!-- Optional visual thumbnail list -->
               <div class="flex gap-2 pt-2 border-t border-slate-100" id="js-prod-thumbnails">
-                <div class="w-8 h-8 rounded-lg bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-400"><i class="ti ti-plus text-xs"></i></div>
-                <div class="w-8 h-8 rounded-lg bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-400"><i class="ti ti-plus text-xs"></i></div>
-                <div class="w-8 h-8 rounded-lg bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-400"><i class="ti ti-plus text-xs"></i></div>
+                <div
+                  class="w-8 h-8 rounded-lg bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+                  <i class="ti ti-plus text-xs"></i></div>
+                <div
+                  class="w-8 h-8 rounded-lg bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+                  <i class="ti ti-plus text-xs"></i></div>
+                <div
+                  class="w-8 h-8 rounded-lg bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+                  <i class="ti ti-plus text-xs"></i></div>
               </div>
             </div>
             <div class="mt-6">
-              <a id="js-cta-2" href="tambah-produk.html" class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider">
+              <a id="js-cta-2" href="tambah-produk.html"
+                class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider">
                 <span>Tambah Produk</span> <i class="ti ti-arrow-right"></i>
               </a>
             </div>
           </div>
 
           <!-- Card 3 -->
-          <div id="js-card-3" class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 flex flex-col justify-between group relative overflow-hidden">
+          <div id="js-card-3"
+            class="bg-white rounded-3xl p-6 border border-slate-200 shadow-soft hover:shadow-lg transition duration-300 flex flex-col justify-between group relative overflow-hidden">
             <div class="space-y-4">
               <div class="flex justify-between items-start">
-                <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition duration-300">
+                <div
+                  class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl group-hover:scale-110 transition duration-300">
                   <i class="ti ti-layout-dashboard"></i>
                 </div>
-                <span id="js-badge-3" class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal">Belum Selesai</span>
+                <span id="js-badge-3"
+                  class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal">Belum
+                  Selesai</span>
               </div>
               <div>
                 <h3 class="font-outfit font-black text-slate-800 text-base">Setup Landing Page</h3>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Kustomisasi halaman utama (Landing Page) tokomu mulai dari hero title, gambar, dan kontak.</p>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Kustomisasi halaman utama (Landing Page) tokomu
+                  mulai dari hero title, gambar, dan kontak.</p>
               </div>
-              
+
               <!-- CMS indicators -->
               <div class="space-y-2 pt-2 border-t border-slate-100">
                 <div class="flex items-center gap-2 text-xs font-bold" id="subtask-cms">
@@ -261,7 +295,8 @@
               </div>
             </div>
             <div class="mt-6">
-              <a id="js-cta-3" href="landing-page.html" class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider">
+              <a id="js-cta-3" href="landing-page.html"
+                class="w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider">
                 <span>Atur Landing Page</span> <i class="ti ti-arrow-right"></i>
               </a>
             </div>
@@ -270,19 +305,24 @@
       </section>
 
       <!-- COMPACT ONBOARDING WIDGET (Light Theme) -->
-      <div id="js-onboarding-compact" class="hidden bg-white rounded-3xl p-4 text-slate-800 shadow-soft border border-slate-200/80 flex items-center justify-between gap-4 hover:shadow-md transition duration-300">
+      <div id="js-onboarding-compact"
+        class="hidden bg-white rounded-3xl p-4 text-slate-800 shadow-soft border border-slate-200/80 flex items-center justify-between gap-4 hover:shadow-md transition duration-300">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal flex items-center justify-center text-lg">
+          <div
+            class="w-10 h-10 rounded-full bg-brand-blueLight border border-brand-blueRoyal/10 text-brand-blueRoyal flex items-center justify-center text-lg">
             <i class="ti ti-sparkles animate-pulse"></i>
           </div>
           <div>
             <h4 class="font-outfit font-black text-xs sm:text-sm text-slate-800">Setup Tokomu Belum Selesai</h4>
-            <p class="text-[10px] sm:text-xs text-slate-500 font-medium">Selesaikan langkah awal setup agar siap menerima pesanan pelanggan.</p>
+            <p class="text-[10px] sm:text-xs text-slate-500 font-medium">Selesaikan langkah awal setup agar siap
+              menerima pesanan pelanggan.</p>
           </div>
         </div>
         <div class="flex items-center gap-3 shrink-0">
-          <span class="text-xs font-bold text-brand-blueRoyal font-outfit hidden sm:inline" id="js-onboarding-compact-percent">33% selesai</span>
-          <button onclick="restoreOnboarding()" class="px-4.5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-[10px] sm:text-xs transition uppercase tracking-wider font-outfit shadow-md shadow-brand-blueRoyal/10">
+          <span class="text-xs font-bold text-brand-blueRoyal font-outfit hidden sm:inline"
+            id="js-onboarding-compact-percent">33% selesai</span>
+          <button onclick="restoreOnboarding()"
+            class="px-4.5 py-2.5 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-xl text-[10px] sm:text-xs transition uppercase tracking-wider font-outfit shadow-md shadow-brand-blueRoyal/10">
             Lanjutkan Setup
           </button>
         </div>
@@ -474,6 +514,9 @@
 
       <!-- ==================== TAB 2: STATUS PESANAN ==================== -->
       <div id="js-content-pesanan" class="space-y-8">
+
+
+
         <!-- Section: Status Operasional Pesanan -->
         <section class="space-y-4">
           <div class="flex items-center justify-between">
@@ -640,6 +683,57 @@
           </div>
         </section>
 
+        <!-- SECTION: PERINGATAN PENTING -->
+        <section id="js-alerts-container" class="hidden bg-white rounded-3xl border border-slate-200/80 shadow-soft p-6 flex flex-col space-y-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="font-outfit font-black text-lg text-slate-800 flex items-center gap-2">
+                <i class="ti ti-alert-triangle text-amber-500 text-xl"></i>
+                Peringatan Penting
+              </h3>
+              <p class="text-xs text-slate-500 font-medium">Tindakan operasional penting yang memerlukan perhatian Anda segera.</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-100 text-rose-600 text-[10px] font-extrabold uppercase tracking-wider">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> Tindakan Diperlukan
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1: Unprocessed -->
+            <div class="bg-indigo-50/60 border border-indigo-100/80 rounded-3xl p-5 flex items-start gap-4 hover:shadow-md transition duration-300">
+              <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center shrink-0">
+                <i class="ti ti-box text-xl animate-pulse"></i>
+              </div>
+              <div class="space-y-1">
+                <h4 class="font-outfit font-black text-slate-800 text-sm">Pesanan Perlu Diproses</h4>
+                <p class="text-xs text-slate-500 font-semibold leading-relaxed">Ada <span id="js-alert-unprocessed-count" class="font-bold text-indigo-600">0</span> pesanan telah lunas dan siap dikirim. Segera siapkan barang!</p>
+              </div>
+            </div>
+
+            <!-- Card 2: Pending Payments -->
+            <div class="bg-amber-50/60 border border-amber-100/80 rounded-3xl p-5 flex items-start gap-4 hover:shadow-md transition duration-300">
+              <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
+                <i class="ti ti-wallet text-xl animate-pulse"></i>
+              </div>
+              <div class="space-y-1">
+                <h4 class="font-outfit font-black text-slate-800 text-sm">Pembayaran Pending</h4>
+                <p class="text-xs text-slate-500 font-semibold leading-relaxed">Ada <span id="js-alert-pending-count" class="font-bold text-amber-600">0</span> pesanan menunggu pembayaran. Perlu verifikasi manual!</p>
+              </div>
+            </div>
+
+            <!-- Card 3: Cancelled Payments -->
+            <div class="bg-rose-50/60 border border-rose-100/80 rounded-3xl p-5 flex items-start gap-4 hover:shadow-md transition duration-300">
+              <div class="w-10 h-10 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center shrink-0">
+                <i class="ti ti-square-x text-xl"></i>
+              </div>
+              <div class="space-y-1">
+                <h4 class="font-outfit font-black text-slate-800 text-sm">Pembayaran Dibatalkan</h4>
+                <p class="text-xs text-slate-500 font-semibold leading-relaxed">Ada <span id="js-alert-failed-count" class="font-bold text-rose-600">0</span> transaksi gagal atau dibatalkan oleh sistem.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Charts & Order Breakdown Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -679,103 +773,19 @@
             </div>
           </div>
 
-          <!-- Order Status Breakdown Card (1 Col) -->
+          <!-- Realtime Activities Card (1 Col) -->
           <div class="bg-white rounded-3xl border border-slate-200 shadow-soft p-6 flex flex-col">
             <div class="flex justify-between items-center mb-6">
               <div>
-                <h3 class="font-outfit font-black text-lg text-slate-800">Breakdown Status</h3>
-                <p class="text-xs text-slate-500 font-medium">Distribusi status pesanan saat ini</p>
+                <h3 class="font-outfit font-black text-lg text-slate-800">Aktivitas Realtime</h3>
+                <p class="text-xs text-slate-500 font-medium">Aktivitas transaksi dan operasional terbaru</p>
               </div>
               <a href="pesanan.html" class="text-xs font-bold text-brand-blueRoyal hover:underline">Kelola Semua</a>
             </div>
 
-            <!-- List of Status Counts -->
-            <div class="space-y-4 flex-grow" id="js-breakdown-list">
-              <!-- Belum Bayar -->
-              <div class="flex items-center justify-between p-3 rounded-2xl bg-amber-50/50 border border-amber-100/50">
-                <div class="flex items-center gap-3">
-                  <span
-                    class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-sm font-bold">
-                    <i class="ti ti-wallet"></i>
-                  </span>
-                  <span class="text-xs font-bold text-slate-700">Belum Bayar</span>
-                </div>
-                <span
-                  class="px-2.5 py-1 bg-amber-100 text-amber-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center"
-                  id="js-breakdown-pending">0</span>
-              </div>
-
-              <!-- Diproses -->
-              <div
-                class="flex items-center justify-between p-3 rounded-2xl bg-indigo-50/50 border border-indigo-100/50">
-                <div class="flex items-center gap-3">
-                  <span
-                    class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-sm font-bold">
-                    <i class="ti ti-box"></i>
-                  </span>
-                  <span class="text-xs font-bold text-slate-700">Diproses</span>
-                </div>
-                <span
-                  class="px-2.5 py-1 bg-indigo-100 text-indigo-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center"
-                  id="js-breakdown-processing">0</span>
-              </div>
-
-              <!-- Dikirim -->
-              <div class="flex items-center justify-between p-3 rounded-2xl bg-blue-50/50 border border-blue-100/50">
-                <div class="flex items-center gap-3">
-                  <span
-                    class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-sm font-bold">
-                    <i class="ti ti-truck-delivery"></i>
-                  </span>
-                  <span class="text-xs font-bold text-slate-700">Dikirim</span>
-                </div>
-                <span
-                  class="px-2.5 py-1 bg-blue-100 text-blue-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center"
-                  id="js-breakdown-shipped">0</span>
-              </div>
-
-              <!-- Selesai -->
-              <div
-                class="flex items-center justify-between p-3 rounded-2xl bg-emerald-50/50 border border-emerald-100/50">
-                <div class="flex items-center gap-3">
-                  <span
-                    class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-sm font-bold">
-                    <i class="ti ti-checkbox"></i>
-                  </span>
-                  <span class="text-xs font-bold text-slate-700">Selesai</span>
-                </div>
-                <span
-                  class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center"
-                  id="js-breakdown-delivered">0</span>
-              </div>
-
-              <!-- Batal -->
-              <div class="flex items-center justify-between p-3 rounded-2xl bg-rose-50/50 border border-rose-100/50">
-                <div class="flex items-center gap-3">
-                  <span
-                    class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center text-sm font-bold">
-                    <i class="ti ti-square-x"></i>
-                  </span>
-                  <span class="text-xs font-bold text-slate-700">Batal</span>
-                </div>
-                <span
-                  class="px-2.5 py-1 bg-rose-100 text-rose-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center"
-                  id="js-breakdown-canceled">0</span>
-              </div>
-
-              <!-- Retur & Refund -->
-              <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/50 border border-slate-200/50">
-                <div class="flex items-center gap-3">
-                  <span
-                    class="w-8 h-8 rounded-xl bg-slate-500/10 text-slate-600 flex items-center justify-center text-sm font-bold">
-                    <i class="ti ti-refresh"></i>
-                  </span>
-                  <span class="text-xs font-bold text-slate-700">Retur & Refund</span>
-                </div>
-                <span
-                  class="px-2.5 py-1 bg-slate-200 text-slate-800 font-extrabold text-xs rounded-lg min-w-[2.5rem] text-center"
-                  id="js-breakdown-return">0</span>
-              </div>
+            <!-- Timeline of Realtime Activities -->
+            <div class="space-y-6 flex-grow overflow-y-auto max-h-[420px] pr-2" id="js-timeline-container">
+              <!-- Rendered by JS -->
             </div>
           </div>
 
@@ -835,7 +845,9 @@
 
   <!-- FLOATING ONBOARDING SIMULATOR (RULE 10: Outside main container for z-index safety) -->
   <!-- Toggle Button -->
-  <button onclick="toggleSimulatorPanel()" class="fixed bottom-6 right-6 z-[9999] w-14 h-14 bg-brand-sidebar hover:bg-slate-800 text-white rounded-full shadow-premium flex items-center justify-center transition hover:scale-105 active:scale-95 group border border-white/10" aria-label="Buka Simulator Onboarding">
+  <button onclick="toggleSimulatorPanel()"
+    class="fixed bottom-6 right-6 z-[9999] w-14 h-14 bg-brand-sidebar hover:bg-slate-800 text-white rounded-full shadow-premium flex items-center justify-center transition hover:scale-105 active:scale-95 group border border-white/10"
+    aria-label="Buka Simulator Onboarding">
     <i class="ti ti-adjustments text-2xl group-hover:rotate-45 transition duration-300"></i>
     <span class="absolute -top-1.5 -right-1.5 flex h-4 w-4">
       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
@@ -844,22 +856,26 @@
   </button>
 
   <!-- Simulator Panel -->
-  <div id="js-simulator-panel" class="fixed bottom-24 right-6 z-[9999] w-80 bg-white rounded-3xl border border-slate-200 shadow-premium p-6 hidden transition duration-300 flex flex-col gap-4 font-sans">
+  <div id="js-simulator-panel"
+    class="fixed bottom-24 right-6 z-[9999] w-80 bg-white rounded-3xl border border-slate-200 shadow-premium p-6 hidden transition duration-300 flex flex-col gap-4 font-sans">
     <div class="flex justify-between items-center pb-3 border-b border-slate-100">
       <div class="flex items-center gap-2">
         <i class="ti ti-adjustments text-brand-blueRoyal text-lg"></i>
         <h4 class="font-outfit font-black text-slate-800 text-sm">Onboarding Simulator</h4>
       </div>
-      <button onclick="toggleSimulatorPanel()" class="p-1 text-slate-400 hover:text-slate-600 rounded-lg" aria-label="Tutup Panel Simulator"><i class="ti ti-x text-lg"></i></button>
+      <button onclick="toggleSimulatorPanel()" class="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
+        aria-label="Tutup Panel Simulator"><i class="ti ti-x text-lg"></i></button>
     </div>
-    
+
     <div class="space-y-3">
       <p class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Pilih Mode Dashboard</p>
       <div class="grid grid-cols-2 gap-2">
-        <button onclick="setSimulatorMode('new')" id="btn-sim-new" class="py-2.5 px-3 rounded-xl border text-xs font-bold text-center transition">
+        <button onclick="setSimulatorMode('new')" id="btn-sim-new"
+          class="py-2.5 px-3 rounded-xl border text-xs font-bold text-center transition">
           Seller Baru
         </button>
-        <button onclick="setSimulatorMode('demo')" id="btn-sim-demo" class="py-2.5 px-3 rounded-xl border text-xs font-bold text-center transition">
+        <button onclick="setSimulatorMode('demo')" id="btn-sim-demo"
+          class="py-2.5 px-3 rounded-xl border text-xs font-bold text-center transition">
           Mode Demo
         </button>
       </div>
@@ -869,25 +885,32 @@
       <p class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Simulasi Progress</p>
       <div class="p-3 bg-slate-50 rounded-2xl space-y-2.5 border border-slate-100">
         <div class="flex items-center gap-2.5">
-          <input type="checkbox" id="check-sim-shop" onchange="toggleSimStep('shop')" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
+          <input type="checkbox" id="check-sim-shop" onchange="toggleSimStep('shop')"
+            class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
           <label for="check-sim-shop" class="text-xs text-slate-700 font-bold cursor-pointer">Profil Toko</label>
         </div>
         <div class="flex items-center gap-2.5">
-          <input type="checkbox" id="check-sim-payment" onchange="toggleSimStep('payment')" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
+          <input type="checkbox" id="check-sim-payment" onchange="toggleSimStep('payment')"
+            class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
           <label for="check-sim-payment" class="text-xs text-slate-700 font-bold cursor-pointer">Rekening Bank</label>
         </div>
         <div class="flex items-center gap-2.5">
-          <input type="checkbox" id="check-sim-products" onchange="toggleSimStep('products')" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
-          <label for="check-sim-products" class="text-xs text-slate-700 font-bold cursor-pointer">Tambah 3 Produk</label>
+          <input type="checkbox" id="check-sim-products" onchange="toggleSimStep('products')"
+            class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
+          <label for="check-sim-products" class="text-xs text-slate-700 font-bold cursor-pointer">Tambah 3
+            Produk</label>
         </div>
         <div class="flex items-center gap-2.5">
-          <input type="checkbox" id="check-sim-landing" onchange="toggleSimStep('landing')" class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
-          <label for="check-sim-landing" class="text-xs text-slate-700 font-bold cursor-pointer">Setup Landing Page</label>
+          <input type="checkbox" id="check-sim-landing" onchange="toggleSimStep('landing')"
+            class="rounded border-slate-300 text-brand-blueRoyal focus:ring-brand-blueRoyal/20">
+          <label for="check-sim-landing" class="text-xs text-slate-700 font-bold cursor-pointer">Setup Landing
+            Page</label>
         </div>
       </div>
     </div>
 
-    <button onclick="resetOnboardingProgress()" class="w-full py-2.5 border border-rose-200 hover:bg-rose-50 text-rose-600 font-bold rounded-xl text-xs transition uppercase tracking-wider font-outfit">
+    <button onclick="resetOnboardingProgress()"
+      class="w-full py-2.5 border border-rose-200 hover:bg-rose-50 text-rose-600 font-bold rounded-xl text-xs transition uppercase tracking-wider font-outfit">
       Reset Semua Progress
     </button>
   </div>
@@ -907,7 +930,7 @@
       const cmsLanding = BizmateDB.getCMSLanding() || {};
 
       const simMode = localStorage.getItem('bizmate_onboarding_simulator_mode') || 'new';
-      
+
       if (simMode === 'demo') {
         return {
           isActive: false,
@@ -924,27 +947,27 @@
       }
 
       // Check shop profile completeness
-      const isShopSetup = localStorage.getItem('bizmate_onboarding_shop_completed') === 'true' || 
+      const isShopSetup = localStorage.getItem('bizmate_onboarding_shop_completed') === 'true' ||
         (settings.shopName && settings.shopName !== 'Bizmate Premium Store' && settings.shopWhatsApp !== '6285179720622');
 
       // Check bank payment completeness
-      const isPaymentSetup = localStorage.getItem('bizmate_onboarding_payment_completed') === 'true' || 
+      const isPaymentSetup = localStorage.getItem('bizmate_onboarding_payment_completed') === 'true' ||
         (settings.bankAccount && settings.bankAccount !== '8291048590');
 
       // Step 1 combines Shop Profile and Payment Setup
       const isStep1Completed = isShopSetup && isPaymentSetup;
 
       // Step 2 requires at least 3 custom products (not seeded)
-      const customProducts = products.filter(p => 
+      const customProducts = products.filter(p =>
         !['CHR-RED-001', 'SFA-VLV-002', 'TBL-JTI-003'].includes(p.sku) && !p.sku.startsWith('PRD-')
       );
-      
+
       const checkSimProd = localStorage.getItem('bizmate_onboarding_products_completed') === 'true';
       const productsCount = checkSimProd ? 3 : customProducts.length;
       const isStep2Completed = checkSimProd || (productsCount >= 3);
 
       // Step 3 requires customizing the CMS hero Title
-      const isLandingSetup = localStorage.getItem('bizmate_onboarding_landing_completed') === 'true' || 
+      const isLandingSetup = localStorage.getItem('bizmate_onboarding_landing_completed') === 'true' ||
         (cmsLanding.heroTitle && cmsLanding.heroTitle !== 'Temukan Furniture Premium untuk Rumah Impian Anda');
 
       const isStep3Completed = isLandingSetup;
@@ -956,7 +979,7 @@
       if (isStep1Completed) completedSteps++;
       if (isStep2Completed) completedSteps++;
       if (isStep3Completed) completedSteps++;
-      
+
       const percentage = Math.round((completedSteps / 3) * 100);
 
       return {
@@ -978,15 +1001,15 @@
       const progress = getOnboardingProgress();
       const onboardingContainer = document.getElementById('js-onboarding-container');
       const compactWidget = document.getElementById('js-onboarding-compact');
-      
+
       if (!onboardingContainer || !compactWidget) return;
-      
+
       if (!progress.isActive) {
         onboardingContainer.classList.add('hidden');
         compactWidget.classList.add('hidden');
         return;
       }
-      
+
       const isDismissed = localStorage.getItem('bizmate_onboarding_dismissed') === 'true';
       if (isDismissed) {
         onboardingContainer.classList.add('hidden');
@@ -995,23 +1018,23 @@
         onboardingContainer.classList.remove('hidden');
         compactWidget.classList.add('hidden');
       }
-      
+
       const completedCount = (progress.step1 ? 1 : 0) + (progress.step2 ? 1 : 0) + (progress.step3 ? 1 : 0);
       document.getElementById('js-onboarding-progress-text').textContent = `${completedCount} dari 3 langkah selesai`;
       document.getElementById('js-onboarding-progress-percent').textContent = `${progress.percentage}%`;
       document.getElementById('js-onboarding-progress-bar').style.width = `${progress.percentage}%`;
       document.getElementById('js-onboarding-compact-percent').textContent = `${progress.percentage}% selesai`;
-      
+
       // Card 1: Shop & Account settings
       const badge1 = document.getElementById('js-badge-1');
       const card1 = document.getElementById('js-card-1');
       const cta1 = document.getElementById('js-cta-1');
-      
+
       const shopIcon = document.getElementById('subtask-shop-icon');
       const shopText = document.getElementById('subtask-shop-text');
       const paymentIcon = document.getElementById('subtask-payment-icon');
       const paymentText = document.getElementById('subtask-payment-text');
-      
+
       if (progress.isShopSetup) {
         shopIcon.className = "ti ti-circle-check text-emerald-500 text-base animate-pulse";
         shopText.className = "text-slate-500 line-through font-medium";
@@ -1019,7 +1042,7 @@
         shopIcon.className = "ti ti-circle text-slate-300 text-base";
         shopText.className = "text-slate-700 font-bold";
       }
-      
+
       if (progress.isPaymentSetup) {
         paymentIcon.className = "ti ti-circle-check text-emerald-500 text-base animate-pulse";
         paymentText.className = "text-slate-500 line-through font-medium";
@@ -1027,7 +1050,7 @@
         paymentIcon.className = "ti ti-circle text-slate-300 text-base";
         paymentText.className = "text-slate-700 font-bold";
       }
-      
+
       if (progress.step1) {
         badge1.textContent = "✔ Selesai";
         badge1.className = "text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600";
@@ -1041,20 +1064,20 @@
         cta1.className = "w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider";
         cta1.querySelector('span').textContent = "Lengkapi Sekarang";
       }
-      
+
       // Card 2: Catalog additions
       const badge2 = document.getElementById('js-badge-2');
       const card2 = document.getElementById('js-card-2');
       const cta2 = document.getElementById('js-cta-2');
       const prodThumbnails = document.getElementById('js-prod-thumbnails');
-      
+
       if (prodThumbnails) {
         prodThumbnails.innerHTML = '';
         const products = BizmateDB.getProducts() || [];
-        const customProducts = products.filter(p => 
+        const customProducts = products.filter(p =>
           !['CHR-RED-001', 'SFA-VLV-002', 'TBL-JTI-003'].includes(p.sku) && !p.sku.startsWith('PRD-')
         );
-        
+
         for (let i = 0; i < 3; i++) {
           if (i < progress.step2Count) {
             const prod = customProducts[i];
@@ -1072,7 +1095,7 @@
           }
         }
       }
-      
+
       if (progress.step2) {
         badge2.textContent = "✔ Selesai";
         badge2.className = "text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600";
@@ -1086,15 +1109,15 @@
         cta2.className = "w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider";
         cta2.querySelector('span').textContent = "Tambah Produk";
       }
-      
+
       // Card 3: CMS Landing page setup
       const badge3 = document.getElementById('js-badge-3');
       const card3 = document.getElementById('js-card-3');
       const cta3 = document.getElementById('js-cta-3');
-      
+
       const cmsIcon = document.getElementById('subtask-cms-icon');
       const cmsText = document.getElementById('subtask-cms-text');
-      
+
       if (progress.step3) {
         cmsIcon.className = "ti ti-circle-check text-emerald-500 text-base animate-pulse";
         cmsText.className = "text-slate-500 line-through font-medium";
@@ -1102,7 +1125,7 @@
         cmsIcon.className = "ti ti-circle text-slate-300 text-base";
         cmsText.className = "text-slate-700 font-bold";
       }
-      
+
       if (progress.step3) {
         badge3.textContent = "✔ Selesai";
         badge3.className = "text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600";
@@ -1116,20 +1139,20 @@
         cta3.className = "w-full py-3 bg-brand-blueRoyal hover:bg-blue-800 text-white font-bold rounded-2xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-brand-blueRoyal/10 font-outfit uppercase tracking-wider";
         cta3.querySelector('span').textContent = "Atur Landing Page";
       }
-      
+
       // Celebration State CONFETTI when 100% completed
       if (progress.percentage === 100) {
         const celebrationDone = localStorage.getItem('bizmate_onboarding_celebrated') === 'true';
         if (!celebrationDone) {
           localStorage.setItem('bizmate_onboarding_celebrated', 'true');
           triggerConfetti();
-          
+
           if (typeof window.showToast === 'function') {
             window.showToast("🎉 Selamat! Setup tokomu telah selesai 100%. Tokomu kini siap menerima pesanan!", "success");
           } else {
             alert("🎉 Selamat! Setup tokomu telah selesai 100%. Tokomu kini siap menerima pesanan!");
           }
-          
+
           setTimeout(() => {
             localStorage.setItem('bizmate_onboarding_dismissed', 'true');
             renderOnboardingUI();
@@ -1142,10 +1165,10 @@
     window.renderChartOverlays = function (isOnboarding) {
       const statContainer = document.getElementById('js-chart-stat-container');
       const pesananContainer = document.getElementById('js-chart-pesanan-container');
-      
+
       const existingOverlays = document.querySelectorAll('.js-chart-overlay');
       existingOverlays.forEach(el => el.remove());
-      
+
       if (isOnboarding) {
         if (statContainer) {
           statContainer.classList.add('relative');
@@ -1160,7 +1183,7 @@
           `;
           statContainer.appendChild(overlay);
         }
-        
+
         if (pesananContainer) {
           pesananContainer.classList.add('relative');
           const overlay = document.createElement('div');
@@ -1220,7 +1243,7 @@
 
       function draw() {
         ctx.clearRect(0, 0, width, height);
-        
+
         let remaining = false;
         particles.forEach((p) => {
           p.tiltAngle += p.tiltAngleIncremental;
@@ -1269,7 +1292,7 @@
 
     window.setSimulatorMode = function (mode) {
       localStorage.setItem('bizmate_onboarding_simulator_mode', mode);
-      
+
       if (mode === 'demo') {
         localStorage.removeItem('bizmate_onboarding_dismissed');
         localStorage.removeItem('bizmate_onboarding_celebrated');
@@ -1281,13 +1304,13 @@
         localStorage.setItem('bizmate_onboarding_products_completed', 'false');
         localStorage.setItem('bizmate_onboarding_landing_completed', 'false');
       }
-      
+
       window.location.reload();
     };
 
     window.toggleSimStep = function (step) {
       const checked = document.getElementById(`check-sim-${step}`).checked;
-      
+
       if (step === 'shop') {
         localStorage.setItem('bizmate_onboarding_shop_completed', checked ? 'true' : 'false');
       } else if (step === 'payment') {
@@ -1297,7 +1320,7 @@
       } else if (step === 'landing') {
         localStorage.setItem('bizmate_onboarding_landing_completed', checked ? 'true' : 'false');
       }
-      
+
       renderOnboardingUI();
       renderMainDashboardUI();
       renderBreakdownStats();
@@ -1321,7 +1344,7 @@
       const btnNew = document.getElementById('btn-sim-new');
       const btnDemo = document.getElementById('btn-sim-demo');
       const progressSec = document.getElementById('js-sim-progress-section');
-      
+
       if (mode === 'new') {
         if (btnNew) btnNew.className = "py-2.5 px-3 rounded-xl border bg-brand-blueRoyal text-white font-extrabold text-xs text-center transition shadow-md shadow-brand-blueRoyal/10";
         if (btnDemo) btnDemo.className = "py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs text-center transition";
@@ -1331,12 +1354,12 @@
         if (btnDemo) btnDemo.className = "py-2.5 px-3 rounded-xl border bg-brand-blueRoyal text-white font-extrabold text-xs text-center transition shadow-md shadow-brand-blueRoyal/10";
         if (progressSec) progressSec.classList.add('hidden');
       }
-      
+
       const checkShop = document.getElementById('check-sim-shop');
       const checkPay = document.getElementById('check-sim-payment');
       const checkProd = document.getElementById('check-sim-products');
       const checkLand = document.getElementById('check-sim-landing');
-      
+
       if (checkShop) checkShop.checked = localStorage.getItem('bizmate_onboarding_shop_completed') === 'true';
       if (checkPay) checkPay.checked = localStorage.getItem('bizmate_onboarding_payment_completed') === 'true';
       if (checkProd) checkProd.checked = localStorage.getItem('bizmate_onboarding_products_completed') === 'true';
@@ -1536,56 +1559,186 @@
       }
     }
 
-    // Render Live Order Status Breakdown Counts
+    // Helper: Parse Date from Activity Log
+    function parseActivityDate(timeStr) {
+      if (!timeStr) return new Date(0);
+      const months = {
+        'jan': 0, 'januari': 0,
+        'feb': 1, 'februari': 1,
+        'mar': 2, 'maret': 2,
+        'apr': 3, 'april': 3,
+        'mei': 4, 'may': 4,
+        'jun': 5, 'juni': 5,
+        'jul': 6, 'juli': 6,
+        'agu': 7, 'agustus': 7,
+        'sep': 8, 'september': 8,
+        'okt': 9, 'oktober': 9,
+        'nov': 10, 'november': 10,
+        'des': 11, 'desember': 11
+      };
+      const parts = timeStr.toLowerCase().replace(/,/g, '').split(' ');
+      if (parts.length >= 3) {
+        const day = parseInt(parts[0]);
+        const month = months[parts[1]] !== undefined ? months[parts[1]] : 4;
+        const year = parseInt(parts[2]);
+        let hour = 0, minute = 0;
+        if (parts[3]) {
+          const timeParts = parts[3].split(':');
+          hour = parseInt(timeParts[0]) || 0;
+          minute = parseInt(timeParts[1]) || 0;
+        }
+        return new Date(year, month, day, hour, minute);
+      }
+      return new Date(timeStr);
+    }
+
+    // Render Realtime Activities Timeline & Warnings
     function renderBreakdownStats() {
       const progress = getOnboardingProgress();
+      const alertsContainer = document.getElementById('js-alerts-container');
+      const timelineContainer = document.getElementById('js-timeline-container');
+
       if (progress.isActive) {
-        const ids = ['js-breakdown-pending', 'js-breakdown-processing', 'js-breakdown-shipped', 'js-breakdown-delivered', 'js-breakdown-canceled', 'js-breakdown-return',
-                     'stat-orders-pending', 'stat-orders-processing', 'stat-orders-shipped', 'stat-orders-delivered', 'stat-orders-canceled', 'stat-orders-action', 'stat-orders-return', 'stat-orders-total'];
-        ids.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.textContent = '0';
-        });
+        if (alertsContainer) alertsContainer.classList.add('hidden');
+        if (timelineContainer) {
+          timelineContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-12 text-center h-full flex-grow">
+              <div class="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center mb-3 border border-slate-100">
+                <i class="ti ti-activity text-xl"></i>
+              </div>
+              <h4 class="font-outfit font-bold text-slate-700 text-xs">Belum Ada Aktivitas</h4>
+              <p class="text-[11px] text-slate-500 mt-1 max-w-[200px] leading-normal">Aktivitas real-time seperti transaksi dan pembayaran akan terdaftar di sini.</p>
+            </div>
+          `;
+        }
         return;
       }
+
+      if (alertsContainer) alertsContainer.classList.remove('hidden');
 
       const orders = BizmateDB.getOrders();
       let pendingCount = 0;
       let processingCount = 0;
-      let shippedCount = 0;
-      let deliveredCount = 0;
       let canceledCount = 0;
-      let returnCount = 0;
 
       orders.forEach(o => {
-        if (o.returnStatus && o.returnStatus !== '') {
-          returnCount++;
-        } else if (o.paymentStatus === 'Pending') {
+        if (o.paymentStatus === 'Pending') {
           pendingCount++;
         } else if (o.paymentStatus === 'Paid' && o.shippingStatus === 'Unfulfilled') {
           processingCount++;
-        } else if (o.shippingStatus === 'Shipped') {
-          shippedCount++;
-        } else if (o.shippingStatus === 'Delivered') {
-          deliveredCount++;
         } else if (o.paymentStatus === 'Failed') {
           canceledCount++;
         }
       });
 
-      const pendingEl = document.getElementById('js-breakdown-pending');
-      const processingEl = document.getElementById('js-breakdown-processing');
-      const shippedEl = document.getElementById('js-breakdown-shipped');
-      const deliveredEl = document.getElementById('js-breakdown-delivered');
-      const canceledEl = document.getElementById('js-breakdown-canceled');
-      const returnEl = document.getElementById('js-breakdown-return');
+      // Update Alerts counts on the cards
+      const alertUnprocessedEl = document.getElementById('js-alert-unprocessed-count');
+      const alertPendingEl = document.getElementById('js-alert-pending-count');
+      const alertFailedEl = document.getElementById('js-alert-failed-count');
 
-      if (pendingEl) pendingEl.textContent = pendingCount;
-      if (processingEl) processingEl.textContent = processingCount;
-      if (shippedEl) shippedEl.textContent = shippedCount;
-      if (deliveredEl) deliveredEl.textContent = deliveredCount;
-      if (canceledEl) canceledEl.textContent = canceledCount;
-      if (returnEl) returnEl.textContent = returnCount;
+      if (alertUnprocessedEl) alertUnprocessedEl.textContent = processingCount;
+      if (alertPendingEl) alertPendingEl.textContent = pendingCount;
+      if (alertFailedEl) alertFailedEl.textContent = canceledCount;
+
+      // Generate timeline activities from all order history logs
+      let activities = [];
+      orders.forEach(o => {
+        (o.statusHistory || []).forEach(h => {
+          activities.push({
+            orderId: o.id,
+            customer: o.customer,
+            status: h.status,
+            time: h.time,
+            note: h.note,
+            amount: o.amount
+          });
+        });
+      });
+
+      // Sort timeline items chronologically (latest first)
+      activities.sort((a, b) => parseActivityDate(b.time) - parseActivityDate(a.time));
+
+      if (timelineContainer) {
+        timelineContainer.innerHTML = '';
+        if (activities.length === 0) {
+          timelineContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-12 text-center h-full flex-grow">
+              <div class="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center mb-3 border border-slate-100">
+                <i class="ti ti-activity text-xl"></i>
+              </div>
+              <h4 class="font-outfit font-bold text-slate-700 text-xs">Belum Ada Aktivitas</h4>
+              <p class="text-[11px] text-slate-500 mt-1 max-w-[200px] leading-normal">Rincian aktivitas transaksi akan muncul setelah Anda mulai memproses pesanan.</p>
+            </div>
+          `;
+        } else {
+          // Render top 6 activities
+          const topActivities = activities.slice(0, 6);
+          let timelineHtml = '<div class="relative pl-6 border-l border-slate-200 space-y-6 ml-3 mt-2">';
+
+          topActivities.forEach(item => {
+            let iconClass = 'ti ti-bell text-slate-600';
+            let bulletBg = 'bg-slate-50 border border-slate-200 text-slate-500';
+            let title = 'Aktivitas Transaksi';
+            let desc = item.note || 'Status pesanan diperbarui.';
+
+            if (item.status === 'Pesanan Dibuat') {
+              iconClass = 'ti ti-shopping-cart text-orange-600';
+              bulletBg = 'bg-orange-50 border border-orange-100 text-orange-600';
+              title = 'Pesanan Baru Masuk';
+              desc = `Pelanggan <span class="font-bold text-slate-800">${item.customer}</span> membuat pesanan baru <span class="font-bold text-brand-blueRoyal">${item.orderId}</span> sebesar <span class="font-extrabold text-slate-800">Rp ${item.amount.toLocaleString('id-ID')}</span>.`;
+            } else if (item.status === 'Pembayaran Lunas') {
+              iconClass = 'ti ti-wallet text-emerald-600';
+              bulletBg = 'bg-emerald-50 border border-emerald-100 text-emerald-600';
+              title = 'Pembayaran Lunas';
+              desc = `Pembayaran pesanan <span class="font-bold text-brand-blueRoyal">${item.orderId}</span> oleh <span class="font-bold text-slate-800">${item.customer}</span> sebesar <span class="font-extrabold text-slate-800">Rp ${item.amount.toLocaleString('id-ID')}</span> telah diverifikasi lunas.`;
+            } else if (item.status === 'Pesanan Diproses') {
+              iconClass = 'ti ti-settings text-indigo-600';
+              bulletBg = 'bg-indigo-50 border border-indigo-100 text-indigo-600';
+              title = 'Pesanan Diproses';
+              desc = `Pesanan <span class="font-bold text-brand-blueRoyal">${item.orderId}</span> milik <span class="font-bold text-slate-800">${item.customer}</span> sedang dipersiapkan di gudang.`;
+            } else if (item.status === 'Pesanan Dikirim') {
+              iconClass = 'ti ti-truck-delivery text-blue-600';
+              bulletBg = 'bg-blue-50 border border-blue-100 text-blue-600';
+              title = 'Pesanan Dikirim';
+              desc = `Pesanan <span class="font-bold text-brand-blueRoyal">${item.orderId}</span> sedang dikirim ke alamat tujuan <span class="font-bold text-slate-800">${item.customer}</span>.`;
+            } else if (item.status === 'Pengajuan Retur') {
+              iconClass = 'ti ti-refresh text-amber-600';
+              bulletBg = 'bg-amber-50 border border-amber-100 text-amber-600';
+              title = 'Pengajuan Retur';
+              desc = `Pelanggan <span class="font-bold text-slate-800">${item.customer}</span> mengajukan retur untuk pesanan <span class="font-bold text-brand-blueRoyal">${item.orderId}</span>.`;
+            } else if (item.status === 'Selesai') {
+              iconClass = 'ti ti-checkbox text-emerald-600';
+              bulletBg = 'bg-emerald-50 border border-emerald-100 text-emerald-600';
+              title = 'Pesanan Selesai';
+              desc = `Pesanan <span class="font-bold text-brand-blueRoyal">${item.orderId}</span> selesai. Paket telah berhasil diterima oleh <span class="font-bold text-slate-800">${item.customer}</span>.`;
+            } else if (item.status === 'Gagal') {
+              iconClass = 'ti ti-square-x text-rose-600';
+              bulletBg = 'bg-rose-50 border border-rose-100 text-rose-600';
+              title = 'Transaksi Gagal / Batal';
+              desc = `Pesanan <span class="font-bold text-brand-blueRoyal">${item.orderId}</span> dibatalkan karena kegagalan pembayaran bank.`;
+            }
+
+            timelineHtml += `
+              <div class="relative">
+                <!-- Timeline Bullet Icon -->
+                <span class="absolute -left-[36px] top-0.5 w-6 h-6 rounded-full flex items-center justify-center text-xs ring-4 ring-white shadow-soft shrink-0 ${bulletBg}">
+                  <i class="${iconClass} text-xs"></i>
+                </span>
+                <div class="space-y-1 ml-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <h4 class="text-xs font-black text-slate-800 font-outfit uppercase tracking-wider">${title}</h4>
+                    <span class="text-[10px] text-slate-400 font-bold font-mono">${item.time}</span>
+                  </div>
+                  <p class="text-xs text-slate-500 font-medium leading-relaxed">${desc}</p>
+                </div>
+              </div>
+            `;
+          });
+
+          timelineHtml += '</div>';
+          timelineContainer.innerHTML = timelineHtml;
+        }
+      }
     }
 
     // Shared Chart Configuration Factory
@@ -1933,7 +2086,7 @@
     window.renderMainDashboardUI = function () {
       const stats = BizmateDB.getStats();
       const progress = getOnboardingProgress();
-      
+
       // Update Cumulative Metrics Overview
       if (progress.isActive) {
         document.getElementById('stat-revenue').textContent = 'Rp 0';

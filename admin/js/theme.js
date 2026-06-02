@@ -32,6 +32,13 @@
       primaryRgb: '124, 58, 237',
       accent: '#c084fc',
       light: '#faf5ff'
+    },
+    'ocean-teal': {
+      name: 'Ocean Teal',
+      primary: '#0d9488',
+      primaryRgb: '13, 148, 136',
+      accent: '#0ea5e9',
+      light: '#f0fdfa'
     }
   };
 

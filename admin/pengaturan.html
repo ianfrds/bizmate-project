@@ -510,29 +510,41 @@
               </div>
               <div>
                 <h3 class="font-outfit font-black text-slate-800 text-base leading-none">Warna Brand (Theme)</h3>
-                <p class="text-xs text-slate-400 font-medium mt-1">Warna branding toko.</p>
+                <p class="text-xs text-slate-400 font-medium mt-1">Pilih preset atau buat warna kustom Anda.</p>
               </div>
             </div>
 
-            <div class="space-y-4">
-              <div class="space-y-2">
-                <label for="input-primary-color" class="text-xs font-bold text-slate-600 block">Primary Color</label>
-                <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
-                  <input id="input-primary-color-text" type="text"
-                    class="flex-grow px-4 py-3 text-xs font-bold text-brand-blueRoyal focus:outline-none"
-                    value="#0C4CB4">
-                  <input id="input-primary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#0c4cb4"
-                    oninput="syncColorInput('primary')">
-                </div>
+            <!-- PRESET THEME SELECTOR GRID -->
+            <div class="space-y-2.5">
+              <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Pilih Preset Warna</span>
+              <div id="theme-selector-container" class="grid grid-cols-1 gap-2.5">
+                <!-- Theme options dynamically injected here -->
               </div>
-              <div class="space-y-2">
-                <label for="input-secondary-color" class="text-xs font-bold text-slate-600 block">Secondary
-                  Color</label>
-                <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
-                  <input id="input-secondary-color-text" type="text"
-                    class="flex-grow px-4 py-3 text-xs font-bold text-brand-orange focus:outline-none" value="#FA7315">
-                  <input id="input-secondary-color" type="color" class="w-14 h-12 border-0 cursor-pointer"
-                    value="#fa7315" oninput="syncColorInput('secondary')">
+            </div>
+
+            <!-- CUSTOM COLOR CONFIGURATION -->
+            <div class="border-t border-slate-100 pt-4 mt-4 space-y-4">
+              <span class="text-[11px] font-black text-slate-700 uppercase tracking-wider block">Kustomisasi Manual</span>
+              <div class="space-y-4">
+                <div class="space-y-2">
+                  <label for="input-primary-color-text" class="text-xs font-bold text-slate-600 block">Primary Color</label>
+                  <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-brand-blueRoyal/20 transition">
+                    <input id="input-primary-color-text" type="text"
+                      class="flex-grow px-4 py-3 text-xs font-bold text-brand-blueRoyal focus:outline-none"
+                      value="#0C4CB4" oninput="syncColorText('primary')" placeholder="#HEXCODE">
+                    <input id="input-primary-color" type="color" class="w-14 h-12 border-0 cursor-pointer" value="#0c4cb4"
+                      oninput="syncColorInput('primary')" aria-label="Pilih Primary Color secara visual">
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <label for="input-secondary-color-text" class="text-xs font-bold text-slate-600 block">Secondary Color</label>
+                  <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-brand-blueRoyal/20 transition">
+                    <input id="input-secondary-color-text" type="text"
+                      class="flex-grow px-4 py-3 text-xs font-bold text-brand-orange focus:outline-none" value="#FA7315"
+                      oninput="syncColorText('secondary')" placeholder="#HEXCODE">
+                    <input id="input-secondary-color" type="color" class="w-14 h-12 border-0 cursor-pointer"
+                      value="#fa7315" oninput="syncColorInput('secondary')" aria-label="Pilih Secondary Color secara visual">
+                  </div>
                 </div>
               </div>
             </div>
@@ -805,13 +817,13 @@
       const container = document.getElementById('theme-selector-container');
       const themes = window.BizmateThemeEngine.themes;
 
-      container.innerHTML = Object.keys(themes).map(key => {
+      let html = Object.keys(themes).map(key => {
         const theme = themes[key];
         const isActive = key === activeThemeId;
         const borderClass = isActive ? 'border-brand-blueRoyal ring-2 ring-brand-blueRoyal/20 shadow-md' : 'border-slate-100 hover:border-slate-300';
 
         return `
-          <button onclick="selectTheme('${key}')" class="w-full flex items-center justify-between p-3.5 rounded-2xl border text-left transition ${borderClass}" aria-label="Pilih Tema ${theme.name}">
+          <button type="button" onclick="selectTheme('${key}')" class="w-full flex items-center justify-between p-3.5 rounded-2xl border text-left transition bg-white ${borderClass}" aria-label="Pilih Tema ${theme.name}">
             <div class="flex items-center gap-3">
               <div class="flex -space-x-1 shrink-0">
                 <div class="w-5 h-5 rounded-full border border-white z-10" style="background-color: ${theme.primary}"></div>
@@ -833,12 +845,60 @@
           </button>
         `;
       }).join('');
+
+      // Add Custom item at the end of the preset list
+      const isCustomActive = activeThemeId === 'custom';
+      const customBorderClass = isCustomActive ? 'border-brand-blueRoyal ring-2 ring-brand-blueRoyal/20 shadow-md' : 'border-slate-100 hover:border-slate-300';
+      const customPrimary = document.getElementById('input-primary-color')?.value || '#0C4CB4';
+      const customSecondary = document.getElementById('input-secondary-color')?.value || '#FA7315';
+
+      html += `
+        <button type="button" onclick="selectTheme('custom')" class="w-full flex items-center justify-between p-3.5 rounded-2xl border text-left transition bg-white ${customBorderClass}" aria-label="Pilih Tema Kustom">
+          <div class="flex items-center gap-3">
+            <div class="flex -space-x-1 shrink-0">
+              <div class="w-5 h-5 rounded-full border border-white z-10" style="background-color: ${customPrimary}"></div>
+              <div class="w-5 h-5 rounded-full border border-white z-0" style="background-color: ${customSecondary}"></div>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-slate-800 block">Kustom Warna Sendiri</span>
+              <span class="text-[10px] text-slate-400 font-semibold block uppercase tracking-wider">Custom Brand</span>
+            </div>
+          </div>
+          
+          ${isCustomActive ? `
+            <div class="w-5 h-5 bg-brand-blueRoyal text-white rounded-full flex items-center justify-center text-xs">
+              <i class="ti ti-check font-black"></i>
+            </div>
+          ` : `
+            <div class="w-5 h-5 border border-slate-200 rounded-full"></div>
+          `}
+        </button>
+      `;
+
+      container.innerHTML = html;
     }
 
     function selectTheme(themeId) {
       activeThemeId = themeId;
       // Live apply instantly to the current view using the exposed theme engine!
       window.BizmateThemeEngine.applyTheme(themeId);
+      
+      // Update inputs if it's a preset theme
+      if (themeId !== 'custom') {
+        const theme = window.BizmateThemeEngine.themes[themeId];
+        if (theme) {
+          const primaryPicker = document.getElementById('input-primary-color');
+          const primaryText = document.getElementById('input-primary-color-text');
+          const secondaryPicker = document.getElementById('input-secondary-color');
+          const secondaryText = document.getElementById('input-secondary-color-text');
+
+          if (primaryPicker) primaryPicker.value = theme.primary.toLowerCase();
+          if (primaryText) primaryText.value = theme.primary.toUpperCase();
+          if (secondaryPicker) secondaryPicker.value = theme.accent.toLowerCase();
+          if (secondaryText) secondaryText.value = theme.accent.toUpperCase();
+        }
+      }
+      
       renderThemeSelector();
     }
 
@@ -851,6 +911,21 @@
       
       // Auto select custom theme when colors are edited
       selectTheme('custom');
+    }
+
+    function syncColorText(type) {
+      const textInput = document.getElementById(type === 'primary' ? 'input-primary-color-text' : 'input-secondary-color-text');
+      const colorInput = document.getElementById(type === 'primary' ? 'input-primary-color' : 'input-secondary-color');
+      if (textInput && colorInput) {
+        let val = textInput.value.trim();
+        if (val.length === 6 && !val.startsWith('#')) {
+          val = '#' + val;
+        }
+        if (val.length === 7 && /^#[0-9A-F]{6}$/i.test(val)) {
+          colorInput.value = val.toLowerCase();
+          selectTheme('custom');
+        }
+      }
     }
 
     function handleLogoUpload(event) {
